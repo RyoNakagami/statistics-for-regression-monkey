@@ -24,7 +24,9 @@ book:
 
 format:
   html:
-    include-in-header: include/setup_googletagmanager.html
+    include-in-header: 
+      - include/setup_googletagmanager.html
+      - include/custom_webfont.html
     include-in-body: include/setup_googletagmanager_body.html
     lang: ja_JP.UTF-8
     number-depth: 1
@@ -38,5 +40,7 @@ format:
     bibliography: references.bib
     biblatexoptions: bibstyle=jauthoryear,citestyle=numeric,natbib=true
     csl: reference.csl
+    mainfont: "Zen Kaku Gothic New"
+    monofont: monospace
 
   
