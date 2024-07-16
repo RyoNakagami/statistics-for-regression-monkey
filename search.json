@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Statistics for Regression Monkeys",
     "section": "",
-    "text": "Home\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.",
+    "text": "Home\n ▶  プログラミング言語\n\n主にPython 3.11.8 + poetry を用います\nケースに応じて，Rを用いる場合もあります\n分析コードはRepositoryのqmdファイルがそのままソースコードとなっています\n\n参考として以下のようにコードブロックと合わせて出力されます．\n\n\nCode\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nFigure 1: A line plot on a polar axis\n\n\n\n\n\n\nContributions\n\nノートに関してBUG/Typos/不正確な表記を見つけた場合，まずGitHub IssuesでIssue Raiseしていただけると助かります\n各ノートの末尾に utteranc.es を用いたコメント欄があります．こちらはGitHub Discussionsと接続されておりますので，各ノートに関してはこちらも適宜ご利用ください\n\n修正の必要性の判断はRyoNakが最終的には判断しますが，広く議論できたら幸いです",
     "crumbs": [
       "Home"
     ]
@@ -14,7 +14,7 @@
     "href": "posts/statistics101/chapter_header.html",
     "title": "Part 1: Statistics 101",
     "section": "",
-    "text": "▶  Part 1 のスコープ\n\n竹村彰通 (2020) をベースに，統計モデルとしての確率分布族と，それらに対する統計推測法について勉強する\n勉強対象は主に日々のデータサイエンス分析のベースとなるような統計基礎概念や定義になるが，これらについて数学的な定義とともにわかりやすい言語化ができるようになることを目的にしています\n\n ▶  プログラミング言語\n\n主にPython 3.11.8 + poetry を用います\nケースに応じて，Rを用いる場合もあります\n分析コードはRepositoryのqmdファイルがそのままソースコードとなっています\n\n参考として以下のようにコードブロックと合わせて出力されます．\n\n\nCode\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nFigure 1: A line plot on a polar axis\n\n\n\n\n\n\nContributions\n\nノートに関してBUG/Typos/不正確な表記を見つけた場合，まずGitHub IssuesでIssue Raiseしていただけると助かります\n各ノートの末尾に utteranc.es を用いたコメント欄があります．こちらはGitHub Discussionsと接続されておりますので，各ノートに関してはこちらも適宜ご利用ください\n\n修正の必要性の判断はRyoNakが最終的には判断しますが，広く議論できたら幸いです\n\n\nReferences\n\n\n竹村彰通 (2020), 現代数理統計学,\n学術図書出版社.",
+    "text": "▶  Part 1 のスコープ\n\n竹村彰通 (2020) をベースに，統計モデルとしての確率分布族と，それらに対する統計推測法について勉強する\n勉強対象は主に日々のデータサイエンス分析のベースとなるような統計基礎概念や定義になるが，これらについて数学的な定義とともにわかりやすい言語化ができるようになることを目的にしています\n\n ▶  記述統計と統計的推測\n\n 記述統計(descriptive statistics)\n\n調査や実験で得られたデータを整理して，その解釈を助けるような統計的分析のこと\n\n統計的推測(statistical inference)\n\n確率的な変動を多く含むデータに対して，そのDGP(= Data generating process)に何かしらの仮定を想定し，データから確率モデルの推定を検定を行う分析のこと\n\n\n\n統計的推測という手法は確率モデルを想定してデータを解釈/判断する分析なので，確率論を中心とする数学的表現を用いたモデルの定式化が必要となります．加えて，\n\n想定した確率モデルが正しそうか？\n与えられたデータと矛盾しないか？\n乖離がある場合，想定したモデルから導かれる結論はどの程度妥当すると言えるのだろうか？\n\nという分析上の判断が必要となります．そのため，統計的推測はデータ分析初心者にとっては敷居が高い手法となりますが，一旦モデル化や仮定の妥当性についての説明がうまく行くと， 手元に実際にあるデータの背後にあるメカニズムに基づいて推測が行えるようになります．例えば，実際に観測できないPotential Outcomesの分布についての推定や将来の予測などがあります．\nこのように統計的推測とは，使いこなすのは大変だが，使えるようになるととても強力なツールです．このノートを通じて，統計的推測の基礎やいくつかの応用分野の分析を見ながら マスターしたいなと思っています．\n\nReferences\n\n\n竹村彰通 (2020), 現代数理統計学,\n学術図書出版社.",
     "crumbs": [
       "<strong>Part 1: Statistics 101</strong>"
     ]

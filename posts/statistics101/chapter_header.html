@@ -20,40 +20,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -212,8 +178,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#contributions" id="toc-contributions" class="nav-link active" data-scroll-target="#contributions">Contributions</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link active" data-scroll-target="#references">References</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistics101/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -244,50 +209,26 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 <li><span class="citation" data-cites="2020現代数理統計学">竹村彰通 (<a href="chapter_header.html#ref-2020現代数理統計学" role="doc-biblioref">2020</a>)</span> をベースに，統計モデルとしての確率分布族と，それらに対する統計推測法について勉強する</li>
 <li>勉強対象は主に日々のデータサイエンス分析のベースとなるような統計基礎概念や定義になるが，これらについて数学的な定義とともにわかりやすい言語化ができるようになることを目的にしています</li>
 </ul>
-<p><strong> ▶&nbsp; プログラミング言語</strong></p>
+<p><strong> ▶&nbsp; 記述統計と統計的推測</strong></p>
+<div style="padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#6495ED;">
+<p><strong> 記述統計(descriptive statistics)</strong></p>
 <ul>
-<li>主にPython 3.11.8 + <a href="https://python-poetry.org/">poetry</a> を用います</li>
-<li>ケースに応じて，Rを用いる場合もあります</li>
-<li>分析コードは<a href="https://github.com/RyoNakagami/statistics-for-regression-monkey">Repository</a>のqmdファイルがそのままソースコードとなっています</li>
+<li>調査や実験で得られたデータを整理して，その解釈を助けるような統計的分析のこと</li>
 </ul>
-<p>参考として以下のようにコードブロックと合わせて出力されます．</p>
-<div id="cell-fig-polar" class="cell" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.01</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> r</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  subplot_kw <span class="op">=</span> {<span class="st">'projection'</span>: <span class="st">'polar'</span>} </span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ax.plot(theta, r)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ax.set_rticks([<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>])</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output cell-output-display">
-<div id="fig-polar" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="chapter_header_files/figure-html/fig-polar-output-1.png" width="450" height="439" class="figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-polar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: A line plot on a polar axis
-</figcaption>
-</figure>
-</div>
-</div>
-</div>
-<section id="contributions" class="level3">
-<h3 class="anchored" data-anchor-id="contributions">Contributions</h3>
+<p><strong>統計的推測(statistical inference)</strong></p>
 <ul>
-<li>ノートに関してBUG/Typos/不正確な表記を見つけた場合，まず<a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new">GitHub Issues</a>でIssue Raiseしていただけると助かります</li>
-<li>各ノートの末尾に <code>utteranc.es</code> を用いたコメント欄があります．こちらはGitHub Discussionsと接続されておりますので，各ノートに関してはこちらも適宜ご利用ください</li>
+<li>確率的な変動を多く含むデータに対して，そのDGP(= Data generating process)に何かしらの仮定を想定し，データから確率モデルの推定を検定を行う分析のこと</li>
 </ul>
-<p>修正の必要性の判断は<a href="https://github.com/RyoNakagami">RyoNak</a>が最終的には判断しますが，広く議論できたら幸いです</p>
-</section>
+</div>
+<p><br></p>
+<p>統計的推測という手法は確率モデルを想定してデータを解釈/判断する分析なので，確率論を中心とする数学的表現を用いたモデルの定式化が必要となります．加えて，</p>
+<ul>
+<li>想定した確率モデルが正しそうか？</li>
+<li>与えられたデータと矛盾しないか？</li>
+<li>乖離がある場合，想定したモデルから導かれる結論はどの程度妥当すると言えるのだろうか？</li>
+</ul>
+<p>という分析上の判断が必要となります．そのため，統計的推測はデータ分析初心者にとっては敷居が高い手法となりますが，一旦モデル化や仮定の妥当性についての説明がうまく行くと， 手元に実際にあるデータの背後にあるメカニズムに基づいて推測が行えるようになります．例えば，実際に観測できないPotential Outcomesの分布についての推定や将来の予測などがあります．</p>
+<p>このように統計的推測とは，使いこなすのは大変だが，使えるようになるととても強力なツールです．このノートを通じて，統計的推測の基礎やいくつかの応用分野の分析を見ながら マスターしたいなと思っています．</p>
 <section id="references" class="level3">
 <h3 class="anchored" data-anchor-id="references">References</h3>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
