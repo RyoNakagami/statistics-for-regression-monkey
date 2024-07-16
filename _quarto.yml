@@ -18,8 +18,8 @@ book:
         href: LICENSE
   chapters:
     - index.qmd
-    - posts/introduction/chapter_header.qmd
-    - posts/introduction/intro.qmd
+    - posts/statistics101/chapter_header.qmd
+    - posts/statistics101/intro.qmd
 
 
 format:
@@ -36,4 +36,7 @@ format:
     code-overflow: wrap
     date-format: "iso"
     bibliography: references.bib
+    biblatexoptions: bibstyle=jauthoryear,citestyle=numeric,natbib=true
+    csl: reference.csl
+
   
