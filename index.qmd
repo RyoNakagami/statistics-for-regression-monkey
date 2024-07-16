@@ -1,5 +1,35 @@
 # Home {.unnumbered}
 
-This is a Quarto book.
+<strong > &#9654;&nbsp; プログラミング言語</strong>
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+- 主にPython 3.11.8 + [poetry](https://python-poetry.org/) を用います
+- ケースに応じて，Rを用いる場合もあります
+- 分析コードは[Repository](https://github.com/RyoNakagami/statistics-for-regression-monkey)のqmdファイルがそのままソースコードとなっています
+
+参考として以下のようにコードブロックと合わせて出力されます．
+
+```{python}
+#| label: fig-polar
+#| fig-cap: "A line plot on a polar axis"
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+r = np.arange(0, 2, 0.01)
+theta = 2 * np.pi * r
+fig, ax = plt.subplots(
+  subplot_kw = {'projection': 'polar'} 
+)
+ax.plot(theta, r)
+ax.set_rticks([0.5, 1, 1.5, 2])
+ax.grid(True)
+plt.show()
+```
+
+
+### Contributions
+
+- ノートに関してBUG/Typos/不正確な表記を見つけた場合，まず[GitHub Issues](https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new)でIssue Raiseしていただけると助かります
+- 各ノートの末尾に `utteranc.es` を用いたコメント欄があります．こちらはGitHub Discussionsと接続されておりますので，各ノートに関してはこちらも適宜ご利用ください
+
+修正の必要性の判断は[RyoNak](https://github.com/RyoNakagami)が最終的には判断しますが，広く議論できたら幸いです
