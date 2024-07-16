@@ -1,0 +1,38 @@
+project:
+  type: book
+
+book:
+  title: "Statistics for Regression Monkeys"
+  repo-url: https://github.com/RyoNakagami/statistics-for-regression-monkey
+  favicon: ./img/favicon.ico
+  sharing: twitter
+  repo-actions: [issue]
+  navbar:
+    search: true
+    pinned: true
+  page-footer:
+    center:
+      - text: © Copyright RyoNak
+      - text: "License"
+        href: LICENSE
+  chapters:
+    - index.qmd
+    - posts/introduction/chapter_header.qmd
+    - posts/introduction/intro.qmd
+
+
+format:
+  html:
+    lang: ja_JP.UTF-8
+    number-depth: 1
+    theme: 
+      light: cosmo
+      dark: darkly
+    code-copy: true
+    code-fold: true
+    code-overflow: wrap
+    date-format: "iso"
+    bibliography: references.bib
+  pdf:
+    documentclass: scrreprt
+  
