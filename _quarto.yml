@@ -23,6 +23,8 @@ book:
 
 
 format:
+  typst:
+    keep-typ: true
   html:
     include-in-header: 
       - include/setup_googletagmanager.html
@@ -40,7 +42,7 @@ format:
     bibliography: references.bib
     biblatexoptions: bibstyle=jauthoryear,citestyle=numeric,natbib=true
     csl: reference.csl
-    mainfont: "Zen Kaku Gothic New"
+    mainfont: "Noto Sans JP"
     monofont: monospace
 
   
