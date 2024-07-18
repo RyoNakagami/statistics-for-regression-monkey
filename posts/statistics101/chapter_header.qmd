@@ -2,7 +2,7 @@
 jupyter: python3
 ---
 
-# <strong>Part 1: Statistics 101</strong> {.unnumbered}
+# Part 1: Statistics 101 {.unnumbered}
 
 <strong > &#9654;&nbsp; Part 1 のスコープ</strong>
 

@@ -18,8 +18,9 @@ book:
         href: LICENSE
   chapters:
     - index.qmd
-    - posts/statistics101/chapter_header.qmd
-    - posts/statistics101/intro.qmd
+    - part: posts/statistics101/chapter_header.qmd
+      chapters:
+        - posts/statistics101/intro.qmd
 
 
 format:
