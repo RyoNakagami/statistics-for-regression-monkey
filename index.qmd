@@ -1,4 +1,28 @@
-# Home {.unnumbered}
+---
+jupyter: python3
+author: "Ryo Nakagtami"
+date: "2024-07-20"
+date-modified: last-modified
+number_sections: false
+# when you run this file locally, do not forget to run poetry shell
+---
+
+# Welcome {.unnumbered}
+
+このQuarto Bookは以下のシリーズと連動して運用されています:
+
+|Blog Series|内容|
+|:---:|:---|
+|[Ryo's Tech Blog](https://ryonakagami.github.io/)|日々の徒然日記，Linuxまわりや開発お作法を主に取り扱う|
+|[OhGoshGit!?!](https://ohgoshgit.github.io/)|Git trouble-shooting note|
+
+### What is it about?
+
+
+
+
+
+<br>
 
 <strong > &#9654;&nbsp; プログラミング言語</strong>
 

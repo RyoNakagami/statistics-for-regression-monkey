@@ -10,6 +10,18 @@ book:
     tracking-id: "G-QEFX7FVCDM"
   favicon: ./img/favicon.ico
   sharing: twitter
+  sidebar:
+      tools:
+       - text: Blog Series
+         icon: brush
+         menu:
+         - text: Ryo's Tech Blog
+           href: https://ryonakagami.github.io/
+           aria-label: blog-general
+         - text: OhGoshGit!?!
+           href: https://ohgoshgit.github.io/
+           aria-label: blog-ogg
+    
   repo-actions: [edit, issue]
   page-footer:
     center:
@@ -21,11 +33,12 @@ book:
     - part: posts/statistics101/chapter_header.qmd
       chapters:
         - posts/statistics101/intro.qmd
+    - part: posts/appendix/chapter_header.qmd
+      chapters:
+        - posts/appendix/reliability_vs_validity.qmd
 
 
 format:
-  typst:
-    keep-typ: true
   html:
     include-in-header: 
       - include/setup_googletagmanager.html
