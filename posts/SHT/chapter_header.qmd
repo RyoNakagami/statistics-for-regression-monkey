@@ -1,0 +1,84 @@
+---
+title: "統計的仮説検定の実践"
+jupyter: python3
+author: "Ryo Nakagtami"
+date: "2024-08-30"
+date-modified: last-modified
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+# when you run this file locally, do not forget to run poetry shell
+---
+
+<strong > &#9654;&nbsp; 統計的仮説検定の実践 のスコープ</strong>
+
+- @P値-spotlight, @永田サンプルサイズ をベースに，統計的仮説検定フレームワークとP値の解釈について勉強する
+
+<strong > &#9654;&nbsp; p-valueとは？</strong>
+
+食生活コントロールを初めたところ，開始から一週間後に体重を測定してみたら開始直前体重と比較して１kgほど
+減量していたとします．食生活コントロールの成果として判断するのも結構ですが，そもそも体重自体は一日の中でも
+1~2kgほどのばらつきがあり，もしかしたらたまたま体重が軽めに計測されるタイミングだったかもしれません．
+
+P値とは，**体重が下がったのは食生活コントロールの成果であり，体重のランダムなバラツキによるものではない」という統計的判断をするために用いられるツール**のことです．
+
+注意点として，P値は，統計的判断をするために用いられるツールであって，真の科学的効果の判定するためのツールではありません．
+あくまで，統計的判断は科学的効果の判定の根拠の一つであって，「統計的判断 $\neq$ 科学的効果の判定」 です．
+
+<div style='padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#00008B;'>
+<strong>Def: p-value</strong> <br>
+
+- データにバラツキがある場合に，もし処置効果がないとしたとき(=帰無仮説 $H_0$ の下)，バラツキだけの原因で評価指標が観測された値以上に
+極端な値をとる確率を表したもの
+
+検定統計量（test statistic）を $T$，データから算出された検定統計量の値を $x$ とすると，右側対立仮説 $H^+_1$ を
+帰無仮説 $H_0$ に対比させる場合，数式的には以下のように表現される：
+
+$$
+\text{p-value} = \Pr(T\geq x \vert H_0)
+$$
+ 
+</div>
+
+<br>
+
+<strong > &#9654;&nbsp; 評価指標(end point)とは？</strong>
+
+<div style='padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#00008B;'>
+<strong>Def: 評価指標</strong> <br>
+
+- 評価指標とは，分析において収集したデータから計算する指標
+- 評価指標の結果を評価することで，統計的判断及び分析結果の導出を行う
+- 評価指標は一つである必要はないが，重要度に応じて主要評価指標(primary end point)や副次評価指標(secondary end point)を設定する
+
+</div>
+
+
+仮説検定方式を用いたシンプルな二群比較の場合は，二群の平均の差という統計量が主要評価指標になります．例として
+
+$$
+\begin{align*}
+X_1, \cdots X_m, &\overset{\mathrm{iid}}{\sim} N(\mu_1, \sigma^2)\\
+Y_1, \cdots Y_n, &\overset{\mathrm{iid}}{\sim} N(\mu_1, \sigma^2)
+\end{align*}
+$$
+
+なる２標本問題における検定問題 $H_0:\mu_1 = \mu_2$ vs $H_1:\mu_1 =\neq \mu_2$ を考えると
+
+$$
+\begin{align*}
+T &= \frac{\vert \overline{X}  - \overline Y\vert }{\sqrt{\hat\sigma^2}}\\
+\text{where } \hat\sigma^2 &= \frac{1}{m+n-2}\{\sum^m(X_i - \overline X)^2 + \sum^m(Y_i - \overline Y)^2\}
+\end{align*}
+$$
+
+における $T$ の実現値に応じて統計的推測をしますが，このとき，
+
+- 統計量 $T$ は検定統計量
+- 統計量 $\overline X - \overline Y$ が主要評価指標
+
+となります．
+
+References
+---------

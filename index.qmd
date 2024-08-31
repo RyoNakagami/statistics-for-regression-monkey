@@ -4,6 +4,7 @@ author: "Ryo Nakagtami"
 date: "2024-07-20"
 date-modified: last-modified
 number_sections: false
+code-fold: true
 # when you run this file locally, do not forget to run poetry shell
 ---
 
@@ -15,14 +16,27 @@ number_sections: false
 |:---:|:---|
 |[Ryo's Tech Blog](https://ryonakagami.github.io/)|日々の徒然日記，Linuxまわりや開発お作法を主に取り扱う|
 |[OhGoshGit!?!](https://ohgoshgit.github.io/)|Git trouble-shooting note|
+|[statistics dojo](https://ryonakagami.github.io/statistics_dojo/)|統計学基礎問題練習ノート, Rを主に扱う|
 
 ### What is it about?
 
+データ分析を学ぶ及び実践するにあたって５つの観点があると考えています：
 
+1. 統計手法そのものの理解と，その背後にある数学を用いた理論の理解
+2. 実際のデータに対して統計手法を用いた分析を実行するためのプログラミングスキル
+3. データの前処理，環境構築，ソースコードのテストや管理，実装した推定量のデプロイなどのエンジニアリングスキル
+4. 基本的な統計学の考え方や発想（例：データ分析のお作法や結果の解釈方法など）
+5. そもそも解くべきの問題の見つけ方とその問題を特にあたっての方法論
 
+このQuarto Bookではチャプターごとに各事項にフォーカスしてノートをまとめています．
 
+<strong > &#9654;&nbsp; 参考書</strong>
 
-<br>
+|タイトル|説明|Citation|
+|---|---|---|
+|現代数理統計学|統計学入門|@2020現代数理統計学|
+|P値: その正しい理解と適用|統計的仮説検定におけるP値の解説入門書|@P値-spotlight|
+|サンプルサイズの決め方|統計的仮説検定におけるサンプルサイズ計算方法の解説本|@永田サンプルサイズ|
 
 <strong > &#9654;&nbsp; プログラミング言語</strong>
 
@@ -33,23 +47,9 @@ number_sections: false
 参考として以下のようにコードブロックと合わせて出力されます．
 
 ```{python}
-#| label: fig-polar
-#| fig-cap: "A line plot on a polar axis"
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-r = np.arange(0, 2, 0.01)
-theta = 2 * np.pi * r
-fig, ax = plt.subplots(
-  subplot_kw = {'projection': 'polar'} 
-)
-ax.plot(theta, r)
-ax.set_rticks([0.5, 1, 1.5, 2])
-ax.grid(True)
-plt.show()
+#| code-fold: show
+print("Hallo World")
 ```
-
 
 ### Contributions
 

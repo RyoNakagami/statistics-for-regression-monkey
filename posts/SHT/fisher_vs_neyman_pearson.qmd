@@ -1,0 +1,137 @@
+---
+title: "Fisher流検定 vs Neyman-Pearson流検定"
+jupyter: python3
+author: "Ryo Nakagtami"
+date: last-modified
+date-modified: last-modified
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+# when you run this file locally, do not forget to run poetry shell
+---
+
+<div style='padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#00008B;'>
+<strong > &#9654;&nbsp; Key Takeaways</strong>
+
+- P値にエビデンス力を見出すFisher流統計的検定と，統計的判定にP値をもちいるに留まるNeyman-Pearson流検定がある
+- リサーチには，探索的リサーチと事前にeffect sizeを想定し検証する検証的リサーチというクラスがある
+- 探索的リサーチは推論を重んじるFisher流の検定が好ましい，検証的リサーチの場合はNeyman-Pearson流検定が好ましい
+</div>
+
+<br>
+
+## Fisher流検定の考え方
+
+２標本問題を考えたとき，２標本の平均の差がそのバラツキの大きさ（＝標準誤差）と比べて大きければ大きいほど
+「母集団に差があり」のエビデンス力が高いという考えがFisher流検定となります．P値自体はサンプルサイズに依存すると留意していましたが，
+Fisher流ではP値が小さいほどエビデンス力が高いという解釈になります．さらに，
+
+- 平均の差が標準誤差の２倍未満であれば平均の差はバラツキによる差であって考慮に値しない，
+- 2倍以上の差があるとき，偶然のみに支配されたバラツキに比べると指標の値が相対的に大きいと言える→初めて科学的に意味のある差であるか否かを検討する対象になりうる（正規分布を仮定したとき，約5％水準に相当）
+
+というモノサシの提案をFisherはしました．これが現在の有意水準(significance level) 5% という慣習の由来であると言われています．
+
+なお，FisherはP値を統計家がデータの解析結果を「報告」するときのモノサシとしての提案にとどまっており，
+効果があったか否かの「判定」は，統計家だけでなく関連専門家が参加するグループ討議によって，報告されたP値，分析対象，サンプルサイズ等を吟味して総合的に「判定」すべきであると考えてます．
+
+## Neyman-Pearson流検定の考え方
+
+Neyman-Pearson流は統計的検定について
+
+- $H_0: \theta \in \Theta_0$, Null hypothesis
+- $H_1: \theta \not\in \Theta_0$, Alternative hypothesis
+
+の２つを設定し，観察されたデータに基づいてどちらの仮説がより妥当な仮説であるかを判定する問題という統計的判定問題を考えました．
+統計的判定問題のおける判定の誤りについて，
+
+- Type I Error: $H_0$ が正しいのに誤って $H_0$ を棄却するエラー
+- Type II Error: $H_1$ が正しいのに誤って $H_0$ を採択するエラー
+
+の２種類があるとし，Type I Errorの確率を $\alpha$ に抑えた上で，Type II Errorの確率 $\beta$ を最小にする制約付き最小化問題
+として統計的判定問題を定式化しました．
+
+<table><thead><tr><th colspan="2" rowspan="2" style="border-width: 1px; width: 350px; text-align: center;"><p style="text-align: center;"><span>&nbsp;</span></p>
+</th><th colspan="2" style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Truth</font></font></span></p>
+</th></tr><tr><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$H_0$</font></font></span></p>
+</th><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$H_1$</font></font></span></p>
+</th></tr></thead><tbody><tr><th rowspan="2" style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><br></p>
+<p dir="ltr" style="border-width: 1px; text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">検定結果</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$H_0$</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>正しい</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>($1- \alpha$)</font></span></p>
+</td><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Type II Error</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">($\beta$)</font></font></span></p>
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$H_1$</font></font></span></p>
+</th><td style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Type I Error</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">(有意水準: $\alpha$)</font></font></span></p>
+</td><td style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">正しい</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">（検出力: $1 - \beta$）</font></font></span></p>
+</td></tr></tbody></table>
+
+検定問題に対応する 検定統計量 $T$, $H_0$ の棄却域を $R$ で表すとそれぞれ以下のように表現されます
+
+- Type I Error rate, $\alpha = \Pr(T \in R \vert H_0)$
+- Type II Error rate: $\beta = \Pr(T \not\in R \vert H_1)$
+
+Fisher流ではP値の大きさがエビデンス力という意味を持つことに対して，Neyman-Pearson流では
+
+- 事前に定められた有意水準 $\alpha$ をP値が下回るなら効果ありとの判定
+- そうでないなら，効果なしとの判定
+- $P = 0.00001$ だろうが $P = 0.049$ だろうがP値の水準自体には意味を求めない
+
+という違いがあります．
+
+<div style='padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#00008B;'>
+<strong >📘 REMARKS</strong> <br>
+
+Neyman-Pearson流では， $\alpha, \beta$ を用いて統計的に効果があると言えるか？という統計的判定問題として仮説検定を定式化しましたが，
+
+- 統計的検定は決定するための方法ではなく，結果を報告するための方法である by F.Mostelller(1916-2006)
+
+と理解するにとどめたほうが良いとされています．
+
+</div>
+
+
+## 探索的リサーチと検証的リサーチ
+
+特定の疾患をターゲットとして行われる医薬品の開発過程を例にすると，
+
+1. 候補化学物質について，発がん性試験，変異原性試験，薬効薬理研究など様々な試験をラットや細胞に対して探索的に実施
+2. 健常なヒトを対象に臨床第I相試験として，安全性や薬物動態などを探索的に研究
+3. 当該疾患の患者を対象に第II相臨床試験として，病気の程度によってどのような効き目を発揮するのか（有効性）、副作用はどの程度か（安全性）、またどのような使い方（投与量・間隔・期間など）をしたらよいか、を研究
+4. 第III相臨床試験として，医薬品の有効性と安全性をRCTで検証
+
+第III相臨床試験においては，TreatmentのEffect Sizeの想定と十分なサンプルサイズを確保した上でRCTを実施，そして得られたデータに基づいて統計的意味における効果の有無を検証しています．
+このようなリサーチを検証的リサーチといいます．
+
+一方，それまでの動物試験，非臨床試験，臨床第I相試験，臨床第II相試験では，Effect Sizeやサンプルサイズが事前に統計的に設定される場合は少なく，あくまで
+次の分析ステップに進む値するエビデンス収集や仮説立案という目的で実施されるリサーチです．このような分析を探索的リサーチと呼びます．
+
+
+### 検証的リサーチにおける仮説検定手順
+
+とあるPopulationを対象に実施するTreatmentの効果をRCTで仮説検定検証する場合，基本的には次のような一連の手順で実施します．
+
+|手順|説明|
+|:---|:---|
+|手順(1)|主要評価項目 $\delta$ を定義し，期待される水準 $\delta_0$ を見積もる|
+|手順(2)|$H_0: \delta = 0, H_1: \delta \neq 0$ のようにHypothesesを言語化する|
+|手順(3)|有意水準 $\alpha$, 検出力 $1 - \beta$ を定める|
+|手順(4)|有意水準 $\alpha$, 検出力 $1 - \beta$ のもとで $\delta_0$ を検出するための必要サンプルサイズを計算する|
+|手順(5)|PopulationからランダムにEntityをサンプリングして，手順(4)のサンプルサイズを満たすようにEntityをランダム or 層化ランダムでtreated/controlに割り当てる|
+|手順(6)|treated, controlのバランスチェック|
+|手順(8)|treated, controlがともに実験から逸脱しない形でそれぞれ処置を受けることを観察(= プロトコル遵守の確保)|
+|手順(8)|treated, controlのデータを収集し，Attritionなどの対応を実施した上で，主要評価項目, 検定統計量を計算|
+|手順(9)|手順(8)で計算された検定統計量を元に，統計的検定を実施し，P値が有意水準 $\alpha$ 以下ならば効果があると統計的判断を下し，それ以外の場合では $H_0$ が棄却できなかったとする|
+
+
+:検証的リサーチ手順 {tbl-colwidths="[15,85]"}
+
+上記の手順に則って，$H_0$ が棄却された場合，少なくとも $\delta \geq \delta_0$ なのだろうという統計的判断がなされます．
+
+### 探索的リサーチと仮説検定
+
+探索的リサーチでは，多くの場合，サンプルサイズや特徴量バランスがコントロールできない観察データを対象に分析し，
+また次のリサーチに進むための仮説構築や検討に値する特徴量スクリーニングを目的とすることが多いです．このとき検定を実施するとしても，有意水準，検出力，Effect Sizeを想定した
+Neyman-Pearson流の検定の実施は難しく，偶然のバラツキにしては差が大きそうというインサイトを得ることを目的としたFisher流仮説検定の用い方となります．
+
+ただ，P値に基づいて推論を行うのではなく，平均の差やハザード比などの指標や信頼区間，またその分野のドメイン知識を考慮した上で，
+総合的に結果を解釈→仮説の構築をすることが重要です．

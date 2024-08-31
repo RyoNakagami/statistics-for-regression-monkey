@@ -33,9 +33,9 @@ book:
     - part: posts/statistics101/chapter_header.qmd
       chapters:
         - posts/statistics101/intro.qmd
-    - part: posts/appendix/chapter_header.qmd
+    - part: posts/SHT/chapter_header.qmd
       chapters:
-        - posts/appendix/reliability_vs_validity.qmd
+        - posts/SHT/fisher_vs_neyman_pearson.qmd
 
 
 format:
@@ -44,11 +44,15 @@ format:
       - include/setup_googletagmanager.html
       - include/custom_webfont.html
     include-in-body: include/setup_googletagmanager_body.html
+    include-after-body: include/custom_section.html
     lang: ja_JP.UTF-8
     number-depth: 1
     theme: 
-      light: cosmo
-      dark: darkly
+      light: 
+        - cosmo
+        - include/custom.scss
+      dark: 
+        - darkly
     code-copy: true
     code-fold: true
     code-overflow: wrap
