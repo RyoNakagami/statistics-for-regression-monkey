@@ -4,9 +4,9 @@
     "href": "index.html",
     "title": "Statistics for Regression Monkeys",
     "section": "",
-    "text": "Home\n ▶  プログラミング言語\n\n主にPython 3.11.8 + poetry を用います\nケースに応じて，Rを用いる場合もあります\n分析コードはRepositoryのqmdファイルがそのままソースコードとなっています\n\n参考として以下のようにコードブロックと合わせて出力されます．\n\n\nCode\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nFigure 1: A line plot on a polar axis\n\n\n\n\n\n\nContributions\n\nノートに関してBUG/Typos/不正確な表記を見つけた場合，まずGitHub IssuesでIssue Raiseしていただけると助かります\n各ノートの末尾に utteranc.es を用いたコメント欄があります．こちらはGitHub Discussionsと接続されておりますので，各ノートに関してはこちらも適宜ご利用ください\n\n修正の必要性の判断はRyoNakが最終的には判断しますが，広く議論できたら幸いです",
+    "text": "Welcome\nこのQuarto Bookは以下のシリーズと連動して運用されています:\n\n\n\nBlog Series\n内容\n\n\n\n\nRyo’s Tech Blog\n日々の徒然日記，Linuxまわりや開発お作法を主に取り扱う\n\n\nOhGoshGit!?!\nGit trouble-shooting note\n\n\nstatistics dojo\n統計学基礎問題練習ノート, Rを主に扱う\n\n\n\n\nWhat is it about?\nデータ分析を学ぶ及び実践するにあたって５つの観点があると考えています：\n\n統計手法そのものの理解と，その背後にある数学を用いた理論の理解\n実際のデータに対して統計手法を用いた分析を実行するためのプログラミングスキル\nデータの前処理，環境構築，ソースコードのテストや管理，実装した推定量のデプロイなどのエンジニアリングスキル\n基本的な統計学の考え方や発想（例：データ分析のお作法や結果の解釈方法など）\nそもそも解くべきの問題の見つけ方とその問題を特にあたっての方法論\n\nこのQuarto Bookではチャプターごとに各事項にフォーカスしてノートをまとめています．\n ▶  参考書\n\n\n\n\n\n\n\n\nタイトル\n説明\nCitation\n\n\n\n\n現代数理統計学\n統計学入門\n竹村彰通 (2020)\n\n\nP値: その正しい理解と適用\n統計的仮説検定におけるP値の解説入門書\n柳川堯 (2018)\n\n\nサンプルサイズの決め方\n統計的仮説検定におけるサンプルサイズ計算方法の解説本\n永田靖 (2003)\n\n\n\n ▶  プログラミング言語\n\n主にPython 3.11.8 + poetry を用います\nケースに応じて，Rを用いる場合もあります\n分析コードはRepositoryのqmdファイルがそのままソースコードとなっています\n\n参考として以下のようにコードブロックと合わせて出力されます．\n\n\nCode\nprint(\"Hallo World\")\n\n\nHallo World\n\n\n\n\nContributions\n\nノートに関してBUG/Typos/不正確な表記を見つけた場合，まずGitHub IssuesでIssue Raiseしていただけると助かります\n各ノートの末尾に utteranc.es を用いたコメント欄があります．こちらはGitHub Discussionsと接続されておりますので，各ノートに関してはこちらも適宜ご利用ください\n\n修正の必要性の判断はRyoNakが最終的には判断しますが，広く議論できたら幸いです\n\n\n\n\n柳川堯 (2018), P値: その正しい理解と適用, 近代科学社.\n\n\n永田靖 (2003), サンプルサイズの決め方, 朝倉書店.\n\n\n竹村彰通 (2020), 現代数理統計学, 学術図書出版社.",
     "crumbs": [
-      "Home"
+      "Welcome"
     ]
   },
   {
@@ -14,20 +14,94 @@
     "href": "posts/statistics101/intro.html",
     "title": "1  matplotlib demo",
     "section": "",
-    "text": "demo code\nCode\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nFigure 1.1: A line plot on a polar axis\n編集",
+    "text": "demo code\nCode\nimport numpy as np\nimport matplotlib.pyplot as plt\n\nr = np.arange(0, 2, 0.01)\ntheta = 2 * np.pi * r\nfig, ax = plt.subplots(\n  subplot_kw = {'projection': 'polar'} \n)\nax.plot(theta, r)\nax.set_rticks([0.5, 1, 1.5, 2])\nax.grid(True)\nplt.show()\n\n\n\n\n\n\n\n\nFigure 1.1: A line plot on a polar axis\n編集\nCode\nimport numpy as np\nfrom sklearn.neighbors import KernelDensity\nimport plotly.express as px\nimport plotly.graph_objects as go\n\nnp.random.seed(111)\nx_row = np.array([150, 132, 144, 139, 118, 135, 123, 133, 152, 136])\nx = np.random.normal(np.mean(x_row), np.std(x_row), 1000)\nstep = 10\nticks = np.arange(70, 200, step)\ncounts, bins = np.histogram(x, bins=ticks)\nbins = 0.5 * (bins[:-1] + bins[1:])\n\n# histogram\nfig = px.bar(x=bins, y=counts / sum(counts), \n       labels={\"x\": \"blood pressure\", \"y\": \"prob\"},\n       )\nfig.update_layout(\n    xaxis = dict(\n        tickmode = 'array',\n        tickvals = ticks + 5,\n    )\n)\n\n# density\nx_dense = np.linspace(70, 200, 1000)\nkde = KernelDensity(kernel='gaussian', bandwidth=step/2).fit(x.reshape(-1, 1))\ny_dense = np.exp(kde.score_samples(x_dense.reshape(-1, 1)))\n\nfig.add_trace(go.Scatter(x=x_dense, y=y_dense /max(y_dense) * (max(counts)/sum(counts)),\n                    mode='lines',\n                    name='kde'))\n\nfig.show()\n一般的に推測の精度はサンプルサイズを n とするときに \\(1/\\sqrt{n}\\) のオーダーで精密になる",
     "crumbs": [
-      "Part 1: Statistics 101",
+      "統計学入門",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>matplotlib demo</span>"
+    ]
+  },
+  {
+    "objectID": "posts/SHT/fisher_vs_neyman_pearson.html",
+    "href": "posts/SHT/fisher_vs_neyman_pearson.html",
+    "title": "2  Fisher流検定 vs Neyman-Pearson流検定",
+    "section": "",
+    "text": "Fisher流検定の考え方\n２標本問題を考えたとき，２標本の平均の差がそのバラツキの大きさ（＝標準誤差）と比べて大きければ大きいほど 「母集団に差があり」のエビデンス力が高いという考えがFisher流検定となります．P値自体はサンプルサイズに依存すると留意していましたが， Fisher流ではP値が小さいほどエビデンス力が高いという解釈になります．さらに，\nというモノサシの提案をFisherはしました．これが現在の有意水準(significance level) 5% という慣習の由来であると言われています．\nなお，FisherはP値を統計家がデータの解析結果を「報告」するときのモノサシとしての提案にとどまっており， 効果があったか否かの「判定」は，統計家だけでなく関連専門家が参加するグループ討議によって，報告されたP値，分析対象，サンプルサイズ等を吟味して総合的に「判定」すべきであると考えてます．",
+    "crumbs": [
+      "統計的仮説検定の実践",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
+    ]
+  },
+  {
+    "objectID": "posts/SHT/fisher_vs_neyman_pearson.html#fisher流検定の考え方",
+    "href": "posts/SHT/fisher_vs_neyman_pearson.html#fisher流検定の考え方",
+    "title": "2  Fisher流検定 vs Neyman-Pearson流検定",
+    "section": "",
+    "text": "平均の差が標準誤差の２倍未満であれば平均の差はバラツキによる差であって考慮に値しない，\n2倍以上の差があるとき，偶然のみに支配されたバラツキに比べると指標の値が相対的に大きいと言える→初めて科学的に意味のある差であるか否かを検討する対象になりうる（正規分布を仮定したとき，約5％水準に相当）",
+    "crumbs": [
+      "統計的仮説検定の実践",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
+    ]
+  },
+  {
+    "objectID": "posts/SHT/fisher_vs_neyman_pearson.html#neyman-pearson流検定の考え方",
+    "href": "posts/SHT/fisher_vs_neyman_pearson.html#neyman-pearson流検定の考え方",
+    "title": "2  Fisher流検定 vs Neyman-Pearson流検定",
+    "section": "Neyman-Pearson流検定の考え方",
+    "text": "Neyman-Pearson流検定の考え方\nNeyman-Pearson流は統計的検定について\n\n\\(H_0: \\theta \\in \\Theta_0\\), Null hypothesis\n\\(H_1: \\theta \\not\\in \\Theta_0\\), Alternative hypothesis\n\nの２つを設定し，観察されたデータに基づいてどちらの仮説がより妥当な仮説であるかを判定する問題という統計的判定問題を考えました． 統計的判定問題のおける判定の誤りについて，\n\nType I Error: \\(H_0\\) が正しいのに誤って \\(H_0\\) を棄却するエラー\nType II Error: \\(H_1\\) が正しいのに誤って \\(H_0\\) を採択するエラー\n\nの２種類があるとし，Type I Errorの確率を \\(\\alpha\\) に抑えた上で，Type II Errorの確率 \\(\\beta\\) を最小にする制約付き最小化問題 として統計的判定問題を定式化しました．\n\n\n\n\n\n \n\n\n\n\nTruth\n\n\n\n\n\n\n\\(H_0\\)\n\n\n\n\n\\(H_1\\)\n\n\n\n\n\n\n\n\n\n\n\n検定結果\n\n\n\n\n\\(H_0\\)\n\n\n\n\n正しい(\\(1- \\alpha\\))\n\n\n\n\nType II Error(\\(\\beta\\))\n\n\n\n\n\n\n\\(H_1\\)\n\n\n\n\nType I Error(有意水準: \\(\\alpha\\))\n\n\n\n\n正しい（検出力: \\(1 - \\beta\\)）\n\n\n\n\n\n検定問題に対応する 検定統計量 \\(T\\), \\(H_0\\) の棄却域を \\(R\\) で表すとそれぞれ以下のように表現されます\n\nType I Error rate, \\(\\alpha = \\Pr(T \\in R \\vert H_0)\\)\nType II Error rate: \\(\\beta = \\Pr(T \\not\\in R \\vert H_1)\\)\n\nFisher流ではP値の大きさがエビデンス力という意味を持つことに対して，Neyman-Pearson流では\n\n事前に定められた有意水準 \\(\\alpha\\) をP値が下回るなら効果ありとの判定\nそうでないなら，効果なしとの判定\n\\(P = 0.00001\\) だろうが \\(P = 0.049\\) だろうがP値の水準自体には意味を求めない\n\nという違いがあります．\n\n📘 REMARKS \nNeyman-Pearson流では， \\(\\alpha, \\beta\\) を用いて統計的に効果があると言えるか？という統計的判定問題として仮説検定を定式化しましたが，\n\n統計的検定は決定するための方法ではなく，結果を報告するための方法である by F.Mostelller(1916-2006)\n\nと理解するにとどめたほうが良いとされています．",
+    "crumbs": [
+      "統計的仮説検定の実践",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
+    ]
+  },
+  {
+    "objectID": "posts/SHT/fisher_vs_neyman_pearson.html#探索的リサーチと検証的リサーチ",
+    "href": "posts/SHT/fisher_vs_neyman_pearson.html#探索的リサーチと検証的リサーチ",
+    "title": "2  Fisher流検定 vs Neyman-Pearson流検定",
+    "section": "探索的リサーチと検証的リサーチ",
+    "text": "探索的リサーチと検証的リサーチ\n特定の疾患をターゲットとして行われる医薬品の開発過程を例にすると，\n\n候補化学物質について，発がん性試験，変異原性試験，薬効薬理研究など様々な試験をラットや細胞に対して探索的に実施\n健常なヒトを対象に臨床第I相試験として，安全性や薬物動態などを探索的に研究\n当該疾患の患者を対象に第II相臨床試験として，病気の程度によってどのような効き目を発揮するのか（有効性）、副作用はどの程度か（安全性）、またどのような使い方（投与量・間隔・期間など）をしたらよいか、を研究\n第III相臨床試験として，医薬品の有効性と安全性をRCTで検証\n\n第III相臨床試験においては，TreatmentのEffect Sizeの想定と十分なサンプルサイズを確保した上でRCTを実施，そして得られたデータに基づいて統計的意味における効果の有無を検証しています． このようなリサーチを検証的リサーチといいます．\n一方，それまでの動物試験，非臨床試験，臨床第I相試験，臨床第II相試験では，Effect Sizeやサンプルサイズが事前に統計的に設定される場合は少なく，あくまで 次の分析ステップに進む値するエビデンス収集や仮説立案という目的で実施されるリサーチです．このような分析を探索的リサーチと呼びます．\n\n検証的リサーチにおける仮説検定手順\nとあるPopulationを対象に実施するTreatmentの効果をRCTで仮説検定検証する場合，基本的には次のような一連の手順で実施します．\n\n検証的リサーチ手順\n\n\n\n\n\n\n手順\n説明\n\n\n\n\n手順(1)\n主要評価項目 \\(\\delta\\) を定義し，期待される水準 \\(\\delta_0\\) を見積もる\n\n\n手順(2)\n\\(H_0: \\delta = 0, H_1: \\delta \\neq 0\\) のようにHypothesesを言語化する\n\n\n手順(3)\n有意水準 \\(\\alpha\\), 検出力 \\(1 - \\beta\\) を定める\n\n\n手順(4)\n有意水準 \\(\\alpha\\), 検出力 \\(1 - \\beta\\) のもとで \\(\\delta_0\\) を検出するための必要サンプルサイズを計算する\n\n\n手順(5)\nPopulationからランダムにEntityをサンプリングして，手順(4)のサンプルサイズを満たすようにEntityをランダム or 層化ランダムでtreated/controlに割り当てる\n\n\n手順(6)\ntreated, controlのバランスチェック\n\n\n手順(8)\ntreated, controlがともに実験から逸脱しない形でそれぞれ処置を受けることを観察(= プロトコル遵守の確保)\n\n\n手順(8)\ntreated, controlのデータを収集し，Attritionなどの対応を実施した上で，主要評価項目, 検定統計量を計算\n\n\n手順(9)\n手順(8)で計算された検定統計量を元に，統計的検定を実施し，P値が有意水準 \\(\\alpha\\) 以下ならば効果があると統計的判断を下し，それ以外の場合では \\(H_0\\) が棄却できなかったとする\n\n\n\n上記の手順に則って，\\(H_0\\) が棄却された場合，少なくとも \\(\\delta \\geq \\delta_0\\) なのだろうという統計的判断がなされます．\n\n\n探索的リサーチと仮説検定\n探索的リサーチでは，多くの場合，サンプルサイズや特徴量バランスがコントロールできない観察データを対象に分析し， また次のリサーチに進むための仮説構築や検討に値する特徴量スクリーニングを目的とすることが多いです．このとき検定を実施するとしても，有意水準，検出力，Effect Sizeを想定した Neyman-Pearson流の検定の実施は難しく，偶然のバラツキにしては差が大きそうというインサイトを得ることを目的としたFisher流仮説検定の用い方となります．\nただ，P値に基づいて推論を行うのではなく，平均の差やハザード比などの指標や信頼区間，またその分野のドメイン知識を考慮した上で， 総合的に結果を解釈→仮説の構築をすることが重要です．",
+    "crumbs": [
+      "統計的仮説検定の実践",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
     ]
   },
   {
     "objectID": "posts/statistics101/chapter_header.html",
     "href": "posts/statistics101/chapter_header.html",
-    "title": "Part 1: Statistics 101",
+    "title": "統計学入門",
     "section": "",
-    "text": "▶  Part 1 のスコープ\n\n竹村彰通 (2020) をベースに，統計モデルとしての確率分布族と，それらに対する統計推測法について勉強する\n勉強対象は主に日々のデータサイエンス分析のベースとなるような統計基礎概念や定義になるが，これらについて数学的な定義とともにわかりやすい言語化ができるようになることを目的にしています\n\n ▶  記述統計と統計的推測\n\n 記述統計(descriptive statistics)\n\n調査や実験で得られたデータを整理して，その解釈を助けるような統計的分析のこと\n\n統計的推測(statistical inference)\n\n確率的な変動を多く含むデータに対して，そのDGP(= Data generating process)に何かしらの仮定を想定し，データから確率モデルの推定や検定を行う分析のこと\n\n\n\n統計的推測という手法は確率モデルを想定してデータを解釈/判断する分析なので，確率論を中心とする数学的表現を用いたモデルの定式化が必要となります．加えて，\n\n想定した確率モデルが正しそうか？\n与えられたデータと矛盾しないか？\n乖離がある場合，想定したモデルから導かれる結論はどの程度妥当すると言えるのだろうか？\n\nという分析上の判断が必要となります．そのため，統計的推測はデータ分析初心者にとっては敷居が高い手法となりますが，一旦モデル化や仮定の妥当性についての説明がうまく行くと，手元に実際にあるデータの背後にあるメカニズムに基づいて推測が行えるようになります．例えば，実際に観測できないPotential Outcomesの分布についての推定や将来の予測などがあります．\nこのように統計的推測とは，使いこなすのは大変ですが，使えるようになるととても強力なツールです．このノートを通じて，統計的推測の基礎やいくつかの応用分野の分析を見ながらマスターしたいなと思っています．\n\nReferences\n\n\n竹村彰通 (2020), 現代数理統計学,\n学術図書出版社.",
+    "text": "References",
     "crumbs": [
-      "Part 1: Statistics 101"
+      "統計学入門"
+    ]
+  },
+  {
+    "objectID": "posts/statistics101/chapter_header.html#references",
+    "href": "posts/statistics101/chapter_header.html#references",
+    "title": "統計学入門",
+    "section": "",
+    "text": "竹村彰通 (2020), 現代数理統計学, 学術図書出版社.",
+    "crumbs": [
+      "統計学入門"
+    ]
+  },
+  {
+    "objectID": "posts/SHT/chapter_header.html",
+    "href": "posts/SHT/chapter_header.html",
+    "title": "統計的仮説検定の実践",
+    "section": "",
+    "text": "References",
+    "crumbs": [
+      "統計的仮説検定の実践"
+    ]
+  },
+  {
+    "objectID": "posts/SHT/chapter_header.html#references",
+    "href": "posts/SHT/chapter_header.html#references",
+    "title": "統計的仮説検定の実践",
+    "section": "",
+    "text": "柳川堯 (2018), P値: その正しい理解と適用, 近代科学社.\n\n\n永田靖 (2003), サンプルサイズの決め方, 朝倉書店.",
+    "crumbs": [
+      "統計的仮説検定の実践"
     ]
   }
 ]
