@@ -1,0 +1,12 @@
+---
+title: "統計的仮説検定入門"
+jupyter: python3
+author: "Ryo Nakagtami"
+date: "2024-08-31"
+date-modified: last-modified
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+# when you run this file locally, do not forget to run poetry shell
+---

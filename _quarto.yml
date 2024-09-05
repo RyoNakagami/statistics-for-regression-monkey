@@ -13,10 +13,13 @@ book:
   sidebar:
       tools:
        - text: Blog Series
-         icon: brush
+         icon: book
          menu:
          - text: Ryo's Tech Blog
            href: https://ryonakagami.github.io/
+           aria-label: blog-general
+         - text: statistics dojo
+           href: https://ryonakagami.github.io/statistics_dojo/
            aria-label: blog-general
          - text: OhGoshGit!?!
            href: https://ohgoshgit.github.io/
@@ -33,9 +36,12 @@ book:
     - part: posts/statistics101/chapter_header.qmd
       chapters:
         - posts/statistics101/intro.qmd
-    - part: posts/SHT/chapter_header.qmd
+    - part: posts/statistical_hypothesis_test_101/chapter_header.qmd
       chapters:
-        - posts/SHT/fisher_vs_neyman_pearson.qmd
+        - posts/statistical_hypothesis_test_101/fisher_exact_test.qmd
+    - part: posts/statistical_hypothesis_test_201/chapter_header.qmd
+      chapters:
+        - posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.qmd
 
 
 format:
@@ -51,8 +57,11 @@ format:
       light: 
         - cosmo
         - include/custom.scss
+        - include/light.scss
       dark: 
         - darkly
+        - include/custom.scss
+        - include/dark.scss
     code-copy: true
     code-fold: true
     code-overflow: wrap

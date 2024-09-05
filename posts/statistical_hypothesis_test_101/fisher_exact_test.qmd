@@ -1,0 +1,424 @@
+---
+title: "Fisher's exact test"
+jupyter: python3
+author: "Ryo Nakagtami"
+date: last-modified
+date-modified: last-modified
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+# when you run this file locally, do not forget to run poetry shell
+---
+
+## $2\times 2$クロスセル表とFisher's exact test
+
+<div class="blog-custom-border">
+<strong>問題設定</strong> <br>
+
+ある医薬品試験のRCTにて，５０人の患者を無作為にtreatedとプラセボ(control)に分けて，一定期間後の健康状態(Positive vs Negative)を確認したところ
+以下のような結果になった．
+
+
+<table><thead><tr><th colspan="1" rowspan="2" style="border-width: 1px; width: 350px; text-align: center;"><p style="text-align: center;"><span>&nbsp;</span></p>
+
+
+</th></tr><tr><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Treated</font></font></span></p>
+</th><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Control</font></font></span></p>
+</th><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">合計</font></font></span></p>
+
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Positive</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">21</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>15</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+</td><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">36</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Negative</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">4</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>10</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+</td><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">14</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">合計</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">25</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>25</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+</td><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">50</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+
+
+</td></tr></tbody></table>
+
+このとき，プラセボとグループと医薬品投入グループ間で健康状態分布が異なるかどうか検定したい．
+
+</div>
+<br>
+
+各グループの合計という周辺の値が固定されていると考えたとき，`(Treated, Positive)`の人数という確率変数が従う分布は超幾何分布とみなすことができる．
+つまり，
+
+<table><thead><tr><th colspan="1" rowspan="2" style="border-width: 1px; width: 350px; text-align: center;"><p style="text-align: center;"><span>&nbsp;</span></p>
+
+
+</th></tr><tr><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Treated</font></font></span></p>
+</th><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Control</font></font></span></p>
+</th><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">合計</font></font></span></p>
+
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Positive</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$X_{11}$</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>$X_{12}$</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+</td><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$x_{1\cdot}$</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Negative</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$X_{21}$</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>$X_{22}$</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+</td><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$x_{2\cdot}$</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">合計</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$x_{\cdot 1}$</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>$x_{\cdot 2}$</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+</td><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$N$</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+
+
+</td></tr></tbody></table>
+
+としたとき，$X_{11}$の確率は
+
+$$
+\begin{align*}
+\Pr(X_{11}=x) &= \frac{{}_{x_{1\cdot}}C_{x}\times {}_{x_{2\cdot}}C_{x_{\cdot 1} - x} }{{}_{N}C_{x_{\cdot 1}}}\\
+              &= \frac{x_{\cdot 1}!x_{\cdot 2}!x_{2\cdot}!x_{2\cdot}!}{x_{11}!x_{12}!x_{21}!x_{22}!N!}
+\end{align*}
+$$
+
+このとき，$x$ の範囲は $\max(0, x_{1\cdot} - x_{2\cdot}) \leq x \leq \min(x_{1\cdot}, x_{\cdot 1})$ になる．
+
+<strong > &#9654;&nbsp; Null hypothesis vs Alternative hypothesis</strong>
+
+上記の問題設定におけるFisher's exact testにおける検定仮説設定例はと，両側検定ならば
+
+- $H_0$: 処置(Treatment)と一定期間後の健康状態(主要評価項目)は独立
+- $H_1$: 処置(Treatment)と一定期間後の健康状態(主要評価項目)は独立ではない $\Rightarrow \Pr(\text{Positive}\vert \text{Treated})\neq \Pr(\text{Positive}\vert \text{Control})$
+
+$H_0$の仮定の下では，$X_{11}$は超幾何分布(hypergeometric distribution)に従うはずなので，この仮定に基づいてP値を計算します．両側検定でのP値の計算方法例として
+
+$$
+\begin{align*}
+\text{p-value} = \sum_{x} \Pr(X_{11}={x}) \text{ s.t } \{x \vert \Pr(X_{11}={x}) \leq \Pr(X_{11}={x_{11}})\}
+\end{align*}
+$$
+
+
+:::{#example-p-value}
+```{python}
+#| code-fold: true
+#| label: hypergeo-dist
+import math
+import numpy as np
+import polars as pl
+import plotly.express as px
+
+
+def compute_prob(
+    x: int, positive: int, negative: int, treated: int, denom: int
+) -> np.float64:
+    return math.comb(positive, x) * math.comb(negative, treated - x) / denom
+
+
+DENOM = math.comb(50, 25)
+X_DOMAIN = np.arange(11, 25)
+
+prob = list(
+    map(
+        lambda x: compute_prob(x, positive=36, negative=14, treated=25, denom=DENOM),
+        X_DOMAIN,
+    )
+)
+
+# create polars.DataFrame
+df = pl.DataFrame({"x": X_DOMAIN, "prob": prob})
+
+# plotly
+fig = px.bar(df, x="x", y="prob", title="Null hypothesis下における確率分布")
+fig.update_layout(
+    xaxis_title="TreatedにおけるPositiveの人数", yaxis_title="probability"
+)
+
+fig.show()
+```
+:::
+
+### exact p-valueの計算
+
+<strong > &#9654;&nbsp; 片側検定</strong>
+
+$X_{11} \geq x$ となる場合のp-valueを`scipy.stats.fisher_exact`で計算すると以下のようになります．
+
+```{python}
+#| code-fold: false
+from scipy.stats import fisher_exact
+table = np.array([[21, 15], [4, 10]])
+res_greater = fisher_exact(table, alternative='greater')
+print("scipy-p-value: {:.6f}".format(res_greater.pvalue))
+```
+
+一方，[上で計算したprobability](#example-p-value)に則って上側確率を見てみると
+
+
+```{python}
+#| code-fold: false
+print("self-computed-pvalue: {:.6f}".format(df.filter((pl.col("x") >= 21))['prob'].sum()))
+```
+
+と数値計算誤差を無視してしまえば大まかに一致することが確認できます．
+
+<strong > &#9654;&nbsp; 両側検定</strong>
+
+両側検定におけるp-valueは
+
+$$
+\begin{align*}
+\text{p-value} = \sum_{x} \Pr(X_{11}={x}) \text{ s.t } \{x \vert \Pr(X_{11}={x}) \leq \Pr(X_{11}={x_{11}})\}
+\end{align*}
+$$
+
+なので
+
+```{python}
+# | code-fold: false
+threshold = df.filter((pl.col("x") == 21))["prob"].to_numpy()[0]
+res_twosided = fisher_exact(table, alternative="two-sided")
+myres_twosided = df.filter((pl.col("prob") <= threshold))["prob"].sum()
+print("""scipy-p-value: {:.6f},self-computed-pvalue: {:.6f}
+      """.format(res_twosided.pvalue, myres_twosided))
+```
+
+どちらの計算でもおよそ $11.37\%$ であることが確認できます．
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+- 組み合わせの数が大きすぎ，exact p-valueの計算が難しい場合はMonte Carlo法を用いて計算します
+
++-----------+---+---+---+---+---+---+---+---+---+---+
+| Treatment | T | T | T | T | T | C | C | C | C | C |
++-----------+---+---+---+---+---+---+---+---+---+---+
+| Promoted  | 1 | 1 | 1 | 1 | 0 | 1 | 1 | 0 | 0 | 0 | 
++-----------+---+---+---+---+---+---+---+---+---+---+
+
+というTreatedのうち４人がPromotedされたデータが得られた場合，TreatedかつPromotedの人数を $X$ としたとき，
+$\Pr(X \geq 4)$ のついて計算参する場合は
+
++-----------+---+---+---+---+---+---+---+---+---+---+
+| Treatment | T | T | T | T | T | C | C | C | C | C |
++-----------+---+---+---+---+---+---+---+---+---+---+
+| Promoted  | 1 | 0 | 1 | 0 | 0 | 1 | 1 | 1 | 1 | 1 | 
++-----------+---+---+---+---+---+---+---+---+---+---+
+
+のように２行目についてPermutationをランダムに $Y$ 回実施してサンプリングから $\Pr(X \geq 4)$ を計算します（上の例では $X = 3$）となっている．このように計算されたp-valueはfisher's exact p-valueのMonte Carlo approximationと呼んだりします．
+
+</div>
+
+
+
+### Odds ratio
+
+`scipy.stats.fisher_exact`では`pvalue`のほかに`statistic`という返り値をもっています．
+
+```{python}
+# | code-fold: false
+print(res_twosided.statistic)
+```
+
+この 3.5 はいわゆるodds ratioで
+
+$$
+3.5 = \frac{21 / 4}{15 / 10}
+$$
+
+で計算されます．
+
+<div class="blog-custom-border">
+<strong>Def: Odds</strong> <br>
+
+確率事象 $A$ についての odds は以下のように計算される
+
+$$
+\begin{align*}
+\text{odds}(A) = \frac{\Pr(A)}{1 - \Pr(A)} = \frac{\Pr(A)}{\Pr(A^c)}
+\end{align*}
+$$
+
+</div>
+
+oddsを用いることで表現がシンプルになるケースとしてフェアな賭けにおいける倍率の計算が上げられます．
+例として，確率事象 A に対して1円を賭ける状況を考えます．確率事象 A が発生しなかったら1円を失い，確率事象 A
+が発生したら1円はキープ & x 円のリターンを得られるとします．
+
+このとき，この賭けがフェアであるためには，期待利得が0であることが必要ですが，以下のように $x = \text{odds}(A^c)$ とリターンが設定されているとフェアな賭けになります．
+
+$$
+\begin{align*}
+&\text{expected return} = x \times \Pr(A) + (-1) \times \Pr(A^c)\\
+&\Rightarrow x = \frac{\Pr(A^c)}{\Pr(A)} \because \text{exptected return should be 0}\\
+& \Rightarrow x = \text{odds}(A^c) = 1/\text{odds}(A) 
+\end{align*}
+$$
+
+<div class="blog-custom-border">
+<strong>Def: Odds ratio</strong> <br>
+
+とある母集団にたいして，とある疾患の発症を抑制すると謳っている新薬を考えます．
+
+- 疾患が発症したならPositive, 発症しなかったらNegative
+- 新薬を処方されたらTreated, されなかったらControl
+
+として，母集団の各組み合わせに対する事前割当確率が以下のようなクロスセルで定義されているとします．
+
+<table><thead><tr><th colspan="1" rowspan="2" style="border-width: 1px; width: 350px; text-align: center;"><p style="text-align: center;"><span>&nbsp;</span></p>
+
+
+</th></tr><tr><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Treated</font></font></span></p>
+</th><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Control</font></font></span></p>
+
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Positive</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$p_{11}$</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>$p_{12}$</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Negative</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$p_{21}$</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>$p_{22}$</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+
+</td></tr></tbody></table>
+
+このとき，treated/control間の疾患発症のodds ratioは
+
+$$
+\text{odds ratio} = \frac{p_{11}p_{22}}{p_{21}p_{12}}
+$$
+
+で表現される．
+
+</div>
+
+<br>
+
+仮に Treated, Control両方のグループで疾患発症がレアなイベントだとすると $1- \Pr(\text{Positive} \vert \text{Treated}), 1-\Pr(\text{Positive} \vert \text{Control})$ はともに十分小さくなり，
+
+$$
+\text{odds}(\text{Positive}\vert\text{Treated}) \approx Pr(\text{Positive} \vert \text{Treated})
+$$ 
+
+とみなせるので
+
+$$
+\frac{\text{odds}(\text{Positive}\vert\text{Treated})}{\text{odds}(\text{Positive}\vert\text{Control})} \approx \frac{Pr(\text{Positive} \vert \text{Treated})}{Pr(\text{Positive} \vert \text{Control})}
+$$
+
+Odds ratioが0.7だとすると，Treated は Controlにくらべ 30% ほど疾患発症確率が低いという解釈に繋がります．
+
+### Odds ratioの推定と信頼区間
+
+<table><thead><tr><th colspan="1" rowspan="2" style="border-width: 1px; width: 350px; text-align: center;"><p style="text-align: center;"><span>&nbsp;</span></p>
+
+
+</th></tr><tr><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Treated</font></font></span></p>
+</th><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Control</font></font></span></p>
+</th><th style="border-width: 1px; width: 350px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">合計</font></font></span></p>
+
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Positive</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$x_{11}$</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>$x_{12}$</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+</td><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$x_{1\cdot}$</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Negative</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$x_{21}$</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>$x_{22}$</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+</td><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$x_{2\cdot}$</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+
+</td></tr><tr><th style="border-width: 1px; width: 233.333px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">合計</font></font></span></p>
+</th><th style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$x_{\cdot 1}$</font></font></span></p>
+</th><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>$x_{\cdot 2}$</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+</td><td style="border-width: 1px; width: 175px; text-align: center;"><p dir="ltr" style="text-align: center;"><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">$N$</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></span></p>
+
+
+</td></tr></tbody></table>
+
+上記のようなデータについて，prior odds ratio $\theta$ の推定は
+
+$$
+\hat\theta = \frac{\hat p_{11}\hat p_{22}}{\hat p_{21}\hat p_{12}} \  \ \text{where } \hat p_{ij} = \frac{x_{ij}}{N}
+$$
+
+従って，
+
+$$
+\hat\theta = \frac{x_{11}x_{22}}{x_{21}x_{12}}
+$$
+
+<strong > &#9654;&nbsp; Confidence Intervalの計算</strong>
+
+Confidence Intervalは，実務では $\log(\theta)$ を用いたCLTとdelta methodによる近似で計算されます．
+
+$$
+\begin{align*}
+\mathbf p = (p_{11},p_{12},p_{21},p_{22})
+\end{align*}
+$$
+
+としたとき，もともとのテーブルはクラス4の多項分布とみなせるので $\mathbf p$ についての共分散行列 $\Sigma$ は
+
+$$
+\begin{align*}
+\Sigma = \frac{1}{n}\left(
+    \begin{array}{cccc}
+    (1-p_{11}) p_{11} & -p_{11} p_{12} & -p_{11} p_{21} & -p_{11} p_{22} \\
+     -p_{11} p_{12} & \left(1-p_{12}\right) p_{12} & -p_{12} p_{21} & -p_{12} p_{22} \\
+     -p_{11} p_{21} & -p_{12} p_{21} & \left(1-p_{21}\right) p_{21} & -p_{21} p_{22} \\
+     -p_{11} p_{22} & -p_{12} p_{22} & -p_{21} p_{22} & (1-p_{22}) p_{22} 
+    \end{array}
+\right)
+\end{align*}
+$$
+
+また，$\log(\theta) = \log(p_{11}) - \log(p_{12}) - \log(p_{21}) + \log(p_{22})$ についての分散はdelta methodを用いて
+
+$$
+\begin{align*}
+&\operatorname{Var}(\log(\mathrm{OR})) = (\nabla f \Sigma )\times \nabla f^T\\
+&\nabla f = \left(\frac{1}{p_{11}},-\frac{1}{p_{12}},-\frac{1}{p_{21}},\frac{1}{p_{22}}\right)
+\end{align*}
+$$
+
+と表せます．これを推定値 $\hat p_{ij}$ を用いて計算すると
+
+$$
+\begin{align*}
+&\widehat{\operatorname{Var}(\log(\operatorname{OR})}=\frac{1}{x_{11}}+\frac{1}{x_{12}}+\frac{1}{x_{21}}+\frac{1}{x_{22}}\\
+&\widehat{\operatorname{SE}(\log(\operatorname{OR})}=\sqrt{\frac{1}{x_{11}}+\frac{1}{x_{12}}+\frac{1}{x_{21}}+\frac{1}{x_{22}}}
+\end{align*}
+$$
+
+$\mathbf p$ は $N$ が十分大きいときCLTより正規分布に近似できると考えられるので $\log(\hat\theta)$ についてのConfidence Intervalは
+
+$$
+\text{CI(log odds ratio)} = \widehat{\log(\operatorname{OR})}\pm z_{1-\alpha/2}\times \widehat{\operatorname{SE}(\log(\operatorname{OR})}
+$$
+
+また，odds ratioのConfidence Intervalは対数を再度変換すれば良いので
+
+$$
+\text{CI(odds ratio)} = \exp(\widehat{\log(\operatorname{OR})}\pm z_{1-\alpha/2}\times \widehat{\operatorname{SE}(\log(\operatorname{OR})})
+$$
+
+と計算できる．
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+- 上記の方法でのConfidence intervalは $\log(\hat\theta)$ 自体の推定分散ではなく，CLTを用いているのであくまで分散についての極限分布を用いている
+- $p_{21}$ や $p_{12}$ 自体は0になり得ることを考えると，$\hat\theta$ や $\log(\hat\theta)$ が存在しないことも考えられる 
+
+
+</div>
+
+
+References
+----------
+- [PennState STAT 504 > 4.5 - Fisher's Exact Test](https://online.stat.psu.edu/stat504/lesson/4/4.5)

@@ -4,11 +4,5 @@
     padding-right: 2em;
     border-radius: 0em;
     border-style: solid;
-    border-color: #00008B;
-    
-    // Apply the dark theme border color when the theme is dark
-    
-    @media (prefers-color-scheme: dark) {
-      border-color: #1ac398;
-    }
+    border-color: #1ac398;;
   }
