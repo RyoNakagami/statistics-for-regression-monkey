@@ -60,3 +60,9 @@ References
 ::: {#refs}
 :::
 ```
+
+## Quarto FAQ
+
+<strong > &#9654;&nbsp;Q: icon fieldで利用可能なiconのリストはどこでみれるのか？</strong>
+
+- [Bootstrap Icons](https://icons.getbootstrap.com/)
