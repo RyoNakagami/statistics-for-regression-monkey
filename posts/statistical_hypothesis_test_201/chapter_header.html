@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagtami">
-<meta name="dcterms.date" content="2024-08-31">
+<meta name="dcterms.date" content="2024-08-30">
 
-<title>2&nbsp; Fisher流検定 vs Neyman-Pearson流検定 – Statistics for Regression Monkeys</title>
+<title>統計的仮説検定の実践 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -32,7 +52,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/SHT/chapter_header.html" rel="prev">
+<link href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" rel="next">
+<link href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -133,7 +154,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/SHT/chapter_header.html">統計的仮説検定の実践</a></li><li class="breadcrumb-item"><a href="../../posts/SHT/fisher_vs_neyman_pearson.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_201/chapter_header.html">統計的仮説検定の実践</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -151,11 +172,16 @@ window.Quarto = {
       <a href="../../">Statistics for Regression Monkeys</a> 
         <div class="sidebar-tools-main tools-wide">
     <div class="dropdown">
-      <a href="" title="Blog Series" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Blog Series"><i class="bi bi-brush"></i></a>
+      <a href="" title="Blog Series" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Blog Series"><i class="bi bi-book"></i></a>
       <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
           <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/">
             Ryo's Tech Blog
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/statistics_dojo/">
+            statistics dojo
             </a>
           </li>
           <li>
@@ -203,8 +229,8 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../posts/SHT/chapter_header.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">統計的仮説検定の実践</span></a>
+            <a href="../../posts/statistical_hypothesis_test_101/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">統計的仮説検定入門</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -212,8 +238,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/SHT/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+  <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../posts/statistical_hypothesis_test_201/chapter_header.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">統計的仮説検定の実践</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -228,22 +271,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#fisher流検定の考え方" id="toc-fisher流検定の考え方" class="nav-link active" data-scroll-target="#fisher流検定の考え方">Fisher流検定の考え方</a></li>
-  <li><a href="#neyman-pearson流検定の考え方" id="toc-neyman-pearson流検定の考え方" class="nav-link" data-scroll-target="#neyman-pearson流検定の考え方">Neyman-Pearson流検定の考え方</a></li>
-  <li><a href="#探索的リサーチと検証的リサーチ" id="toc-探索的リサーチと検証的リサーチ" class="nav-link" data-scroll-target="#探索的リサーチと検証的リサーチ">探索的リサーチと検証的リサーチ</a>
-  <ul class="collapse">
-  <li><a href="#検証的リサーチにおける仮説検定手順" id="toc-検証的リサーチにおける仮説検定手順" class="nav-link" data-scroll-target="#検証的リサーチにおける仮説検定手順">検証的リサーチにおける仮説検定手順</a></li>
-  <li><a href="#探索的リサーチと仮説検定" id="toc-探索的リサーチと仮説検定" class="nav-link" data-scroll-target="#探索的リサーチと仮説検定">探索的リサーチと仮説検定</a></li>
-  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link active" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/SHT/fisher_vs_neyman_pearson.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistical_hypothesis_test_201/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/SHT/chapter_header.html">統計的仮説検定の実践</a></li><li class="breadcrumb-item"><a href="../../posts/SHT/fisher_vs_neyman_pearson.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></h1>
+<h1 class="title">統計的仮説検定の実践</h1>
 </div>
 
 
@@ -260,14 +297,14 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-08-31</p>
+      <p class="date">2024-08-30</p>
     </div>
   </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-08-31</p>
+      <p class="date-modified">2024-09-05</p>
     </div>
   </div>
     
@@ -278,205 +315,66 @@ window.Quarto = {
 </header>
 
 
-<div style="padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#00008B;">
-<p><strong> ▶&nbsp; Key Takeaways</strong></p>
+<p><strong> ▶&nbsp; 統計的仮説検定の実践 のスコープ</strong></p>
 <ul>
-<li>P値にエビデンス力を見出すFisher流統計的検定と，統計的判定にP値をもちいるに留まるNeyman-Pearson流検定がある</li>
-<li>リサーチには，探索的リサーチと事前にeffect sizeを想定し検証する検証的リサーチというクラスがある</li>
-<li>探索的リサーチは推論を重んじるFisher流の検定が好ましい，検証的リサーチの場合はNeyman-Pearson流検定が好ましい</li>
+<li><span class="citation" data-cites="P値-spotlight">柳川堯 (<a href="#ref-P値-spotlight" role="doc-biblioref">2018</a>)</span>, <span class="citation" data-cites="永田サンプルサイズ">永田靖 (<a href="#ref-永田サンプルサイズ" role="doc-biblioref">2003</a>)</span> をベースに，統計的仮説検定フレームワークとP値の解釈について勉強する</li>
 </ul>
+<p><strong> ▶&nbsp; p-valueとは？</strong></p>
+<p>食生活コントロールを初めたところ，開始から一週間後に体重を測定してみたら開始直前体重と比較して１kgほど 減量していたとします．食生活コントロールの成果として判断するのも結構ですが，そもそも体重自体は一日の中でも 1~2kgほどのばらつきがあり，もしかしたらたまたま体重が軽めに計測されるタイミングだったかもしれません．</p>
+<p>P値とは，<strong>体重が下がったのは食生活コントロールの成果であり，体重のランダムなバラツキによるものではない」という統計的判断をするために用いられるツール</strong>のことです．</p>
+<p>注意点として，P値は，統計的判断をするために用いられるツールであって，真の科学的効果の判定するためのツールではありません． あくまで，統計的判断は科学的効果の判定の根拠の一つであって，「統計的判断 <span class="math inline">\(\neq\)</span> 科学的効果の判定」 です．</p>
+<div style="padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#00008B;">
+<p><strong>Def: p-value</strong> <br></p>
+<ul>
+<li>データにバラツキがある場合に，もし処置効果がないとしたとき(=帰無仮説 <span class="math inline">\(H_0\)</span> の下)，バラツキだけの原因で評価指標が観測された値以上に 極端な値をとる確率を表したもの</li>
+</ul>
+<p>検定統計量（test statistic）を <span class="math inline">\(T\)</span>，データから算出された検定統計量の値を <span class="math inline">\(x\)</span> とすると，右側対立仮説 <span class="math inline">\(H^+_1\)</span> を 帰無仮説 <span class="math inline">\(H_0\)</span> に対比させる場合，数式的には以下のように表現される：</p>
+<p><span class="math display">\[
+\text{p-value} = \Pr(T\geq x \vert H_0)
+\]</span></p>
 </div>
 <p><br></p>
-<section id="fisher流検定の考え方" class="level2">
-<h2 class="anchored" data-anchor-id="fisher流検定の考え方">Fisher流検定の考え方</h2>
-<p>２標本問題を考えたとき，２標本の平均の差がそのバラツキの大きさ（＝標準誤差）と比べて大きければ大きいほど 「母集団に差があり」のエビデンス力が高いという考えがFisher流検定となります．P値自体はサンプルサイズに依存すると留意していましたが， Fisher流ではP値が小さいほどエビデンス力が高いという解釈になります．さらに，</p>
-<ul>
-<li>平均の差が標準誤差の２倍未満であれば平均の差はバラツキによる差であって考慮に値しない，</li>
-<li>2倍以上の差があるとき，偶然のみに支配されたバラツキに比べると指標の値が相対的に大きいと言える→初めて科学的に意味のある差であるか否かを検討する対象になりうる（正規分布を仮定したとき，約5％水準に相当）</li>
-</ul>
-<p>というモノサシの提案をFisherはしました．これが現在の有意水準(significance level) 5% という慣習の由来であると言われています．</p>
-<p>なお，FisherはP値を統計家がデータの解析結果を「報告」するときのモノサシとしての提案にとどまっており， 効果があったか否かの「判定」は，統計家だけでなく関連専門家が参加するグループ討議によって，報告されたP値，分析対象，サンプルサイズ等を吟味して総合的に「判定」すべきであると考えてます．</p>
-</section>
-<section id="neyman-pearson流検定の考え方" class="level2">
-<h2 class="anchored" data-anchor-id="neyman-pearson流検定の考え方">Neyman-Pearson流検定の考え方</h2>
-<p>Neyman-Pearson流は統計的検定について</p>
-<ul>
-<li><span class="math inline">\(H_0: \theta \in \Theta_0\)</span>, Null hypothesis</li>
-<li><span class="math inline">\(H_1: \theta \not\in \Theta_0\)</span>, Alternative hypothesis</li>
-</ul>
-<p>の２つを設定し，観察されたデータに基づいてどちらの仮説がより妥当な仮説であるかを判定する問題という統計的判定問題を考えました． 統計的判定問題のおける判定の誤りについて，</p>
-<ul>
-<li>Type I Error: <span class="math inline">\(H_0\)</span> が正しいのに誤って <span class="math inline">\(H_0\)</span> を棄却するエラー</li>
-<li>Type II Error: <span class="math inline">\(H_1\)</span> が正しいのに誤って <span class="math inline">\(H_0\)</span> を採択するエラー</li>
-</ul>
-<p>の２種類があるとし，Type I Errorの確率を <span class="math inline">\(\alpha\)</span> に抑えた上で，Type II Errorの確率 <span class="math inline">\(\beta\)</span> を最小にする制約付き最小化問題 として統計的判定問題を定式化しました．</p>
-<table>
-<thead>
-<tr>
-<th colspan="2" rowspan="2" style="border-width: 1px; width: 350px; text-align: center;">
-<p style="text-align: center;">
-<span>&nbsp;</span>
-</p>
-</th>
-<th colspan="2" style="border-width: 1px; width: 350px; text-align: center;">
-<p dir="ltr" style="text-align: center;">
-<span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Truth</font></font></span>
-</p>
-</th>
-</tr>
-<tr>
-<th style="border-width: 1px; width: 350px; text-align: center;">
-<p dir="ltr" style="text-align: center;">
-<span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span class="math inline">\(H_0\)</span></font></font></span>
-</p>
-</th>
-<th style="border-width: 1px; width: 350px; text-align: center;">
-<p dir="ltr" style="text-align: center;">
-<span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span class="math inline">\(H_1\)</span></font></font></span>
-</p>
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<th rowspan="2" style="border-width: 1px; width: 175px; text-align: center;">
-<p dir="ltr" style="text-align: center;">
-<br>
-</p>
-<p dir="ltr" style="border-width: 1px; text-align: center;">
-<span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">検定結果</font></font></span>
-</p>
-</th>
-<th style="border-width: 1px; width: 175px; text-align: center;">
-<p dir="ltr" style="text-align: center;">
-<span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span class="math inline">\(H_0\)</span></font></font></span>
-</p>
-</th>
-<td style="border-width: 1px; width: 175px; text-align: center;">
-<p dir="ltr" style="text-align: center;">
-<span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>正しい</font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font>(<span class="math inline">\(1- \alpha\)</span>)</font></span>
-</p>
-</td>
-<td style="border-width: 1px; width: 175px; text-align: center;">
-<p dir="ltr" style="text-align: center;">
-<span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Type II Error</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">(<span class="math inline">\(\beta\)</span>)</font></font></span>
-</p>
-</td>
-</tr>
-<tr>
-<th style="border-width: 1px; width: 233.333px; text-align: center;">
-<p dir="ltr" style="text-align: center;">
-<span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"><span class="math inline">\(H_1\)</span></font></font></span>
-</p>
-</th>
-<td style="border-width: 1px; width: 233.333px; text-align: center;">
-<p dir="ltr" style="text-align: center;">
-<span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Type I Error</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">(有意水準: <span class="math inline">\(\alpha\)</span>)</font></font></span>
-</p>
-</td>
-<td style="border-width: 1px; width: 233.333px; text-align: center;">
-<p dir="ltr" style="text-align: center;">
-<span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">正しい</font></font></span><br><span><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">（検出力: <span class="math inline">\(1 - \beta\)</span>）</font></font></span>
-</p>
-</td>
-</tr>
-</tbody>
-</table>
-<p>検定問題に対応する 検定統計量 <span class="math inline">\(T\)</span>, <span class="math inline">\(H_0\)</span> の棄却域を <span class="math inline">\(R\)</span> で表すとそれぞれ以下のように表現されます</p>
-<ul>
-<li>Type I Error rate, <span class="math inline">\(\alpha = \Pr(T \in R \vert H_0)\)</span></li>
-<li>Type II Error rate: <span class="math inline">\(\beta = \Pr(T \not\in R \vert H_1)\)</span></li>
-</ul>
-<p>Fisher流ではP値の大きさがエビデンス力という意味を持つことに対して，Neyman-Pearson流では</p>
-<ul>
-<li>事前に定められた有意水準 <span class="math inline">\(\alpha\)</span> をP値が下回るなら効果ありとの判定</li>
-<li>そうでないなら，効果なしとの判定</li>
-<li><span class="math inline">\(P = 0.00001\)</span> だろうが <span class="math inline">\(P = 0.049\)</span> だろうがP値の水準自体には意味を求めない</li>
-</ul>
-<p>という違いがあります．</p>
+<p><strong> ▶&nbsp; 評価指標(end point)とは？</strong></p>
 <div style="padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#00008B;">
-<p><strong>📘 REMARKS</strong> <br></p>
-<p>Neyman-Pearson流では， <span class="math inline">\(\alpha, \beta\)</span> を用いて統計的に効果があると言えるか？という統計的判定問題として仮説検定を定式化しましたが，</p>
+<p><strong>Def: 評価指標</strong> <br></p>
 <ul>
-<li>統計的検定は決定するための方法ではなく，結果を報告するための方法である by F.Mostelller(1916-2006)</li>
+<li>評価指標とは，分析において収集したデータから計算する指標</li>
+<li>評価指標の結果を評価することで，統計的判断及び分析結果の導出を行う</li>
+<li>評価指標は一つである必要はないが，重要度に応じて主要評価指標(primary end point)や副次評価指標(secondary end point)を設定する</li>
 </ul>
-<p>と理解するにとどめたほうが良いとされています．</p>
 </div>
-</section>
-<section id="探索的リサーチと検証的リサーチ" class="level2">
-<h2 class="anchored" data-anchor-id="探索的リサーチと検証的リサーチ">探索的リサーチと検証的リサーチ</h2>
-<p>特定の疾患をターゲットとして行われる医薬品の開発過程を例にすると，</p>
-<ol type="1">
-<li>候補化学物質について，発がん性試験，変異原性試験，薬効薬理研究など様々な試験をラットや細胞に対して探索的に実施</li>
-<li>健常なヒトを対象に臨床第I相試験として，安全性や薬物動態などを探索的に研究</li>
-<li>当該疾患の患者を対象に第II相臨床試験として，病気の程度によってどのような効き目を発揮するのか（有効性）、副作用はどの程度か（安全性）、またどのような使い方（投与量・間隔・期間など）をしたらよいか、を研究</li>
-<li>第III相臨床試験として，医薬品の有効性と安全性をRCTで検証</li>
-</ol>
-<p>第III相臨床試験においては，TreatmentのEffect Sizeの想定と十分なサンプルサイズを確保した上でRCTを実施，そして得られたデータに基づいて統計的意味における効果の有無を検証しています． このようなリサーチを検証的リサーチといいます．</p>
-<p>一方，それまでの動物試験，非臨床試験，臨床第I相試験，臨床第II相試験では，Effect Sizeやサンプルサイズが事前に統計的に設定される場合は少なく，あくまで 次の分析ステップに進む値するエビデンス収集や仮説立案という目的で実施されるリサーチです．このような分析を探索的リサーチと呼びます．</p>
-<section id="検証的リサーチにおける仮説検定手順" class="level3">
-<h3 class="anchored" data-anchor-id="検証的リサーチにおける仮説検定手順">検証的リサーチにおける仮説検定手順</h3>
-<p>とあるPopulationを対象に実施するTreatmentの効果をRCTで仮説検定検証する場合，基本的には次のような一連の手順で実施します．</p>
-<table class="caption-top table">
-<caption>検証的リサーチ手順</caption>
-<colgroup>
-<col style="width: 15%">
-<col style="width: 85%">
-</colgroup>
-<thead>
-<tr class="header">
-<th style="text-align: left;">手順</th>
-<th style="text-align: left;">説明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">手順(1)</td>
-<td style="text-align: left;">主要評価項目 <span class="math inline">\(\delta\)</span> を定義し，期待される水準 <span class="math inline">\(\delta_0\)</span> を見積もる</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">手順(2)</td>
-<td style="text-align: left;"><span class="math inline">\(H_0: \delta = 0, H_1: \delta \neq 0\)</span> のようにHypothesesを言語化する</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">手順(3)</td>
-<td style="text-align: left;">有意水準 <span class="math inline">\(\alpha\)</span>, 検出力 <span class="math inline">\(1 - \beta\)</span> を定める</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">手順(4)</td>
-<td style="text-align: left;">有意水準 <span class="math inline">\(\alpha\)</span>, 検出力 <span class="math inline">\(1 - \beta\)</span> のもとで <span class="math inline">\(\delta_0\)</span> を検出するための必要サンプルサイズを計算する</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">手順(5)</td>
-<td style="text-align: left;">PopulationからランダムにEntityをサンプリングして，手順(4)のサンプルサイズを満たすようにEntityをランダム or 層化ランダムでtreated/controlに割り当てる</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">手順(6)</td>
-<td style="text-align: left;">treated, controlのバランスチェック</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">手順(8)</td>
-<td style="text-align: left;">treated, controlがともに実験から逸脱しない形でそれぞれ処置を受けることを観察(= プロトコル遵守の確保)</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">手順(8)</td>
-<td style="text-align: left;">treated, controlのデータを収集し，Attritionなどの対応を実施した上で，主要評価項目, 検定統計量を計算</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">手順(9)</td>
-<td style="text-align: left;">手順(8)で計算された検定統計量を元に，統計的検定を実施し，P値が有意水準 <span class="math inline">\(\alpha\)</span> 以下ならば効果があると統計的判断を下し，それ以外の場合では <span class="math inline">\(H_0\)</span> が棄却できなかったとする</td>
-</tr>
-</tbody>
-</table>
-<p>上記の手順に則って，<span class="math inline">\(H_0\)</span> が棄却された場合，少なくとも <span class="math inline">\(\delta \geq \delta_0\)</span> なのだろうという統計的判断がなされます．</p>
-</section>
-<section id="探索的リサーチと仮説検定" class="level3">
-<h3 class="anchored" data-anchor-id="探索的リサーチと仮説検定">探索的リサーチと仮説検定</h3>
-<p>探索的リサーチでは，多くの場合，サンプルサイズや特徴量バランスがコントロールできない観察データを対象に分析し， また次のリサーチに進むための仮説構築や検討に値する特徴量スクリーニングを目的とすることが多いです．このとき検定を実施するとしても，有意水準，検出力，Effect Sizeを想定した Neyman-Pearson流の検定の実施は難しく，偶然のバラツキにしては差が大きそうというインサイトを得ることを目的としたFisher流仮説検定の用い方となります．</p>
-<p>ただ，P値に基づいて推論を行うのではなく，平均の差やハザード比などの指標や信頼区間，またその分野のドメイン知識を考慮した上で， 総合的に結果を解釈→仮説の構築をすることが重要です．</p>
+<p>仮説検定方式を用いたシンプルな二群比較の場合は，二群の平均の差という統計量が主要評価指標になります．例として</p>
+<p><span class="math display">\[
+\begin{align*}
+X_1, \cdots X_m, &amp;\overset{\mathrm{iid}}{\sim} N(\mu_1, \sigma^2)\\
+Y_1, \cdots Y_n, &amp;\overset{\mathrm{iid}}{\sim} N(\mu_1, \sigma^2)
+\end{align*}
+\]</span></p>
+<p>なる２標本問題における検定問題 <span class="math inline">\(H_0:\mu_1 = \mu_2\)</span> vs <span class="math inline">\(H_1:\mu_1 =\neq \mu_2\)</span> を考えると</p>
+<p><span class="math display">\[
+\begin{align*}
+T &amp;= \frac{\vert \overline{X}  - \overline Y\vert }{\sqrt{\hat\sigma^2}}\\
+\text{where } \hat\sigma^2 &amp;= \frac{1}{m+n-2}\{\sum^m(X_i - \overline X)^2 + \sum^m(Y_i - \overline Y)^2\}
+\end{align*}
+\]</span></p>
+<p>における <span class="math inline">\(T\)</span> の実現値に応じて統計的推測をしますが，このとき，</p>
+<ul>
+<li>統計量 <span class="math inline">\(T\)</span> は検定統計量</li>
+<li>統計量 <span class="math inline">\(\overline X - \overline Y\)</span> が主要評価指標</li>
+</ul>
+<p>となります．</p>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
 
 
-</section>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-P値-spotlight" class="csl-entry" role="listitem">
+柳川堯 (2018), <em><a href="https://books.google.co.jp/books?id=xgCoDwAAQBAJ">P値: その正しい理解と適用</a></em>, 近代科学社.
+</div>
+<div id="ref-永田サンプルサイズ" class="csl-entry" role="listitem">
+永田靖 (2003), <em><a href="https://www.google.co.jp/books/edition/%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E6%B1%BA%E3%82%81%E6%96%B9/jeROAAAACAAJ?hl=en">サンプルサイズの決め方</a></em>, 朝倉書店.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1056,11 +954,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/SHT/chapter_header.html" class="pagination-link" aria-label="統計的仮説検定の実践">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">統計的仮説検定の実践</span>
+      <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="pagination-link" aria-label="Fisher's exact test">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="pagination-link" aria-label="Fisher流検定 vs Neyman-Pearson流検定">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -1080,7 +981,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/SHT/fisher_vs_neyman_pearson.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistical_hypothesis_test_201/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

@@ -21,47 +21,91 @@
     ]
   },
   {
-    "objectID": "posts/SHT/fisher_vs_neyman_pearson.html",
-    "href": "posts/SHT/fisher_vs_neyman_pearson.html",
-    "title": "2  Fisher流検定 vs Neyman-Pearson流検定",
+    "objectID": "posts/statistical_hypothesis_test_101/fisher_exact_test.html",
+    "href": "posts/statistical_hypothesis_test_101/fisher_exact_test.html",
+    "title": "2  Fisher’s exact test",
+    "section": "",
+    "text": "\\(2\\times 2\\)クロスセル表とFisher’s exact test\n各グループの合計という周辺の値が固定されていると考えたとき，(Treated, Positive)の人数という確率変数が従う分布は超幾何分布とみなすことができる． つまり，\nとしたとき，\\(X_{11}\\)の確率は\n\\[\n\\begin{align*}\n\\Pr(X_{11}=x) &= \\frac{{}_{x_{1\\cdot}}C_{x}\\times {}_{x_{2\\cdot}}C_{x_{\\cdot 1} - x} }{{}_{N}C_{x_{\\cdot 1}}}\\\\\n              &= \\frac{x_{\\cdot 1}!x_{\\cdot 2}!x_{2\\cdot}!x_{2\\cdot}!}{x_{11}!x_{12}!x_{21}!x_{22}!N!}\n\\end{align*}\n\\]\nこのとき，\\(x\\) の範囲は \\(\\max(0, x_{1\\cdot} - x_{2\\cdot}) \\leq x \\leq \\min(x_{1\\cdot}, x_{\\cdot 1})\\) になる．\n▶  Null hypothesis vs Alternative hypothesis\n上記の問題設定におけるFisher’s exact testにおける検定仮説設定例はと，両側検定ならば\n\\(H_0\\)の仮定の下では，\\(X_{11}\\)は超幾何分布(hypergeometric distribution)に従うはずなので，この仮定に基づいてP値を計算します．両側検定でのP値の計算方法例として\n\\[\n\\begin{align*}\n\\text{p-value} = \\sum_{x} \\Pr(X_{11}={x}) \\text{ s.t } \\{x \\vert \\Pr(X_{11}={x}) \\leq \\Pr(X_{11}={x_{11}})\\}\n\\end{align*}\n\\]",
+    "crumbs": [
+      "統計的仮説検定入門",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Fisher's exact test</span>"
+    ]
+  },
+  {
+    "objectID": "posts/statistical_hypothesis_test_101/fisher_exact_test.html#times-2クロスセル表とfishers-exact-test",
+    "href": "posts/statistical_hypothesis_test_101/fisher_exact_test.html#times-2クロスセル表とfishers-exact-test",
+    "title": "2  Fisher’s exact test",
+    "section": "References",
+    "text": "問題設定 \nある医薬品試験のRCTにて，５０人の患者を無作為にtreatedとプラセボ(control)に分けて，一定期間後の健康状態(Positive vs Negative)を確認したところ 以下のような結果になった．\n\n\n\n\n\n \n\n\n\n\n\n\nTreated\n\n\n\n\nControl\n\n\n\n\n合計\n\n\n\n\n\n\nPositive\n\n\n\n\n21\n\n\n\n\n15\n\n\n\n\n36\n\n\n\n\n\n\nNegative\n\n\n\n\n4\n\n\n\n\n10\n\n\n\n\n14\n\n\n\n\n\n\n合計\n\n\n\n\n25\n\n\n\n\n25\n\n\n\n\n50\n\n\n\n\n\nこのとき，プラセボとグループと医薬品投入グループ間で健康状態分布が異なるかどうか検定したい．\n\n\n\n\n\n\n\n\n \n\n\n\n\n\n\nTreated\n\n\n\n\nControl\n\n\n\n\n合計\n\n\n\n\n\n\nPositive\n\n\n\n\n\\(X_{11}\\)\n\n\n\n\n\\(X_{12}\\)\n\n\n\n\n\\(x_{1\\cdot}\\)\n\n\n\n\n\n\nNegative\n\n\n\n\n\\(X_{21}\\)\n\n\n\n\n\\(X_{22}\\)\n\n\n\n\n\\(x_{2\\cdot}\\)\n\n\n\n\n\n\n合計\n\n\n\n\n\\(x_{\\cdot 1}\\)\n\n\n\n\n\\(x_{\\cdot 2}\\)\n\n\n\n\n\\(N\\)\n\n\n\n\n\n\n\n\n\n\n\n\\(H_0\\): 処置(Treatment)と一定期間後の健康状態(主要評価項目)は独立\n\\(H_1\\): 処置(Treatment)と一定期間後の健康状態(主要評価項目)は独立ではない \\(\\Rightarrow \\Pr(\\text{Positive}\\vert \\text{Treated})\\neq \\Pr(\\text{Positive}\\vert \\text{Control})\\)\n\n\n\n\n\n\nCode\nimport math\nimport numpy as np\nimport polars as pl\nimport plotly.express as px\n\n\ndef compute_prob(\n    x: int, positive: int, negative: int, treated: int, denom: int\n) -&gt; np.float64:\n    return math.comb(positive, x) * math.comb(negative, treated - x) / denom\n\n\nDENOM = math.comb(50, 25)\nX_DOMAIN = np.arange(11, 25)\n\nprob = list(\n    map(\n        lambda x: compute_prob(x, positive=36, negative=14, treated=25, denom=DENOM),\n        X_DOMAIN,\n    )\n)\n\n# create polars.DataFrame\ndf = pl.DataFrame({\"x\": X_DOMAIN, \"prob\": prob})\n\n# plotly\nfig = px.bar(df, x=\"x\", y=\"prob\", title=\"Null hypothesis下における確率分布\")\nfig.update_layout(\n    xaxis_title=\"TreatedにおけるPositiveの人数\", yaxis_title=\"probability\"\n)\n\nfig.show()\n\n\n                                                \n\n\n\n\nexact p-valueの計算\n ▶  片側検定\n\\(X_{11} \\geq x\\) となる場合のp-valueをscipy.stats.fisher_exactで計算すると以下のようになります．\n\nfrom scipy.stats import fisher_exact\ntable = np.array([[21, 15], [4, 10]])\nres_greater = fisher_exact(table, alternative='greater')\nprint(\"scipy-p-value: {:.6f}\".format(res_greater.pvalue))\n\nscipy-p-value: 0.056829\n\n\n一方，上で計算したprobabilityに則って上側確率を見てみると\n\nprint(\"self-computed-pvalue: {:.6f}\".format(df.filter((pl.col(\"x\") &gt;= 21))['prob'].sum()))\n\nself-computed-pvalue: 0.056824\n\n\nと数値計算誤差を無視してしまえば大まかに一致することが確認できます．\n ▶  両側検定\n両側検定におけるp-valueは\n\\[\n\\begin{align*}\n\\text{p-value} = \\sum_{x} \\Pr(X_{11}={x}) \\text{ s.t } \\{x \\vert \\Pr(X_{11}={x}) \\leq \\Pr(X_{11}={x_{11}})\\}\n\\end{align*}\n\\]\nなので\n\nthreshold = df.filter((pl.col(\"x\") == 21))[\"prob\"].to_numpy()[0]\nres_twosided = fisher_exact(table, alternative=\"two-sided\")\nmyres_twosided = df.filter((pl.col(\"prob\") &lt;= threshold))[\"prob\"].sum()\nprint(\"\"\"scipy-p-value: {:.6f},self-computed-pvalue: {:.6f}\n      \"\"\".format(res_twosided.pvalue, myres_twosided))\n\nscipy-p-value: 0.113657,self-computed-pvalue: 0.113652\n      \n\n\nどちらの計算でもおよそ \\(11.37\\%\\) であることが確認できます．\n\n📘 REMARKS \n\n組み合わせの数が大きすぎ，exact p-valueの計算が難しい場合はMonte Carlo法を用いて計算します\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTreatment\nT\nT\nT\nT\nT\nC\nC\nC\nC\nC\n\n\nPromoted\n1\n1\n1\n1\n0\n1\n1\n0\n0\n0\n\n\n\nというTreatedのうち４人がPromotedされたデータが得られた場合，TreatedかつPromotedの人数を \\(X\\) としたとき， \\(\\Pr(X \\geq 4)\\) のついて計算参する場合は\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTreatment\nT\nT\nT\nT\nT\nC\nC\nC\nC\nC\n\n\nPromoted\n1\n0\n1\n0\n0\n1\n1\n1\n1\n1\n\n\n\nのように２行目についてPermutationをランダムに \\(Y\\) 回実施してサンプリングから \\(\\Pr(X \\geq 4)\\) を計算します（上の例では \\(X = 3\\)）となっている．このように計算されたp-valueはfisher’s exact p-valueのMonte Carlo approximationと読んだりします．\n\n\n\nOdds ratio\nscipy.stats.fisher_exactではpvalueのほかにstatisticという返り値をもっています．\n\nprint(res_twosided.statistic)\n\n3.5\n\n\nこの 3.5 はいわゆるodds ratioで\n\\[\n3.5 = \\frac{21 / 4}{15 / 10}\n\\]\nで計算されます．\n\nDef: Odds \n確率事象 \\(A\\) についての odds は以下のように計算される\n\\[\n\\begin{align*}\n\\text{odds}(A) = \\frac{\\Pr(A)}{1 - \\Pr(A)} = \\frac{\\Pr(A)}{\\Pr(A^c)}\n\\end{align*}\n\\]\n\noddsを用いることで表現がシンプルになるケースとしてフェアな賭けにおいける倍率の計算が上げられます． 例として，確率事象 A に対して1円を賭ける状況を考えます．確率事象 A が発生しなかったら1円を失い，確率事象 A が発生したら1円はキープ & x 円のリターンを得られるとします．\nこのとき，この賭けがフェアであるためには，期待利得が0であることが必要ですが，以下のように \\(x = \\text{odds}(A^c)\\) とリターンが設定されているとフェアな賭けになります．\n\\[\n\\begin{align*}\n&\\text{expected return} = x \\times \\Pr(A) + (-1) \\times \\Pr(A^c)\\\\\n&\\Rightarrow x = \\frac{\\Pr(A^c)}{\\Pr(A)} \\because \\text{exptected return should be 0}\\\\\n& \\Rightarrow x = \\text{odds}(A^c) = 1/\\text{odds}(A)\n\\end{align*}\n\\]\n\nDef: Odds ratio \nとある母集団にたいして，とある疾患の発症を抑制すると謳っている新薬を考えます．\n\n疾患が発症したならPositive, 発症しなかったらNegative\n新薬を処方されたらTreated, されなかったらControl\n\nとして，母集団の各組み合わせに対する事前割当確率が以下のようなクロスセルで定義されているとします．\n\n\n\n\n\n \n\n\n\n\n\n\nTreated\n\n\n\n\nControl\n\n\n\n\n\n\nPositive\n\n\n\n\n\\(p_{11}\\)\n\n\n\n\n\\(p_{12}\\)\n\n\n\n\n\n\nNegative\n\n\n\n\n\\(p_{21}\\)\n\n\n\n\n\\(p_{22}\\)\n\n\n\n\n\nこのとき，treated/control間の疾患発症のodds ratioは\n\\[\n\\text{odds ratio} = \\frac{p_{11}p_{22}}{p_{21}p_{12}}\n\\]\nで表現される．\n\n\n仮に Treated, Control両方のグループで疾患発症がレアなイベントだとすると \\(1- \\Pr(\\text{Positive} \\vert \\text{Treated}), 1-\\Pr(\\text{Positive} \\vert \\text{Control})\\) はともに十分小さくなり，\n\\[\n\\text{odds}(\\text{Positive}\\vert\\text{Treated}) \\approx Pr(\\text{Positive} \\vert \\text{Treated})\n\\]\nとみなせるので\n\\[\n\\frac{\\text{odds}(\\text{Positive}\\vert\\text{Treated})}{\\text{odds}(\\text{Positive}\\vert\\text{Control})} \\approx \\frac{Pr(\\text{Positive} \\vert \\text{Treated})}{Pr(\\text{Positive} \\vert \\text{Control})}\n\\]\nOdds ratioが0.7だとすると，Treated は Controlにくらべ 30% ほど疾患発症確率が低いという解釈に繋がります．\n\nOdds ratioの推定と信頼区間\n\n\n\n\n\n \n\n\n\n\n\n\nTreated\n\n\n\n\nControl\n\n\n\n\n合計\n\n\n\n\n\n\nPositive\n\n\n\n\n\\(x_{11}\\)\n\n\n\n\n\\(x_{12}\\)\n\n\n\n\n\\(x_{1\\cdot}\\)\n\n\n\n\n\n\nNegative\n\n\n\n\n\\(x_{21}\\)\n\n\n\n\n\\(x_{22}\\)\n\n\n\n\n\\(x_{2\\cdot}\\)\n\n\n\n\n\n\n合計\n\n\n\n\n\\(x_{\\cdot 1}\\)\n\n\n\n\n\\(x_{\\cdot 2}\\)\n\n\n\n\n\\(N\\)\n\n\n\n\n\n上記のようなデータについて，prior odds ratio \\(\\theta\\) の推定は\n\\[\n\\hat\\theta = \\frac{\\hat p_{11}\\hat p_{22}}{\\hat p_{21}\\hat p_{12}} \\  \\ \\text{where } \\hat p_{ij} = \\frac{x_{ij}}{N}\n\\]\n従って，\n\\[\n\\hat\\theta = \\frac{x_{11}x_{22}}{x_{21}x_{12}}\n\\]\n ▶  Confidence Intervalの計算\nConfidence Intervalは，実務では \\(\\log(\\theta)\\) を用いたCLTとdelta methodによる近似で計算されます．\n\\[\n\\begin{align*}\n\\mathbf p = (p_{11},p_{12},p_{21},p_{22})\n\\end{align*}\n\\]\nとしたとき，もともとのテーブルはクラス4の多項分布とみなせるので \\(\\mathbf p\\) についての共分散行列 \\(\\Sigma\\) は\n\\[\n\\begin{align*}\n\\Sigma = \\frac{1}{n}\\left(\n    \\begin{array}{cccc}\n    (1-p_{11}) p_{11} & -p_{11} p_{12} & -p_{11} p_{21} & -p_{11} p_{22} \\\\\n     -p_{11} p_{12} & \\left(1-p_{12}\\right) p_{12} & -p_{12} p_{21} & -p_{12} p_{22} \\\\\n     -p_{11} p_{21} & -p_{12} p_{21} & \\left(1-p_{21}\\right) p_{21} & -p_{21} p_{22} \\\\\n     -p_{11} p_{22} & -p_{12} p_{22} & -p_{21} p_{22} & (1-p_{22} p_{22}\n    \\end{array}\n\\right)\n\\end{align*}\n\\]\nまた，\\(\\log(\\theta) = \\log(p_{11}) - \\log(p_{12}) - \\log(p_{21}) + \\log(p_{22})\\) についての分散はdelta methodを用いて\n\\[\n\\begin{align*}\n&\\operatorname{Var}(\\log(\\mathrm{OR})) = (\\nabla f \\Sigma )\\times \\nabla f^T\\\\\n&\\nabla f = \\left(\\frac{1}{p_{11}},-\\frac{1}{p_{12}},-\\frac{1}{p_{21}},\\frac{1}{p_{22}}\\right)\n\\end{align*}\n\\]\nと表せます．これを推定値 \\(\\hat p_{ij}\\) を用いて計算すると\n\\[\n\\begin{align*}\n&\\widehat{\\operatorname{Var}(\\log(\\operatorname{OR})}=\\frac{1}{x_{11}}+\\frac{1}{x_{12}}+\\frac{1}{x_{21}}+\\frac{1}{x_{22}}\\\\\n&\\widehat{\\operatorname{SE}(\\log(\\operatorname{OR})}=\\sqrt{\\frac{1}{x_{11}}+\\frac{1}{x_{12}}+\\frac{1}{x_{21}}+\\frac{1}{x_{22}}}\n\\end{align*}\n\\]\n\\(\\mathbf p\\) は \\(N\\) が十分大きいときCLTより正規分布に近似できると考えられるので \\(\\log(\\hat\\theta)\\) についてのConfidence Intervalは\n\\[\n\\text{CI(log odds ratio)} = \\widehat{\\log(\\operatorname{OR})}\\pm z_{1-\\alpha/2}\\times \\widehat{\\operatorname{SE}(\\log(\\operatorname{OR})}\n\\]\nまた，odds ratioのConfidence Intervalは対数を再度変換すれば良いので\n\\[\n\\text{CI(odds ratio)} = \\exp(\\widehat{\\log(\\operatorname{OR})}\\pm z_{1-\\alpha/2}\\times \\widehat{\\operatorname{SE}(\\log(\\operatorname{OR})})\n\\]\nと計算できる．\n\n📘 REMARKS \n\n上記の方法でのConfidence intervalは \\(\\log(\\hat\\theta)\\) 自体の推定分散ではなく，CLTを用いているのであくまで分散についての極限分布を用いている\n\\(p_{21}\\) や \\(p_{12}\\) 自体は0になり得ることを考えると，\\(\\hat\\theta\\) や \\(\\log(\\hat\\theta)\\) が存在しないことも考えられる\n\n\n\n\nReferences\n\nPennState STAT 504 &gt; 4.5 - Fisher’s Exact Test",
+    "crumbs": [
+      "統計的仮説検定入門",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Fisher's exact test</span>"
+    ]
+  },
+  {
+    "objectID": "posts/statistical_hypothesis_test_101/fisher_exact_test.html#references",
+    "href": "posts/statistical_hypothesis_test_101/fisher_exact_test.html#references",
+    "title": "2  Fisher’s exact test",
+    "section": "",
+    "text": "PennState STAT 504 &gt; 4.5 - Fisher’s Exact Test",
+    "crumbs": [
+      "統計的仮説検定入門",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Fisher's exact test</span>"
+    ]
+  },
+  {
+    "objectID": "posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html",
+    "href": "posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html",
+    "title": "3  Fisher流検定 vs Neyman-Pearson流検定",
     "section": "",
     "text": "Fisher流検定の考え方\n２標本問題を考えたとき，２標本の平均の差がそのバラツキの大きさ（＝標準誤差）と比べて大きければ大きいほど 「母集団に差があり」のエビデンス力が高いという考えがFisher流検定となります．P値自体はサンプルサイズに依存すると留意していましたが， Fisher流ではP値が小さいほどエビデンス力が高いという解釈になります．さらに，\nというモノサシの提案をFisherはしました．これが現在の有意水準(significance level) 5% という慣習の由来であると言われています．\nなお，FisherはP値を統計家がデータの解析結果を「報告」するときのモノサシとしての提案にとどまっており， 効果があったか否かの「判定」は，統計家だけでなく関連専門家が参加するグループ討議によって，報告されたP値，分析対象，サンプルサイズ等を吟味して総合的に「判定」すべきであると考えてます．",
     "crumbs": [
       "統計的仮説検定の実践",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
     ]
   },
   {
-    "objectID": "posts/SHT/fisher_vs_neyman_pearson.html#fisher流検定の考え方",
-    "href": "posts/SHT/fisher_vs_neyman_pearson.html#fisher流検定の考え方",
-    "title": "2  Fisher流検定 vs Neyman-Pearson流検定",
+    "objectID": "posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html#fisher流検定の考え方",
+    "href": "posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html#fisher流検定の考え方",
+    "title": "3  Fisher流検定 vs Neyman-Pearson流検定",
     "section": "",
     "text": "平均の差が標準誤差の２倍未満であれば平均の差はバラツキによる差であって考慮に値しない，\n2倍以上の差があるとき，偶然のみに支配されたバラツキに比べると指標の値が相対的に大きいと言える→初めて科学的に意味のある差であるか否かを検討する対象になりうる（正規分布を仮定したとき，約5％水準に相当）",
     "crumbs": [
       "統計的仮説検定の実践",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
     ]
   },
   {
-    "objectID": "posts/SHT/fisher_vs_neyman_pearson.html#neyman-pearson流検定の考え方",
-    "href": "posts/SHT/fisher_vs_neyman_pearson.html#neyman-pearson流検定の考え方",
-    "title": "2  Fisher流検定 vs Neyman-Pearson流検定",
+    "objectID": "posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html#neyman-pearson流検定の考え方",
+    "href": "posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html#neyman-pearson流検定の考え方",
+    "title": "3  Fisher流検定 vs Neyman-Pearson流検定",
     "section": "Neyman-Pearson流検定の考え方",
     "text": "Neyman-Pearson流検定の考え方\nNeyman-Pearson流は統計的検定について\n\n\\(H_0: \\theta \\in \\Theta_0\\), Null hypothesis\n\\(H_1: \\theta \\not\\in \\Theta_0\\), Alternative hypothesis\n\nの２つを設定し，観察されたデータに基づいてどちらの仮説がより妥当な仮説であるかを判定する問題という統計的判定問題を考えました． 統計的判定問題のおける判定の誤りについて，\n\nType I Error: \\(H_0\\) が正しいのに誤って \\(H_0\\) を棄却するエラー\nType II Error: \\(H_1\\) が正しいのに誤って \\(H_0\\) を採択するエラー\n\nの２種類があるとし，Type I Errorの確率を \\(\\alpha\\) に抑えた上で，Type II Errorの確率 \\(\\beta\\) を最小にする制約付き最小化問題 として統計的判定問題を定式化しました．\n\n\n\n\n\n \n\n\n\n\nTruth\n\n\n\n\n\n\n\\(H_0\\)\n\n\n\n\n\\(H_1\\)\n\n\n\n\n\n\n\n\n\n\n\n検定結果\n\n\n\n\n\\(H_0\\)\n\n\n\n\n正しい(\\(1- \\alpha\\))\n\n\n\n\nType II Error(\\(\\beta\\))\n\n\n\n\n\n\n\\(H_1\\)\n\n\n\n\nType I Error(有意水準: \\(\\alpha\\))\n\n\n\n\n正しい（検出力: \\(1 - \\beta\\)）\n\n\n\n\n\n検定問題に対応する 検定統計量 \\(T\\), \\(H_0\\) の棄却域を \\(R\\) で表すとそれぞれ以下のように表現されます\n\nType I Error rate, \\(\\alpha = \\Pr(T \\in R \\vert H_0)\\)\nType II Error rate: \\(\\beta = \\Pr(T \\not\\in R \\vert H_1)\\)\n\nFisher流ではP値の大きさがエビデンス力という意味を持つことに対して，Neyman-Pearson流では\n\n事前に定められた有意水準 \\(\\alpha\\) をP値が下回るなら効果ありとの判定\nそうでないなら，効果なしとの判定\n\\(P = 0.00001\\) だろうが \\(P = 0.049\\) だろうがP値の水準自体には意味を求めない\n\nという違いがあります．\n\n📘 REMARKS \nNeyman-Pearson流では， \\(\\alpha, \\beta\\) を用いて統計的に効果があると言えるか？という統計的判定問題として仮説検定を定式化しましたが，\n\n統計的検定は決定するための方法ではなく，結果を報告するための方法である by F.Mostelller(1916-2006)\n\nと理解するにとどめたほうが良いとされています．",
     "crumbs": [
       "統計的仮説検定の実践",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
     ]
   },
   {
-    "objectID": "posts/SHT/fisher_vs_neyman_pearson.html#探索的リサーチと検証的リサーチ",
-    "href": "posts/SHT/fisher_vs_neyman_pearson.html#探索的リサーチと検証的リサーチ",
-    "title": "2  Fisher流検定 vs Neyman-Pearson流検定",
+    "objectID": "posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html#探索的リサーチと検証的リサーチ",
+    "href": "posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html#探索的リサーチと検証的リサーチ",
+    "title": "3  Fisher流検定 vs Neyman-Pearson流検定",
     "section": "探索的リサーチと検証的リサーチ",
-    "text": "探索的リサーチと検証的リサーチ\n特定の疾患をターゲットとして行われる医薬品の開発過程を例にすると，\n\n候補化学物質について，発がん性試験，変異原性試験，薬効薬理研究など様々な試験をラットや細胞に対して探索的に実施\n健常なヒトを対象に臨床第I相試験として，安全性や薬物動態などを探索的に研究\n当該疾患の患者を対象に第II相臨床試験として，病気の程度によってどのような効き目を発揮するのか（有効性）、副作用はどの程度か（安全性）、またどのような使い方（投与量・間隔・期間など）をしたらよいか、を研究\n第III相臨床試験として，医薬品の有効性と安全性をRCTで検証\n\n第III相臨床試験においては，TreatmentのEffect Sizeの想定と十分なサンプルサイズを確保した上でRCTを実施，そして得られたデータに基づいて統計的意味における効果の有無を検証しています． このようなリサーチを検証的リサーチといいます．\n一方，それまでの動物試験，非臨床試験，臨床第I相試験，臨床第II相試験では，Effect Sizeやサンプルサイズが事前に統計的に設定される場合は少なく，あくまで 次の分析ステップに進む値するエビデンス収集や仮説立案という目的で実施されるリサーチです．このような分析を探索的リサーチと呼びます．\n\n検証的リサーチにおける仮説検定手順\nとあるPopulationを対象に実施するTreatmentの効果をRCTで仮説検定検証する場合，基本的には次のような一連の手順で実施します．\n\n検証的リサーチ手順\n\n\n\n\n\n\n手順\n説明\n\n\n\n\n手順(1)\n主要評価項目 \\(\\delta\\) を定義し，期待される水準 \\(\\delta_0\\) を見積もる\n\n\n手順(2)\n\\(H_0: \\delta = 0, H_1: \\delta \\neq 0\\) のようにHypothesesを言語化する\n\n\n手順(3)\n有意水準 \\(\\alpha\\), 検出力 \\(1 - \\beta\\) を定める\n\n\n手順(4)\n有意水準 \\(\\alpha\\), 検出力 \\(1 - \\beta\\) のもとで \\(\\delta_0\\) を検出するための必要サンプルサイズを計算する\n\n\n手順(5)\nPopulationからランダムにEntityをサンプリングして，手順(4)のサンプルサイズを満たすようにEntityをランダム or 層化ランダムでtreated/controlに割り当てる\n\n\n手順(6)\ntreated, controlのバランスチェック\n\n\n手順(8)\ntreated, controlがともに実験から逸脱しない形でそれぞれ処置を受けることを観察(= プロトコル遵守の確保)\n\n\n手順(8)\ntreated, controlのデータを収集し，Attritionなどの対応を実施した上で，主要評価項目, 検定統計量を計算\n\n\n手順(9)\n手順(8)で計算された検定統計量を元に，統計的検定を実施し，P値が有意水準 \\(\\alpha\\) 以下ならば効果があると統計的判断を下し，それ以外の場合では \\(H_0\\) が棄却できなかったとする\n\n\n\n上記の手順に則って，\\(H_0\\) が棄却された場合，少なくとも \\(\\delta \\geq \\delta_0\\) なのだろうという統計的判断がなされます．\n\n\n探索的リサーチと仮説検定\n探索的リサーチでは，多くの場合，サンプルサイズや特徴量バランスがコントロールできない観察データを対象に分析し， また次のリサーチに進むための仮説構築や検討に値する特徴量スクリーニングを目的とすることが多いです．このとき検定を実施するとしても，有意水準，検出力，Effect Sizeを想定した Neyman-Pearson流の検定の実施は難しく，偶然のバラツキにしては差が大きそうというインサイトを得ることを目的としたFisher流仮説検定の用い方となります．\nただ，P値に基づいて推論を行うのではなく，平均の差やハザード比などの指標や信頼区間，またその分野のドメイン知識を考慮した上で， 総合的に結果を解釈→仮説の構築をすることが重要です．",
+    "text": "探索的リサーチと検証的リサーチ\n特定の疾患をターゲットとして行われる医薬品の開発過程（詳細はこちら）を例にすると，\n\n候補化学物質について，発がん性試験，変異原性試験，薬効薬理研究など様々な試験をラットや細胞に対して探索的に実施\n健常なヒトを対象に臨床第I相試験として，安全性や薬物動態などを探索的に研究\n当該疾患の患者を対象に第II相臨床試験として，病気の程度によってどのような効き目を発揮するのか（有効性）、副作用はどの程度か（安全性）、またどのような使い方（投与量・間隔・期間など）をしたらよいか、を研究\n第III相臨床試験として，医薬品の有効性と安全性をRCTで検証\n\n第III相臨床試験においては，TreatmentのEffect Sizeの想定と十分なサンプルサイズを確保した上でRCTを実施，そして得られたデータに基づいて統計的意味における効果の有無を検証しています． このようなリサーチを検証的リサーチといいます．\n一方，それまでの動物試験，非臨床試験，臨床第I相試験，臨床第II相試験では，Effect Sizeやサンプルサイズが事前に統計的に設定される場合は少なく，あくまで 次の分析ステップに進む値するエビデンス収集や仮説立案という目的で実施されるリサーチです．このような分析を探索的リサーチと呼びます．\n\n検証的リサーチにおける仮説検定手順\nとあるPopulationを対象に実施するTreatmentの効果をRCTで仮説検定検証する場合，基本的には次のような一連の手順で実施します．\n\nTable: 検証的リサーチ手順\n\n\n\n\n\n\n手順\n説明\n\n\n\n\n手順(1)\n主要評価項目 \\(\\delta\\) を定義し，期待される水準 \\(\\delta_0\\) を見積もる\n\n\n手順(2)\n\\(H_0: \\delta = 0, H_1: \\delta \\neq 0\\) のようにHypothesesを言語化する\n\n\n手順(3)\n有意水準 \\(\\alpha\\), 検出力 \\(1 - \\beta\\) を定める\n\n\n手順(4)\n有意水準 \\(\\alpha\\), 検出力 \\(1 - \\beta\\) のもとで \\(\\delta_0\\) を検出するための必要サンプルサイズを計算する\n\n\n手順(5)\nPopulationからランダムにEntityをサンプリングして，手順(4)のサンプルサイズを満たすようにEntityをランダム or 層化ランダムでtreated/controlに割り当てる\n\n\n手順(6)\ntreated, controlのバランスチェック\n\n\n手順(7)\ntreated, controlがともに実験から逸脱しない形でそれぞれ処置を受けることを観察(= プロトコル遵守の確保)\n\n\n手順(8)\ntreated, controlのデータを収集し，Attritionなどの対応を実施した上で，主要評価項目, 検定統計量を計算\n\n\n手順(9)\n手順(8)で計算された検定統計量を元に，統計的検定を実施し，P値が有意水準 \\(\\alpha\\) 以下ならば効果があると統計的判断を下し，それ以外の場合では \\(H_0\\) が棄却できなかったとする\n\n\n\n上記の手順に則って，\\(H_0\\) が棄却された場合，少なくとも \\(\\delta \\geq \\delta_0\\) なのだろうという統計的判断がなされます．\n\n\n探索的リサーチと仮説検定\n探索的リサーチでは，多くの場合，サンプルサイズや特徴量バランスがコントロールできない観察データを対象に分析し， また次のリサーチに進むための仮説構築や検討に値する特徴量スクリーニングを目的とすることが多いです．このとき検定を実施するとしても，有意水準，検出力，Effect Sizeを想定した Neyman-Pearson流の検定の実施は難しく，偶然のバラツキにしては差が大きそうというインサイトを得ることを目的としたFisher流仮説検定の用い方となります．\nただ，P値に基づいて推論を行うのではなく，平均の差やハザード比などの指標や信頼区間，またその分野のドメイン知識を考慮した上で， 総合的に結果を解釈→仮説の構築をすることが重要です．",
     "crumbs": [
       "統計的仮説検定の実践",
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
+    ]
+  },
+  {
+    "objectID": "posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html#appendix-新薬誕生までのプロセス",
+    "href": "posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html#appendix-新薬誕生までのプロセス",
+    "title": "3  Fisher流検定 vs Neyman-Pearson流検定",
+    "section": "Appendix: 新薬誕生までのプロセス",
+    "text": "Appendix: 新薬誕生までのプロセス\n\n\n\n出典: 治験の３つのステップ，群馬大学医学部附属病院 先端医療開発センター臨床研究推進部\n\n\n\nTable: 各工程における分析目的\n\n\n\n\n\n\n工程\n説明\n\n\n\n\n新規物質の探索・創製\n薬になりそうな新しい物質を探したり，作り出したりすること\n\n\n物理的化学的研究\n新規物質の構造や物理的・化学的な性状などを調べること\n\n\n薬効薬理研究\nどのような効果があるか，どのようなメカニズムで効果を現すのかなどを調べること\n\n\n薬物動態研究\nどのように，体内に吸収され，臓器などに分布し，代謝されて排泄されるかなどを調べること\n\n\n一般薬理研究\nどのような部位にどんな作用を及ぼすかなど，薬効薬理作用以外の安全性に関する作用を調べること\n\n\n一般毒性研究\n投与期間を短・中・長期などに分けて，毒性（安全性）を広く調べること\n\n\n特殊毒性研究\n発がん性や胎児への影響がないかなど，特別な毒性（安全性）を調べること\n\n\n臨床第I相試験（臨床薬理試験）\n少数の健康成人などについて，主に安全性や薬物動態などを調べる試験\n\n\n臨床第II相試験（探索的試験）\n比較的少数の患者さんについて，有効性と安全性などを調べる試験\n\n\n臨床第III相試験（検証的試験）\n多数の患者さんについて，標準的な「くすり」などと比較して有効性と安全性を確認する試験\n\n\n製造販売後調査\n製造販売後に多くの患者さんに使用されたときの安全性や有効性などの情報を集め，それを分析・ 評価して医療関係者などに伝えること",
+    "crumbs": [
+      "統計的仮説検定の実践",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Fisher流検定 vs Neyman-Pearson流検定</span>"
     ]
   },
   {
@@ -85,8 +129,8 @@
     ]
   },
   {
-    "objectID": "posts/SHT/chapter_header.html",
-    "href": "posts/SHT/chapter_header.html",
+    "objectID": "posts/statistical_hypothesis_test_201/chapter_header.html",
+    "href": "posts/statistical_hypothesis_test_201/chapter_header.html",
     "title": "統計的仮説検定の実践",
     "section": "",
     "text": "References",
@@ -95,8 +139,8 @@
     ]
   },
   {
-    "objectID": "posts/SHT/chapter_header.html#references",
-    "href": "posts/SHT/chapter_header.html#references",
+    "objectID": "posts/statistical_hypothesis_test_201/chapter_header.html#references",
+    "href": "posts/statistical_hypothesis_test_201/chapter_header.html#references",
     "title": "統計的仮説検定の実践",
     "section": "",
     "text": "柳川堯 (2018), P値: その正しい理解と適用, 近代科学社.\n\n\n永田靖 (2003), サンプルサイズの決め方, 朝倉書店.",
