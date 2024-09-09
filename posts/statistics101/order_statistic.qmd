@@ -1,0 +1,269 @@
+---
+title: "順序統計量"
+jupyter: python3
+author: "Ryo Nakagtami"
+date: "2024-09-07"
+date-modified: last-modified
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+# when you run this file locally, do not forget to run poetry shell
+---
+
+## 順序統計量
+
+<div class="blog-custom-border">
+<strong>Def: 順序統計量</strong> <br>
+
+$X_1, \cdots, X_n \overset{\mathrm{iid}}{\sim} F$ とするとき，これkらの確率変数の値を小さい順に並び替えたものを
+
+$$
+X_{(1)}\leq\cdots\leq X_{(i)}\leq\cdots \leq X_{(n)}
+$$
+
+と表し，順序統計量(order statistic)という．
+
+</div><br>
+
+<strong > &#9654;&nbsp; $X_{(i)}$ の累積密度関数と確率密度関数</strong>
+
+$F$ を密度関数 $f$ を持つ連続分布として，$X_{(i)} \leq x$ となる事象を考える．この事象は
+$X_1, \cdots, X_n$ のなかで $x$ 以下となるものの個数が $i$ 個以上であるという事象と同地なので
+
+$$
+B_k = \{X_1, \cdots, X_n\text{のうち}k\text{個が}x\text{以下}\}
+$$
+
+と事象 $B_k$ を設定すると，
+
+$$
+\Pr(X_{(i)}\leq x) = \sum_{k=i}^n \Pr(B_k)
+$$
+
+それぞれの $X_j$ について，独立に成功確率 $p = F(x)$ のベルヌーイ試行と考えることができるので
+
+$$
+F_{X_{(i)}}(X) = \sum_{k=i}^n {}_nC_{k} p^k (1 - p)^{n-k}, \ \ p=F(x)
+$$
+
+となることがわかります．また，この式を $x$ で微分することで $X_{(i)}$ の確率密度関数がわかるので, $p(k, m)$ を $\operatorname{Binom}(m, p)$ の確率関数とすると
+
+$$
+\begin{align*}
+&\frac{\mathrm{d}}{\mathrm{d}p} {}_nC_{k} p^k (1 - p)^{n-k}\\
+&= \frac{n!}{(k-1)!(n-k)!}p^{k-1}(1-p)^{n-k} - \frac{n!}{k!(n-k-1)!}p^{k-1}(1-p)^{n-k-1}\\
+&= n (p(k-1, n-1) - p(k. n-1))
+\end{align*}
+$$
+
+従って，$p(n, n-1) =0$ とすると，
+
+$$
+\begin{align*}
+f_{X_{(i)}}(x) &= nf(x)\sum_{k=i}^n(p(k-1, n-1) - p(k. n-1))\\
+               &= nf(x) p(i-1, n-1)\\
+               &= \frac{n!}{(i-1)!(n-i)!}f(x)F(x)^{i-1}(1 - F(x))^{n-i}
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; 最大値の分布関数</strong>
+
+最大値の分布関数 $\Pr(X_{(n)} \leq x)$ は 
+
+$$
+\max_i X_i \leq x \Leftrightarrow X_i \leq x, \  \ i = 1, \cdots, n
+$$
+
+なので，
+
+$$
+\begin{align*}
+&\Pr(\max_i X_i \leq x )= F(x)^n\\
+&f_{X_{(n)}}(x) = nf(x)F(x)^{n-1}
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; 最小値の分布関数</strong>
+
+最小値の分布関数 $\Pr(X_{(1)} \leq x) = \Pr(\min(X_i)\leq x)$ は 
+
+$$
+\min_i X_i > x \Leftrightarrow X_i > x, \  \ i = 1, \cdots, n
+$$
+
+より
+
+$$
+\begin{align*}
+&\Pr(\min_i X_i \leq x )= 1 - (1 - F(x))^n\\
+&f_{X_{(1)}}(x) = nf(x)(1 - F(x))^{n-1}
+\end{align*}
+$$
+
+<div style='padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#00008B;'>
+::: {#exm- .custom_problem } 
+**一様分布に従う確率変数列の順序統計量とベータ分布**
+<br>
+
+$X_1, \cdots, X_n \overset{\mathrm{iid}}{\sim} \operatorname{Unif}(0, 1)$ とするとき，第 $i$ 順序統計量の確率密度関数と分布関数はそれぞれ以下のようになる
+
+$$
+\begin{align*}
+f_{X_{(i)}} &= \frac{n!}{(i-1)!(n-i)!} x^{i-1}(1 - x)^{n-i}\\
+            &= \frac{x^{i-1}(1 - x)^{n-i}}{\operatorname{B}(i, n-i+1)}\\
+F_{X_{(i)}} &= \sum_{k=i}^n \frac{n!}{(n-k)!k!} x^k (1 - x)^{n-k}\\
+            &= \frac{n!}{(i-1)!(n-i)!}\int^x_0t^{i-1}(1 - t)^{n-i}\mathrm{d}t
+\end{align*}
+$$
+
+従って，$X_{(i)}$ はベータ分布 $\operatorname{Beta}(i, n-i+1)$ に従うことがわかる．ここから $\operatorname{Beta}(1, 1)$ が 
+$\operatorname{Unif}(0, 1)$ に等しくなることもわかる．
+
+:::
+
+</div>
+
+```{python}
+import numpy as np
+from scipy.stats import beta
+import plotly.express as px
+import plotly.graph_objects as go
+
+N = 10
+ITER = 10000
+I = 9
+NBINS = 100
+a, b = 10, 1
+np.random.seed(42)
+
+
+def random_sampling_from_unif(index, size):
+    return sorted(np.random.uniform(0, 1, size))[index]
+
+
+x = np.array(list(map(lambda x: random_sampling_from_unif(I, N), range(ITER))))
+beta_x = np.linspace(beta.ppf(0.01, a, b), beta.ppf(0.99, a, b), NBINS)
+
+# plot
+newnames = {"0": "sample maximum"}
+fig = px.histogram(x, histnorm="probability density", nbins=NBINS, title="maximum value distribution of 10 rvs from Unif(0, 1)")
+fig.for_each_trace(
+    lambda t: t.update(
+        name=newnames[t.name],
+        hovertemplate=t.hovertemplate.replace(t.name, newnames[t.name]),
+    )
+)
+fig.add_trace(
+    go.Scatter(
+        x=beta_x, y=beta.pdf(beta_x, a, b), mode="lines", name="beta(10, 1) pdf"
+    ),
+    row=1,
+    col=1,
+)
+fig.show()
+```
+
+## 最大値と最小値の同時密度関数
+
+<div style='padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#00008B;'>
+::: {#thm- .custom_problem }
+**最大値と最小値の同時密度関数**
+<br>
+
+$X_1, \cdots, X_n \overset{\mathrm{iid}}{\sim} F$ とするとき，$x<y$ とすると
+
+$$
+\begin{align*}
+F_{X_{(1)},X_{(n)}}(x, y) &= \Pr(X_{(1)} \leq x,X_{(n)}\leq y)\\
+                          &= [F(y)]^n - [F(y) - F(x)]^n
+\end{align*}
+$$
+
+同時確率密度関数は
+
+$$
+f_{X_{(1)},X_{(n)}}(x, y) = n(n-1)[F(y) - F(x)]^{n-2}f(x)f(y)
+$$
+
+
+:::
+
+</div>
+
+$x < y$ の条件のもとで，
+
+$$
+F_{X_{(1)},X_{(n)}}(x, y) = \Pr(X_{(1)} \leq x,X_{(n)}\leq y)
+$$
+
+についてまず考える．確率事象の排他性より
+
+$$
+\Pr(X_{(n)} \leq y) = \Pr(X_{(1)}\leq x, X_{(n)}\leq y) + \Pr(X_{(1)}> x, X_{(n)}\leq y)
+$$
+
+ここから，$\Pr(X_{(1)}\leq x, X_{(n)}\leq y) = \Pr(X_{(n)} \leq y) - \Pr(X_{(1)}> x, X_{(n)}\leq y)$ を得る．
+
+$$
+\begin{align*}
+&\Pr(X_{(1)}> x, X_{(n)}\leq y)\\
+&= \Pr(x < X_{(1)} \leq y, \cdots, x < X_{(i)} \leq y, \cdots, x< X_{(n)}\leq y)\\
+&= [F(y) - F(x)]^n \because{\operatorname{i.i.d}}
+\end{align*}
+$$
+
+$\Pr(X_{(n)}\leq y) = [F(y)]^n$ であるのは上で確認したので，従って，
+
+$$
+\begin{align*}
+F_{X_{(1)},X_{(n)}}(x, y) &= \Pr(X_{(1)} \leq x,X_{(n)}\leq y)\\
+                          &= [F(y)]^n - [F(y) - F(x)]^n
+\end{align*}
+$$
+
+同時確率密度関数は
+
+$$
+\begin{align*}
+f_{X_{(1)},X_{(n)}}(x, y) &= \frac{\mathrm{d}}{\mathrm{d}x}\frac{\mathrm{d}}{\mathrm{d}x}\{[F(y)]^n - [F(y) - F(x)]^n\}\\
+&= \frac{\mathrm{d}}{\mathrm{d}x}\{n[F_y]^{n-1}f(y) - n[F(y) - F(x)]^{n-1}f(y)\}\\
+&= n(n-1)[F(y) - F(x)]^{n-2}f(y)f(x)
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; A heuristic approach for calculating the joint pdf</strong>
+
+$\min X_i = x, \max X_i =y$, と決まっており, それ以外の値は $(x, y)$ 区間に収まっていれば何でも良いので，
+index通りに順番があるならば
+
+$$
+f(x)[F(y) - F(x)]^{n-2}f(y)
+$$
+
+また，この並べ方は $n!$ 通り存在するが，$X_{(1)}, X_{(n)}$ 以外の並び方には区別はいらないので
+
+$$
+\frac{n!}{(n-2)!}f(x)[F(y) - F(x)]^{n-2}f(y) = n(n-1)f(x)[F(y) - F(x)]^{n-2}f(y)
+$$
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+並び替えの考えで同様に $(X_{(1)}, \cdots, X_{(n)})$ の同時確率密度関数は
+
+$$
+f_{X_{(1)}, \cdots, X_{(n)}}(x_1, \cdots, x_n) = n!f(x_1)f(x_2)\cdots f(x_n)
+$$
+
+であることがわかる．
+
+$X_{(i)}, X_{(j)}$ の同時確率密度関数は
+
+$$
+f_{X_{(i)}, X_{(j)}}(x, y)=\frac{n!}{(i-1)!(j-i-1)!}(n-j)!f(x)f(y)F(x)^{i-1}[F(y)-F(x)]^{j-i-1}[1 - F(y)]^{n-j}
+$$
+
+
+
+</div>
