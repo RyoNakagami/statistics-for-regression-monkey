@@ -1,0 +1,13 @@
+---
+title: "Mathematical Appendix"
+author: "Ryo Nakagami"
+date: "2024-09-12"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
