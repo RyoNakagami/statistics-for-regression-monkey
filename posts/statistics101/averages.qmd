@@ -1,0 +1,358 @@
+---
+title: "代表値"
+jupyter: python3
+author: "Ryo Nakagtami"
+date: "2024-09-07"
+date-modified: last-modified
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+# when you run this file locally, do not forget to run poetry shell
+---
+
+## 代表値
+
+<div class="blog-custom-border">
+<strong>Def: 代表値(Averages)</strong> <br>
+
+- 分布を代表する値のことを代表値と呼ぶ
+- 例: mean, median, mid-range, mode, quartile(四分位点)
+
+</div>
+
+### 平均
+
+<strong > &#9654;&nbsp; 標本平均</strong>
+
+データ $X = \{x_1, \cdots, x_n\}$ が与えられとき，標本平均（sample mean） $\overline{x}$ は次になります：
+
+$$
+\overline{x} = \frac{x_1 + \cdots + x_n}{n}
+$$
+
+標本平均は分布の代表値として最も使用されるものだが，外れ値に対して弱い性質がある．
+
+```{python}
+#| code-fold: false
+import numpy as np
+
+X_0 = np.array([5.6, 5.7, 5.4, 5.5, 5.8, 5.2, 5.3, 5.6, 5.4, 55.5])
+X_1 = np.array([5.6, 5.7, 5.4, 5.5, 5.8, 5.2, 5.3, 5.6, 5.4])
+
+print(
+    """X_0: sample mean = {}, median = {}\nX_1: sample mean = {}, median = {}
+      """.format(
+        np.mean(X_0), np.median(X_0), np.mean(X_1), np.median(X_1)
+    )
+)
+```
+
+上記の例のように，medianは外れ値の混入があってもその影響は軽微ですが，標本平均は大きく変わっており外れ値に対して弱いことがわかる．
+
+<strong > &#9654;&nbsp; 刈り込み平均</strong>
+
+外れ値の影響を弱めて標本平均を推定する方法として，刈り込み平均(trimmed mean)があります．
+上側 $100\alpha \%$ と下側 $100\alpha \%$ を使わないで推定する方法で，$x_{[i]}$ を順序統計値として
+
+$$
+\hat\mu_\alpha = \frac{1}{n-2m} \sum_{i=m+1}^{n-m}x_{[i]}, \  \ m = \lfloor n\alpha \rfloor
+$$
+
+で推定する方法を刈り込み平均という．利用にあたって，外れ地の割合を事前に想定する必要がありますが，
+少々適当に推定しても妥当な推定になりやすい特徴があります．
+
+$\alpha = 0.1$ としてPythonで計算してみると以下，
+
+```{python}
+#| code-fold: false
+from scipy import stats
+self_trimmed_mean = np.mean([5.7, 5.4, 5.5, 5.8, 5.4, 5.3, 5.6, 5.6])
+trimmed_mean = stats.trim_mean(X_0, 0.1)
+print(self_trimmed_mean, trimmed_mean)
+```
+
+Trimmed meanはARE(Asymptotic relative efficiency, 漸近相対効率)という観点からも大抵の裾の重さに対して（重すぎるのは厳しいですが．．．）高いパフォーマンスがあることが知られています．
+
+<strong > &#9654;&nbsp; 幾何平均</strong>
+
+$x_i > 0$ となるようなデータについて，幾何平均は以下のように計算されます：
+
+$$
+\overline{x}_G = \bigg(\prod_{i=1}^n x_i \bigg)^{\frac{1}{n}}
+$$
+
+2000年から2005年までのXこくのでの物価上昇率が2%, 5%, 2%, 5%, 10%とあるとき，年平均上昇率は算術平均ではなく幾何平均で計算すべきで
+
+$$
+(1.02 \times 1.05 \times 1.02 \times 1.05 \times 1.1)^{1/5} \approx 1.0476
+$$
+
+すなわち年平均約4.8%の増加と報告すべきとなります．なお，相加相乗平均より，幾何平均は算術平均より小さい値になることがわかります．もし大きい値を出してしまっていたら計算ミスを疑うべきです．
+
+幾何平均について対数をとると以下のように算術平均で表すことができます
+
+$$
+\log(\overline{x}_G) = \frac{1}{n}\sum \log(x_i)
+$$
+
+ここから，幾何平均を計算するときは一旦log transformationを実行し，算術平均を計算し，その後 $\exp(\cdot)$ で元のスケールに戻すという形でよく計算されます．
+
+クラス分類の評価指標との関係では，sensitivity(感応度)とspecificity(特異度)の幾何平均を用いたG-Mean(geometric mean)という指標があります．
+
+$$
+\begin{align*}
+\operatorname{G-mean} &= \sqrt{\operatorname{sensitivity} \times \operatorname{specificity}}\\
+                      &= \sqrt{\operatorname{recall} \times \operatorname{True Negative Rate}}
+\end{align*}
+$$
+
+
+<strong > &#9654;&nbsp; 調和平均</strong>
+
+$x_i > 0$ となるようなデータについて，調和平均(harmonic mean)は以下のように計算されます：
+
+$$
+\frac{1}{\overline{x}_H} = \frac{1}{n}\sum\frac{1}{x_i}
+$$
+
+とある車が距離 $\alpha$ の区間Aでは25km/h, 距離 $\beta$ の区間Bでは15km/hで走っていたとします．このとき，この車の平均時速は 
+
+$$
+\frac{1}{\text{平均時速}} = \frac{\alpha}{\alpha + \beta} \frac{1}{25} + \frac{\beta}{\alpha + \beta} \frac{1}{15}
+$$
+
+$\alpha = \beta$ のときは
+
+$$
+\frac{1}{\text{平均時速}}  = \frac{1}{2} \bigg(\frac{1}{25} + \frac{1}{15}\bigg)
+$$
+
+平均を計算するにあたって，値が同じスケールの単位である必要であるため，上の平均時速の例では調和平均を利用することが
+好ましいとされます．なお区間Aをx時間で25km/h, 区間Bをy時間で15km/hという場合はウェイトが時間単位で表されているので
+
+$$
+\text{平均時速} = \frac{x}{x + y} \times 25 + \frac{y}{x + y} \times 15 
+$$
+
+モデルの評価指標の１つにprecisionとrecallを用いたF1-scoreがありますが，precisionとrecallも分子はそれぞれTrue Positiveで共通していますが，分母がそれぞれ $\operatorname{TP} + \operatorname{FP}, \operatorname{TP} + \operatorname{FN}$ と異なっているので，調和平均を用いて以下のように計算します：
+
+$$
+\begin{align*}
+\operatorname{F1-score} &= \frac{1}{\frac{1}{2} \left(\frac{1}{\text{precision}} + \frac{1}{\text{recall}}\right)}\\
+&= \frac{2}{\frac{1}{\text{precision}} + \frac{1}{\text{recall}}}
+\end{align*}
+$$
+
+なお，これはウェイトが等しい場合を意味しており，weighted harmonic meanへ拡張する場合は以下のように $\operatorname{F_\beta-score}$ を用いて計算します
+
+$$
+\operatorname{F_\beta-score} = \frac{1 + \beta^2}{\frac{1}{\text{precision}} + \frac{\beta^2}{\text{recall}}}
+$$
+
+ウェイトが $\frac{1}{1 + \beta^2}, \frac{\beta^2}{1 + \beta^2}$ の形を取っているのは一見不自然に見えますが，その考察で面白いのが[van Rijs-bergen’s E (effectiveness) functionに基づいた説明](https://people.cs.pitt.edu/~litman/courses/cs1671s20/F-measure-YS-26Oct07.pdf)です．
+
+
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+定義域が $\mathbb R_+$ の確率変数 $X$ を考える（つまり $X > 0$）.  このとき, 
+
+- $H_x$: 調和平均
+- $G_x$: 幾何平均
+- $\overline{X}$: 標本平均
+
+として以下が常に成り立つ
+
+$$
+H_x \leq G_x \leq \overline{X}
+$$
+
+:::
+
+</div>
+
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: Jensen's inequalityを用いた証明
+
+Jensen's inequalityより 関数 $g$ を凸関数(convex function)とすると
+
+$$
+\frac{1}{n}\sum_{i=1}^ng(x_i)\geq g(\bar{x})
+$$
+
+という不等式が成り立つ.
+
+<strong > &#9654;&nbsp; $\bar{X} \geq G_x$ の証明</strong>
+
+$f(x) = -\log(x)$ とすると $f$ は単調減少の凸関数であるので
+
+$$
+\begin{align*}
+-\log(\bar{x}) &\leq -\frac{1}{n}\sum_{i=1}^n\log(x_i)\\
+                    &= -\log(\prod_{i=1}^n x_i^{1/n})\\
+                    &= -\log(G_x)
+\end{align*}
+$$
+
+つまり，$\log(\overline{x})\geq \log(G_x) \Rightarrow \bar{X} \geq G_x$
+
+<strong > &#9654;&nbsp; $G_x \geq H_x$ の証明</strong>
+
+$1/x_i = y_i$ と変換すると
+
+$$
+\begin{align*}
+G_x &= \left(\prod \frac{1}{y_i}\right)^{1/n}\\
+H_x &= \frac{1}{\bar y}
+\end{align*}
+$$
+
+それぞれについて $f(x) = \log(x)$ とすると
+
+$$
+\begin{align*}
+\log(G_x) &= \frac{1}{n}\sum_{i=1}^n(-\log(y_i))\\
+\log(H_x) &= -\log(\bar y)
+\end{align*}
+$$
+
+$-\log(\cdot)$ は凸関数であるので
+
+$\log(G_x) \geq \log(H_x) \Rightarrow G_x \geq H_x$ を得る．
+
+:::
+
+### 中央値
+
+<div class="blog-custom-border">
+<strong>Def: median</strong> <br>
+
+データ $x_1, \cdots, x_n$ を小さい順に並び替えた順序統計量 
+
+$$
+x_{[1]} < \cdots < x_{[n]}
+$$
+
+について，真ん中の値を中央値という．つまり，
+
+$$
+\operatorname{Med}(X) = \left\{\begin{array}{cl} 
+x_{[k]} & \text{where } n = 2k-1\\
+\displaystyle \frac{x_{[k]} + x_{[k+1]}}{2} & \text{where } n = 2k
+\end{array}\right.
+$$
+
+</div>
+
+<strong > &#9654;&nbsp; Hodges-Lehmann推定量</strong>
+
+標本の中からペアを選び，そのヘアの平均の中央値を用いて中央値を推定するのがホッジスレーマン推定値です．
+
+$$
+\hat\mu_{HL} = \operatorname{Med}\bigg(\bigg\{\frac{x_i + x_j}{2}\bigg\}_{1\leq i \leq j \le n}\bigg)
+$$
+
+computation上少し重たいですが計算例として以下，
+
+```{python}
+#| code-fold: false
+import itertools
+
+def HL_mean(x: list[tuple]):
+    return np.median([np.mean(t) for t in itertools.combinations(x, 2)])
+
+X_0 = np.array([5.6, 5.7, 5.4, 5.5, 5.8, 5.2, 5.3, 5.6, 5.4, 55.5])
+print(HL_mean(X_0))
+```
+
+
+<div class="blog-custom-border">
+<strong>Theorem: Asymptotic distribution of sample quantile-p</strong> <br>
+
+$y_1, \cdots, y_n$ を density function $f$ 及びquantile function $Q^{(p)}$ を持つ分布からのi.i.dとします．このとき, sample quantile $\hat Q^{(p)}$ は
+
+$$
+\sqrt{n}(\hat Q^{(p)} - Q^{(p)}) \rightarrow_d \mathbb N\left(0,\frac{p(1-p)}{f(Q^{(p)})^2}\right)
+$$
+
+
+</div>
+
+
+ここでは，連続変数分布を想定して解説します．連続なdensity function $f_x$ を持つ連続確率分布 $F$ という分布について
+
+$$
+X = \{x_1, \cdots, x_n\}  \overset{\mathrm{iid}}{\sim} F
+$$
+
+と確率変数列が与えられたとします．この確率変数に対して
+
+$$
+Z_i\equiv 1\{x_i \leq x\}
+$$
+
+という変数を考えます．この $Z_i$ は Bernoulli分布に従うと考えられるので，$F$ のCDFを $F_X$ とおくと
+
+$$
+\begin{align*}
+\mathbb E(Z_i) &=  \mathbb E\left(I\{X_i\le x\}\right) = P(X_i\le x)=F_X(x)\\
+\operatorname{Var}(Z_i) &= F_X(x)[1-F_X(x)]
+\end{align*}
+$$
+
+ここで，$Z_i$ のsample meanを以下のように定義する．
+
+$$
+Y_n(x) =  \frac 1n\sum_{i=1}^nZ_i
+$$
+
+このように定義した $Y_n(x)$ はいわゆる経験分布関数 $F_n(x)$ であるとみなせます．また，定義より
+
+$$
+\begin{align*}
+&E[F_n(x)] = F_X(x)\\
+&\operatorname{Var}(F_n(x)) = (1/n)F_X(x)[1-F_X(x)]\\
+&\sqrt n\Big(F_n(x) - F_X(x)\Big) \rightarrow_d \mathbb N\left(0,F_X(x)[1-F_X(x)]\right) \because{\text{CLT}}
+\end{align*}
+$$
+
+ここでCDFの逆関数 $F^{-1}_X$ とする(monotonicityより自明)と delta methodを用いると
+
+$$
+\begin{align*}
+&\frac {d}{dt}F^{-1}_X(t) = \frac 1{f_x\left(F^{-1}_X(t)\right)}\\
+&\sqrt n\Big(F^{-1}_X(F_n(x)) - F^{-1}_X(F_X(x))\Big) \rightarrow_d \mathbb N\left(0,\frac {F_X(x)[1-F_X(x)]}{\left[f_x\left(F^{-1}_X(F_X(x))\right)\right]^2} \right)
+\end{align*}
+$$
+
+つまり，
+
+$$
+\sqrt n\Big(F^{-1}_X(F_n(x)) - x\Big) \rightarrow_d \mathbb N\left(0,\frac {F_X(x)[1-F_X(x)]}{\left[f_x(x)\right]^2} \right)
+$$
+
+ここで $x = m$(population median)と設定すると
+
+$$
+\sqrt n\Big(F^{-1}_X(F_n(m)) - m\Big) \rightarrow_d \mathbb N\left(0,\frac {1}{\left[2f_x(m)\right]^2} \right)
+$$
+
+また，
+
+$$
+F^{-1}_X(\hat F_n(m)) = \inf\{x : F_X(x) \geq \hat F_n(m)\} = \inf\{x : F_X(x) \geq \frac 1n \sum_{i=1}^n I\{X_i\leq m\}\}
+$$
+
+より, 不等式のRHSは 1/2 に収束するので $F^{-1}_X(\hat F_n(m))$ はsample mean $\hat m$ に収束することがわかる．従って，
+
+$$
+\sqrt n\Big(\hat m - m\Big) \rightarrow_d \mathbb N\left(0,\frac {1}{\left[2f_x(m)\right]^2} \right)
+$$
+
+References
+----------
+- [Yutaka Sasaki, The truth of the F-measure, 2007](https://people.cs.pitt.edu/~litman/courses/cs1671s20/F-measure-YS-26Oct07.pdf)
