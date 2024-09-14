@@ -2,6 +2,7 @@
 .MathJax {
     overflow-x: auto;
     overflow-y: hidden;
+    
    }
 
 .blog-custom-border {
@@ -11,3 +12,7 @@
     border-style: solid;
     border-color: #00008B;
 }
+
+.chapter-number::after {
+    content: ".";
+  }
