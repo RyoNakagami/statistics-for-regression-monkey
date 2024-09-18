@@ -19,7 +19,6 @@ env.bak/
 *.swp
 
 # IDE specific
-.vscode/
 
 # Logs
 logs

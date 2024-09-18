@@ -1,0 +1,40 @@
+---
+title: "Econometrics Topics"
+author: "Ryo Nakagami"
+date: "2024-09-06"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+---
+
+### Econometrics Topics のスコープ
+
+- 
+
+
+### Econometric Analysisの基本的な考え
+
+<strong > &#9654;&nbsp; ceteris paribus</strong>
+
+- ceteris paribusとは「holding all other relevant factors fixed」を意味する概念
+
+とある確率変数 $X$ の変化が別の確率変数 $Y$ の変化を引き起こす（cause）とデータから主張するためには，単に同時分布（相関関係）を確認するだけでは不十分で，他の変数を固定した上(ceteris paribus)で，
+$X$ の変化が $Y$ の変化を伴うことを示す必要があります．
+
+<strong > &#9654;&nbsp; Asymptotics</strong>
+
+- finite sample propertyと対になる概念で，$N\to\infty$ に飛ばした極限分布における統計量の性質のこと
+- cross section dataの場合は, unit of observations を $N\to\infty$
+- panel data analysisの場合は，time indexを固定した上で unit of entitie sを $N\to\infty$
+
+<strong > &#9654;&nbsp; 説明変数(regressor)が確率的である</strong>
+
+- 説明変数が非確率的である例として，実験データのように説明変数 $\mathbf x_i$ の水準について分析者が事前に決定できる場合がある
+    - この場合，error termと説明変数の相関（内生性問題）は排除できる
+- 観測データの場合は，実験データのように説明変数 $\mathbf x_i$ の水準については決定できないため，「非確率的」という仮定は通常当てはまらない
+
+説明変数が確率的である場合，非確率的のもとでは一致性を満たす推定量(例: GLS)が一致性を満たさなくなるリスクがあります．

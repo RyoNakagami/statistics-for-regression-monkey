@@ -1,0 +1,974 @@
+---
+title: "期待値"
+author: "Ryo Nakagami"
+date: "2024-09-12"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## 期待値の性質
+
+<div class="blog-custom-border">
+<strong>Def: 連続確率変数の期待値</strong> <br>
+
+$f$ を確率変数 $X$ の確率密度関数とする．$\int_{\mathbb R} \vert x\vert f(x) \mathrm{d}x < \infty$ 
+のとき，$X$ の期待値は以下のように定義する:
+
+$$
+\mathbb E[X] = \int_{\mathbb R} x f(x) \mathrm{d}x
+$$
+
+また，$X$ の関数 $g(X)$ の期待値は $\int_{\mathbb R} \vert g(x)\vert f(x) \mathrm{d}x < \infty$ ならば
+
+$$
+\mathbb E[g(X)] = \int_{\mathbb R} g(x) f(x) \mathrm{d}x
+$$
+
+
+</div>
+
+定義より確率密度関数で重みづけた平均が確率変数の期待値になると解釈することができます．meanは分布の位置を表すパラメーターとも解釈できるので
+**location parameter（位置母数）**と呼ぶこともあります．一方，標準偏差 $\sigma$ は**scale parameter（尺度母数）**といいます．
+
+::: {#exm- .custom_problem }
+**指数分布の期待値**
+<br>
+
+rate parameter $\lambda$ の指数分布に従う確率変数 $X$ を考えます．
+
+$$
+\begin{align*}
+\mathbb E[X] &= \int^\infty_0 x \lambda \exp(-\lambda x)\mathrm{d}x\\
+             &= \bigg[-x\exp(-\lambda x)\bigg]^\infty_0 + \int^\infty_0 \exp(-\lambda x)\mathrm{d}x\\
+             &= \int^\infty_0 \exp(-\lambda x)\mathrm{d}x\\
+             &= -\frac{1}{\lambda}\bigg[\exp(-\lambda x)\bigg]^\infty_0\\
+             &= \frac{1}{\lambda}
+\end{align*}
+$$
+
+
+指数分布は電球の寿命などに応用される分布ですが，rate parameter $\lambda$ が小さいほど期待値（= 電球の寿命）が大きくなることが分かります．
+
+:::
+
+::: {#exm- .custom_problem }
+**期待値が定義できない離散分布**
+<br>
+
+確率変数 $X$ のsupportを加算集合 $\{2, 2^2, 2^3, \cdots\}$ とする．確率関数を
+
+$$
+\Pr(X = 2^i) = \frac{1}{2^i} \quad (i = 1, 2, \cdots)
+$$
+
+このとき，
+
+$$
+\sum_{i=1}^\infty \Pr(X=2^i) = \sum_{i=1}^\infty\frac{1}{2^i} = 1
+$$
+
+と確率の公理を満たしていることが分かる．一方，
+
+$$
+\begin{align*}
+\mathbb E[X]
+    &= \sum_{i=1}^\infty 2^i \frac{1}{2^i}\\
+    &= \sum_{i=1}^\infty 1 = \infty
+\end{align*}
+$$
+
+従って，確率変数 $X$ の分布は，期待値が定義できない分布であることがわかる．
+
+:::
+
+::: {#exm- .custom_problem }
+**期待値が定義できない連続分布**
+<br>
+
+確率密度関数
+$$
+f(x) = \begin{cases}
+0 & x < 1\\
+\frac{1}{x^2} & x\geq 1
+\end{cases}
+$$
+
+という確率変数 $X$ を考える．
+
+$$
+\begin{align*}
+\int_1^\infty f(x) \mathrm{d}x
+    &= \left[\frac{1}{x}\right]^1_\infty = 1
+\end{align*}
+$$
+
+一方，
+
+$$
+\begin{align*}
+\mathbb E[X]
+    &= \int_1^\infty xf(x) \mathrm{d}x\\
+    &= \int_1^\infty\frac{1}{x}\mathrm{d}x\\
+    &= \left[\log(x)\right]_1^\infty = \infty
+\end{align*}
+$$
+
+従って，確率変数 $X$ の分布は，期待値が定義できない分布であることがわかる．
+
+:::
+
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**Tail probabilities**
+<br>
+
+$[0, b]$ の定義域をもつ非負確率変数 $X$ を考える．$F$ を累積分布関数とするとき
+
+$$
+\mathbb E[X] = \int_0^b (1 - F(x))\mathrm{d}x
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\bigg[xF(x)\bigg]^b_0 = \int^b_0xf(x) \mathrm{d}x + \int^b_0F(x) \mathrm{d}x
+$$
+
+を用いると
+
+$$
+\begin{align*}
+\mathbb E[X] &= b - \int^b_0F(x) \mathrm{d}x\\
+             &= \int^b_0 1 \mathrm{d}x - \int^b_0F(x) \mathrm{d}x\\
+             &= \int_0^b (1 - F(x))\mathrm{d}x
+\end{align*}
+$$
+
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+$[0, \infty)$ の定義域をもつ非負確率変数 $X$ を考える．$\mathbb E[\vert X^{p+1} \vert] <\infty$ が定義可能及び， $F$ を累積分布関数とするとき
+
+$$
+\mathbb E[X^p] = \int_0^\infty px^{p-1} (1 - F(x))\mathrm{d}x \quad \text{where } p > 0
+$$
+
+:::
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+\bigg[x^p(1 - F(x))\bigg]^\infty_0 = \int^\infty_0 p x^{p-1}(1 -F(x))\mathrm{d}x - \int^\infty_0 x^{p}f(x)\mathrm{d}x
+\end{align*}
+$$
+
+$\text{RHS} = 0$ であるので
+
+$$
+\mathbb E[X^p] = \int_0^\infty px^{p-1} (1 - F(x))\mathrm{d}x 
+$$
+
+:::
+
+::: {#exm- .custom_problem }
+<br>
+
+同様の考えで定義域を $0,1,2,3,\cdots$ とする離散確率変数 $X$ について
+
+$$
+\mathbb E[X] = \sum_{k=0}^\infty \Pr(X > k)
+$$
+
+が成立します．
+
+$$
+\begin{align*}
+\Pr(X > k) &= \Pr(X = k+1) + \Pr(X = k+2) + \cdots\\
+           &= \sum_{l=k+1}^\infty \Pr(X=l)
+\end{align*}
+$$
+
+従って，
+
+$$
+\begin{align*}
+\sum_{k=0}^\infty \Pr(X > k) &= \sum_{k=0}^\infty \sum_{l=k+1}^\infty \Pr(X=l)\\
+                             &= \sum_{l=1}^\infty\sum_{k=0}^{l-1}\Pr(X=l) \quad\because \Pr(X=l) > 0 \\
+                             &= \sum_{l=1}^\infty l\Pr(X=l)\\
+                             &= \sum_{l=0}^\infty l\Pr(X=l)\\
+                             &= \mathbb E[X]
+\end{align*}
+$$
+$$\tag*{\(\blacksquare\)}$$
+
+:::
+
+::: {#exm- .custom_problem }
+<br>
+
+$0,1,2,3,\cdots$ とする離散確率変数 $X$ について
+
+$$
+\mathbb E[X^2] = \sum_{k=0}^\infty \Pr(X > k)(2k+1)
+$$
+
+も成立する．
+
+$$
+\begin{align*}
+\sum_{k=0}^\infty \Pr(X > k)(2k+1) 
+    &= \sum_{k=0}^\infty \sum_{l=k+1}^\infty \Pr(X=l)(2k+1)\\
+    &= \sum_{l=1}^\infty \sum_{k=0}^{l-1}\Pr(X=l)(2k+1)\\
+    &= \sum_{l=1}^\infty \Pr(X=l)\sum_{k=0}^{l-1}(2k+1)\\
+    &= \sum_{l=1}^\infty l^2\Pr(X=l)\\
+    &= \mathbb E[X^2]
+\end{align*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**期待値の線型性**
+<br>
+
+$a, b$ を実数，確率変数 $X, Y$ について以下が成り立つ
+
+$$
+\mathbb E[aX + bY] = a\mathbb E[X] + b\mathbb E[Y]
+$$
+
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+確率変数 $X, Y$ が有限加算な標本空間で定義されているケースにて以下を示す．
+
+1. $\mathbb E[X + Y] = \mathbb E[X] + \mathbb E[Y]$
+2. $\mathbb E[cX] = c\mathbb E[X]$
+
+<strong > &#9654;&nbsp; 1. $\mathbb E[X + Y] = \mathbb E[X] + \mathbb E[Y]$</strong>
+
+確率変数 $X$ は $\{x_1, \cdots, x_m\}$, 確率変数 $Y$ は $\{y_1, \cdots, y_n\}$ の値をそれぞれ取りうるとする．
+このとき，$Z = X + Y$ の標本空間 $\{z_1, \cdots, z_k\}$ について $k\leq m + n$ が成り立つ．
+
+$A_l = \{(i,j): x_i + y_j = z_l\}$ としたとき，
+
+$$
+\begin{align*}
+\mathbb E[X+Y]
+    &= \sum_{l=1}^kz_l\Pr(A_l)\\
+    &= \sum_{l=1}^k\sum_{(i,j)\in Z_l}(x_i + y_j)\Pr(x_i, y_j)\\
+    &= \sum_{i=1}^m\sum_{j=1}^n(x_i + y_j)\Pr(x_i, y_j)\\
+    &= \sum_{i=1}^m\sum_{j=1}^nx_i\Pr(x_i, y_j) + y_j\Pr(x_i, y_j)\\
+    &= \sum_{i=1}^m\sum_{j=1}^n[x_i\Pr(x_i, y_j) + y_j\Pr(x_i, y_j)]\\
+    &= \sum_{i=1}^mx_i\sum_{j=1}^nPr(x_i, y_j) + \sum_{j=1}^ny_j\sum_{i=1}^m\Pr(x_i, y_j)\\
+    &=\sum_{i=1}^mx_i \Pr(x_i) + \sum_{j=1}^ny_j \Pr(y_j)\\
+    &= \mathbb E[X] + \mathbb E[Y]
+\end{align*}
+$$
+
+
+<strong > &#9654;&nbsp; 2. $\mathbb E[cX] = c\mathbb E[X]$</strong>
+
+$$
+\begin{align*}
+\mathbb E[cX]
+    &= \sum_{i=1}^m cx_i = \Pr(cX = cx_i)\\
+    &= c\sum_{i=1}^m x_i = \Pr(X = x_i)\\
+    &= c\mathbb E[X]
+\end{align*}
+$$
+
+:::
+
+
+::: {#exm- .custom_problem }
+**: 変数変換と分散**
+<br>
+
+mean $\mu$ をもつ確率変数 $X$ と実数 $a, b$ について
+
+$$
+\operatorname{Var}(aX + b) = a^2\operatorname{Var}(X)
+$$
+
+が成立します．証明は以下，
+
+$$
+\begin{align*}
+\operatorname{Var}(aX + b) 
+    &= \mathbb E[(aX + b) - (a\mu +b)^2]\\
+    &= \mathbb E[a^2(X - \mu)^2]\\
+    &= a^2 \mathbb E[(X - \mu)^2]\\
+    &= a^2\operatorname{Var}(X)
+\end{align*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+:::
+
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**positive operator**
+<br>
+
+確率変数 $X, Y$ について，$X\geq Y$ が成り立つとき，
+
+$$
+\mathbb E[X] \geq \mathbb E[Y]
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$X\geq Y$ より $X - Y \geq 0$. 期待値はpositive operatorなので
+
+$$
+\mathbb E[X - Y] \geq 0
+$$
+
+従って，期待値の線型性を用いると
+
+$$
+\begin{align*}
+\mathbb E[X - Y] &= \mathbb E[X] - \mathbb E[Y] \geq 0
+\end{align*}
+$$
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+確率変数 $X$ について,
+
+$$
+\mathbb E[\vert X \vert] \geq \vert \mathbb E[X] \vert
+$$
+
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$\vert X\vert \geq X$ より 
+
+$$
+\mathbb E[\vert X \vert] \geq \mathbb E[X]
+$$ 
+
+また, $\vert X\vert + X \geq 0$ より，$\mathbb E[\vert X\vert + X] \geq 0$，
+つまり，
+
+$$
+\mathbb E[\vert X \vert] \geq -\mathbb E[X]
+$$
+
+以上より，$\mathbb E[\vert X \vert] \geq \vert \mathbb E[X] \vert$
+
+
+:::
+
+
+
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**互いに独立な確率変数の積の期待値**
+<br>
+
+$\mathbb E[\vert X\vert ]<\infty, \mathbb E[\vert Y\vert ]<\infty$ を満たす, 確率空間 $(\Omega, \mathscr{F},P)$ 上で定義された確率変数 $X, Y$ を考える．
+$X \perp Y$ であるとき，次が成立する
+
+$$
+\mathbb E[XY] = \mathbb E[X]\mathbb E[Y]
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+\mathbb E[XY] &= \int\int_\Omega xy f(x, y)\mathrm{d}x\mathrm{d}y\\
+              &= \int\int_\Omega xy f_X(x)f_Y(y)\mathrm{d}x\mathrm{d}y \quad\because{\text{independence}}\\
+              &= \left(\int xf_X(x)\mathrm{d}x\right)\left(\int yf_Y(y)\mathrm{d}y\right)\\
+              &= \mathbb E[X]\mathbb E[Y]
+\end{align*}
+$$
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**Schwarz inquality**
+<br>
+
+確率変数 $X, Y$ についてシュワルツの不等式が成立することを示せ
+
+$$
+\left(\mathbb E[XY]\right)^2 \leq \mathbb E[X^2]\mathbb E[Y^2]
+$$
+
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+Quadratic functionを以下のように定義します
+
+$$
+\begin{align*}
+g(t) 
+    &= \mathbb E[(tX - Y)^2]\\
+    &= t^2\mathbb E[X^2] - 2t\mathbb E[XY] + E[Y^2]\\
+    &\geq 0
+\end{align*}
+$$
+
+このとき，$g(t)$ はnon-negativeなので判別式について以下が成立する
+
+$$
+D/4 = \left(\mathbb E[XY]\right)^2 - \mathbb E[X^2]\mathbb E[Y^2]\leq 0 
+$$
+
+従って，$\left(\mathbb E[XY]\right)^2 \leq \mathbb E[X^2]\mathbb E[Y^2]$
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: Triangle inequality**
+<br>
+
+確率変数 $X, Y$ について，以下のような三角不等式が成立することを示せ
+
+$$
+\sqrt{\mathbb E[(X+Y)^2]} \leq \sqrt{\mathbb E[X^2]} + \sqrt{\mathbb E[Y^2]}
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+シュワルツの不等式を用いて以下のように示せる
+
+$$
+\begin{align*}
+\mathbb E[(X+Y)^2]
+    &= \mathbb E[X^2] + 2\mathbb E[XY] + \mathbb E[Y^2]\\
+    &= \mathbb E[X^2] + 2\sqrt{(\mathbb E[XY])^2} + \mathbb E[Y^2]\\
+    &\leq \mathbb E[X^2] + 2\sqrt{\mathbb E[X^2]\mathbb E[Y^2]} + \mathbb E[Y^2]\\
+    &= (\sqrt{\mathbb E[X^2]} + \sqrt{\mathbb E[Y^2]})^2
+\end{align*}
+$$
+
+両辺について，square rootをとると，
+
+$$
+\sqrt{\mathbb E[(X+Y)^2]} \leq \sqrt{\mathbb E[X^2]} + \sqrt{\mathbb E[Y^2]}
+$$
+
+
+:::
+
+
+
+### 条件付き期待値
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**Law of Total Expectation**
+<br>
+
+$$
+\mathbb E[Y] = \mathbb E[\mathbb E[Y\vert X]]
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+\mathbb E[\mathbb E[Y\vert X]]
+    &= \int \mathbb E[Y\vert X=u]f_X(u)\mathrm{d}u\\
+    &= \int \left[\int t f_Y(t\vert x=u)\mathrm{d}t\right]f_X(u)\mathrm{d}u\\
+    &= \int \int t f_Y(t\vert x=u)f_X(u)\mathrm{d}u\mathrm{d}t\\
+    &= \int t\left[\int f_{X,Y}(u, t)\mathrm{d}u\right]\mathrm{d}t\\
+    &= \int t f_Y(t)\mathrm{d}t\\
+    &= \mathbb E[Y]
+\end{align*}
+$$
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: CEF Decomposition Property**
+<br>
+
+確率変数 $X, Y$ について，
+
+$$
+Y = \mathbb E[Y\vert X] + \epsilon
+$$
+
+としたとき，
+
+1. $\epsilon$ は $X$ について mean-independent, i.e., $\mathbb E[\epsilon\vert X] = 0$
+2. $\epsilon$ は $X$ の任意の関数に対して無相関, i.e., $\operatorname{Cov}(h(X), \epsilon) = 0$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+<strong > &#9654;&nbsp; (1)</strong>
+
+$$
+\begin{align*}
+\mathbb E[\epsilon\vert X] 
+    &= \mathbb E[Y - \mathbb E[Y\vert X]\vert X]\\
+    &= \mathbb E[Y\vert X] - \mathbb E[Y\vert X]\\
+    &= 0
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; (2)</strong>
+
+$$
+\begin{align*}
+\mathbb E[h(X)\epsilon] &= E[\mathbb E[h(X)\epsilon\vert X]]\\
+                        &= E[h(X)\mathbb E[\epsilon\vert X]]\\
+                        &= 0 \quad \because{\text{mean independence}}
+\end{align*}
+$$
+
+
+:::
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+CEF Decomposition Propertyは，確率変数 $Y$ は確率変数 $X$ で説明できるパートと，$X$ の任意の関数と直行（orthogonal）
+な誤差項のパートに分解できることを示しています．
+
+</div>
+
+
+
+
+## Markov and Chebyshev Inequalities
+
+確率変数 $X$ について，確率密度関数や分布関数がわかっている状況は少ないです．また，データが得られたとしても
+それらを計算することはかんたんではありません．その中で，
+
+- $X$ が mean $\mu$ からどれくらい離れる可能性があるのか
+- $\Pr(\vert X \leq a\vert )$ のupper boundはどれくらいか？
+
+という統計的推測をしたいときに使用されるMarkov and Chebyshev Inequalitiesを解説します．
+
+### Markov’s Inequality
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**Markov’s Inequality**
+<br>
+
+non-negative 確率変数 $X \geq 0$，constant $k >0$ について以下が成立する
+
+$$
+\Pr(X \geq k) \leq \frac{\mathbb E[X]}{k}
+$$
+
+つまり，
+
+$$
+\Pr(X \geq k\mathbb E[X]) \leq \frac{1}{k}
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+\mathbb E[X] &= \int_0^\infty xf(x)\mathrm{d}x\\
+             &= \int_0^k xf(x)\mathrm{d}x + \int_k^\infty xf(x)\mathrm{d}x\\
+             &\leq \int_k^\infty xf(x)\mathrm{d}x\\
+             &\leq \int_k^\infty kf(x)\mathrm{d}x\\
+             &= k \Pr(X \geq k)
+\end{align*}
+$$
+
+:::
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: 変数変換
+
+$$
+Y = 
+\begin{cases}
+    0 & \text{if} X < k\\[5pt]
+    k & \text{if} X \geq k
+\end{cases}
+$$
+
+のように変数変換をすると常に $Y \leq X$ であるので $\mathbb E[Y] \leq \mathbb E[X]$.
+
+$$
+\begin{align*}
+&\mathbb E[Y] = k\Pr(X\geq k)\\
+\Rightarrow &\Pr(X\geq k)\leq \frac{\mathbb E[X]}{k}
+\end{align*}
+$$
+
+:::
+
+
+
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+- Markov’s inequalityは 確率変数 $X$ がnon-negative, population mean $\mu$ の知識のみで使用可能
+- 一方，bound幅は大きく，weakest inequalityである
+
+</div>
+
+::: {#exm- .custom_problem }
+<br>
+
+点数範囲が $\Omega_x=[0, 110]$ の試験をついて，そのテストスコア確率変数 $X$ を考える．分布の情報はわからないが
+population meanは 25 であることが知られている．このとき，$\Pr(X \geq 100)$ のupper boundはMarkov's inequalityを用いて
+以下のように計算できます．
+
+$X$ がnon-negativeなので
+
+$$
+\begin{align*}
+\Pr(X\geq 100) &\leq \frac{25}{100}\\
+               &= \frac{1}{4}
+\end{align*}
+$$
+
+:::
+
+::: {#exm-binom-markov .custom_problem }
+**: weak inequality**
+<br>
+
+$X_i \overset{\mathrm{iid}}{\sim} \operatorname{Bernoulli}(0.2)$ を20回繰り返す試行を考える．この試行の結果のアウトカムを $Y$ としたとき，
+
+$$
+\Pr(Y \geq 16) = \sum_{k=16}^{20} {}_{20}C_{k} 0.2^k 0.8^{20-k} \approx 1.38\cdot 10^{-8}
+$$
+
+一方，Markov's inequalityを用いると
+
+$$
+\begin{align*}
+\Pr(Y \geq 16) \leq \frac{4}{16} = \frac{1}{4}
+\end{align*}
+$$
+
+このように，bound幅は大きいことが分かる．
+
+:::
+
+### Chebyshev’s Inequality
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**Chebyshev’s inequality**
+<br>
+
+$X \sim D(\mu, \sigma^2)$ とする．ただし，$D$ の形状はわからない．実数 $\alpha >0$ について，以下が成立する
+
+$$
+\Pr(\vert X - \mu \vert \geq \alpha) \leq \frac{\sigma^2}{\alpha^2}
+$$
+
+つまり，
+
+$$
+\Pr(\vert X - \mu \vert \geq \alpha \sigma) \leq \frac{1}{\alpha^2}
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$I = \{x: \vert x -\mu \vert \geq k\}$ とする．
+
+$$
+\begin{align*}
+\sigma^2 &= \int_{\mathbb R} (x - \mu)^2f(x)\mathrm{d}x\\
+         &\geq  \int_{I} (x - \mu)^2f(x)\mathrm{d}x\\
+         &\geq  \int_{I} k^2f(x)\mathrm{d}x\\
+         &= k^2 \Pr(\vert x - \mu\vert \geq k)
+\end{align*}
+$$
+
+以上より，$\displaystyle\Pr(\vert X - \mu \vert \geq k) \leq \frac{\sigma^2}{k^2}$ を得る．
+
+:::
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: using Markov's inequality
+
+$(x - \mu)^2$ を確率変数と考えると，non-negative確率変数になる，つまりMarkov's inequalityを用いることができるので
+
+$$
+\begin{align*}
+\Pr(\vert x - \mu\vert \geq k) &= \Pr((x - \mu)^2 \geq k)\\
+                               &\leq \frac{\mathbb E[(x - \mu)^2]}{k^2} \because{\text{Markov's inequality}}\\
+                               &= \frac{\sigma^2}{k^2}
+\end{align*}
+$$
+
+
+:::
+
+::: {#exm- .custom_problem }
+**Markov's inequality vs Chebyshev’s inequality**
+<br>
+
+$X \sim \operatorname{Binom}(n=20, p=0.2)$ について，[weak inequality](#exm-binom-markov)
+で確認したように，Markov's inequalityのより
+
+$$
+\Pr(X \geq 16) = \Pr(X \geq 4\mathbb E[X]) \leq \frac{1}{4}
+$$
+
+一方，Chebyshev’s inequalityを用いると
+
+$$
+\begin{align*}
+\Pr(X \geq 16) &\leq \Pr(\vert X - 4\vert \geq 12)\\
+               &\leq \frac{\operatorname{Var}(X)}{12^2}\\
+               &\leq \frac{3.2}{12^2}\\
+               &= \frac{1}{45}
+\end{align*}
+$$
+
+:::
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+- Chebyshev’s inequalityはMarkov's inqualityと異なり，確率変数 $X$ がnon-negativeである必要はない
+- meanからの距離についての情報を得ることができる
+
+</div>
+
+### Weak Law of Large Numbers
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**Weak Law of Large Numbers**
+<br>
+
+平均 $\mu$, 分散 $\sigma^2$ の分布に独立に従う確率変数 $X_1, \cdots, X_n$ を考える．標本平均を $\overline{X_n} = \frac{1}{n}\sum_{i=1}^nX_i$ とする．
+
+このとき，任意の実数 $\epsilon >0$ に対して，
+
+$$
+\lim_{n\to\infty}\Pr(\vert \overline{X_n} - \mu \vert > \epsilon) = 0
+$$
+
+つまり，**標本平均は母平均に確率収束**する．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+Chebyshev’s inequalityを用いて以下のように示せる
+
+$$
+\begin{align*}
+\lim_{n\to\infty}\Pr(\vert \overline{X_n} - \mu \vert > \epsilon) 
+                &\leq \lim_{n\to\infty} \frac{\operatorname{Var}(\overline{X_n})}{\epsilon^2}\\
+                &= \lim_{n\to\infty} \frac{\sigma^2}{n\epsilon^2}\\
+                &=0
+\end{align*}
+$$
+
+:::
+
+## 分散
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: Bienaymé Equality**
+<br>
+
+互いに独立な確率変数 $X, Y$ について以下が成立する
+
+$$
+\operatorname{Var}(X+Y) = \operatorname{Var}(X) + \operatorname{Var}(Y)
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+\operatorname{Var}(X+Y)
+    &= \mathbb E[((X+Y) - (\mu_X+\mu_Y))^2]\\
+    &= \mathbb E[((X- \mu_X)+(Y - \mu_Y))^2]\\
+    &= \mathbb E[(X- \mu_X)^2] + 2\mathbb E[(X- \mu_X)(Y- \mu_Y)] + \mathbb E[(Y- \mu_Y)^2]\\
+    &= \mathbb E[(X- \mu_X)^2] + 2\mathbb E[(X- \mu_X)]\mathbb E[(Y- \mu_Y)] + \mathbb E[(Y- \mu_Y)^2] \quad \because{\text{独立性}}\\ 
+    &= \operatorname{Var}(X) + \operatorname{Var}(Y)
+\end{align*}
+$$
+
+:::
+
+なお，確率変数 $X, Y$ が独立ではない場合は
+
+$$
+\operatorname{Var}(X + Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) + 2\operatorname{Cov}(X, Y)
+$$
+
+が成立します．
+
+### 条件付き分散
+
+確率変数 $X, Y$ についての条件付き分散は以下のような意味を持つ
+
+- $\operatorname{Var}(X\vert Y=y)$ は，$Y = y$ と固定したときの $X$ の分散
+- $\operatorname{Var}(X\vert Y)$ は，$Y$ がランダムに選ばれた値に固定された場合の $X$ の分散
+
+$\operatorname{Var}(X\vert Y)$ は $Y$ のランダムネスに依存した確率変数である一方，
+$\operatorname{Var}(X\vert Y=y)$ は $y$ の関数という違いがある
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**条件付き分散**
+<br>
+
+$$
+\operatorname{Var}(Y\vert X) = \mathbb E[(Y^2\vert X)] - (\mathbb E[(Y\vert X)])^2 = \mathbb E[(Y - \mathbb E[Y\vert X])^2\vert X]
+$$
+
+
+:::
+
+</div>
+
+<br>
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**Law of Total Variance**
+<br>
+
+$$
+\operatorname{Var}(Y) = \operatorname{Var}(\mathbb E[Y\vert X]) + \mathbb E_X[\operatorname{Var}(Y\vert X)]
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$\epsilon = Y - E\mathbb E[Y\vert X]$ としたとき，$\epsilon$ と $E\mathbb E[Y\vert X]$ は無相関なので，
+
+$$
+\operatorname{Var}(Y) = \operatorname{Var}(\mathbb E[Y\vert X]) + \operatorname{Var}(\epsilon)
+$$
+
+$\mathbb E[\epsilon] = 0$ より，
+
+$$
+\begin{align*}
+\operatorname{Var}(\epsilon)
+    &= \mathbb E[\epsilon^2] - (\mathbb E[\epsilon])^2\\
+    &= \mathbb E[\epsilon^2]\\
+    &= \mathbb E_X(\mathbb E[\epsilon^2\vert X])\\
+    &= \mathbb E_X[\operatorname{Var}(Y\vert X)]
+\end{align*}
+$$
+
+従って，
+
+$$
+\operatorname{Var}(Y) = \operatorname{Var}(\mathbb E[Y\vert X]) + \mathbb E_X[\operatorname{Var}(Y\vert X)]
+$$
+
+:::
+
+Law of Total Varianceより $Y$ の分散は，CEFの分散 + 誤差項の分散に分解できることを示しています．
+実務における分析において，賃金のバラツキを
+
+- 賃金を説明する各個人の特徴のバラツキ
+- 特徴で説明することのできない賃金のバラツキ(=誤差項)の期待値
+
+に分解して考察する際にLaw of Total Varianceを使用したりします．

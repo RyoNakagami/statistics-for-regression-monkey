@@ -1,0 +1,205 @@
+---
+title: "ジニ係数"
+author: "Ryo Nakagami"
+date: "2024-09-06"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## ジニ係数とローレンツ曲線
+
+<div class="blog-custom-border">
+<strong>Def: ローレンツ曲線</strong> <br>
+
+データ $X = \{x_1, \cdots, x_n\}$ について，以下のような順序統計量をとる
+
+$$
+x_{[1]} \leq \cdots \leq x_{[i]} \leq \cdots \leq x_{[n]}
+$$
+
+このとき，相対度数 $r_i$ と累積比率 $I_i$ をそれぞれ以下のように定義する：
+
+$$
+\begin{align*}
+r_i & = \frac{i}{n}\\
+I_i &= \frac{\sum_{j=1}^i x_{[j]}}{\sum_{j=1}^n x_{[j]}}
+\end{align*}
+$$
+
+点 $(0,0), (r_1, I_1), \cdots , (r_n, I_n)$ を区分的に直線で結んで得られる曲線がローレンツ曲線である．
+
+</div>
+
+Pythonで形状パラメター 2.5 のパレート分布の乱数と $\operatorname{Unif}(0, 1)$ を20個ずつ発生させ作画したのが以下
+
+```{python}
+# | code-fold: true
+import numpy as np
+from scipy.stats import pareto
+import polars as pl
+import plotly.express as px
+
+np.random.seed(42)
+
+SAMPLESIZE = 20
+shape_parameter = 1
+x = pareto.rvs(shape_parameter, size=SAMPLESIZE)
+x2 = np.random.uniform(0, 1, SAMPLESIZE)
+
+# Compute ratio
+relative_freq = np.arange(0, SAMPLESIZE + 1) / SAMPLESIZE
+relative_cumulative_pareto = np.insert(np.cumsum(sorted(x)) / np.sum(x), 0, 0)
+relative_cumulative_uniform = np.insert(np.cumsum(sorted(x2)) / np.sum(x2), 0, 0)
+
+# create dataframe
+df = pl.DataFrame(
+    {
+        "relative_freq": relative_freq,
+        "pareto": relative_cumulative_pareto,
+        "uniform": relative_cumulative_uniform,
+    }
+)
+
+
+# compute gini
+def compute_gini(relative_freq, relative_cumulative):
+    a = relative_freq[1:-1] - relative_cumulative[1:-1]
+    b = relative_freq[2:] - relative_freq[:-2]
+    return np.sum(a * b)
+
+
+# plot
+pareto_gini = compute_gini(relative_freq, relative_cumulative_pareto)
+uniform_gini = compute_gini(relative_freq, relative_cumulative_uniform)
+fig = px.line(
+    df,
+    x="relative_freq",
+    y=["pareto", "uniform"],
+    color_discrete_sequence=["blue", "red"],
+    markers="x",
+    title="""pareto gini coefficient: {:.2f}, uniform gini coeffient:  {:.2f}""".format(
+        pareto_gini, uniform_gini
+    ),
+)
+
+fig.update_yaxes(
+    scaleanchor="x",
+    scaleratio=1,
+)
+BASE_SIZE = 600
+fig.update_layout(
+    autosize=True,
+    width=BASE_SIZE,
+    height=BASE_SIZE,
+    shapes=[
+        dict(
+            type="line",
+            line_dash="dot",
+            yref="y",
+            y0=0,
+            y1=1,
+            xref="x",
+            x0=0,
+            x1=1,
+            line=dict(color="gray"),
+            label=dict(text="完全平等線", textposition="middle center"),
+        )
+    ],
+)
+
+fig.show()
+```
+
+上記のfigureにおける45度線は**完全平等線**と呼ばれる線です．この赤線とローレンツ曲線で囲まれたエリアの面積の２倍がジニ係数に相当します．ジニ係数は赤線と青線のエリアを三角形と台形に分けてそれぞれを計算し，その合計の２倍で計算することができます．
+
+<div class="blog-custom-border">
+<strong>Def: ジニ係数</strong> <br>
+
+- ジニ係数はデータの偏りを示す指標
+
+<strong > &#9654;&nbsp; 相対度数に基づくジニ係数</strong>
+
+$a_i$ を度数表に基づく累積相対頻度， $b_i$ を累積相対階級値としたとき
+
+$$
+\begin{align*}
+\operatorname{Gini} = \sum_{i=1}^{k-1} (a_i - b_i)(a_{i+1} - a_{i-1}) \  \ \text{where } a_0 = 0, b_0 = 0
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; データに基づくジニ係数</strong>
+
+$$
+\begin{align*}
+\operatorname{Gini} 
+    &= \frac{2}{n}\sum_{n-1}^{i=1}\left(\frac{i}{n} - \frac{\sum_{j=1}^i x_{[j]}}{n\overline{x}}\right) \\
+    &= \frac{1}{2n^2\overline{x}}\sum_{i=1}^n\sum_{j=1}^n \vert x_i - x_j\vert
+\end{align*}
+$$
+
+
+</div>
+<br>
+上記のようにsampleジニ係数は台形の面積の２倍で計算しますが，母集団ジニ係数と比較して小さめに計算されます．
+サンプルサイズが十分大きい場合は無視できる程度ですが，度数分布表に基づく計算の場合やsmall sampleの場合は
+過小方向バイアスの修正が必要になる場合があります．
+
+また，ジニ係数の導出式より，MAD(Mean absolute difference)と sample meanの相対比にジニ係数が比例することがわかります．
+
+$$
+\begin{align*}
+\operatorname{Gini} &= \frac{1}{2n^2\overline{x}}\sum_{i=1}^n\sum_{j=1}^n \vert x_i - x_j\vert\\
+                    &= \frac{1}{2}\frac{\sum_{i=1}^n\sum_{j=1}^n \vert x_i - x_j\vert}{n^2}\frac{1}{\overline x}\\
+                    &\propto \frac{\operatorname{MAD}}{\operatorname{sample mean}}
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; ジニ係数の特徴</strong>
+
+- ローレンツ曲線，ジニ係数ともに分布の尺度パラメーターに依存しない
+- 1点に集中する分布の場合，ローレンツ曲線は完全平等線と一致し，ジニ係数は0となる
+- エントロピーと異なり，一様分布の場合にジニ係数が最大をとるとかではない
+
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+- データの偏りや集中性を見る指標としてジニ係数は使用されますが，他にもエントロピーという指標がある
+
+カテゴリー別に分類されたデータにおいて，各カテゴリーの総体頻度を $\hat p_i = f_i/n$ としたとき
+
+$$
+\begin{align*}
+H(\mathbf p) = -\sum \hat p_i \log(\hat p_i)
+\end{align*}
+$$
+
+Hが大きいほどデータは一様になり，集中性があるほど指標は小さくなる．
+
+</div>
+
+### 無限母集団におけるローレンツ曲線
+
+定義域 $(0, \infty)$, 期待値 $\mu$ を持つ連続確率変数 $X$ について，累積分布関数を $F(x)$, 確率密度関数 $f(x)$ とおきます．このとき，$z = F(x)$ としたときのローレンツ曲線は
+
+$$
+\begin{align*}
+&F^{-1}(z) = x \  \ \text{ (inverse function of cdf)}\\
+&L(z) =\frac{\int_0^{F^{-1}(z)} t f(t) \mathrm{d}t}{\mathbb E[X]}
+\end{align*}
+$$
+
+として, $(z, L(z))$ で作られる曲線となります．ジニ係数は
+
+$$
+\begin{align*}
+\operatorname{gini} &= 2\int_0^1 (u - L(u))\mathrm{d}u\\
+                    &= 1 - 2\int_0^1 L(u)\mathrm{d}u
+\end{align*}
+$$

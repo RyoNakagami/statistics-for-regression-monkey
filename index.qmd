@@ -30,14 +30,6 @@ code-fold: true
 
 このQuarto Bookではチャプターごとに各事項にフォーカスしてノートをまとめています．
 
-<strong > &#9654;&nbsp; 参考書</strong>
-
-|タイトル|説明|Citation|
-|---|---|---|
-|現代数理統計学|統計学入門|@2020現代数理統計学|
-|P値: その正しい理解と適用|統計的仮説検定におけるP値の解説入門書|@P値-spotlight|
-|サンプルサイズの決め方|統計的仮説検定におけるサンプルサイズ計算方法の解説本|@永田サンプルサイズ|
-
 <strong > &#9654;&nbsp; プログラミング言語</strong>
 
 - 主にPython 3.11.8 + [poetry](https://python-poetry.org/) を用います
@@ -57,3 +49,9 @@ print("Hallo World")
 - 各ノートの末尾に `utteranc.es` を用いたコメント欄があります．こちらはGitHub Discussionsと接続されておりますので，各ノートに関してはこちらも適宜ご利用ください
 
 修正の必要性の判断は[RyoNak](https://github.com/RyoNakagami)が最終的には判断しますが，広く議論できたら幸いです
+
+
+References
+----------
+::: {#refs}
+:::

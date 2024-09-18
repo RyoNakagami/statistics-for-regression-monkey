@@ -1,0 +1,27 @@
+---
+title: "Data Analysis and Outliers"
+author: "Ryo Nakagami"
+date: "2024-09-05"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+<strong > &#9654;&nbsp; Robust Statistics のスコープ</strong>
+
+- @ロバスト統計 をベースに，外れ値に対する分析上の対処方法について勉強する
+
+<strong > &#9654;&nbsp; ロバスト推定とロバスト検定</strong>
+
+<div class="blog-custom-border">
+<strong>Def: ロバスト推定とロバスト検定</strong> <br>
+
+- **ロバスト推定**: 外れ値に頑健な推定(estimation)
+- **ロバスト検定**: 外れ値の混入に頑健な検定
+
+</div>

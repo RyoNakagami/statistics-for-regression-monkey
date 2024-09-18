@@ -1,0 +1,358 @@
+---
+title: "超幾何分布"
+author: "Ryo Nakagami"
+date: "2024-09-14"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## 超幾何分布の性質
+
+<div class="blog-custom-border">
+<strong>Def: 超幾何分布</strong> <br>
+
+Parameters $(N, K, n)$ の超幾何分布に従う確率変数 $X$ について，その確率関数は
+
+$$
+\begin{gather*}
+\Pr(X = x) = \frac{{}_KC_x \cdot {}_{N-K}C_{n-x}}{{}_NC_n}\\
+\text{where} \max\{0, n+K-N\} \leq x \leq \min\{n, K\}
+\end{gather*}
+$$
+
+また $\max\{0, n+K-N\} \leq x \leq \min\{n, K\}$ の範囲外の $x$ については $\Pr(X = x) = 0$
+
+</div>
+
+ツボに $K$ 個の赤玉と $N-K$ 個の白玉，つまり合計 $N$ 個の玉が入っている中から，$n$ 個の玉をランダムに
+**非復元(without replacement)**で抽出するとする．このとき取り出した赤玉の個数を $X$ としたとき，この
+$X$ は超幾何分布 $\operatorname{Hypergeometric}(N, K, n)$ に従います．
+
+<strong > &#9654;&nbsp; 確率関数の合計が1になることの証明</strong>
+
+恒等式
+
+$$
+(1 + t)^N = (1 + t)^{K}(1 + t)^{N-K}
+$$
+
+を考える．RHSを展開し，$t^n$ の係数 $\beta_n$ を見てみると
+
+$$
+\begin{align*}
+\beta_n = \sum_{\max(n+K-N, 0)}^{\min(K, n)} {}_KC_{x} \times {}_{N-K}C_{n-x}
+\end{align*}
+$$
+
+一方，LHSでみると 
+
+$$
+\beta_n = {}_NC_n
+$$
+
+従って，
+
+$$
+\begin{gather*}
+\sum_{\max(n+K-N, 0)}^{\min(K, n)} {}_KC_{x} \times {}_{N-K}C_{n-x} = {}_NC_n\\
+\Rightarrow \sum_{\max(n+K-N, 0)}^{\min(K, n)}\Pr(X=k) = 1
+\end{gather*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**期待値**
+<br>
+
+確率変数 $X \sim \operatorname{Hypergeometric}(N, K, n)$ について
+
+$$
+\mathbb E[X] = n\frac{K}{N}
+$$
+
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\left(\begin{array}{c}n\\k\end{array}\right)= \frac{n}{k} \left(\begin{array}{c}n-1\\ k-1\end{array}\right)
+$$
+
+という関係式をもちいると
+
+$$
+\begin{align*}
+\mathbb E[X]
+    &= \sum_x\frac{x \left(\begin{array}{c}K\\ x\end{array}\right)\left(\begin{array}{c}N-K\\ n-x\end{array}\right)}{\left(\begin{array}{c}N\\ n\end{array}\right)}\\
+    &= \frac{nK}{N}\sum_x\frac{ \left(\begin{array}{c}K-1\\ x-1\end{array}\right)\left(\begin{array}{c}N-K\\ n-x\end{array}\right)}{\left(\begin{array}{c}N-1\\ n-1\end{array}\right)}\\
+    &= \frac{nK}{N}\sum_x\frac{ \left(\begin{array}{c}K-1\\ x-1\end{array}\right)\left(\begin{array}{c}N-1-(K-1)\\ n-1 - (x-1)\end{array}\right)}{\left(\begin{array}{c}N-1\\ n-1\end{array}\right)}
+\end{align*}
+$$
+
+最後の式変形は，ツボに $K-1$ 個の赤玉と $N-1 - (K-1)$ 個の白玉，つまり合計 $N-1$ 個の玉が入っている中から $n-1$ 個のボールを選ぶ場合の確率関数と同じなので
+
+$$
+\begin{align*}
+\sum_x\frac{ \left(\begin{array}{c}K-1\\ x-1\end{array}\right)\left(\begin{array}{c}N-1-(K-1)\\ n-1 - (x-1)\end{array}\right)}{\left(\begin{array}{c}N-1\\ n-1\end{array}\right)} = 1
+\end{align*}
+$$
+
+従って，$\displaystyle\mathbb E[X] = \frac{nK}{N}$ を得る．
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**分散**
+<br>
+
+確率変数 $X \sim \operatorname{Hypergeometric}(N, K, n)$ について
+
+$$
+\operatorname{Var}(X) = n\frac{K}{N}\frac{N-K}{N}\frac{N-n}{(N-1)}
+$$
+
+
+:::
+
+</div>
+
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\operatorname{Var}(X) = \mathbb E[X(X-1)] + E[X](1 - E[X])
+$$
+
+なので，$\mathbb E[X(X-1)]$ がわかれば良い．
+
+$$
+\begin{align*}
+\mathbb E[X(X-1)] 
+    &= \sum_{x}\frac{x(x-1)\left(\begin{array}{c}K \\ x\end{array}\right)\left(\begin{array}{c}N-K \\ n-x\end{array}\right)}{\left(\begin{array}{c}N \\ n\end{array}\right)}\\
+    &= \frac{n(n-1)K(K-1)}{N(N-1)}\sum_{x}\frac{\left(\begin{array}{c}K-2 \\ x-2\end{array}\right)\left(\begin{array}{c}(N-2) - (K-2) \\ (n-2)-(x-2)\end{array}\right)}{\left(\begin{array}{c}N -2\\ n - 2\end{array}\right)}\\
+    &= \frac{n(n-1)K(K-1)}{N(N-1)}\sum_{l=x-2}\frac{\left(\begin{array}{c}K-2 \\ l\end{array}\right)\left(\begin{array}{c}(N-2) - (K-2) \\ (n-2)-l\end{array}\right)}{\left(\begin{array}{c}N -2\\ n - 2\end{array}\right)}\\
+    &= \frac{n(n-1)K(K-1)}{N(N-1)}
+\end{align*}
+$$
+
+従って，
+
+$$
+\operatorname{Var}(X) = n\frac{K}{N}\frac{N-K}{N}\frac{N-n}{N-1}
+$$
+
+
+:::
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+- $\frac{N-n}{N-1}$ は**有限母集団修正**と呼ばれる
+
+</div>
+
+### 超幾何分布の極限と二項分布
+
+確率変数 $X \sim \operatorname{Hypergeometric}(N, K, n)$ について, $\frac{K}{N} = p \text{ as } N, K \to\infty$ が極限において
+成立するとします．
+
+$$
+\begin{align*}
+&\Pr(X = x)\\
+    &= \frac{\left(\begin{array}{c}K\\ x\end{array}\right)\left(\begin{array}{c}N-K\\ n-x\end{array}\right)}{\left(\begin{array}{c}N\\n\end{array}\right)}\\
+    &= \left(\begin{array}{c}n\\ x\end{array}\right)\frac{K!}{(K-x)!}\frac{(N-k)!}{(N-K-n+x)!}\frac{(N-n)!}{N}\\
+    &= \left(\begin{array}{c}n\\ x\end{array}\right)\frac{K(K-1)\cdots(K-x+1)}{N(N-1)\cdots(N-x+1)}\frac{(N-K)\cdots(N-K-(n-x)+1)}{(N-x)\cdots(N-x+1)}
+\end{align*}
+$$
+
+このとき，$p = K/N$ とすると，極限において
+
+$$
+\begin{gather*}
+\frac{K(K-1)\cdots(K-x+1)}{N(N-1)\cdots(N-x+1)} \approx p^x\\
+\frac{(N-K)\cdots(N-K-(n-x)+1)}{(N-x)\cdots(N-x+1)}\approx (1-p)^{n-x}
+\end{gather*}
+$$
+
+以上より
+
+$$
+\lim_{N,K\to\infty}\Pr(X=x) = \left(\begin{array}{c}n\\ x\end{array}\right)p^x(1-p)^{n-x}
+$$
+
+
+### 有限母集団からの非復元抽出と有限母集団修正
+
+有限母集団からの復元抽出は，i.i.d.確率変数が観測されるが，非復元抽出の場合は i.i.d.となりません．
+大きさ $N$ の有限母集団を考え，$X_i$ を標本として抽出された観測値とします．なお，有限母集団に属する各個体の個体値を，
+
+$$
+a_1, a_2, \cdots, a_N
+$$
+
+とします．サイズ $n$ の非復元抽出は，任意の互いに異なる $i_1, \cdots, i_n$ について，以下のように確率が定義される標本抽出方法です：
+
+$$
+\begin{align*}
+\Pr(X_1 = a_{i_1}, \cdots, X_1 = a_{i_n}) = \frac{1}{N(N-1)\cdots(N-n+1)}
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; 有限母集団の平均と分散</strong>
+
+有限母集団の平均と分散は
+
+$$
+\begin{gather*}
+\mu = \frac{1}{N}\sum_{i=1}^Na_i\\
+\sigma^2 = \frac{1}{N}\sum_{i=1}^N(a_i - \mu)^2 
+\end{gather*}
+$$
+
+と定義できます．
+
+<strong > &#9654;&nbsp; 標本平均の期待値と分散</strong>
+
+$$
+\begin{align*}
+\mathbb E[\overline{{X}}]
+    &= \frac{1}{n}\sum_{i=1}^n\mathbb E[X_i]\\
+    &= \mu\\
+\\
+\operatorname{Var}(\overline{{X}})
+    &= \frac{1}{n^2}\operatorname{Var}(\sum_{i=1}^nX_i)\\
+    &=\frac{1}{n^2}\left[\sum_{i=1}^n\operatorname{Var}(X_i) + \sum_{i\neq j}\operatorname{Cov}(X_i, X_j)\right]\\
+    &=\frac{1}{n^2}\left[n\operatorname{Var}(X_1) + n(n-1)\operatorname{Cov}(X_1, X_2)\right]
+\end{align*}
+$$
+
+ここで，
+
+$$
+\begin{align*}
+&\operatorname{Cov}(X_1, X_2)\\
+    &= \mathbb E[X_1X_2] - \mathbb E[X_1]\mathbb E[X_2]\\
+    &= \frac{1}{N(N-1)}\sum_{i\neq j}a_ia_j - \left(\frac{1}{N}\sum_{i=1}^Na_i\right)^2\\
+    &= \frac{1}{N(N-1)}\left[(\sum_{i=1}^Na_i)^2 - \sum_{i=1}^Na_i^2\right]- \left(\frac{1}{N}\sum_{i=1}^Na_i\right)^2\\
+    &= \frac{(\sum_{i=1}^Na_i)^2}{N^2(N-1)} - \frac{\sum_{i=1}^Na_i^2}{N(N-1)}\\
+    &= -\frac{1}{N(N-1)}\left(\sum_{i=1}^Na_i^2 - \frac{1}{N}(\sum_{i=1}^Na_i)^2\right)\\
+    &= -\frac{1}{N(N-1)}\sum_{i=1}^N(a_i - \overline(a))^2\\
+    &= -\frac{\sigma^2}{N-1}
+\end{align*}
+$$
+
+従って，
+
+$$
+\operatorname{Var}(\overline{{X}}) = \frac{\sigma^2}{n}\frac{N-n}{N-1}
+$$
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+サイズ $N$ の有限母集団からサイズ $n$ の非復元無作為抽出を実施する場合，
+
+$$
+\{a_{i_1}, \cdots, a_{i_n}\}
+$$
+
+という要素の重複を許した多重集合を一度抽出し，そこから改めて１個ずつ順に無作為に抜き出すという方法でも同じ抽出方法となります．
+ここから，$X_i$ の周辺分布は $X_1$ の周辺分布と同じになることが分かるし，また，$(X_i, X_j)$ の２次元同時分布は
+$(X_1, X_2)$ の２次元同時分布と同じであることがわかります．
+
+</div>
+
+<strong > &#9654;&nbsp; 別解: 非復元抽出における $\operatorname{Cov}(X_1, X_2)$ の求め方</strong>
+
+$$
+\sum_{i=1}^N X_i = \sum_{i=1}^N a_i
+$$
+
+と定数であるので，$\operatorname{Var}(\sum_{i=1}^N X_i) = 0$ となる．
+
+$$
+\begin{align*}
+\operatorname{Var}(\sum_{i=1}^N X_i)
+    &= \sum_{i=1}^N \operatorname{Var}(X_1) + \sum_{i\neq j}\operatorname{Cov}(X_1, X_2)\\
+    &= N\sigma^2 + N(N-1)\operatorname{Cov}(X_1, X_2) = 0
+\end{align*}
+$$
+
+従って，
+
+$$
+\operatorname{Cov}(X_1, X_2) = -\frac{\sigma^2}{N-1}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+## 多変量超幾何分布
+
+<div class="blog-custom-border">
+<strong>Def: 多変量超幾何分布</strong> <br>
+
+各個体が $c_1, c_2, \cdots, c_k$ のいずれかに所属するようなクラスサイズ $N$ 有限母集団を考える(各 $c_i$ のサイズは $C_i$ とする)．つまり，
+
+$$
+\sum_{j=1}^kC_j = N
+$$
+
+
+この有限母集団から，サイズ $n$ の非復元無作為抽出をする場合，その同時確率関数は
+
+$$
+\begin{gather*}
+\Pr(X_1=x_1, \cdots, X_k=x_k) = \frac{\left(\begin{array}{c}C_1\\x_1 \end{array}\right)\left(\begin{array}{c}C_2\\x_2 \end{array}\right)\cdots\left(\begin{array}{c}C_k\\ x_k \end{array}\right)}
+{\left(\begin{array}{c}N\\n \end{array}\right)}\\
+\text{where } \sum_{i=1}^kx_i = n
+\end{gather*}
+$$
+
+となる．このとき，$k$ 次元確率変数ベクトル $X$ は $\operatorname{Multi-hypergeometric}(N, (C_1, \cdots, C_k), n)$ に従う．
+
+
+</div>
+
+<strong > &#9654;&nbsp; 周辺確率分布</strong>
+
+多変量超幾何分布の $X_i$ についての周辺確率分布は，$X_i$ 以外のグループをまとめてシンプルな超幾何分布とみなして考えることができるので
+
+$$
+\begin{gather*}
+\Pr(X_i=x) = \frac{\left(\begin{array}{c}C_i\\ x\end{array}\right)\left(\begin{array}{c}N-C_i\\ n-x\end{array}\right)}{\left(\begin{array}{c}N\\ n\end{array}\right)}\\
+\text{where } \max\{0, n+C_i-N\} \leq x \leq \min\{n, C_i\}
+\end{gather*}
+$$
+
+<strong > &#9654;&nbsp; 期待値と分散</strong>
+
+$$
+\begin{gather*}
+\mathbb E[X_i] = n\frac{C_i}{N}\\
+\operatorname{Var}(X_i) = n\frac{C_i}{N}\frac{N-C_i}{N}\frac{N-n}{N-1}\\
+\operatorname{Cov}(X_i, X_j) = -n\frac{N-n}{N-1}\frac{C_i}{N}\frac{C_j}{N}
+\end{gather*}
+$$
+
+
+
+
+
+
+References
+----------
+- [LibreTexts Statistics > The Multivariate Hypergeometric Distribution](https://stats.libretexts.org/Bookshelves/Probability_Theory/Probability_Mathematical_Statistics_and_Stochastic_Processes_(Siegrist)/12%3A_Finite_Sampling_Models/12.03%3A_The_Multivariate_Hypergeometric_Distribution)

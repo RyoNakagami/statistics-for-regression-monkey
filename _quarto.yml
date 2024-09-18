@@ -35,13 +35,29 @@ book:
     - index.qmd
     - part: posts/statistics101/chapter_header.qmd
       chapters:
-        - posts/statistics101/intro.qmd
+        - posts/statistics101/averages.qmd
+        - posts/statistics101/density_function.qmd
+        - posts/statistics101/expectation.qmd
+        - posts/statistics101/order_statistic.qmd
+    - part: posts/probability_distribution/chapter_header.qmd
+      chapters: 
+        - posts/probability_distribution/hypergeometric.qmd
     - part: posts/statistical_hypothesis_test_101/chapter_header.qmd
       chapters:
         - posts/statistical_hypothesis_test_101/fisher_exact_test.qmd
     - part: posts/statistical_hypothesis_test_201/chapter_header.qmd
       chapters:
         - posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.qmd
+    - part: posts/ExplanatoryDataAnalysis/chapter_header.qmd
+      chapters: 
+        - posts/ExplanatoryDataAnalysis/gini_coefficient.qmd
+    - part: posts/robust_statistics/chapter_header.qmd
+    - part: posts/econometrics101/chapter_header.qmd
+    - part: posts/mathematical_appendix/chapter_header.qmd
+      chapters: 
+        - posts/mathematical_appendix/beta_function.qmd
+        - posts/mathematical_appendix/jensen_inequality.qmd
+
 
 
 format:

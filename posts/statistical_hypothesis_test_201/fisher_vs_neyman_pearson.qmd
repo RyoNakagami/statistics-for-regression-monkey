@@ -2,7 +2,7 @@
 title: "Fisher流検定 vs Neyman-Pearson流検定"
 jupyter: python3
 author: "Ryo Nakagtami"
-date: last-modified
+date: "2024-09-01"
 date-modified: last-modified
 comments:
     utterances:

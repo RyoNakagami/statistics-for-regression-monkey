@@ -11,7 +11,6 @@ comments:
 # when you run this file locally, do not forget to run poetry shell
 ---
 
-## 代表値
 
 <div class="blog-custom-border">
 <strong>Def: 代表値(Averages)</strong> <br>
@@ -21,7 +20,7 @@ comments:
 
 </div>
 
-### 平均
+## 平均
 
 <strong > &#9654;&nbsp; 標本平均</strong>
 
@@ -181,24 +180,24 @@ $$
 Jensen's inequalityより 関数 $g$ を凸関数(convex function)とすると
 
 $$
-\frac{1}{n}\sum_{i=1}^ng(x_i)\geq g(\bar{x})
+\frac{1}{n}\sum_{i=1}^ng(x_i)\geq g(\overline{x})
 $$
 
 という不等式が成り立つ.
 
-<strong > &#9654;&nbsp; $\bar{X} \geq G_x$ の証明</strong>
+<strong > &#9654;&nbsp; $\overline{X} \geq G_x$ の証明</strong>
 
 $f(x) = -\log(x)$ とすると $f$ は単調減少の凸関数であるので
 
 $$
 \begin{align*}
--\log(\bar{x}) &\leq -\frac{1}{n}\sum_{i=1}^n\log(x_i)\\
+-\log(\overline{x}) &\leq -\frac{1}{n}\sum_{i=1}^n\log(x_i)\\
                     &= -\log(\prod_{i=1}^n x_i^{1/n})\\
                     &= -\log(G_x)
 \end{align*}
 $$
 
-つまり，$\log(\overline{x})\geq \log(G_x) \Rightarrow \bar{X} \geq G_x$
+つまり，$\log(\overline{x})\geq \log(G_x) \Rightarrow \overline{X} \geq G_x$
 
 <strong > &#9654;&nbsp; $G_x \geq H_x$ の証明</strong>
 
@@ -207,7 +206,7 @@ $1/x_i = y_i$ と変換すると
 $$
 \begin{align*}
 G_x &= \left(\prod \frac{1}{y_i}\right)^{1/n}\\
-H_x &= \frac{1}{\bar y}
+H_x &= \frac{1}{\overline y}
 \end{align*}
 $$
 
@@ -216,7 +215,7 @@ $$
 $$
 \begin{align*}
 \log(G_x) &= \frac{1}{n}\sum_{i=1}^n(-\log(y_i))\\
-\log(H_x) &= -\log(\bar y)
+\log(H_x) &= -\log(\overline y)
 \end{align*}
 $$
 
@@ -226,7 +225,7 @@ $\log(G_x) \geq \log(H_x) \Rightarrow G_x \geq H_x$ を得る．
 
 :::
 
-### 中央値
+## 中央値
 
 <div class="blog-custom-border">
 <strong>Def: median</strong> <br>
@@ -352,6 +351,192 @@ $$
 $$
 \sqrt n\Big(\hat m - m\Big) \rightarrow_d \mathbb N\left(0,\frac {1}{\left[2f_x(m)\right]^2} \right)
 $$
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**標本平均とMedianの距離**
+<br>
+
+独立に同一の分布に従う確率変数列 $\{X_i\}_{i=1}^n$ を考える．この標本平均を $\overline{X}$, 不偏分散を $S^2$, メディアン $X_{\operatorname{med}}$ とすると
+
+$$
+\vert \overline{X} - X_{\operatorname{med}}\vert < S
+$$
+
+:::
+
+</div>
+
+<!--::: {.callout-note collapse="true" icon=false}-->
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$X_{\operatorname{med}}$ はL1ノルムの和を最小にするような値であるので
+
+$$
+\begin{align*}
+\vert \overline{X} - X_{\operatorname{med}}\vert 
+    &= \bigg\vert \frac{1}{n}\sum_{i=1}^n(X_i - X_{\operatorname{med}})\bigg\vert\\
+    &\leq \frac{1}{n}\sum_{i=1}^n\bigg\vert X_i - X_{\operatorname{med}}\bigg\vert\\
+    &\leq\frac{1}{n}\sum_{i=1}^n\bigg\vert X_i - \overline{X}\bigg\vert\\
+    &\leq\sqrt{\frac{1}{n}\sum_{i=1}^n( X_i - \overline{X})^2}\\
+    &=\sqrt{\frac{n-1}{n}}S\\
+    &\leq S
+\end{align*}
+$$
+
+
+:::
+
+
+## 分散と標準偏差
+
+<div class="blog-custom-border">
+<strong>Def: Variance</strong> <br>
+
+mean $\mu$ をもつ確率変数 $X$ の分散は
+
+$$
+\begin{align*}
+\operatorname{Var}(X) &= \mathbb E[(X - \mu)^2]\\
+                      &= \mathbb E[X^2] - \mathbb E[X]^2
+\end{align*}
+$$
+
+標準偏差(standard deviation)は分散のsquare rootで定義される．
+
+</div>
+
+上の定義より標準偏差について以下のことがわかります：
+
+- $X$ と同じ単位で表される
+- $X - \mathbb E[X]$ の L2ノルムと解釈できる
+- population meanからどれだけ分布がバラついているか(dispersion)を示す指標の一つ
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+確率変数 $X\sim D(\mu, \sigma^2)$ とする．このとき
+
+$$
+\begin{align*}
+\mathbb E[\vert X - \mu\vert] \leq \sigma
+\end{align*}
+$$
+
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: Jensen's Inequality
+
+$g(x) = \sqrt{x}$ という関数はconcaveなので，Jensen's Inequalityより
+
+$$
+\begin{align*}
+\mathbb E[\vert X - \mu \vert]
+    &= \mathbb E[\sqrt{( X - \mu)^2}]\\
+    &\leq \sqrt{\mathbb E[( X - \mu)^2]}\\
+    &= \sigma
+\end{align*}
+$$
+
+
+:::
+
+### 変動係数
+
+確率変数のバラツキを表す指標として範囲(Range), 四分位範囲（IQR）, 分散がありますが，分布の中心の位置が著しく異なるような場合
+には，これらを用いて分布の散らばり具合を比較することは難しいです．このような場合に，変動係数(**Coefficient of variation**)
+という単位のない統計量を用いたりします．
+
+<div class="blog-custom-border">
+<strong>Def: Coefficient of variation</strong> <br>
+
+比例尺度にもとづく測定が行われ，その測定結果をnon-negative 確率変数 $X_i >0$ で表すとする．$\{X_i\}_{i=1}^n$ の標本平均を $\overline{X}$, 標本標準偏差を $S$ としたとき，変動係数は以下のように計算される
+
+$$
+\operatorname{C_V} = \frac{S}{\overline{X}}
+$$
+
+</div>
+
+上記の定義より以下のことがわかります
+
+- 変動係数は，実際のゼロ点を持つ測定値（i.e., 比率尺度）に対してのみ用いることができます
+- 変動係数の計算対象となる測定は，non-negativeである必要がある
+- サイズ $N$ のfinite sampleにおける $\operatorname{C_V}$ のレンジは $\operatorname{CV}\in[0, \sqrt{N-1}]$ である
+
+::: {#exm- .custom_problem }
+**東京 日平均気温の月平均値（℃）**
+<br>
+
+[国土交通省気象庁](https://www.data.jma.go.jp/stats/etrn/view/monthly_s3.php?prec_no=44&block_no=47662&year=2023&month=&day=&view=)より以下のように東京都の気象データを取得します．
+
+```{python}
+import polars as pl
+import plotly.express as px
+
+data = {
+    "Year": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
+    "Jan": [5.8, 6.1, 5.8, 4.7, 5.6, 7.1, 5.4, 4.9, 5.7],
+    "Feb": [5.7, 7.2, 6.9, 5.4, 7.2, 8.3, 8.5, 5.2, 7.3],
+    "Mar": [10.3, 10.1, 8.5, 11.5, 10.6, 10.7, 12.8, 10.9, 12.9],
+    "Apr": [14.5, 15.4, 14.7, 17.0, 13.6, 12.8, 15.1, 15.3, 16.3],
+    "May": [21.1, 20.2, 20.0, 19.8, 20.0, 19.5, 19.6, 18.8, 19.0],
+    "Jun": [22.1, 22.4, 22.0, 22.4, 21.8, 23.2, 22.7, 23.0, 23.2],
+    "Jul": [26.2, 25.4, 27.3, 28.3, 24.1, 24.3, 25.9, 27.4, 28.7],
+    "Aug": [26.7, 27.1, 26.4, 28.1, 28.4, 29.1, 27.4, 27.5, 29.2],
+    "Sep": [22.6, 24.4, 22.8, 22.9, 25.1, 24.2, 22.3, 24.4, 26.7],
+    "Oct": [18.4, 18.7, 16.8, 19.1, 19.4, 17.5, 18.2, 17.2, 18.9],
+    "Nov": [13.9, 11.4, 11.9, 14.0, 13.1, 14.0, 13.7, 14.5, 14.4],
+    "Dec": [9.3, 8.9, 6.6, 8.3, 8.5, 7.7, 7.9, 7.5, 9.4],
+}
+
+df = pl.DataFrame(data)
+df_unpivoted = df.unpivot(index="Year", variable_name="Month", value_name="Celsius")
+px.line(df_unpivoted, x="Month", y="Celsius", color="Year", title="東京都月別平均気温")
+```
+
+ここで，以下のようにFahrenheitに変換してみます．
+
+```{python}
+df_unpivoted = df_unpivoted.with_columns(
+    (pl.col("Celsius") * 9 / 5 + 32).alias("Fahrenheit")
+)
+df_unpivoted.head()
+```
+
+ここで，Celsius, Fahrenheit両方のカラムについて変動係数を計算します．
+
+```{python}
+def compute_cv(df, col: str) -> float:
+    return df_unpivoted[col].std() / df_unpivoted[col].mean()
+
+
+print(
+    """Celsius CV: {:.2f}, Fahrenheit CV: {:.2f}""".format(
+        compute_cv(df_unpivoted, "Celsius"), compute_cv(df_unpivoted, "Fahrenheit")
+    ))
+```
+
+このように，Celsius, Fahrenheitともに同じ温度を単位の違う方法で表しているのにも関わらず変動係数は異なります．Celsius, Fahrenheitともに間隔尺度であること，及び変数変換の観点からもlocation/scale parameterを異なる値で調整しているので同じデータを扱っているにも関わらずCVが一致しないという現象が発生してしまいます．
+
+:::
+
+<strong > &#9654;&nbsp; Bias Correction</strong>
+
+サイズ $N$ のsampleベースで計算された変動係数はpopulation変動係数 $\gamma_V$ と比較して過小推定されているということが知られています．population変動係数のunbiased estimate $\widehat{\operatorname{C_V}}$ は以下のように計算されます
+
+$$
+\widehat{\operatorname{C_V}} = \left(1 + \frac{1}{4N}\right)\operatorname{C_V}
+$$
+
+
+
 
 References
 ----------

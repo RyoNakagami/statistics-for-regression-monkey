@@ -2,7 +2,7 @@
 title: "Fisher's exact test"
 jupyter: python3
 author: "Ryo Nakagtami"
-date: last-modified
+date: "2024-09-05"
 date-modified: last-modified
 comments:
     utterances:
