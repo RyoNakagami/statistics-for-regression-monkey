@@ -60,7 +60,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -225,8 +224,43 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./posts/statistics101/intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">matplotlib demo</span></span></a>
+  <a href="./posts/statistics101/averages.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">代表値</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./posts/statistics101/density_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">確率密度関数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./posts/statistics101/expectation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./posts/statistics101/order_statistic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./posts/probability_distribution/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">確率分布</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./posts/probability_distribution/hypergeometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
   </div>
 </li>
       </ul>
@@ -235,15 +269,15 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="./posts/statistical_hypothesis_test_101/chapter_header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">統計的仮説検定入門</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
       </ul>
@@ -252,15 +286,63 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
       <div class="sidebar-item-container"> 
             <a href="./posts/statistical_hypothesis_test_201/chapter_header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">統計的仮説検定の実践</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./posts/ExplanatoryDataAnalysis/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Explanatory Data Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Data Analysis and Outliers</span></span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Econometrics Topics</span></span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="./posts/mathematical_appendix/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mathematical Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./posts/mathematical_appendix/jensen_inequality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
   </div>
 </li>
       </ul>
@@ -279,6 +361,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
   <ul class="collapse">
   <li><a href="#what-is-it-about" id="toc-what-is-it-about" class="nav-link" data-scroll-target="#what-is-it-about">What is it about?</a></li>
   <li><a href="#contributions" id="toc-contributions" class="nav-link" data-scroll-target="#contributions">Contributions</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -312,7 +395,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-09-05</p>
+      <p class="date-modified">2024-09-18</p>
     </div>
   </div>
     
@@ -359,38 +442,6 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 <li>そもそも解くべきの問題の見つけ方とその問題を特にあたっての方法論</li>
 </ol>
 <p>このQuarto Bookではチャプターごとに各事項にフォーカスしてノートをまとめています．</p>
-<p><strong> ▶&nbsp; 参考書</strong></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>タイトル</th>
-<th>説明</th>
-<th>Citation</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>現代数理統計学</td>
-<td>統計学入門</td>
-<td><span class="citation" data-cites="2020現代数理統計学">竹村彰通 (<a href="#ref-2020現代数理統計学" role="doc-biblioref">2020</a>)</span></td>
-</tr>
-<tr class="even">
-<td>P値: その正しい理解と適用</td>
-<td>統計的仮説検定におけるP値の解説入門書</td>
-<td><span class="citation" data-cites="P値-spotlight">柳川堯 (<a href="#ref-P値-spotlight" role="doc-biblioref">2018</a>)</span></td>
-</tr>
-<tr class="odd">
-<td>サンプルサイズの決め方</td>
-<td>統計的仮説検定におけるサンプルサイズ計算方法の解説本</td>
-<td><span class="citation" data-cites="永田サンプルサイズ">永田靖 (<a href="#ref-永田サンプルサイズ" role="doc-biblioref">2003</a>)</span></td>
-</tr>
-</tbody>
-</table>
 <p><strong> ▶&nbsp; プログラミング言語</strong></p>
 <ul>
 <li>主にPython 3.11.8 + <a href="https://python-poetry.org/">poetry</a> を用います</li>
@@ -398,7 +449,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 <li>分析コードは<a href="https://github.com/RyoNakagami/statistics-for-regression-monkey">Repository</a>のqmdファイルがそのままソースコードとなっています</li>
 </ul>
 <p>参考として以下のようにコードブロックと合わせて出力されます．</p>
-<div id="b49bfd92" class="cell" data-execution_count="1">
+<div id="51061092" class="cell" data-execution_count="1">
 <details open="" class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Hallo World"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -415,31 +466,42 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 <li>各ノートの末尾に <code>utteranc.es</code> を用いたコメント欄があります．こちらはGitHub Discussionsと接続されておりますので，各ノートに関してはこちらも適宜ご利用ください</li>
 </ul>
 <p>修正の必要性の判断は<a href="https://github.com/RyoNakagami">RyoNak</a>が最終的には判断しますが，広く議論できたら幸いです</p>
-
-
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-P値-spotlight" class="csl-entry" role="listitem">
-柳川堯 (2018), <em><a href="https://books.google.co.jp/books?id=xgCoDwAAQBAJ">P値: その正しい理解と適用</a></em>, 近代科学社.
+柳川堯 (2018), <em><a href="https://books.google.co.jp/books?id=xgCoDwAAQBAJ">P値:
+その正しい理解と適用</a></em>, 近代科学社.
 </div>
 <div id="ref-永田サンプルサイズ" class="csl-entry" role="listitem">
-永田靖 (2003), <em><a href="https://www.google.co.jp/books/edition/%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E6%B1%BA%E3%82%81%E6%96%B9/jeROAAAACAAJ?hl=en">サンプルサイズの決め方</a></em>, 朝倉書店.
+永田靖 (2003), <em><a href="https://www.google.co.jp/books/edition/%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%82%B5%E3%82%A4%E3%82%BA%E3%81%AE%E6%B1%BA%E3%82%81%E6%96%B9/jeROAAAACAAJ?hl=en">サンプルサイズの決め方</a></em>,
+朝倉書店.
 </div>
 <div id="ref-2020現代数理統計学" class="csl-entry" role="listitem">
-竹村彰通 (2020), <em><a href="https://books.google.co.jp/books?id=OY8dzgEACAAJ">現代数理統計学</a></em>, 学術図書出版社.
+竹村彰通 (2020), <em><a href="https://books.google.co.jp/books?id=OY8dzgEACAAJ">現代数理統計学</a></em>,
+学術図書出版社.
+</div>
+<div id="ref-ロバスト統計" class="csl-entry" role="listitem">
+藤澤洋徳 (2017), <em><a href="https://www.google.co.jp/books/edition/%E3%83%AD%E3%83%90%E3%82%B9%E3%83%88%E7%B5%B1%E8%A8%88/ThSvswEACAAJ?hl=en">ロバスト統計
+: 外れ値への対処の仕方（ISMシリーズ : 進化する統計数理 /
+統計数理研究所編, 6</a></em>, 近代科学社.
 </div>
 </div>
+
+
 </section>
 </section>
 
 </main> <!-- /main -->
 <script>
-    var custom_title = document.querySelectorAll('.custom_problem .theorem-title');
-    
-    for (let i = 0; i < custom_title.length; i++ ) {
-       var mod_name = custom_title[i].innerHTML;
-       custom_title[i].innerHTML = mod_name.replace("Exercise", "Problem");
-    };
-    </script>
+   document.querySelectorAll('.custom_problem .theorem-title').forEach((title) => {
+       let modName = title.innerHTML;
+       modName = modName.replace("Exercise", "Problem");
+       modName = modName.replace("Example", "<strong>&#9654;</strong>&nbsp; Example");
+       title.innerHTML = modName;
+   });
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

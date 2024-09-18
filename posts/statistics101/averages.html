@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ja_JP.UTF-8" xml:lang="ja_JP.UTF-8"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ryo Nakagtami">
+<meta name="dcterms.date" content="2024-09-07">
+
+<title>1&nbsp; 代表値 – Statistics for Regression Monkeys</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../posts/statistics101/density_function.html" rel="next">
+<link href="../../posts/statistics101/chapter_header.html" rel="prev">
+<link href="../.././img/favicon.ico" rel="icon">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-QEFX7FVCDM"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
+</script>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-M27Z2BWG');</script>
+<!-- End Google Tag Manager -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.32.0.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script>
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistics101/chapter_header.html">統計学入門</a></li><li class="breadcrumb-item"><a href="../../posts/statistics101/averages.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">代表値</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Statistics for Regression Monkeys</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <div class="dropdown">
+      <a href="" title="Blog Series" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Blog Series"><i class="bi bi-book"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/">
+            Ryo's Tech Blog
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/statistics_dojo/">
+            statistics dojo
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://ohgoshgit.github.io/">
+            OhGoshGit!?!
+            </a>
+          </li>
+      </ul>
+    </div>
+    <a href="https://github.com/RyoNakagami/statistics-for-regression-monkey" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://twitter.com/intent/tweet?url=|url|" title="Twitter" class="quarto-navigation-tool px-1" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../posts/statistics101/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">統計学入門</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/statistics101/averages.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">代表値</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/statistics101/density_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">確率密度関数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/statistics101/expectation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/statistics101/order_statistic.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../posts/probability_distribution/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">確率分布</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/hypergeometric.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../posts/statistical_hypothesis_test_101/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">統計的仮説検定入門</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../posts/statistical_hypothesis_test_201/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">統計的仮説検定の実践</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../posts/ExplanatoryDataAnalysis/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Explanatory Data Analysis</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Data Analysis and Outliers</span></span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Econometrics Topics</span></span>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../posts/mathematical_appendix/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Mathematical Appendix</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/mathematical_appendix/jensen_inequality.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#平均" id="toc-平均" class="nav-link active" data-scroll-target="#平均">平均</a></li>
+  <li><a href="#中央値" id="toc-中央値" class="nav-link" data-scroll-target="#中央値">中央値</a></li>
+  <li><a href="#分散と標準偏差" id="toc-分散と標準偏差" class="nav-link" data-scroll-target="#分散と標準偏差">分散と標準偏差</a>
+  <ul class="collapse">
+  <li><a href="#変動係数" id="toc-変動係数" class="nav-link" data-scroll-target="#変動係数">変動係数</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistics101/averages.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistics101/chapter_header.html">統計学入門</a></li><li class="breadcrumb-item"><a href="../../posts/statistics101/averages.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">代表値</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">代表値</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Ryo Nakagtami </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">2024-09-07</p>
+    </div>
+  </div>
+  
+    <div>
+    <div class="quarto-title-meta-heading">Modified</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date-modified">2024-09-18</p>
+    </div>
+  </div>
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="blog-custom-border">
+<p><strong>Def: 代表値(Averages)</strong> <br></p>
+<ul>
+<li>分布を代表する値のことを代表値と呼ぶ</li>
+<li>例: mean, median, mid-range, mode, quartile(四分位点)</li>
+</ul>
+</div>
+<section id="平均" class="level2">
+<h2 class="anchored" data-anchor-id="平均">平均</h2>
+<p><strong> ▶&nbsp; 標本平均</strong></p>
+<p>データ <span class="math inline">\(X = \{x_1, \cdots, x_n\}\)</span> が与えられとき，標本平均（sample mean） <span class="math inline">\(\overline{x}\)</span> は次になります：</p>
+<p><span class="math display">\[
+\overline{x} = \frac{x_1 + \cdots + x_n}{n}
+\]</span></p>
+<p>標本平均は分布の代表値として最も使用されるものだが，外れ値に対して弱い性質がある．</p>
+<div id="e8bdf668" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>X_0 <span class="op">=</span> np.array([<span class="fl">5.6</span>, <span class="fl">5.7</span>, <span class="fl">5.4</span>, <span class="fl">5.5</span>, <span class="fl">5.8</span>, <span class="fl">5.2</span>, <span class="fl">5.3</span>, <span class="fl">5.6</span>, <span class="fl">5.4</span>, <span class="fl">55.5</span>])</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>X_1 <span class="op">=</span> np.array([<span class="fl">5.6</span>, <span class="fl">5.7</span>, <span class="fl">5.4</span>, <span class="fl">5.5</span>, <span class="fl">5.8</span>, <span class="fl">5.2</span>, <span class="fl">5.3</span>, <span class="fl">5.6</span>, <span class="fl">5.4</span>])</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""X_0: sample mean = </span><span class="sc">{}</span><span class="st">, median = </span><span class="sc">{}</span><span class="ch">\n</span><span class="st">X_1: sample mean = </span><span class="sc">{}</span><span class="st">, median = </span><span class="sc">{}</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="st">      """</span>.<span class="bu">format</span>(</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>        np.mean(X_0), np.median(X_0), np.mean(X_1), np.median(X_1)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>X_0: sample mean = 10.5, median = 5.55
+X_1: sample mean = 5.5, median = 5.5
+      </code></pre>
+</div>
+</div>
+<p>上記の例のように，medianは外れ値の混入があってもその影響は軽微ですが，標本平均は大きく変わっており外れ値に対して弱いことがわかる．</p>
+<p><strong> ▶&nbsp; 刈り込み平均</strong></p>
+<p>外れ値の影響を弱めて標本平均を推定する方法として，刈り込み平均(trimmed mean)があります． 上側 <span class="math inline">\(100\alpha \%\)</span> と下側 <span class="math inline">\(100\alpha \%\)</span> を使わないで推定する方法で，<span class="math inline">\(x_{[i]}\)</span> を順序統計値として</p>
+<p><span class="math display">\[
+\hat\mu_\alpha = \frac{1}{n-2m} \sum_{i=m+1}^{n-m}x_{[i]}, \  \ m = \lfloor n\alpha \rfloor
+\]</span></p>
+<p>で推定する方法を刈り込み平均という．利用にあたって，外れ地の割合を事前に想定する必要がありますが， 少々適当に推定しても妥当な推定になりやすい特徴があります．</p>
+<p><span class="math inline">\(\alpha = 0.1\)</span> としてPythonで計算してみると以下，</p>
+<div id="a73fa82b" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>self_trimmed_mean <span class="op">=</span> np.mean([<span class="fl">5.7</span>, <span class="fl">5.4</span>, <span class="fl">5.5</span>, <span class="fl">5.8</span>, <span class="fl">5.4</span>, <span class="fl">5.3</span>, <span class="fl">5.6</span>, <span class="fl">5.6</span>])</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>trimmed_mean <span class="op">=</span> stats.trim_mean(X_0, <span class="fl">0.1</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(self_trimmed_mean, trimmed_mean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5.5375 5.5375</code></pre>
+</div>
+</div>
+<p>Trimmed meanはARE(Asymptotic relative efficiency, 漸近相対効率)という観点からも大抵の裾の重さに対して（重すぎるのは厳しいですが．．．）高いパフォーマンスがあることが知られています．</p>
+<p><strong> ▶&nbsp; 幾何平均</strong></p>
+<p><span class="math inline">\(x_i &gt; 0\)</span> となるようなデータについて，幾何平均は以下のように計算されます：</p>
+<p><span class="math display">\[
+\overline{x}_G = \bigg(\prod_{i=1}^n x_i \bigg)^{\frac{1}{n}}
+\]</span></p>
+<p>2000年から2005年までのXこくのでの物価上昇率が2%, 5%, 2%, 5%, 10%とあるとき，年平均上昇率は算術平均ではなく幾何平均で計算すべきで</p>
+<p><span class="math display">\[
+(1.02 \times 1.05 \times 1.02 \times 1.05 \times 1.1)^{1/5} \approx 1.0476
+\]</span></p>
+<p>すなわち年平均約4.8%の増加と報告すべきとなります．なお，相加相乗平均より，幾何平均は算術平均より小さい値になることがわかります．もし大きい値を出してしまっていたら計算ミスを疑うべきです．</p>
+<p>幾何平均について対数をとると以下のように算術平均で表すことができます</p>
+<p><span class="math display">\[
+\log(\overline{x}_G) = \frac{1}{n}\sum \log(x_i)
+\]</span></p>
+<p>ここから，幾何平均を計算するときは一旦log transformationを実行し，算術平均を計算し，その後 <span class="math inline">\(\exp(\cdot)\)</span> で元のスケールに戻すという形でよく計算されます．</p>
+<p>クラス分類の評価指標との関係では，sensitivity(感応度)とspecificity(特異度)の幾何平均を用いたG-Mean(geometric mean)という指標があります．</p>
+<p><span class="math display">\[
+\begin{align*}
+\operatorname{G-mean} &amp;= \sqrt{\operatorname{sensitivity} \times \operatorname{specificity}}\\
+                      &amp;= \sqrt{\operatorname{recall} \times \operatorname{True Negative Rate}}
+\end{align*}
+\]</span></p>
+<p><strong> ▶&nbsp; 調和平均</strong></p>
+<p><span class="math inline">\(x_i &gt; 0\)</span> となるようなデータについて，調和平均(harmonic mean)は以下のように計算されます：</p>
+<p><span class="math display">\[
+\frac{1}{\overline{x}_H} = \frac{1}{n}\sum\frac{1}{x_i}
+\]</span></p>
+<p>とある車が距離 <span class="math inline">\(\alpha\)</span> の区間Aでは25km/h, 距離 <span class="math inline">\(\beta\)</span> の区間Bでは15km/hで走っていたとします．このとき，この車の平均時速は</p>
+<p><span class="math display">\[
+\frac{1}{\text{平均時速}} = \frac{\alpha}{\alpha + \beta} \frac{1}{25} + \frac{\beta}{\alpha + \beta} \frac{1}{15}
+\]</span></p>
+<p><span class="math inline">\(\alpha = \beta\)</span> のときは</p>
+<p><span class="math display">\[
+\frac{1}{\text{平均時速}}  = \frac{1}{2} \bigg(\frac{1}{25} + \frac{1}{15}\bigg)
+\]</span></p>
+<p>平均を計算するにあたって，値が同じスケールの単位である必要であるため，上の平均時速の例では調和平均を利用することが 好ましいとされます．なお区間Aをx時間で25km/h, 区間Bをy時間で15km/hという場合はウェイトが時間単位で表されているので</p>
+<p><span class="math display">\[
+\text{平均時速} = \frac{x}{x + y} \times 25 + \frac{y}{x + y} \times 15
+\]</span></p>
+<p>モデルの評価指標の１つにprecisionとrecallを用いたF1-scoreがありますが，precisionとrecallも分子はそれぞれTrue Positiveで共通していますが，分母がそれぞれ <span class="math inline">\(\operatorname{TP} + \operatorname{FP}, \operatorname{TP} + \operatorname{FN}\)</span> と異なっているので，調和平均を用いて以下のように計算します：</p>
+<p><span class="math display">\[
+\begin{align*}
+\operatorname{F1-score} &amp;= \frac{1}{\frac{1}{2} \left(\frac{1}{\text{precision}} + \frac{1}{\text{recall}}\right)}\\
+&amp;= \frac{2}{\frac{1}{\text{precision}} + \frac{1}{\text{recall}}}
+\end{align*}
+\]</span></p>
+<p>なお，これはウェイトが等しい場合を意味しており，weighted harmonic meanへ拡張する場合は以下のように <span class="math inline">\(\operatorname{F_\beta-score}\)</span> を用いて計算します</p>
+<p><span class="math display">\[
+\operatorname{F_\beta-score} = \frac{1 + \beta^2}{\frac{1}{\text{precision}} + \frac{\beta^2}{\text{recall}}}
+\]</span></p>
+<p>ウェイトが <span class="math inline">\(\frac{1}{1 + \beta^2}, \frac{\beta^2}{1 + \beta^2}\)</span> の形を取っているのは一見不自然に見えますが，その考察で面白いのが<a href="https://people.cs.pitt.edu/~litman/courses/cs1671s20/F-measure-YS-26Oct07.pdf">van Rijs-bergen’s E (effectiveness) functionに基づいた説明</a>です．</p>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 1.1</strong></span> <br></p>
+<p>定義域が <span class="math inline">\(\mathbb R_+\)</span> の確率変数 <span class="math inline">\(X\)</span> を考える（つまり <span class="math inline">\(X &gt; 0\)</span>）. このとき,</p>
+<ul>
+<li><span class="math inline">\(H_x\)</span>: 調和平均</li>
+<li><span class="math inline">\(G_x\)</span>: 幾何平均</li>
+<li><span class="math inline">\(\overline{X}\)</span>: 標本平均</li>
+</ul>
+<p>として以下が常に成り立つ</p>
+<p><span class="math display">\[
+H_x \leq G_x \leq \overline{X}
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof: Jensen’s inequalityを用いた証明
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>Jensen’s inequalityより 関数 <span class="math inline">\(g\)</span> を凸関数(convex function)とすると</p>
+<p><span class="math display">\[
+\frac{1}{n}\sum_{i=1}^ng(x_i)\geq g(\overline{x})
+\]</span></p>
+<p>という不等式が成り立つ.</p>
+<p><strong> ▶&nbsp; <span class="math inline">\(\overline{X} \geq G_x\)</span> の証明</strong></p>
+<p><span class="math inline">\(f(x) = -\log(x)\)</span> とすると <span class="math inline">\(f\)</span> は単調減少の凸関数であるので</p>
+<p><span class="math display">\[
+\begin{align*}
+-\log(\overline{x}) &amp;\leq -\frac{1}{n}\sum_{i=1}^n\log(x_i)\\
+                    &amp;= -\log(\prod_{i=1}^n x_i^{1/n})\\
+                    &amp;= -\log(G_x)
+\end{align*}
+\]</span></p>
+<p>つまり，<span class="math inline">\(\log(\overline{x})\geq \log(G_x) \Rightarrow \overline{X} \geq G_x\)</span></p>
+<p><strong> ▶&nbsp; <span class="math inline">\(G_x \geq H_x\)</span> の証明</strong></p>
+<p><span class="math inline">\(1/x_i = y_i\)</span> と変換すると</p>
+<p><span class="math display">\[
+\begin{align*}
+G_x &amp;= \left(\prod \frac{1}{y_i}\right)^{1/n}\\
+H_x &amp;= \frac{1}{\overline y}
+\end{align*}
+\]</span></p>
+<p>それぞれについて <span class="math inline">\(f(x) = \log(x)\)</span> とすると</p>
+<p><span class="math display">\[
+\begin{align*}
+\log(G_x) &amp;= \frac{1}{n}\sum_{i=1}^n(-\log(y_i))\\
+\log(H_x) &amp;= -\log(\overline y)
+\end{align*}
+\]</span></p>
+<p><span class="math inline">\(-\log(\cdot)\)</span> は凸関数であるので</p>
+<p><span class="math inline">\(\log(G_x) \geq \log(H_x) \Rightarrow G_x \geq H_x\)</span> を得る．</p>
+</div>
+</div>
+</div>
+</section>
+<section id="中央値" class="level2">
+<h2 class="anchored" data-anchor-id="中央値">中央値</h2>
+<div class="blog-custom-border">
+<p><strong>Def: median</strong> <br></p>
+<p>データ <span class="math inline">\(x_1, \cdots, x_n\)</span> を小さい順に並び替えた順序統計量</p>
+<p><span class="math display">\[
+x_{[1]} &lt; \cdots &lt; x_{[n]}
+\]</span></p>
+<p>について，真ん中の値を中央値という．つまり，</p>
+<p><span class="math display">\[
+\operatorname{Med}(X) = \left\{\begin{array}{cl}
+x_{[k]} &amp; \text{where } n = 2k-1\\
+\displaystyle \frac{x_{[k]} + x_{[k+1]}}{2} &amp; \text{where } n = 2k
+\end{array}\right.
+\]</span></p>
+</div>
+<p><strong> ▶&nbsp; Hodges-Lehmann推定量</strong></p>
+<p>標本の中からペアを選び，そのヘアの平均の中央値を用いて中央値を推定するのがホッジスレーマン推定値です．</p>
+<p><span class="math display">\[
+\hat\mu_{HL} = \operatorname{Med}\bigg(\bigg\{\frac{x_i + x_j}{2}\bigg\}_{1\leq i \leq j \le n}\bigg)
+\]</span></p>
+<p>computation上少し重たいですが計算例として以下，</p>
+<div id="d8673028" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> itertools</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> HL_mean(x: <span class="bu">list</span>[<span class="bu">tuple</span>]):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.median([np.mean(t) <span class="cf">for</span> t <span class="kw">in</span> itertools.combinations(x, <span class="dv">2</span>)])</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>X_0 <span class="op">=</span> np.array([<span class="fl">5.6</span>, <span class="fl">5.7</span>, <span class="fl">5.4</span>, <span class="fl">5.5</span>, <span class="fl">5.8</span>, <span class="fl">5.2</span>, <span class="fl">5.3</span>, <span class="fl">5.6</span>, <span class="fl">5.4</span>, <span class="fl">55.5</span>])</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(HL_mean(X_0))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>5.55</code></pre>
+</div>
+</div>
+<div class="blog-custom-border">
+<p><strong>Theorem: Asymptotic distribution of sample quantile-p</strong> <br></p>
+<p><span class="math inline">\(y_1, \cdots, y_n\)</span> を density function <span class="math inline">\(f\)</span> 及びquantile function <span class="math inline">\(Q^{(p)}\)</span> を持つ分布からのi.i.dとします．このとき, sample quantile <span class="math inline">\(\hat Q^{(p)}\)</span> は</p>
+<p><span class="math display">\[
+\sqrt{n}(\hat Q^{(p)} - Q^{(p)}) \rightarrow_d \mathbb N\left(0,\frac{p(1-p)}{f(Q^{(p)})^2}\right)
+\]</span></p>
+</div>
+<p>ここでは，連続変数分布を想定して解説します．連続なdensity function <span class="math inline">\(f_x\)</span> を持つ連続確率分布 <span class="math inline">\(F\)</span> という分布について</p>
+<p><span class="math display">\[
+X = \{x_1, \cdots, x_n\}  \overset{\mathrm{iid}}{\sim} F
+\]</span></p>
+<p>と確率変数列が与えられたとします．この確率変数に対して</p>
+<p><span class="math display">\[
+Z_i\equiv 1\{x_i \leq x\}
+\]</span></p>
+<p>という変数を考えます．この <span class="math inline">\(Z_i\)</span> は Bernoulli分布に従うと考えられるので，<span class="math inline">\(F\)</span> のCDFを <span class="math inline">\(F_X\)</span> とおくと</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E(Z_i) &amp;=  \mathbb E\left(I\{X_i\le x\}\right) = P(X_i\le x)=F_X(x)\\
+\operatorname{Var}(Z_i) &amp;= F_X(x)[1-F_X(x)]
+\end{align*}
+\]</span></p>
+<p>ここで，<span class="math inline">\(Z_i\)</span> のsample meanを以下のように定義する．</p>
+<p><span class="math display">\[
+Y_n(x) =  \frac 1n\sum_{i=1}^nZ_i
+\]</span></p>
+<p>このように定義した <span class="math inline">\(Y_n(x)\)</span> はいわゆる経験分布関数 <span class="math inline">\(F_n(x)\)</span> であるとみなせます．また，定義より</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;E[F_n(x)] = F_X(x)\\
+&amp;\operatorname{Var}(F_n(x)) = (1/n)F_X(x)[1-F_X(x)]\\
+&amp;\sqrt n\Big(F_n(x) - F_X(x)\Big) \rightarrow_d \mathbb N\left(0,F_X(x)[1-F_X(x)]\right) \because{\text{CLT}}
+\end{align*}
+\]</span></p>
+<p>ここでCDFの逆関数 <span class="math inline">\(F^{-1}_X\)</span> とする(monotonicityより自明)と delta methodを用いると</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;\frac {d}{dt}F^{-1}_X(t) = \frac 1{f_x\left(F^{-1}_X(t)\right)}\\
+&amp;\sqrt n\Big(F^{-1}_X(F_n(x)) - F^{-1}_X(F_X(x))\Big) \rightarrow_d \mathbb N\left(0,\frac {F_X(x)[1-F_X(x)]}{\left[f_x\left(F^{-1}_X(F_X(x))\right)\right]^2} \right)
+\end{align*}
+\]</span></p>
+<p>つまり，</p>
+<p><span class="math display">\[
+\sqrt n\Big(F^{-1}_X(F_n(x)) - x\Big) \rightarrow_d \mathbb N\left(0,\frac {F_X(x)[1-F_X(x)]}{\left[f_x(x)\right]^2} \right)
+\]</span></p>
+<p>ここで <span class="math inline">\(x = m\)</span>(population median)と設定すると</p>
+<p><span class="math display">\[
+\sqrt n\Big(F^{-1}_X(F_n(m)) - m\Big) \rightarrow_d \mathbb N\left(0,\frac {1}{\left[2f_x(m)\right]^2} \right)
+\]</span></p>
+<p>また，</p>
+<p><span class="math display">\[
+F^{-1}_X(\hat F_n(m)) = \inf\{x : F_X(x) \geq \hat F_n(m)\} = \inf\{x : F_X(x) \geq \frac 1n \sum_{i=1}^n I\{X_i\leq m\}\}
+\]</span></p>
+<p>より, 不等式のRHSは 1/2 に収束するので <span class="math inline">\(F^{-1}_X(\hat F_n(m))\)</span> はsample mean <span class="math inline">\(\hat m\)</span> に収束することがわかる．従って，</p>
+<p><span class="math display">\[
+\sqrt n\Big(\hat m - m\Big) \rightarrow_d \mathbb N\left(0,\frac {1}{\left[2f_x(m)\right]^2} \right)
+\]</span></p>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 1.2</strong></span> <strong>標本平均とMedianの距離</strong> <br></p>
+<p>独立に同一の分布に従う確率変数列 <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> を考える．この標本平均を <span class="math inline">\(\overline{X}\)</span>, 不偏分散を <span class="math inline">\(S^2\)</span>, メディアン <span class="math inline">\(X_{\operatorname{med}}\)</span> とすると</p>
+<p><span class="math display">\[
+\vert \overline{X} - X_{\operatorname{med}}\vert &lt; S
+\]</span></p>
+</div>
+</div>
+<!--::: {.callout-note collapse="true" icon=false}-->
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(X_{\operatorname{med}}\)</span> はL1ノルムの和を最小にするような値であるので</p>
+<p><span class="math display">\[
+\begin{align*}
+\vert \overline{X} - X_{\operatorname{med}}\vert
+    &amp;= \bigg\vert \frac{1}{n}\sum_{i=1}^n(X_i - X_{\operatorname{med}})\bigg\vert\\
+    &amp;\leq \frac{1}{n}\sum_{i=1}^n\bigg\vert X_i - X_{\operatorname{med}}\bigg\vert\\
+    &amp;\leq\frac{1}{n}\sum_{i=1}^n\bigg\vert X_i - \overline{X}\bigg\vert\\
+    &amp;\leq\sqrt{\frac{1}{n}\sum_{i=1}^n( X_i - \overline{X})^2}\\
+    &amp;=\sqrt{\frac{n-1}{n}}S\\
+    &amp;\leq S
+\end{align*}
+\]</span></p>
+</div>
+</div>
+</div>
+</section>
+<section id="分散と標準偏差" class="level2">
+<h2 class="anchored" data-anchor-id="分散と標準偏差">分散と標準偏差</h2>
+<div class="blog-custom-border">
+<p><strong>Def: Variance</strong> <br></p>
+<p>mean <span class="math inline">\(\mu\)</span> をもつ確率変数 <span class="math inline">\(X\)</span> の分散は</p>
+<p><span class="math display">\[
+\begin{align*}
+\operatorname{Var}(X) &amp;= \mathbb E[(X - \mu)^2]\\
+                      &amp;= \mathbb E[X^2] - \mathbb E[X]^2
+\end{align*}
+\]</span></p>
+<p>標準偏差(standard deviation)は分散のsquare rootで定義される．</p>
+</div>
+<p>上の定義より標準偏差について以下のことがわかります：</p>
+<ul>
+<li><span class="math inline">\(X\)</span> と同じ単位で表される</li>
+<li><span class="math inline">\(X - \mathbb E[X]\)</span> の L2ノルムと解釈できる</li>
+<li>population meanからどれだけ分布がバラついているか(dispersion)を示す指標の一つ</li>
+</ul>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 1.3</strong></span> <br></p>
+<p>確率変数 <span class="math inline">\(X\sim D(\mu, \sigma^2)\)</span> とする．このとき</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[\vert X - \mu\vert] \leq \sigma
+\end{align*}
+\]</span></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof: Jensen’s Inequality
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(g(x) = \sqrt{x}\)</span> という関数はconcaveなので，Jensen’s Inequalityより</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[\vert X - \mu \vert]
+    &amp;= \mathbb E[\sqrt{( X - \mu)^2}]\\
+    &amp;\leq \sqrt{\mathbb E[( X - \mu)^2]}\\
+    &amp;= \sigma
+\end{align*}
+\]</span></p>
+</div>
+</div>
+</div>
+<section id="変動係数" class="level3">
+<h3 class="anchored" data-anchor-id="変動係数">変動係数</h3>
+<p>確率変数のバラツキを表す指標として範囲(Range), 四分位範囲（IQR）, 分散がありますが，分布の中心の位置が著しく異なるような場合 には，これらを用いて分布の散らばり具合を比較することは難しいです．このような場合に，変動係数(<strong>Coefficient of variation</strong>) という単位のない統計量を用いたりします．</p>
+<div class="blog-custom-border">
+<p><strong>Def: Coefficient of variation</strong> <br></p>
+<p>比例尺度にもとづく測定が行われ，その測定結果をnon-negative 確率変数 <span class="math inline">\(X_i &gt;0\)</span> で表すとする．<span class="math inline">\(\{X_i\}_{i=1}^n\)</span> の標本平均を <span class="math inline">\(\overline{X}\)</span>, 標本標準偏差を <span class="math inline">\(S\)</span> としたとき，変動係数は以下のように計算される</p>
+<p><span class="math display">\[
+\operatorname{C_V} = \frac{S}{\overline{X}}
+\]</span></p>
+</div>
+<p>上記の定義より以下のことがわかります</p>
+<ul>
+<li>変動係数は，実際のゼロ点を持つ測定値（i.e., 比率尺度）に対してのみ用いることができます</li>
+<li>変動係数の計算対象となる測定は，non-negativeである必要がある</li>
+<li>サイズ <span class="math inline">\(N\)</span> のfinite sampleにおける <span class="math inline">\(\operatorname{C_V}\)</span> のレンジは <span class="math inline">\(\operatorname{CV}\in[0, \sqrt{N-1}]\)</span> である</li>
+</ul>
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 1.1</strong></span> <strong>東京 日平均気温の月平均値（℃）</strong> <br></p>
+<p><a href="https://www.data.jma.go.jp/stats/etrn/view/monthly_s3.php?prec_no=44&amp;block_no=47662&amp;year=2023&amp;month=&amp;day=&amp;view=">国土交通省気象庁</a>より以下のように東京都の気象データを取得します．</p>
+<div id="19bec806" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Year"</span>: [<span class="dv">2015</span>, <span class="dv">2016</span>, <span class="dv">2017</span>, <span class="dv">2018</span>, <span class="dv">2019</span>, <span class="dv">2020</span>, <span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>],</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Jan"</span>: [<span class="fl">5.8</span>, <span class="fl">6.1</span>, <span class="fl">5.8</span>, <span class="fl">4.7</span>, <span class="fl">5.6</span>, <span class="fl">7.1</span>, <span class="fl">5.4</span>, <span class="fl">4.9</span>, <span class="fl">5.7</span>],</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Feb"</span>: [<span class="fl">5.7</span>, <span class="fl">7.2</span>, <span class="fl">6.9</span>, <span class="fl">5.4</span>, <span class="fl">7.2</span>, <span class="fl">8.3</span>, <span class="fl">8.5</span>, <span class="fl">5.2</span>, <span class="fl">7.3</span>],</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Mar"</span>: [<span class="fl">10.3</span>, <span class="fl">10.1</span>, <span class="fl">8.5</span>, <span class="fl">11.5</span>, <span class="fl">10.6</span>, <span class="fl">10.7</span>, <span class="fl">12.8</span>, <span class="fl">10.9</span>, <span class="fl">12.9</span>],</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Apr"</span>: [<span class="fl">14.5</span>, <span class="fl">15.4</span>, <span class="fl">14.7</span>, <span class="fl">17.0</span>, <span class="fl">13.6</span>, <span class="fl">12.8</span>, <span class="fl">15.1</span>, <span class="fl">15.3</span>, <span class="fl">16.3</span>],</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"May"</span>: [<span class="fl">21.1</span>, <span class="fl">20.2</span>, <span class="fl">20.0</span>, <span class="fl">19.8</span>, <span class="fl">20.0</span>, <span class="fl">19.5</span>, <span class="fl">19.6</span>, <span class="fl">18.8</span>, <span class="fl">19.0</span>],</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Jun"</span>: [<span class="fl">22.1</span>, <span class="fl">22.4</span>, <span class="fl">22.0</span>, <span class="fl">22.4</span>, <span class="fl">21.8</span>, <span class="fl">23.2</span>, <span class="fl">22.7</span>, <span class="fl">23.0</span>, <span class="fl">23.2</span>],</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Jul"</span>: [<span class="fl">26.2</span>, <span class="fl">25.4</span>, <span class="fl">27.3</span>, <span class="fl">28.3</span>, <span class="fl">24.1</span>, <span class="fl">24.3</span>, <span class="fl">25.9</span>, <span class="fl">27.4</span>, <span class="fl">28.7</span>],</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Aug"</span>: [<span class="fl">26.7</span>, <span class="fl">27.1</span>, <span class="fl">26.4</span>, <span class="fl">28.1</span>, <span class="fl">28.4</span>, <span class="fl">29.1</span>, <span class="fl">27.4</span>, <span class="fl">27.5</span>, <span class="fl">29.2</span>],</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Sep"</span>: [<span class="fl">22.6</span>, <span class="fl">24.4</span>, <span class="fl">22.8</span>, <span class="fl">22.9</span>, <span class="fl">25.1</span>, <span class="fl">24.2</span>, <span class="fl">22.3</span>, <span class="fl">24.4</span>, <span class="fl">26.7</span>],</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Oct"</span>: [<span class="fl">18.4</span>, <span class="fl">18.7</span>, <span class="fl">16.8</span>, <span class="fl">19.1</span>, <span class="fl">19.4</span>, <span class="fl">17.5</span>, <span class="fl">18.2</span>, <span class="fl">17.2</span>, <span class="fl">18.9</span>],</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Nov"</span>: [<span class="fl">13.9</span>, <span class="fl">11.4</span>, <span class="fl">11.9</span>, <span class="fl">14.0</span>, <span class="fl">13.1</span>, <span class="fl">14.0</span>, <span class="fl">13.7</span>, <span class="fl">14.5</span>, <span class="fl">14.4</span>],</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Dec"</span>: [<span class="fl">9.3</span>, <span class="fl">8.9</span>, <span class="fl">6.6</span>, <span class="fl">8.3</span>, <span class="fl">8.5</span>, <span class="fl">7.7</span>, <span class="fl">7.9</span>, <span class="fl">7.5</span>, <span class="fl">9.4</span>],</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pl.DataFrame(data)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>df_unpivoted <span class="op">=</span> df.unpivot(index<span class="op">=</span><span class="st">"Year"</span>, variable_name<span class="op">=</span><span class="st">"Month"</span>, value_name<span class="op">=</span><span class="st">"Celsius"</span>)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>px.line(df_unpivoted, x<span class="op">=</span><span class="st">"Month"</span>, y<span class="op">=</span><span class="st">"Celsius"</span>, color<span class="op">=</span><span class="st">"Year"</span>, title<span class="op">=</span><span class="st">"東京都月別平均気温"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>                            <div id="38af820c-cb37-4587-8a9b-d15eab0bc33d" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("38af820c-cb37-4587-8a9b-d15eab0bc33d")) {                    Plotly.newPlot(                        "38af820c-cb37-4587-8a9b-d15eab0bc33d",                        [{"hovertemplate":"Year=2015\u003cbr\u003eMonth=%{x}\u003cbr\u003eCelsius=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"2015","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"2015","orientation":"v","showlegend":true,"x":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"xaxis":"x","y":[5.8,5.7,10.3,14.5,21.1,22.1,26.2,26.7,22.6,18.4,13.9,9.3],"yaxis":"y","type":"scatter"},{"hovertemplate":"Year=2016\u003cbr\u003eMonth=%{x}\u003cbr\u003eCelsius=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"2016","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"2016","orientation":"v","showlegend":true,"x":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"xaxis":"x","y":[6.1,7.2,10.1,15.4,20.2,22.4,25.4,27.1,24.4,18.7,11.4,8.9],"yaxis":"y","type":"scatter"},{"hovertemplate":"Year=2017\u003cbr\u003eMonth=%{x}\u003cbr\u003eCelsius=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"2017","line":{"color":"#00cc96","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"2017","orientation":"v","showlegend":true,"x":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"xaxis":"x","y":[5.8,6.9,8.5,14.7,20.0,22.0,27.3,26.4,22.8,16.8,11.9,6.6],"yaxis":"y","type":"scatter"},{"hovertemplate":"Year=2018\u003cbr\u003eMonth=%{x}\u003cbr\u003eCelsius=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"2018","line":{"color":"#ab63fa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"2018","orientation":"v","showlegend":true,"x":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"xaxis":"x","y":[4.7,5.4,11.5,17.0,19.8,22.4,28.3,28.1,22.9,19.1,14.0,8.3],"yaxis":"y","type":"scatter"},{"hovertemplate":"Year=2019\u003cbr\u003eMonth=%{x}\u003cbr\u003eCelsius=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"2019","line":{"color":"#FFA15A","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"2019","orientation":"v","showlegend":true,"x":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"xaxis":"x","y":[5.6,7.2,10.6,13.6,20.0,21.8,24.1,28.4,25.1,19.4,13.1,8.5],"yaxis":"y","type":"scatter"},{"hovertemplate":"Year=2020\u003cbr\u003eMonth=%{x}\u003cbr\u003eCelsius=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"2020","line":{"color":"#19d3f3","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"2020","orientation":"v","showlegend":true,"x":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"xaxis":"x","y":[7.1,8.3,10.7,12.8,19.5,23.2,24.3,29.1,24.2,17.5,14.0,7.7],"yaxis":"y","type":"scatter"},{"hovertemplate":"Year=2021\u003cbr\u003eMonth=%{x}\u003cbr\u003eCelsius=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"2021","line":{"color":"#FF6692","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"2021","orientation":"v","showlegend":true,"x":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"xaxis":"x","y":[5.4,8.5,12.8,15.1,19.6,22.7,25.9,27.4,22.3,18.2,13.7,7.9],"yaxis":"y","type":"scatter"},{"hovertemplate":"Year=2022\u003cbr\u003eMonth=%{x}\u003cbr\u003eCelsius=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"2022","line":{"color":"#B6E880","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"2022","orientation":"v","showlegend":true,"x":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"xaxis":"x","y":[4.9,5.2,10.9,15.3,18.8,23.0,27.4,27.5,24.4,17.2,14.5,7.5],"yaxis":"y","type":"scatter"},{"hovertemplate":"Year=2023\u003cbr\u003eMonth=%{x}\u003cbr\u003eCelsius=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"2023","line":{"color":"#FF97FF","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"2023","orientation":"v","showlegend":true,"x":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"xaxis":"x","y":[5.7,7.3,12.9,16.3,19.0,23.2,28.7,29.2,26.7,18.9,14.4,9.4],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"Month"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"Celsius"}},"legend":{"title":{"text":"Year"},"tracegroupgap":0},"title":{"text":"\u6771\u4eac\u90fd\u6708\u5225\u5e73\u5747\u6c17\u6e29"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('38af820c-cb37-4587-8a9b-d15eab0bc33d');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+<p>ここで，以下のようにFahrenheitに変換してみます．</p>
+<div id="728c917e" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_unpivoted <span class="op">=</span> df_unpivoted.with_columns(</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">"Celsius"</span>) <span class="op">*</span> <span class="dv">9</span> <span class="op">/</span> <span class="dv">5</span> <span class="op">+</span> <span class="dv">32</span>).alias(<span class="st">"Fahrenheit"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>df_unpivoted.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (5, 4)</small>
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">Year</th>
+<th data-quarto-table-cell-role="th">Month</th>
+<th data-quarto-table-cell-role="th">Celsius</th>
+<th data-quarto-table-cell-role="th">Fahrenheit</th>
+</tr>
+<tr class="odd">
+<th>i64</th>
+<th>str</th>
+<th>f64</th>
+<th>f64</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2015</td>
+<td>"Jan"</td>
+<td>5.8</td>
+<td>42.44</td>
+</tr>
+<tr class="even">
+<td>2016</td>
+<td>"Jan"</td>
+<td>6.1</td>
+<td>42.98</td>
+</tr>
+<tr class="odd">
+<td>2017</td>
+<td>"Jan"</td>
+<td>5.8</td>
+<td>42.44</td>
+</tr>
+<tr class="even">
+<td>2018</td>
+<td>"Jan"</td>
+<td>4.7</td>
+<td>40.46</td>
+</tr>
+<tr class="odd">
+<td>2019</td>
+<td>"Jan"</td>
+<td>5.6</td>
+<td>42.08</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>ここで，Celsius, Fahrenheit両方のカラムについて変動係数を計算します．</p>
+<div id="643ce032" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_cv(df, col: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df_unpivoted[col].std() <span class="op">/</span> df_unpivoted[col].mean()</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""Celsius CV: </span><span class="sc">{:.2f}</span><span class="st">, Fahrenheit CV: </span><span class="sc">{:.2f}</span><span class="st">"""</span>.<span class="bu">format</span>(</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>        compute_cv(df_unpivoted, <span class="st">"Celsius"</span>), compute_cv(df_unpivoted, <span class="st">"Fahrenheit"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    ))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Celsius CV: 0.45, Fahrenheit CV: 0.22</code></pre>
+</div>
+</div>
+<p>このように，Celsius, Fahrenheitともに同じ温度を単位の違う方法で表しているのにも関わらず変動係数は異なります．Celsius, Fahrenheitともに間隔尺度であること，及び変数変換の観点からもlocation/scale parameterを異なる値で調整しているので同じデータを扱っているにも関わらずCVが一致しないという現象が発生してしまいます．</p>
+</div>
+<p><strong> ▶&nbsp; Bias Correction</strong></p>
+<p>サイズ <span class="math inline">\(N\)</span> のsampleベースで計算された変動係数はpopulation変動係数 <span class="math inline">\(\gamma_V\)</span> と比較して過小推定されているということが知られています．population変動係数のunbiased estimate <span class="math inline">\(\widehat{\operatorname{C_V}}\)</span> は以下のように計算されます</p>
+<p><span class="math display">\[
+\widehat{\operatorname{C_V}} = \left(1 + \frac{1}{4N}\right)\operatorname{C_V}
+\]</span></p>
+</section>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li><a href="https://people.cs.pitt.edu/~litman/courses/cs1671s20/F-measure-YS-26Oct07.pdf">Yutaka Sasaki, The truth of the F-measure, 2007</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+   document.querySelectorAll('.custom_problem .theorem-title').forEach((title) => {
+       let modName = title.innerHTML;
+       modName = modName.replace("Exercise", "Problem");
+       modName = modName.replace("Example", "<strong>&#9654;</strong>&nbsp; Example");
+       title.innerHTML = modName;
+   });
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ryonakagami\.github\.io\/statistics-for-regression-monkey\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="RyoNakagami/statistics-for-regression-monkey" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../posts/statistics101/chapter_header.html" class="pagination-link" aria-label="統計学入門">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">統計学入門</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../posts/statistics101/density_function.html" class="pagination-link" aria-label="確率密度関数">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">確率密度関数</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+ © Copyright RyoNak
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="../../LICENSE">
+<p>License</p>
+</a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistics101/averages.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

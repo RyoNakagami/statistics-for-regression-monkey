@@ -2,30 +2,78 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/index.html</loc>
-    <lastmod>2024-09-05T13:27:09.724Z</lastmod>
+    <lastmod>2024-09-18T03:11:25.679Z</lastmod>
   </url>
   <url>
-    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/intro.html</loc>
-    <lastmod>2024-09-05T13:27:09.728Z</lastmod>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/averages.html</loc>
+    <lastmod>2024-09-18T03:11:25.682Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/density_function.html</loc>
+    <lastmod>2024-09-18T03:11:25.682Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/expectation.html</loc>
+    <lastmod>2024-09-18T03:11:25.682Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/order_statistic.html</loc>
+    <lastmod>2024-09-18T03:11:25.682Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/hypergeometric.html</loc>
+    <lastmod>2024-09-18T03:11:25.681Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistical_hypothesis_test_101/fisher_exact_test.html</loc>
-    <lastmod>2024-09-05T13:27:09.728Z</lastmod>
+    <lastmod>2024-09-18T03:11:25.681Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html</loc>
-    <lastmod>2024-09-05T13:27:09.728Z</lastmod>
+    <lastmod>2024-09-18T03:11:25.681Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/ExplanatoryDataAnalysis/gini_coefficient.html</loc>
+    <lastmod>2024-09-18T03:11:25.680Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/mathematical_appendix/beta_function.html</loc>
+    <lastmod>2024-09-18T03:11:25.680Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/mathematical_appendix/jensen_inequality.html</loc>
+    <lastmod>2024-09-18T03:11:25.681Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/chapter_header.html</loc>
-    <lastmod>2024-09-05T13:27:09.728Z</lastmod>
+    <lastmod>2024-09-18T03:11:25.682Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/chapter_header.html</loc>
+    <lastmod>2024-09-18T03:11:25.681Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistical_hypothesis_test_101/chapter_header.html</loc>
-    <lastmod>2024-09-05T13:27:09.728Z</lastmod>
+    <lastmod>2024-09-18T03:11:25.681Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistical_hypothesis_test_201/chapter_header.html</loc>
-    <lastmod>2024-09-05T13:27:09.728Z</lastmod>
+    <lastmod>2024-09-18T03:11:25.681Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/ExplanatoryDataAnalysis/chapter_header.html</loc>
+    <lastmod>2024-09-18T03:11:25.680Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/robust_statistics/chapter_header.html</loc>
+    <lastmod>2024-09-18T03:11:25.681Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/econometrics101/chapter_header.html</loc>
+    <lastmod>2024-09-18T03:11:25.680Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/mathematical_appendix/chapter_header.html</loc>
+    <lastmod>2024-09-18T03:11:25.680Z</lastmod>
   </url>
 </urlset>

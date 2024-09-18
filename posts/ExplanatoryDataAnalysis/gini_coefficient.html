@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2024-08-15">
+<meta name="dcterms.date" content="2024-09-06">
 
-<title>統計学入門 – Statistics for Regression Monkeys</title>
+<title>8&nbsp; ジニ係数 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,38 +22,52 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
 }
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/statistics101/averages.html" rel="next">
-<link href="../../index.html" rel="prev">
+<link href="../../posts/robust_statistics/chapter_header.html" rel="next">
+<link href="../../posts/ExplanatoryDataAnalysis/chapter_header.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -112,7 +126,55 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
 
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.32.0.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script>
+
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -125,7 +187,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistics101/chapter_header.html">統計学入門</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/ExplanatoryDataAnalysis/chapter_header.html">Explanatory Data Analysis</a></li><li class="breadcrumb-item"><a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ジニ係数</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -183,7 +245,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../posts/statistics101/chapter_header.html" class="sidebar-item-text sidebar-link active">
+            <a href="../../posts/statistics101/chapter_header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">統計学入門</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -278,7 +340,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
@@ -320,15 +382,24 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#ジニ係数とローレンツ曲線" id="toc-ジニ係数とローレンツ曲線" class="nav-link active" data-scroll-target="#ジニ係数とローレンツ曲線">ジニ係数とローレンツ曲線</a>
+  <ul class="collapse">
+  <li><a href="#無限母集団におけるローレンツ曲線" id="toc-無限母集団におけるローレンツ曲線" class="nav-link" data-scroll-target="#無限母集団におけるローレンツ曲線">無限母集団におけるローレンツ曲線</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/ExplanatoryDataAnalysis/gini_coefficient.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/ExplanatoryDataAnalysis/chapter_header.html">Explanatory Data Analysis</a></li><li class="breadcrumb-item"><a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ジニ係数</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">統計学入門</h1>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ジニ係数</span></h1>
 </div>
 
 
@@ -345,7 +416,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-08-15</p>
+      <p class="date">2024-09-06</p>
     </div>
   </div>
   
@@ -363,76 +434,200 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </header>
 
 
-<p><strong> ▶&nbsp; 統計学入門 のスコープ</strong></p>
-<ul>
-<li><span class="citation" data-cites="2020現代数理統計学">竹村彰通 (<a href="../../index.html#ref-2020現代数理統計学" role="doc-biblioref">2020</a>)</span> をベースに，統計モデルとしての確率分布族と，それらに対する統計推測法について勉強する</li>
-<li>勉強対象は主に日々のデータサイエンス分析のベースとなるような統計基礎概念や定義になるが，これらについて数学的な定義とともにわかりやすい言語化ができるようになることを目的にしています</li>
-</ul>
-<p><strong> ▶&nbsp; 記述統計と統計的推測</strong></p>
-<div style="padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#6495ED;">
-<p><strong> 記述統計(descriptive statistics)</strong></p>
-<ul>
-<li>調査や実験で得られたデータを整理して，その解釈を助けるような統計的分析のこと</li>
-</ul>
-<p><strong>統計的推測(statistical inference)</strong></p>
-<ul>
-<li>確率的な変動を多く含むデータに対して，そのDGP(= Data generating process)に何かしらの仮定を想定し，データから確率モデルの推定や検定を行う分析のこと</li>
-</ul>
+<section id="ジニ係数とローレンツ曲線" class="level2">
+<h2 class="anchored" data-anchor-id="ジニ係数とローレンツ曲線">ジニ係数とローレンツ曲線</h2>
+<div class="blog-custom-border">
+<p><strong>Def: ローレンツ曲線</strong> <br></p>
+<p>データ <span class="math inline">\(X = \{x_1, \cdots, x_n\}\)</span> について，以下のような順序統計量をとる</p>
+<p><span class="math display">\[
+x_{[1]} \leq \cdots \leq x_{[i]} \leq \cdots \leq x_{[n]}
+\]</span></p>
+<p>このとき，相対度数 <span class="math inline">\(r_i\)</span> と累積比率 <span class="math inline">\(I_i\)</span> をそれぞれ以下のように定義する：</p>
+<p><span class="math display">\[
+\begin{align*}
+r_i &amp; = \frac{i}{n}\\
+I_i &amp;= \frac{\sum_{j=1}^i x_{[j]}}{\sum_{j=1}^n x_{[j]}}
+\end{align*}
+\]</span></p>
+<p>点 <span class="math inline">\((0,0), (r_1, I_1), \cdots , (r_n, I_n)\)</span> を区分的に直線で結んで得られる曲線がローレンツ曲線である．</p>
 </div>
-<p><br></p>
-<p>「伏せられたトランプカードを透視することでスートを当てることができる！」という人がいたとします． この能力を試してみたところ５２枚のカードの内，４０枚を当てることができたというデータが得られました． この，<strong>40枚当てることができた</strong>というデータについて確率論的意味を判断をするというのが統計的推測です．</p>
-<p>このように統計的推測とは確率モデルを想定してデータを解釈/判断する分析なので，確率論を中心とする数学的表現を用いたモデルの定式化 （=ランダムネスの法則を扱う数学理論）が必要となります．加えて，</p>
+<p>Pythonで形状パラメター 2.5 のパレート分布の乱数と <span class="math inline">\(\operatorname{Unif}(0, 1)\)</span> を20個ずつ発生させ作画したのが以下</p>
+<div id="3510a6b7" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> pareto</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.express <span class="im">as</span> px</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>SAMPLESIZE <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>shape_parameter <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> pareto.rvs(shape_parameter, size<span class="op">=</span>SAMPLESIZE)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>x2 <span class="op">=</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, SAMPLESIZE)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute ratio</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>relative_freq <span class="op">=</span> np.arange(<span class="dv">0</span>, SAMPLESIZE <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> SAMPLESIZE</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>relative_cumulative_pareto <span class="op">=</span> np.insert(np.cumsum(<span class="bu">sorted</span>(x)) <span class="op">/</span> np.<span class="bu">sum</span>(x), <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>relative_cumulative_uniform <span class="op">=</span> np.insert(np.cumsum(<span class="bu">sorted</span>(x2)) <span class="op">/</span> np.<span class="bu">sum</span>(x2), <span class="dv">0</span>, <span class="dv">0</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># create dataframe</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pl.DataFrame(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">"relative_freq"</span>: relative_freq,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">"pareto"</span>: relative_cumulative_pareto,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        <span class="st">"uniform"</span>: relative_cumulative_uniform,</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co"># compute gini</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_gini(relative_freq, relative_cumulative):</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> relative_freq[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> relative_cumulative[<span class="dv">1</span>:<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> relative_freq[<span class="dv">2</span>:] <span class="op">-</span> relative_freq[:<span class="op">-</span><span class="dv">2</span>]</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.<span class="bu">sum</span>(a <span class="op">*</span> b)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>pareto_gini <span class="op">=</span> compute_gini(relative_freq, relative_cumulative_pareto)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>uniform_gini <span class="op">=</span> compute_gini(relative_freq, relative_cumulative_uniform)</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.line(</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"relative_freq"</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>[<span class="st">"pareto"</span>, <span class="st">"uniform"</span>],</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    color_discrete_sequence<span class="op">=</span>[<span class="st">"blue"</span>, <span class="st">"red"</span>],</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    markers<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"""pareto gini coefficient: </span><span class="sc">{:.2f}</span><span class="st">, uniform gini coeffient:  </span><span class="sc">{:.2f}</span><span class="st">"""</span>.<span class="bu">format</span>(</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>        pareto_gini, uniform_gini</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>fig.update_yaxes(</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    scaleanchor<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    scaleratio<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>BASE_SIZE <span class="op">=</span> <span class="dv">600</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>fig.update_layout(</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    autosize<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>    width<span class="op">=</span>BASE_SIZE,</span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    height<span class="op">=</span>BASE_SIZE,</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>    shapes<span class="op">=</span>[</span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>        <span class="bu">dict</span>(</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>            <span class="bu">type</span><span class="op">=</span><span class="st">"line"</span>,</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>            line_dash<span class="op">=</span><span class="st">"dot"</span>,</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>            yref<span class="op">=</span><span class="st">"y"</span>,</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>            y0<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>            y1<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>            xref<span class="op">=</span><span class="st">"x"</span>,</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>            x0<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>            x1<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>            line<span class="op">=</span><span class="bu">dict</span>(color<span class="op">=</span><span class="st">"gray"</span>),</span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>            label<span class="op">=</span><span class="bu">dict</span>(text<span class="op">=</span><span class="st">"完全平等線"</span>, textposition<span class="op">=</span><span class="st">"middle center"</span>),</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>                            <div id="4337f6eb-82ed-4859-ae9c-999d152f7837" class="plotly-graph-div" style="height:600px; width:600px;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("4337f6eb-82ed-4859-ae9c-999d152f7837")) {                    Plotly.newPlot(                        "4337f6eb-82ed-4859-ae9c-999d152f7837",                        [{"hovertemplate":"variable=pareto\u003cbr\u003erelative_freq=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"pareto","line":{"color":"blue","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"pareto","orientation":"v","showlegend":true,"x":[0.0,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95,1.0],"xaxis":"x","y":[0.0,0.010680128574112196,0.021785449241139232,0.034179069638682995,0.046573044232960166,0.0593579412405027,0.072167568105479,0.0854477546301744,0.10020609773040105,0.1152404734488907,0.1319646213017043,0.1503788309674581,0.17238919412571418,0.19845249213133434,0.22467630058828714,0.2605080955235772,0.2995381219308127,0.36196619777522043,0.44013076409243207,0.6523684900215754,1.0],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=uniform\u003cbr\u003erelative_freq=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"uniform","line":{"color":"red","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"uniform","orientation":"v","showlegend":true,"x":[0.0,0.05,0.1,0.15,0.2,0.25,0.3,0.35,0.4,0.45,0.5,0.55,0.6,0.65,0.7,0.75,0.8,0.85,0.9,0.95,1.0],"xaxis":"x","y":[0.0,0.005106360452930082,0.01225757531559431,0.022994810812784126,0.038329570866562204,0.05707553221498455,0.07902595730262787,0.11114183728001183,0.14462846556254624,0.18490314814361344,0.23328974270066963,0.2834261698022464,0.3399566987273316,0.40508168145702017,0.4718699578891724,0.5391318236438348,0.614350541036762,0.7006660599540466,0.7895343391996751,0.8938466864547023,1.0],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"relative_freq"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"value"},"scaleanchor":"x","scaleratio":1},"legend":{"title":{"text":"variable"},"tracegroupgap":0},"title":{"text":"pareto gini coefficient: 0.61, uniform gini coeffient:  0.36"},"autosize":true,"width":600,"height":600,"shapes":[{"label":{"text":"\u5b8c\u5168\u5e73\u7b49\u7dda","textposition":"middle center"},"line":{"color":"gray","dash":"dot"},"type":"line","x0":0,"x1":1,"xref":"x","y0":0,"y1":1,"yref":"y"}]},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('4337f6eb-82ed-4859-ae9c-999d152f7837');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+<p>上記のfigureにおける45度線は<strong>完全平等線</strong>と呼ばれる線です．この赤線とローレンツ曲線で囲まれたエリアの面積の２倍がジニ係数に相当します．ジニ係数は赤線と青線のエリアを三角形と台形に分けてそれぞれを計算し，その合計の２倍で計算することができます．</p>
+<div class="blog-custom-border">
+<p><strong>Def: ジニ係数</strong> <br></p>
 <ul>
-<li>想定した確率モデルが正しそうか？</li>
-<li>与えられたデータと矛盾しないか？</li>
-<li>乖離がある場合，想定したモデルから導かれる結論はどの程度妥当すると言えるのだろうか？</li>
+<li>ジニ係数はデータの偏りを示す指標</li>
 </ul>
-<p>という分析上の判断も必要となります．そのため，統計的推測はデータ分析初心者にとっては敷居が高い手法となりますが， 一旦モデル化や仮定の妥当性についての説明がうまく行くと，手元に実際にあるデータの背後にあるメカニズムに基づいて推測が行えるようになります． 例えば，実際に観測できないPotential Outcomesの分布についての推定や将来の予測などがあります．</p>
-<p>このように統計的推測とは，使いこなすのは大変ですが，使えるようになるととても強力なツールです．このノートを通じて，統計的推測の基礎やいくつかの応用分野の分析を見ながらマスターしたいなと思っています．</p>
-<p><strong> ▶&nbsp; 測定の尺度</strong></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>種類</th>
-<th>measurement</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>カテゴリカルデータ</td>
-<td>名義尺度(nominal scale)</td>
-<td>ある対象が他と同一か，異なるかを表す測定<br>例: 性別, 血液型</td>
-</tr>
-<tr class="even">
-<td>カテゴリカルデータ</td>
-<td>順序尺度(ordinal scale)</td>
-<td>大小/優劣関係を表す測定<br>例: ４段階評価の健康状態</td>
-</tr>
-<tr class="odd">
-<td>量的データ</td>
-<td>間隔尺度(interval scale)</td>
-<td>0が相対的な意味をもつ指標<br>例: 気温，知能指数，標高</td>
-</tr>
-<tr class="even">
-<td>量的データ</td>
-<td>比例尺度(ratio scale)</td>
-<td>0が絶対的な意味を持つ指標<br>例: 身長，金額，時間の経過，絶対温度</td>
-</tr>
-</tbody>
-</table>
+<p><strong> ▶&nbsp; 相対度数に基づくジニ係数</strong></p>
+<p><span class="math inline">\(a_i\)</span> を度数表に基づく累積相対頻度， <span class="math inline">\(b_i\)</span> を累積相対階級値としたとき</p>
+<p><span class="math display">\[
+\begin{align*}
+\operatorname{Gini} = \sum_{i=1}^{k-1} (a_i - b_i)(a_{i+1} - a_{i-1}) \  \ \text{where } a_0 = 0, b_0 = 0
+\end{align*}
+\]</span></p>
+<p><strong> ▶&nbsp; データに基づくジニ係数</strong></p>
+<p><span class="math display">\[
+\begin{align*}
+\operatorname{Gini}
+    &amp;= \frac{2}{n}\sum_{n-1}^{i=1}\left(\frac{i}{n} - \frac{\sum_{j=1}^i x_{[j]}}{n\overline{x}}\right) \\
+    &amp;= \frac{1}{2n^2\overline{x}}\sum_{i=1}^n\sum_{j=1}^n \vert x_i - x_j\vert
+\end{align*}
+\]</span></p>
+</div>
+<p><br> 上記のようにsampleジニ係数は台形の面積の２倍で計算しますが，母集団ジニ係数と比較して小さめに計算されます． サンプルサイズが十分大きい場合は無視できる程度ですが，度数分布表に基づく計算の場合やsmall sampleの場合は 過小方向バイアスの修正が必要になる場合があります．</p>
+<p>また，ジニ係数の導出式より，MAD(Mean absolute difference)と sample meanの相対比にジニ係数が比例することがわかります．</p>
+<p><span class="math display">\[
+\begin{align*}
+\operatorname{Gini} &amp;= \frac{1}{2n^2\overline{x}}\sum_{i=1}^n\sum_{j=1}^n \vert x_i - x_j\vert\\
+                    &amp;= \frac{1}{2}\frac{\sum_{i=1}^n\sum_{j=1}^n \vert x_i - x_j\vert}{n^2}\frac{1}{\overline x}\\
+                    &amp;\propto \frac{\operatorname{MAD}}{\operatorname{sample mean}}
+\end{align*}
+\]</span></p>
+<p><strong> ▶&nbsp; ジニ係数の特徴</strong></p>
+<ul>
+<li>ローレンツ曲線，ジニ係数ともに分布の尺度パラメーターに依存しない</li>
+<li>1点に集中する分布の場合，ローレンツ曲線は完全平等線と一致し，ジニ係数は0となる</li>
+<li>エントロピーと異なり，一様分布の場合にジニ係数が最大をとるとかではない</li>
+</ul>
+<div class="blog-custom-border">
+<p><strong>📘 REMARKS</strong> <br></p>
+<ul>
+<li>データの偏りや集中性を見る指標としてジニ係数は使用されますが，他にもエントロピーという指標がある</li>
+</ul>
+<p>カテゴリー別に分類されたデータにおいて，各カテゴリーの総体頻度を <span class="math inline">\(\hat p_i = f_i/n\)</span> としたとき</p>
+<p><span class="math display">\[
+\begin{align*}
+H(\mathbf p) = -\sum \hat p_i \log(\hat p_i)
+\end{align*}
+\]</span></p>
+<p>Hが大きいほどデータは一様になり，集中性があるほど指標は小さくなる．</p>
+</div>
+<section id="無限母集団におけるローレンツ曲線" class="level3">
+<h3 class="anchored" data-anchor-id="無限母集団におけるローレンツ曲線">無限母集団におけるローレンツ曲線</h3>
+<p>定義域 <span class="math inline">\((0, \infty)\)</span>, 期待値 <span class="math inline">\(\mu\)</span> を持つ連続確率変数 <span class="math inline">\(X\)</span> について，累積分布関数を <span class="math inline">\(F(x)\)</span>, 確率密度関数 <span class="math inline">\(f(x)\)</span> とおきます．このとき，<span class="math inline">\(z = F(x)\)</span> としたときのローレンツ曲線は</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;F^{-1}(z) = x \  \ \text{ (inverse function of cdf)}\\
+&amp;L(z) =\frac{\int_0^{F^{-1}(z)} t f(t) \mathrm{d}t}{\mathbb E[X]}
+\end{align*}
+\]</span></p>
+<p>として, <span class="math inline">\((z, L(z))\)</span> で作られる曲線となります．ジニ係数は</p>
+<p><span class="math display">\[
+\begin{align*}
+\operatorname{gini} &amp;= 2\int_0^1 (u - L(u))\mathrm{d}u\\
+                    &amp;= 1 - 2\int_0^1 L(u)\mathrm{d}u
+\end{align*}
+\]</span></p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-2020現代数理統計学" class="csl-entry" role="listitem">
-竹村彰通 (2020), <em><a href="https://books.google.co.jp/books?id=OY8dzgEACAAJ">現代数理統計学</a></em>, 学術図書出版社.
-</div>
-</div>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script>
@@ -1011,13 +1206,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../index.html" class="pagination-link" aria-label="Welcome">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      <a href="../../posts/ExplanatoryDataAnalysis/chapter_header.html" class="pagination-link" aria-label="Explanatory Data Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Explanatory Data Analysis</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/statistics101/averages.html" class="pagination-link" aria-label="代表値">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">代表値</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/robust_statistics/chapter_header.html" class="pagination-link" aria-label="Data Analysis and Outliers">
+        <span class="nav-page-text">Data Analysis and Outliers</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1038,7 +1233,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistics101/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/ExplanatoryDataAnalysis/gini_coefficient.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

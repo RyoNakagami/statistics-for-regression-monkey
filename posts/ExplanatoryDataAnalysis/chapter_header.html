@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2024-08-15">
+<meta name="dcterms.date" content="2024-09-06">
 
-<title>統計学入門 – Statistics for Regression Monkeys</title>
+<title>Explanatory Data Analysis – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,27 +22,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -52,8 +32,8 @@ div.csl-indent {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/statistics101/averages.html" rel="next">
-<link href="../../index.html" rel="prev">
+<link href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" rel="next">
+<link href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -125,7 +105,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistics101/chapter_header.html">統計学入門</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/ExplanatoryDataAnalysis/chapter_header.html">Explanatory Data Analysis</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -183,7 +163,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../posts/statistics101/chapter_header.html" class="sidebar-item-text sidebar-link active">
+            <a href="../../posts/statistics101/chapter_header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">統計学入門</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -269,7 +249,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../posts/ExplanatoryDataAnalysis/chapter_header.html" class="sidebar-item-text sidebar-link">
+            <a href="../../posts/ExplanatoryDataAnalysis/chapter_header.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Explanatory Data Analysis</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -328,7 +308,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">統計学入門</h1>
+<h1 class="title">Explanatory Data Analysis</h1>
 </div>
 
 
@@ -345,7 +325,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-08-15</p>
+      <p class="date">2024-09-06</p>
     </div>
   </div>
   
@@ -363,76 +343,8 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </header>
 
 
-<p><strong> ▶&nbsp; 統計学入門 のスコープ</strong></p>
-<ul>
-<li><span class="citation" data-cites="2020現代数理統計学">竹村彰通 (<a href="../../index.html#ref-2020現代数理統計学" role="doc-biblioref">2020</a>)</span> をベースに，統計モデルとしての確率分布族と，それらに対する統計推測法について勉強する</li>
-<li>勉強対象は主に日々のデータサイエンス分析のベースとなるような統計基礎概念や定義になるが，これらについて数学的な定義とともにわかりやすい言語化ができるようになることを目的にしています</li>
-</ul>
-<p><strong> ▶&nbsp; 記述統計と統計的推測</strong></p>
-<div style="padding-left: 2em; padding-right: 2em; border-radius: 0em; border-style:solid; border-color:#6495ED;">
-<p><strong> 記述統計(descriptive statistics)</strong></p>
-<ul>
-<li>調査や実験で得られたデータを整理して，その解釈を助けるような統計的分析のこと</li>
-</ul>
-<p><strong>統計的推測(statistical inference)</strong></p>
-<ul>
-<li>確率的な変動を多く含むデータに対して，そのDGP(= Data generating process)に何かしらの仮定を想定し，データから確率モデルの推定や検定を行う分析のこと</li>
-</ul>
-</div>
-<p><br></p>
-<p>「伏せられたトランプカードを透視することでスートを当てることができる！」という人がいたとします． この能力を試してみたところ５２枚のカードの内，４０枚を当てることができたというデータが得られました． この，<strong>40枚当てることができた</strong>というデータについて確率論的意味を判断をするというのが統計的推測です．</p>
-<p>このように統計的推測とは確率モデルを想定してデータを解釈/判断する分析なので，確率論を中心とする数学的表現を用いたモデルの定式化 （=ランダムネスの法則を扱う数学理論）が必要となります．加えて，</p>
-<ul>
-<li>想定した確率モデルが正しそうか？</li>
-<li>与えられたデータと矛盾しないか？</li>
-<li>乖離がある場合，想定したモデルから導かれる結論はどの程度妥当すると言えるのだろうか？</li>
-</ul>
-<p>という分析上の判断も必要となります．そのため，統計的推測はデータ分析初心者にとっては敷居が高い手法となりますが， 一旦モデル化や仮定の妥当性についての説明がうまく行くと，手元に実際にあるデータの背後にあるメカニズムに基づいて推測が行えるようになります． 例えば，実際に観測できないPotential Outcomesの分布についての推定や将来の予測などがあります．</p>
-<p>このように統計的推測とは，使いこなすのは大変ですが，使えるようになるととても強力なツールです．このノートを通じて，統計的推測の基礎やいくつかの応用分野の分析を見ながらマスターしたいなと思っています．</p>
-<p><strong> ▶&nbsp; 測定の尺度</strong></p>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>種類</th>
-<th>measurement</th>
-<th>説明</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>カテゴリカルデータ</td>
-<td>名義尺度(nominal scale)</td>
-<td>ある対象が他と同一か，異なるかを表す測定<br>例: 性別, 血液型</td>
-</tr>
-<tr class="even">
-<td>カテゴリカルデータ</td>
-<td>順序尺度(ordinal scale)</td>
-<td>大小/優劣関係を表す測定<br>例: ４段階評価の健康状態</td>
-</tr>
-<tr class="odd">
-<td>量的データ</td>
-<td>間隔尺度(interval scale)</td>
-<td>0が相対的な意味をもつ指標<br>例: 気温，知能指数，標高</td>
-</tr>
-<tr class="even">
-<td>量的データ</td>
-<td>比例尺度(ratio scale)</td>
-<td>0が絶対的な意味を持つ指標<br>例: 身長，金額，時間の経過，絶対温度</td>
-</tr>
-</tbody>
-</table>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
-<div id="ref-2020現代数理統計学" class="csl-entry" role="listitem">
-竹村彰通 (2020), <em><a href="https://books.google.co.jp/books?id=OY8dzgEACAAJ">現代数理統計学</a></em>, 学術図書出版社.
-</div>
-</div>
 
 </main> <!-- /main -->
 <script>
@@ -1011,13 +923,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../index.html" class="pagination-link" aria-label="Welcome">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
+      <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="pagination-link" aria-label="Fisher流検定 vs Neyman-Pearson流検定">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/statistics101/averages.html" class="pagination-link" aria-label="代表値">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">代表値</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="pagination-link" aria-label="ジニ係数">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ジニ係数</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1038,7 +950,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistics101/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/ExplanatoryDataAnalysis/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
