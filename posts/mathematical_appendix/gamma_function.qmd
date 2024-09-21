@@ -1,0 +1,250 @@
+---
+title: "ガンマ関数"
+author: "Ryo Nakagami"
+date: "2024-09-21"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## ガンマ関数の性質
+
+ガンマ関数は，階乗関数を正の実数に拡張したものです．
+$n\in\mathbb N$ について階乗関数は
+
+$$
+n! = (n-1)!\cdot n
+$$
+
+と表されますが，ガンマ関数も
+
+$$
+\Gamma(z) = \Gamma(z-1)\cdot (z-1)
+$$
+
+という性質があります．
+
+<div class="blog-custom-border">
+<strong>Def: ガンマ関数</strong> <br>
+
+関数 $\Gamma: \mathbb R_{++}\to\mathbb R_{++}$ を以下のように定義する：
+
+$$
+\Gamma(z) = \int_0^\infty x^{z-1}\exp(-x)\mathrm{d}x
+$$
+
+これをガンマ関数と呼ぶ．
+
+</div>
+
+ガンマ関数は，正の整数 $x$ に対して，$y=x!$ という平面上の点 $(x, y)$ を結ぶsmooth curveに対応します．
+
+```{python}
+from plotly import express as px
+import numpy as np
+from scipy.special import gamma, factorial
+
+x = np.linspace(0, 6*1.05, 200)
+k = np.arange(1, 7)
+
+fig = px.line(x=x, y=gamma(x), title='Gamma function')
+fig.add_traces(
+    list(px.scatter(x=k, y=factorial(k-1)).select_traces())
+)
+fig.show()
+```
+<strong > &#9654;&nbsp; $\Gamma(n) = (n-1)!$ の確認</strong>
+
+まず，$\gamma(1) = 1$ を確認します．
+
+$$
+\begin{align*}
+\Gamma(1)
+    &= \int^\infty_0 x^{1-1}\exp(-x)\mathrm{d}x\\
+    &= \int^\infty_0 \exp(-x)\mathrm{d}x\\
+    &= \left[-\exp(-x)\right]^\infty_0\\
+    &= 1 = 0!
+\end{align*}
+$$
+
+続いて, $z\in\mathbb R_{++}$ について，$\Gamma(z) = \Gamma(z-1)\cdot (z-1)$ が成立することを確認します．
+
+$$
+\begin{align*}
+\Gamma(z+1)
+    &= \int^\infty_0 x^{z+1-1}\exp(-x)\mathrm{d}x\\
+    &= \int^\infty_0 x^{z}\exp(-x)\mathrm{d}x\\
+    &= [-x^z\exp(-x)]^\infty_0 + z\int^\infty_0 x^{z-1}\exp(-x)\mathrm{d}x\\
+    &= z\Gamma(z)
+\end{align*}
+$$
+
+なお，
+
+$$
+\lim_{x\to\infty}-x^z\exp(-x)=0
+$$
+
+はロピタルの定理を用いています．
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+$a > 0$ という定数をについて
+
+$$
+\int^\infty_0t^{x-1}\exp(-at)\mathrm{d}t = \frac{\Gamma(x)}{a^x}
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$u = at$ という変数変換を考える．$\frac{\mathrm{d}t}{\mathrm{d}u}=\frac{1}{a}$ であるので，
+
+$$
+\begin{align*}
+\int^\infty_0t^{x-1}\exp(-at)\mathrm{d}t 
+    &= \int^\infty_0\left(\frac{u}{a}\right)^{x-1}\exp(-u)\frac{1}{a}\mathrm{d}u\\
+    &= \frac{1}{a^x}\int^\infty_0u^{x-1}\exp(-u)\mathrm{d}u\\
+    &= \frac{\Gamma(x)}{a^x}
+\end{align*}
+$$
+
+:::
+
+::: {#exm- .custom_problem }
+<br>
+
+$$
+\int^\infty_{-\infty}x^2\exp(-ax^2)\mathrm{d}x
+$$
+
+も上述の定理を使うと簡単に計算できます．$x^2 = u$ という変数変換を念頭に以下，
+
+$$
+\begin{align*}
+\int^\infty_{-\infty}x^2\exp(-ax^2)\mathrm{d}x
+    &= 2\int^\infty_{0}x^2\exp(-ax^2)\mathrm{d}x \quad\because \text{偶関数}\\
+    &= 2\int^\infty_{0}u\exp(-au)\times \frac{1}{2\sqrt{u}}\mathrm{d} u\\
+    &= \int^\infty_{0}u^{\frac{3}{2}-1}\exp(-au)\mathrm{d} u\\
+    &= \frac{\Gamma(3/2)}{a^{\frac{3}{2}}}\\
+    &=\frac{\sqrt{\pi}}{2a\sqrt{a}}
+\end{align*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+ガンマ関数について，以下の等式が成り立つ
+
+$$
+\Gamma(s) = 2\int_0^\infty t^{2s-1}\exp(-t^2)\mathrm{d}t
+$$
+
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+ガンマ関数について $t = u^2$ という変数変換を行うと以下のように導けます．
+
+$$
+\begin{align*}
+\Gamma(s) 
+    &= \int_0^\infty t^{s-1}\exp(-t)\mathrm{d}t\\
+    &= \int_0^\infty u^{2s-2}\exp(-u^2)\times 2u \mathrm{d}u\\
+    &= 2\int_0^\infty u^{2s-1}\exp(-u^2)\mathrm{d}u\\
+\end{align*}
+$$
+
+:::
+
+### ガンマ関数の有名な公式
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+$$
+\Gamma\bigg(\frac{1}{2}\bigg) = \sqrt{\pi}
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: ガウス積分を用いる場合
+
+$t = u^2$ という変数変換を考える．
+
+$$
+\begin{align*}
+\int^\infty_0t^{-1/2}\exp(-t)\mathrm{d}t 
+    &= \int^\infty_0u^{-1}\exp(-u^2)2u\mathrm{d}u\\[3pt]
+    &= 2\int^\infty_0\exp(-u^2)\mathrm{d}u\\[3pt]
+    &= \int^\infty_{-\infty}\exp(-u^2)\mathrm{d}u\\[3pt]
+    &= \int^\infty_{-\infty}\exp\bigg(-\frac{u^2}{2\times(\frac{1}{\sqrt 2})^2}\bigg)\mathrm{d}u\\[3pt]
+    &= \sqrt{2\pi}\frac{1}{\sqrt 2}\\
+    &= \sqrt{\pi}
+\end{align*}
+$$
+
+:::
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: 極座標変換を用いる場合
+
+$$
+\begin{align*}
+\Gamma\bigg(\frac{1}{2}\bigg)^2 &= \bigg(\int^\infty_0t^{-1/2}\exp(-t)\mathrm{d}t\bigg)^2\\[3pt]
+                                &= \int^\infty_0x^{-1/2}\exp(-x)\mathrm{d}x\int^\infty_0y^{-1/2}\exp(-y)\mathrm{d}y
+\end{align*}
+$$
+
+ここで，$x=u^2, y=v^2$ と置換積分する．
+
+$$
+\begin{align*}
+\int^\infty_0x^{-1/2}\exp(-x)\mathrm{d}x\int^\infty_0y^{-1/2}\exp(-y)\mathrm{d}y
+    &= 4\int^\infty_0\exp(-u^2)\mathrm{d}u\int^\infty_0\exp(-v^2)\mathrm{d}v\\
+    &= 4\int^\infty_0\int^\infty_0\exp[-(u^2+v^2)]\mathrm{d}u\mathrm{d}v
+\end{align*}
+$$
+
+更に，$u = r\cos\theta, v=r\sin\theta$ という極座標変換を行う．$u, v\geq 0$ であることに留意すると，$r\in(0, \infty), \theta\in (0, \pi/2)$ になるので
+
+$$
+\begin{align*}
+4\int^\infty_0\int^\infty_0\exp[-(u^2+v^2)]\mathrm{d}u\mathrm{d}v &= 4\int^\infty_0\int^{\pi/2}_0\exp[-r^2]r \mathrm{d}\theta \mathrm{d}r \  \  \because u, v\geq 0 \\[3pt]
+&= 4\times \frac{\pi}{2} \int^{\infty}_0\exp[-r^2]r\mathrm{d}r\\[3pt]
+&= 4\times \frac{\pi}{2}\bigg[\frac{\exp(-r^2)}{-2}\bigg]^\infty_0\\[3pt]
+&= \pi
+\end{align*}
+$$
+
+ガンマ関数の定義より，$\Gamma(1/2) > 0$ なので，
+
+$$
+\Gamma(1/2)^2 = \pi \Rightarrow \Gamma(1/2) = \sqrt{\pi}
+$$
+
+:::

@@ -176,4 +176,31 @@ $$
 \mathbb E\left[\frac{1}{X}\right] > \frac{1}{\mathbb E[X]}
 $$
 
+$$\tag*{\(\blacksquare\)}$$
+
+:::
+
+::: {#exm- .custom_problem }
+**: 不偏分散と標準偏差**
+<br>
+
+確率変数 $X$ について，$\operatorname{Var}(X) = \sigma^2$ とする．母集団に対してランダムサンプリングを実施し，そこから得られた
+サンプルから不偏分散 $s^2$ を得たとする．つまり，
+
+$$
+\mathbb E[s^2] = \sigma^2
+$$
+
+このとき，$\mathbb E[s] \neq \sigma$ となってしまう．なぜなら，$h(x) = \sqrt{x}$ としたとき，
+関数 $h$ はstrictly concaveのため，Jensen's inequalityより
+
+$$
+\begin{gather*}
+\mathbb E[h(s^2)] < h(\mathbb E[s^2])\\
+\Rightarrow \mathbb E[S] < \sigma
+\end{gather*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
 :::

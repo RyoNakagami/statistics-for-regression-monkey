@@ -1,0 +1,787 @@
+---
+title: "正規分布"
+author: "Ryo Nakagami"
+date: "2024-09-14"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## 正規分布の性質
+
+<div class="blog-custom-border">
+<strong>Def: 正規分布</strong> <br>
+
+確率変数 $X$ が平均と分散 $\mu, \sigma^2$ をもつ正規分布に従う，つまり $X \sim N(\mu, \sigma^2)$ のとき，$X$ の確率密度関数 $f_X(x)$ は
+
+$$
+f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left\{-\frac{(x-\mu)^2}{2\sigma^2}\right\}, \quad -\infty<x<\infty
+$$
+
+
+</div>
+
+$X\sim N(\mu, \sigma^2)$ について，標準化変換(standardization)
+
+$$
+Z = \frac{X-\mu}{\sigma}
+$$
+
+を行うと，変数変換の公式より
+
+$$
+f_Z(z) = \sigma f_X(\sigma z + \mu)=\frac{1}{\sqrt{2\pi}}\exp\left\{-\frac{z^2}{2}\right\}
+$$
+
+となります．$N(0, 1)$ のことを特に標準正規分布とよび，そのpdfを $\phi(z)$, CDFを $\Phi(z)$ で表します．
+
+$f_X(x)$ の形状から，location parameter $\mu$ を中心に対称であることが分かる．つまり, $\phi(z)$ は $z=0$ で対称であり
+
+$$
+\begin{gather*}
+\Phi(0) = \frac{1}{2}\\
+\Phi(-z) = 1 - \Phi(z)
+\end{gather*}
+$$
+
+がわかる．
+
+
+<strong > &#9654;&nbsp; $\sigma$ 範囲</strong>
+
+$X\sim N(\mu, \sigma^2)$ という確率分布を考えたとき，シグマ範囲の目安として以下が知られてます
+
+$$
+\begin{gather*}
+\Pr(\vert X - \mu\vert > \sigma) \approx \frac{1}{3}\\
+\Pr(\vert X - \mu\vert > 2\sigma) \approx \frac{1}{20}\\
+\Pr(\vert X - \mu\vert > 3\sigma) \approx \frac{3}{1000}\\
+\Pr(\vert X - \mu\vert > 4\sigma) \approx \frac{1}{10000}
+\end{gather*}
+$$
+
+大体の目安として, $3\sigma$ 範囲はいわゆる「千三つ」であることは覚えといて損はないと思います．
+
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+$$
+\int^\infty_{-\infty}\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left\{-\frac{(x-\mu)^2}{2\sigma^2}\right\}\mathrm{d}x = 1
+$$
+
+が成立する．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$z = \frac{x-\mu}{\sigma}$ と変数変換をすると
+
+$$
+\int^\infty_{-\infty}\frac{1}{\sqrt{2\pi}}\exp\left\{-\frac{z^2}{2}\right\}\mathrm{d}z = 1
+$$
+
+が示せれば良い．
+
+$$
+I = \int^\infty_{-\infty}\exp\left\{-\frac{z^2}{2}\right\}\mathrm{d}z
+$$
+
+とおくと，
+
+$$
+\begin{align*}
+I^2 &= \left(\int^\infty_{-\infty}\exp\left\{-\frac{z^2}{2}\right\}\mathrm{d}z\right)^2\\
+    &= \int^\infty_{-\infty}\int^\infty_{-\infty}\exp\left\{-\frac{a^2 + b^2}{2}\right\}\mathrm{d}a\mathrm{d}b
+\end{align*}
+$$
+
+ここで，$a=r\cos\theta, b= r\sin\theta$ と極座標変換を行う. ヤコビアン $J$ は 
+
+$$
+\begin{align*}
+\vert J\vert 
+    &= \bigg\vert \frac{\partial a}{\partial r}\frac{\partial b}{\partial \theta} - \frac{\partial a}{\partial \theta}\frac{\partial b}{\partial r}\bigg\vert\\
+    &= r
+\end{align*}
+$$
+
+より
+$$
+\begin{align*}
+I^2 &= \int^\infty_{-\infty}\int^\infty_{-\infty}\exp\left\{-\frac{a^2 + b^2}{2}\right\}\mathrm{d}a\mathrm{d}b\\
+    &= \int^\infty_{0}\int^{2\pi}_{0}\exp\left\{-\frac{r^2}{2}\right\}r \mathrm{d}\theta\mathrm{d}r\\
+    &= 2\pi \int^\infty_{0}\exp\left\{-\frac{r^2}{2}\right\}r \mathrm{d}r\\
+    &= 2\pi \left[\exp\left\{-\frac{r^2}{2}\right\}\right]^0_\infty\\
+    &= 2\pi
+\end{align*}
+$$
+
+以上より, $I = \sqrt{2\pi}$ を得る．
+
+$$
+\begin{align*}
+\int^\infty_{-\infty}\frac{1}{\sqrt{2\pi}}\exp\left\{-\frac{z^2}{2}\right\}\mathrm{d}z
+    &= \frac{1}{\sqrt{2\pi}}I\\
+    &= 1
+\end{align*}
+$$
+
+
+:::
+
+
+<strong > &#9654;&nbsp; 二項分布の極限分布としての正規分布</strong>
+
+$n$ を正の整数として，$Y_n \sim \operatorname{Binom}(n, 1/2)$ とし，
+
+$$
+X_n = \frac{Y_n - n/2}{\sqrt{n}/2}
+$$
+
+という確率変数を考えます．$X_n \in (x - 2/\sqrt{n}, x]$ となるような確率を考えてみると
+
+$$
+\begin{align*}
+&\Pr(x - 2/\sqrt{n} < X_n \leq x)\\
+    &= \Pr\left(\frac{\sqrt{n}}{2}x + \frac{n}{2} - 1 < Y_n \leq \frac{\sqrt{n}}{2}x + \frac{n}{2}\right)\\
+    &= \Pr\bigg(\bigg\lfloor Y_n = \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor\bigg)\\
+    &= \frac{n!}{\bigg\lfloor \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor ! \bigg\lceil -\frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rceil !}\left(\frac{1}{2}\right)^n
+\end{align*}
+$$
+
+
+ここでスターリングの公式より十分大きい正の整数 $m$ について
+
+$$
+m! \approx \sqrt{2\pi m} m^m\exp(-m)
+$$
+
+と近似できるので
+
+$$
+\begin{align*}
+&\lim_{n\to\infty}\Pr(x - 2/\sqrt{n} < X_n \leq x)\\
+    &= \lim_{n\to\infty}\frac{n!}{\bigg\lfloor \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor ! \bigg\lceil -\frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rceil !}\left(\frac{1}{2}\right)^n\\
+    &= \lim_{n\to\infty} \frac{1}{\sqrt{2\pi\left(\frac{n}{4}-\frac{x^2}{4}\right)}\left(1 - \frac{x^2}{n}\right)^{\frac{n}{2}}\left(1 + \frac{x}{\sqrt{n}}\right)^{\frac{\sqrt{n}}{2}x}\left(1 - \frac{x}{\sqrt{n}}\right)^{-\frac{\sqrt{n}}{2}x}}\left(\frac{1}{2}\right)^n\\
+    &= \frac{1}{\sqrt{2\pi}\exp(-x^2/2)\exp(x^2/2)\exp(x^2/2)}\\
+    &=\frac{1}{\sqrt{2\pi}}\exp(-x^2/2)\\[8pt]
+    &= \phi(x)
+\end{align*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+標準正規分布の確率密度関数を $\phi(x)$ とするとき，
+
+$$
+\begin{gather*}
+\int_\mathbb R x\phi(x) \mathrm{d}x = 0\\
+\int_\mathbb R x^2\phi(x) \mathrm{d}x = 1\\
+\end{gather*}
+$$
+
+が成立する．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$\phi(x)$ が偶関数，$x$ が奇関数より, $x\phi(x)$ は奇関数になる．従って，
+
+$$
+\int_\mathbb R x\phi(x) \mathrm{d}x = 0
+$$
+
+2次モーメントについては
+
+$$
+\begin{align*}
+\int_\mathbb R x^2\phi(x) \mathrm{d}x
+    &=  2\int_0^\infty x^2\phi(x) \mathrm{d}x\\
+    &= 2[-x\exp(-x^2/2)]^\infty_0 + 2\int^\infty_0 \phi(x) \mathrm{d}x\\
+    &= 0 + 2 \times \frac{1}{2}\\
+    &= 1
+\end{align*}
+$$
+
+
+:::
+
+::: {#exm- .custom_problem }
+**: 標準正規分布の4次モーメントの導出**
+<br>
+
+$X\sim N(0, 1)$ の4次モーメントについて，ガンマ関数 $\Gamma(1/2) = \sqrt{\pi}$ を用いて以下のように計算できます．
+
+$$
+\begin{align*}
+\mathbb E[X^4]
+    &= \frac{1}{\sqrt{2\pi}}\int^\infty_{-\infty}x^4\exp\left(-\frac{x^2}{2}\right)\mathrm{d}x\\
+    &= \frac{2}{\sqrt{2\pi}}\int^\infty_{0}x^4\exp\left(-\frac{x^2}{2}\right)\mathrm{d}x \quad\because \text{偶関数より}
+\end{align*}
+$$
+
+ここで, $x^2 = u$ という変数変換を行う．
+
+$$
+\begin{align*}
+\frac{2}{\sqrt{2\pi}}\int^\infty_{0}x^4\exp\left(-\frac{x^2}{2}\right)\mathrm{d}x 
+    &= \frac{2}{\sqrt{2\pi}}\int^\infty_{0}u^2 \exp\left(-\frac{u}{2}\right)\frac{u^{-1/2}}{2}\mathrm{d}u\\
+    &= \frac{1}{\sqrt{2\pi}}\int^\infty_{0}u^{\frac{5}{2}-1} \exp\left(-\frac{u}{2}\right)\mathrm{d}u\\
+    &= \frac{1}{\sqrt{2\pi}} \Gamma\left(\frac{5}{2}\right)\left(\frac{1}{2}\right)^{-5/2}\\
+    &= \frac{\sqrt{\pi} \frac{1}{2}\frac{3}{2}}{\sqrt{2\pi}}2^{5/2}\\\\
+    &= 3
+\end{align*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+:::
+
+<strong > &#9654;&nbsp; 標準正規分布のn次モーメントについて</strong>
+
+標準正規分布について，$\phi(z)$ が偶関数であることから，$n$ が奇数のときは
+
+$$
+\mathbb E[X^n] = 0
+$$
+
+であることはすぐに分かります．一方，$l$ を自然数として, $n=2l$ と表せるときは
+
+$$
+\begin{align*}
+\mathbb E[X^n] &= \frac{1}{\sqrt{2\pi}}\int^{\infty}_{-\infty}x^n\exp\bigg(-\frac{x^2}{2}\bigg)\mathrm{d}x\\[3pt]
+               &= \frac{2}{\sqrt{2\pi}}\int^{\infty}_{0}x^{2l}\exp\bigg(-\frac{x^2}{2}\bigg)\mathrm{d}x\\[3pt]
+\end{align*}
+$$
+
+$x^2/2 = u$ と変数変換を行うと，$\frac{\mathrm{d}x}{\mathrm{d}u}=\frac{1}{\sqrt{2u}}$ より
+
+$$
+\begin{align*}
+\mathbb E[X^n] &= \frac{2^{l+1}}{\sqrt{2\pi}}\int^{\infty}_{0}u^{l}\exp(-u)\frac{1}{\sqrt{2u}}\mathrm{d}u\\[3pt]
+               &= \frac{2^l}{\sqrt{\pi}}\int^{\infty}_{0}u^{l-\frac{1}{2}}\exp(-u)\mathrm{d}u\\[3pt]
+               &= \frac{2^l}{\sqrt{\pi}}\int^{\infty}_{0}u^{l+\frac{1}{2}-1}\exp(-u)\mathrm{d}u\\[3pt]
+               &= \frac{2^l}{\sqrt{\pi}}\Gamma\bigg(l+\frac{1}{2}\bigg)
+\end{align*}
+$$
+
+$\Gamma(1/2) = \sqrt{\pi}$ であることに留意すると
+
+$$
+\begin{align*}
+\Gamma\left(\frac{3}{2}\right) &= \frac{1}{2}\Gamma\left(\frac{1}{2}\right)\\
+\Gamma\left(\frac{5}{2}\right) &= \frac{3}{2}\Gamma\left(\frac{3}{2}\right)\\
+                               &= \frac{1 \times 3}{2^2}\sqrt{\pi}
+\end{align*}
+$$
+
+になるので
+
+$$
+\begin{align*}
+\mathbb E[X^n] 
+    &= 1\times 3\times 5\times\cdots\times (2l-1)\\
+    &= \prod_{i=1}^l(2i-1)           
+\end{align*}
+$$
+
+またはこれを変形して，
+
+$$
+\frac{1}{2l!}\mathbb E[X^{2l}] = \prod^l_{k=1}\frac{1}{2k}
+$$
+
+と表すこともできます．
+
+
+### MGFと特性関数
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: 標準正規分布の積率母関数と特性関数**
+<br>
+
+$X\sim N(0, 1)$ としたとき，積率母関数 $M_Z(t)$ 及び，特性関数 $\varphi_Z(t)$ は以下のようになる
+
+$$
+\begin{align*}
+M_Z(t) &= \exp(t^2/2)\\
+\varphi_Z(t)&= \exp(-t^2/2)
+\end{align*}
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+M_Z(t)
+    &= \mathbb E[\exp(tZ)]\\
+    &= \frac{1}{\sqrt{2\pi}}\int^\infty_{-\infty}\exp(tz-z^2/2)\mathrm{d}z\\
+    &= \exp(t^2/2)\frac{1}{\sqrt{2\pi}}\int^\infty_{-\infty}\exp(-(t-z)^2/2)\mathrm{d}z\\
+    &= \exp(t^2/2)
+\end{align*}
+$$
+
+特性関数は $\varphi(t) = M_Z(it)$ より $\varphi(t) = \exp(-t^2/2)$ とわかるが，以下のように計算することもできる．
+
+$$
+\begin{align*}
+\varphi_Z(t)
+    &= \mathbb E[\exp(itZ)]\\[5pt]
+    &= \mathbb E[\cos(tZ) + i\sin(tZ)]\\[5pt]
+    &= \mathbb E[\cos(tZ)] + i\mathbb E[\sin(tZ)]\\[5pt]
+    &= \int^\infty_{-\infty}\cos(tz)\phi(z)\mathrm{d}z + i\int^\infty_{-\infty}\sin(tz)\phi(z)\mathrm{d}z\\[5pt]
+    &= \int^\infty_{-\infty}\cos(tz)\phi(z)\mathrm{d}z \quad \because\text{奇関数}
+\end{align*}
+$$
+
+次に，$t$ について $\varphi_Z(t)$ を微分すると
+
+$$
+\begin{align*}
+\frac{\mathrm{d}}{\mathrm{d}t}\varphi_Z(t)
+    &= \frac{\mathrm{d}}{\mathrm{d}t}\mathbb E[\exp(itZ)]\\[5pt]
+    &= \mathbb E\left[\frac{\mathrm{d}}{\mathrm{d}t}\exp(itZ)\right] \because\text{期待値と微分の順序交換性}\\[5pt]
+    &= i\mathbb E\left[Z\exp(itZ)\right]\\
+    &= -\int^\infty_{-\infty}z\sin(tz)\phi(z)\mathrm{d}z
+\end{align*}
+$$
+
+このとき，
+
+$$
+\frac{\mathrm{d}}{\mathrm{z}}\phi(z) = -z\phi(z)
+$$
+
+であるので
+
+$$
+\begin{align*}
+-\int^\infty_{-\infty}z\sin(tz)\phi(z)\mathrm{d}z
+    &= [\sin(tz)\phi(z)]^\infty_{-\infty} - \int^\infty_{-\infty}t\cos(tz)\phi(z)\mathrm{d}z\\
+    &= - \int^\infty_{-\infty}t\cos(tz)\phi(z)\mathrm{d}z\\
+    &= -t\varphi_Z(t)
+\end{align*}
+$$
+
+$$
+\frac{\mathrm{d}}{\mathrm{d}t}\varphi_Z(t)=-t\varphi_Z(t)
+$$
+
+$\varphi_Z(0) = 1$ より，
+
+$$
+\varphi_Z(t) = \exp(-t^2/2)
+$$
+
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: MGF of non-standard normal distribution**
+<br>
+
+$X \sim N(\mu, \sigma^2)$ の積率母関数および特性関数は
+
+$$
+\begin{align*}
+M_X(t) &= \exp\left(\mu t + \frac{1}{2}\sigma^2t^2\right)\\
+\varphi_X(t) &= \exp\left(i\mu t-\frac{t^2\sigma^2}{2}\right)
+\end{align*}
+$$
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$Z\sim N(0, 1)$ とすると，$Z = \sigma Z + \mu$ と表せるので，
+
+$$
+\begin{align*}
+M_X(t) &= \mathbb E[\exp(t(\sigma Z + \mu))]\\[5pt]
+       &= \exp(t\mu) \mathbb E[\exp(t\sigma Z)]\\[5pt]
+       &= \exp(t\mu)\exp\left(\frac{1}{2}t^2\sigma^2\right)\\
+       &=  \exp\left(\mu t + \frac{1}{2}\sigma^2t^2\right)
+\end{align*}
+$$
+
+同様に
+
+$$
+\begin{align*}
+\varphi_X(t) 
+    &= \mathbb E[\exp(it(\sigma z + \mu))]\\[5pt]
+    &= \exp(it\mu) \mathbb E[\exp(it\sigma z)]\\[5pt]
+    &= \exp\left(i\mu t-\frac{t^2\sigma^2}{2}\right)
+\end{align*}
+$$
+
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+$X\sim N(\mu, \sigma^2)$ とする．定数 $a, b$ に対して
+
+$$
+Y = aX + b
+$$
+
+としたとき，$Y\sim N(a\mu + b, a^2\sigma^2)$ となる．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$N(a\mu + b, a^2\sigma^2)$ に従う確率変数の特性関数は
+
+$$
+\varphi(t) = \exp\left[(a\mu + b)it - \frac{a^2\sigma^2t^2 }{2}\right]
+$$
+
+なので，$Y$ の特性関数がこれと一致することを示せば良い．
+
+$$
+\begin{align*}
+\varphi_Y(t)
+    &= \mathbb E\left[\exp(itY)\right]\\[5pt]
+    &= \mathbb E\left[\exp(it(aX + b))\right]\\[5pt]
+    &= \exp(itb)\exp\left(i a\mu t - \frac{a^2\sigma^2t^2}{2}\right)\\
+    &=  \exp\left[(a\mu + b)it - \frac{a^2\sigma^2t^2 }{2}\right]
+\end{align*}
+$$
+
+:::
+
+### 正規分布の再生性
+
+<div class="blog-custom-border">
+<strong>Def: 確率分布の再生性</strong> <br>
+
+確率分布 $F$ について，2 つの独立な確率変数 $X, Y$  が $F$ に従うとする．このとき，
+
+$$
+\begin{align*}
+Z &= X + Y\\
+Z& \sim F
+\end{align*}
+$$
+
+が成立するとき，確率分布 $F$ は再生性をもつという．
+
+</div>
+
+二項分布，負の二項分布，ポアソン分布，正規分布などは，再生性を持つことがしられています．
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: 正規分布の再生性**
+<br>
+
+正規分布は，location parameter, scale parameter両方について再生性を持つ．つまり，
+
+$$
+\begin{align*}
+&X \sim N(\mu_x, \sigma^2_x), Y \sim N(\mu_y, \sigma^2_y)\\
+\Rightarrow& X +Y \sim N(\mu_x+\mu_y, \sigma^2_x + \sigma^2_y) 
+\end{align*}
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: MGFを用いた証明
+
+確率変数 $X, Y$ は独立なので
+
+$$
+\begin{align*}
+M_{X+Y}(t)
+    &= M_{X}(t) M_{Y}(t)\\
+    &= \exp\left(\mu_xt + \frac{\sigma^2_xt}{2}\right)\exp\left(\mu_yt + \frac{\sigma^2_yt}{2}\right)\\
+    &= \exp\left((\mu_x + \mu_y)t + \frac{(\sigma^2_x + \sigma^2_y)t}{2}\right)
+\end{align*}
+$$
+
+$X+Y$ のMGFが $N(\mu_x + \mu_y, \sigma^2_x + \sigma^2_y)$ のMGFと一致するので 
+
+$$
+X+Y\sim N(\mu_x + \mu_y, \sigma^2_x + \sigma^2_y)
+$$
+
+:::
+
+::: {.callout-note collapse="false" icon=false}
+##  Proof: 畳み込みを用いた証明
+
+確率変数 $X, Y$ のそれぞれの密度関数を $f_X(x), f_Y(y)$ で表したとき，$Z =X+Y$ の確率密度関数 $p(z)$ は畳み込みにより以下のように表せます．
+
+$$
+p(z) = \int^\infty_{-\infty} f_X(x)f_Y(z-x)\mathrm{d}x
+$$
+
+従って，
+
+$$
+\begin{align*}
+p(z)
+    &= \frac{1}{2\pi\sigma_X\sigma_Y}\int^\infty_{-\infty}\exp\left(-\frac{(x -\mu_x)^2}{2\sigma_X^2}-\frac{((z-x) -\mu_y)^2}{2\sigma_Y^2}\right)\mathrm{d}x
+\end{align*}
+$$
+
+ここで，最終項の指数部分について，$x$ についてまとめると 
+
+$$
+\begin{align*}
+&-\frac{(x -\mu_x)^2}{2\sigma_X^2}-\frac{((z-x) -\mu_y)^2}{2\sigma_Y^2}\\
+    &= -\frac{\sigma_x^2 + \sigma_y^2}{2\sigma_x^2\sigma_y^2}\left(x - \frac{z\sigma_x^2 -\mu_x\sigma_y^2 + \mu_y\sigma_x^2}{\sigma_x^2 + \sigma_y^2}\right)^2 - \frac{(z - (\mu_x+\mu_y))^2}{2(\sigma_x^2 + \sigma_y^2)}
+\end{align*}
+$$
+
+ここでガウス積分より，
+
+$$
+\int^\infty_{-\infty}\exp\left(-\frac{\sigma_x^2 + \sigma_y^2}{2\sigma_x^2\sigma_y^2}\left(x - C\right)^2 \right)\mathrm{d}x = \sqrt{\frac{2\pi\sigma_x^2\sigma_y^2}{\sigma_x^2 + \sigma_y^2}}
+$$
+
+以上より，
+
+$$
+p(z) = \frac{1}{\sqrt{2\pi\sigma_x^2\sigma^2_y}}\exp\left(-\frac{(z - (\mu_x+\mu_y))^2}{2(\sigma_x^2 + \sigma_y^2)}\right)
+$$
+
+これは，$N(\mu_x + \mu_y, \sigma^2_x + \sigma^2_y)$ の確率密度関数と一致するので，
+
+$$
+X+Y\sim N(\mu_x + \mu_y, \sigma^2_x + \sigma^2_y)
+$$
+
+:::
+
+### Differential Entropy
+
+<div class="blog-custom-border">
+<strong>Def: 微分エントロピー</strong> <br>
+
+連続確率変数 $X$ について，確率密度関数が $p(x)$ で与えられているとする．このとき，微分エントロピーは以下の形で定義される
+
+$$
+\mathrm{H}(X) = - \int_{\mathcal{X}} p(x) \log_b p(x) \, \mathrm{d}x
+$$
+
+なお，$b$ は通常 $2, e$ が用いられる
+
+</div>
+
+平均 $\mu$, 分散 $\sigma^2$ をもつ確率分布のうち，正規分布は微分エントロピーを最大にする分布として知られています．
+
+<strong > &#9654;&nbsp; $N(\mu, \sigma^2)$ の微分エントロピー</strong>
+
+$N(\mu, \sigma^2)$ の確率密度関数を $f(x)$ として，微分エントロピーの定義より
+
+$$
+\begin{align*}
+\mathrm{H}
+    &= - \int_{-\infty}^\infty f(x) \log_2 f(x) \, \mathrm{d}x\\
+    &= - \int_{-\infty}^\infty f(x) \log_2 \left(\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\right) \, \mathrm{d}x\\
+    &= \frac{\log_2(2\pi\sigma^2)}{2}\int_{-\infty}^\infty f(x)\mathrm{d}x + \frac{\log_2 e}{2\sigma^2} \int_{-\infty}^\infty (x-\mu)^2f(x)\mathrm{d}x\\
+    &= \frac{1}{2}\log_2(2\pi e\sigma^2)
+\end{align*}
+$$
+
+
+なお，自然対数で表現する場合，$\mathrm{H} = \frac{1}{2}[1 + \ln(2\pi\sigma^2)]$
+
+
+$$\tag*{\(\blacksquare\)}$$
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+平均 $\mu$, 分散 $\sigma^2$ をもつ確率分布のうち，正規分布は微分エントロピーを最大にする分布である．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: ラグランジュの未定係数法
+
+（注意: 制約付き最大化問題を解くにあたって，ラグランジュの未定係数法が使用できると仮定してます）
+
+<strong > &#9654;&nbsp; 汎関数の定義</strong>
+
+$$
+\begin{align*}
+&F(p(x), \lambda_1, \lambda_2, \lambda_3)\\
+&= -\int^\infty_{-\infty}p(x)\ln(p(x))\,\mathrm{d}x + \lambda_1\left[\int^\infty_{-\infty}p(x)\,\mathrm{d}x-1\right]\\
+&\qquad+\lambda_2\int^\infty_{-\infty}(x-\mu)p(x)\,\mathrm{d}x + \lambda_3\left[\int^\infty_{-\infty}(x-\mu)^2p(x)\,\mathrm{d}x-\sigma^2\right]\\
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; 極値条件の計算</strong>
+
+<div class="math display" style="overflow: auto">
+$$
+\begin{align*}
+\frac{\partial F}{\partial p(x)} &= -\int^\infty_{-\infty}(1 + \ln(p(x)) - \lambda_1 - \lambda_2(x-\mu) - \lambda_3(x-\mu)^2)\,\mathrm{d}x = 0\tag{A}\\
+\frac{\partial F}{\partial \lambda_1} &= \int^\infty_{-\infty}p(x)\,\mathrm{d}x-1 = 0\tag{B}\\
+\frac{\partial F}{\partial \lambda_2} &= \int^\infty_{-\infty}(x-\mu)p(x)\,\mathrm{d}x\int^\infty_{-\infty}(x-\mu)p(x)\,\mathrm{d}x = 0\tag{C}\\
+\frac{\partial F}{\partial \lambda_3} &= \int^\infty_{-\infty}(x-\mu)^2p(x)\,\mathrm{d}x-\sigma^2= 0\tag{D}
+\end{align*}
+$$
+</div>
+
+<strong > &#9654;&nbsp; 条件(A)の整理</strong>
+
+条件 $\mathrm{(A)}$ より以下を得る
+
+<div class="math display" style="overflow: auto">
+$$
+p(x) = \exp(-1+\lambda_1 + \lambda_2(x-\mu)+ \lambda_3(x-\mu)^2)\tag{E}
+$$
+</div>
+
+なお扱いやすいように $z = x - \mu$ として以下の形で表す．
+
+<div class="math display" style="overflow: auto">
+$$
+p(x) = \exp(-1+\lambda_1 + \lambda_2z+ \lambda_3z^2)\tag{E'}
+$$
+</div>
+
+<strong > &#9654;&nbsp; $\lambda_1$ の消去</strong>
+
+$\mathrm{(E')}$ を $\mathrm{(B)}$ に代入すると，$\frac{\,\mathrm{d}x}{\,\mathrm{d}z}=1$ より
+
+$$
+\begin{align*}
+&\int^\infty_{-\infty}\exp(-1 + \lambda_1 + + \lambda_2z+ \lambda_3z^2)\,\mathrm{d}z\\
+&=\exp(-1+\lambda_1)\exp\left(-\frac{\lambda^2}{4\lambda_3}\right) \int^\infty_{-\infty}\exp\left(\lambda_3\left(z + \frac{\lambda_2}{2\lambda_3}\right)^2\right)\,\mathrm{d}z\\
+&=1
+\end{align*}
+$$
+
+このとき，等号が成立するためには $\lambda_3 < 0$ が必要であることが分かる．また，ガウス積分より
+
+<div class="math display" style="overflow: auto">
+$$
+\int^\infty_{-\infty}\exp\left(\lambda_3\left(z + \frac{\lambda_2}{2\lambda_3}\right)^2\right)\,\mathrm{d}z = \frac{\sqrt{\pi}}{\sqrt{-\lambda_3}}\tag{F}
+$$
+</div>
+
+従って，
+
+<div class="math display" style="overflow: auto">
+$$
+p(x) =  \frac{\sqrt{-\lambda_3}}{\sqrt{\pi}}\exp\left(\lambda_3\left(z + \frac{\lambda_2}{2\lambda_3}\right)^2\right)\tag{G}
+$$
+</div>
+
+
+<strong > &#9654;&nbsp; $\lambda_2$ の消去</strong>
+
+$\mathrm{(G)}$ と $\mathrm{(C)}$ より
+
+<div class="math display" style="overflow: auto">
+$$
+ \frac{\sqrt{-\lambda_3}}{\sqrt{\pi}}\int^\infty_{-\infty}z\exp\left(\lambda_3\left(z + \frac{\lambda_2}{2\lambda_3}\right)^2\right)\,\mathrm{d}z = 0\tag{H} 
+$$
+</div>
+
+$\mathrm{(H)} = 0$ が成立するためには，$\exp\left(\lambda_3\left(z + \frac{\lambda_2}{2\lambda_3}\right)^2\right)$ が偶関数になる必要があるので
+
+$$
+\begin{gather*}
+\frac{\lambda_2}{2\lambda_3} = 0\\
+\Rightarrow \lambda_2 = 0
+\end{gather*}
+$$
+
+従って，
+
+<div class="math display" style="overflow: auto">
+$$
+p(x) = \frac{\sqrt{-\lambda_3}}{\sqrt{\pi}}\exp\left(\lambda_3z^2\right)\tag{I}
+$$
+</div>
+
+<strong > &#9654;&nbsp; $\lambda_3$ の消去</strong>
+
+$\mathrm{(I)}, \mathrm{(D)}$ を整理すると
+
+$$
+\begin{align*}
+\frac{\sqrt{-\lambda_3}}{\sqrt{\pi}}\int^\infty_{-\infty} z^2\exp\left(\lambda_3z^2\right)\,\mathrm{d}z = \sigma^2
+\end{align*}
+$$
+
+$\int^\infty_{-\infty}x^2\exp(-ax^2)\mathrm{d}x = \frac{\sqrt{\pi}}{2a\sqrt{a}}$ より
+
+$$
+\begin{align*}
+\frac{\sqrt{-\lambda_3}}{\sqrt{\pi}}\int^\infty_{-\infty} z^2\exp\left(\lambda_3z^2\right)\,\mathrm{d}z
+    &= \frac{\sqrt{-\lambda_3}}{\sqrt{\pi}}\frac{\sqrt{\pi}}{-2\lambda_3\sqrt{-\lambda_3}}\\
+    &= \frac{1}{-2\lambda_3} 
+\end{align*}
+$$
+
+従って，
+
+$$
+\lambda_3 = -\frac{1}{2\sigma^2}
+$$
+
+以上より, 微分エントロピーを最大化する $p^*(x)$ は
+
+$$
+p^*(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+$$
+
+となり，正規分布となることが分かる．
+
+:::
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+- $\lambda_2 = 0$ より location paramter $\mu$ を変化させても，微分エントロピーは限界的には増えないことが分かります
+- $\lambda_3 < 0$ より scale paramter $\sigma^2$ を増大させると，微分エントロピーは限界的に増大することも分かります
+
+</div>

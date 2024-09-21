@@ -12,6 +12,10 @@ comments:
 jupyter: python3
 ---
 
+確率的変動を考慮する際に，ランダムネスを要約した統計量として期待値を用いる場面は多いです．例えば，
+マーケティング担当者は，プロモーションの提供によって得られるリターンの期待値に基づいてプロモーションの実施を判断しますし，
+投資家はさまざまな金融商品の期待リターンとリスクに基づいてポートフォリオを選択したりします．
+
 ## 期待値の性質
 
 <div class="blog-custom-border">
@@ -123,6 +127,45 @@ $$
 
 :::
 
+<strong > &#9654;&nbsp; 離散確率変数の変数変換と期待値</strong>
+
+離散型確率変数 $X$ について $Y = g(X)$ を考えたとき，$A_y = \{x\vert g(x)=y\}$ とおくと
+
+$$
+\begin{align*}
+\mathbb E[g(X)]
+    &= \sum_x p(x)g(x)\\
+    &= \sum_y\sum_{A_y} p(x)g(x)\\
+    &= \sum_y\sum_{A_y} p(x)y\\
+    &= \sum_y y \sum_{A_y} p(x)\\
+    &= \sum_y \Pr(Y=y)y\\
+    &= \mathbb E[Y]
+\end{align*}
+$$
+
+上の式展開では, $\Pr(X=x) = p(x)$ としています．
+
+<strong > &#9654;&nbsp; 期待値と重心</strong>
+
+期待値の解釈の１つとして 確率変数 $X$ の重心と考えるパターンがあります．$x_i$ の値を $p_i$ の確率でとる離散型確率変数 $X$
+の場合，
+
+- 重さのない棒の中央を原点とする
+- 原点から右側をプラス，左側をマイナスとして，原券からの距離 $x_i$ の場所に重さ $p_i$ のおもりを吊り下げる
+
+このとき，重心 $\mu$ はモーメントの釣り合い = 右回りモーメントが0になる地点となりますが
+
+$$
+\begin{align*}
+\text{右回りモーメント}
+    &= \sum_i (x_i - \mu)p_i\\
+    &= \sum x_ip_i - \sum_i p_i \mu\\
+    &= \mathbb E[X] - \mu = 0
+\end{align*}
+$$
+
+従って，$\mathbb E[X] = \mu$ より，期待値と重心が対応することがわかります．連続型確率変数でも確率密度関数を重さのある棒の断面積と
+みなすことで離散型と同じく期待値と重心が対応することを確かめることができます．
 
 <div class="blog-custom-border">
 ::: {#thm- .custom_problem }
@@ -158,6 +201,41 @@ $$
 
 
 :::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**tail probabilities**
+<br>
+
+$\mathbb E[\vert X\vert]<\infty$ をもつ非負の確率変数 $X$ について，$F(x)$ を分布関数とすると
+
+$$
+\mathbb E[X] = \int_0^\infty (1 - F(x))\mathrm{d}x
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+\int_0^\infty (1 - F(x))\mathrm{d}x
+    &= \int_0^\infty \Pr(X\geq x)\mathrm{d}x\\
+    &= \int_0^\infty \mathbb E[\mathbb 1(X\geq x)]\mathrm{d}x\\
+    &= \int_0^\infty \int_0^\infty \mathbb 1(X\geq x) \mathrm{d}F(x)\mathrm{d}x\\
+    &= \int_0^\infty \left\{\int_0^\infty \mathbb 1(X\geq x) \mathrm{d}x\right\}\mathrm{d}F(x) \quad\because\text{積分の順序交換}\\
+    &= \mathbb E\left[\int_0^\infty \mathbb 1(X\geq x) \mathrm{d}x\right]\\
+    &= \mathbb E\left[\int_0^X 1 \mathrm{d}x\right]\\
+    &= \mathbb E[X]
+\end{align*}
+$$
+
+:::
+
+$\lim_{b\to\infty}\bigg[x(1 - F(x))\bigg]^b_0$ について，$\lim_{b\to\infty}b(1 - F(b))=0$ とは限らない点に注意が必要です．
 
 <div class="blog-custom-border">
 ::: {#thm- .custom_problem }
@@ -566,6 +644,7 @@ $$
 
 1. $\epsilon$ は $X$ について mean-independent, i.e., $\mathbb E[\epsilon\vert X] = 0$
 2. $\epsilon$ は $X$ の任意の関数に対して無相関, i.e., $\operatorname{Cov}(h(X), \epsilon) = 0$
+3. $\operatorname{Var}(\epsilon) = \mathbb E[\operatorname{Var}(Y\vert X)]$
 
 :::
 
@@ -595,6 +674,18 @@ $$
 \end{align*}
 $$
 
+<strong > &#9654;&nbsp; (3)</strong>
+
+条件付き期待値の公式 $\mathbb E[g(X, Y)] = \mathbb E_X[\mathbb E_{Y\vert X}[g(X, Y)\vert X]]$ より
+
+$$
+\begin{align*}
+\operatorname{Var}(\epsilon)
+    &= \mathbb E[(Y - \mathbb E[Y\vert X] )^2]\\
+    &= \mathbb E\{\mathbb E[(Y - \mathbb E[Y\vert X])^2 \vert X]\}\\
+    &= \mathbb E[\operatorname{Var}(Y\vert X)]
+\end{align*}
+$$
 
 :::
 
@@ -606,10 +697,144 @@ CEF Decomposition Propertyは，確率変数 $Y$ は確率変数 $X$ で説明�
 
 </div>
 
+### Moments
+
+<div class="blog-custom-border">
+<strong>Def: モーメント</strong> <br>
+
+$0 < r < \infty$ を満たすような正の整数 $r$ に対して，確率変数 $X$ のthe r-th moment（原点周りのモーメント）は以下のように定義される
+
+$$
+\mathbb E[X^r] = \int_{\mathbb R} x^r \mathrm{d}F_X(x)
+$$
+
+the r-th central moment(平均周りのモーメント)は $\mathbb E[(X - \mathbb E[X])^r]$ と定義される．
+
+</div>
+
+原点周りのモーメントと平均周りのモーメントは以下のような関係で理解することができます．$\mathbb E[X] = \mu$ とすると，
+
+$$
+\begin{align*}
+(X - \mu + \mu)^r
+    &= \sum_{k=0}^k \left(\begin{array}{c}r\\ k\end{array}\right)(X - \mu)^k\mu^{r-k}
+\end{align*}
+$$
+
+両辺の期待値をとると
+
+$$
+\begin{align*}
+\mathbb E[X^r] = \sum_{k=0}^k \left(\begin{array}{c}r\\ k\end{array}\right)\mathbb E[(X - \mu)^k]\mu^{r-k}
+\end{align*}
+$$
+
+また，平均周りのモーメントを原点周りのモーメントで表すとなると，
+
+$$
+\begin{align*}
+(X - \mu)^r = \sum_{k=0}^r(-1)^{r-k}X^r\mu^{r-k}
+\end{align*}
+$$
+
+同様に期待値をとると
+
+$$
+\begin{align*}
+\mathbb E[(X - \mu)^r] = \sum_{k=0}^r(-1)^{r-k}\mathbb E[X^r]\mu^{r-k}
+\end{align*}
+$$
+
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: higher moment and lower moment**
+<br>
+
+$\mathbb E[\vert X\vert^r] < \infty$ のとき，$0 < q < r$ について，$\mathbb E[\vert X\vert^q] < \infty$ が成立する．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+関数 $g:\mathbb R\to \mathbb R$ を
+
+$$
+g(x) = \vert x\vert^r + 1
+$$
+
+関数 $g:\mathbb h\to \mathbb R$ を $h(x) = \vert x\vert^q$ と定義する．$0 < q < r$ より，
+
+$$
+h(x) < g(x) \quad \forall x \in \operatorname{support}(X) 
+$$
+
+このとき，
+
+$$
+\begin{align*}
+\int_{\mathbb{R}} |x|^r + 1 \mathrm{d}F 
+    &= \int_{\mathbb{R}} |x|^r\mathrm{d}F + \underbrace{\int_{\mathbb{R}} 1\mathrm{d}F}_{=1}\\
+    &> \int_{\mathbb{R}} |x|^s\mathrm{d}F
+\end{align*}
+$$
+
+従って，
+
+$$
+\begin{align*}
+\infty &> \mathbb E[\vert X\vert^r] + 1\\
+       &> \int_{\mathbb{R}} |x|^q \mathrm{d}F \\
+       &= \mathbb E[\vert X\vert^q]
+\end{align*}
+$$
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: Mean minimizes squared error**
+<br>
+
+確率変数 $X$ について，$\mathbb E[\vert X\vert^2]<\infty$ とする．このとき，
+
+$$
+\mathbb E[X] = \arg\min_b \mathbb E[(X - b)^2]
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$\mu_X = \mathbb E[X], \sigma^2 = \mathbb E[(X - \mu_X)^2]$ とおく．
+
+$$
+\begin{align*}
+ E[(X - b)^2] 
+    &= \mathbb E[(X - \mu_X + \mu_X - b)^2]\\\
+    &= \mathbb E[(X - \mu_X)^2] + \mathbb E[(\mu_X - b)^2] + \mathbb E[(X - \mu_X)(\mu_x - b)]\\
+    &= \sigma^2 + \mathbb E[(\mu_X - b)^2] + (\mu_X - b)\mathbb E[X - \mu_X]\\
+    &= \sigma^2 + \mathbb E[(\mu_X - b)^2]
+\end{align*}
+$$
+
+$\mathbb E[(\mu_X - b)^2] \geq 0$ が成立し，また, 等号成立条件は $\mu_X = b$．従って，
+
+$$
+\mathbb E[X] = \arg\min_b \mathbb E[(X - b)^2]
+$$
+
+:::
 
 
 
-## Markov and Chebyshev Inequalities
+### Markov and Chebyshev Inequalities
 
 確率変数 $X$ について，確率密度関数や分布関数がわかっている状況は少ないです．また，データが得られたとしても
 それらを計算することはかんたんではありません．その中で，
@@ -619,7 +844,6 @@ CEF Decomposition Propertyは，確率変数 $Y$ は確率変数 $X$ で説明�
 
 という統計的推測をしたいときに使用されるMarkov and Chebyshev Inequalitiesを解説します．
 
-### Markov’s Inequality
 
 <div class="blog-custom-border">
 ::: {#thm- .custom_problem }
@@ -649,8 +873,8 @@ $$
 \begin{align*}
 \mathbb E[X] &= \int_0^\infty xf(x)\mathrm{d}x\\
              &= \int_0^k xf(x)\mathrm{d}x + \int_k^\infty xf(x)\mathrm{d}x\\
-             &\leq \int_k^\infty xf(x)\mathrm{d}x\\
-             &\leq \int_k^\infty kf(x)\mathrm{d}x\\
+             &\geq \int_k^\infty xf(x)\mathrm{d}x\\
+             &\geq \int_k^\infty kf(x)\mathrm{d}x\\
              &= k \Pr(X \geq k)
 \end{align*}
 $$
@@ -730,7 +954,6 @@ $$
 
 :::
 
-### Chebyshev’s Inequality
 
 <div class="blog-custom-border">
 ::: {#thm- .custom_problem }
@@ -778,7 +1001,7 @@ $(x - \mu)^2$ を確率変数と考えると，non-negative確率変数になる
 
 $$
 \begin{align*}
-\Pr(\vert x - \mu\vert \geq k) &= \Pr((x - \mu)^2 \geq k)\\
+\Pr(\vert x - \mu\vert \geq k) &= \Pr((x - \mu)^2 \geq k^2)\\
                                &\leq \frac{\mathbb E[(x - \mu)^2]}{k^2} \because{\text{Markov's inequality}}\\
                                &= \frac{\sigma^2}{k^2}
 \end{align*}
@@ -972,3 +1195,83 @@ Law of Total Varianceより $Y$ の分散は，CEFの分散 + 誤差項の分散
 - 特徴で説明することのできない賃金のバラツキ(=誤差項)の期待値
 
 に分解して考察する際にLaw of Total Varianceを使用したりします．
+
+### 歪度と尖度
+
+$X_1\sim N(1, 1)$ と $X_2\sim\operatorname{Exponential}(1)$ を２つの分布を考える．どちらも平均，分散共に 1 で一致していますが以下のように分布の形状は大きく異なります．
+
+```{python}
+import numpy as np
+import plotly.express as px
+import polars as pl
+
+np.random.seed(42)
+n = 1000
+
+x1 = np.random.normal(loc=1, scale=1, size=n)
+x2 = np.random.exponential(scale=1, size=n)
+
+df = pl.DataFrame({"normal_dist": x1, "exp_dist": x2})
+
+px.histogram(df, histnorm="probability density",
+             opacity=0.8, barmode="overlay",
+             title='Exp(1) vs Normal(1, 1): same mean and variance')
+```
+
+平均や分散(locationとscale)によって確率分布の様子はある程度わかりますが，locationとscaleが同じにもかかわらず上記の指数分布は $N(1, 1)$ に対して，右の裾が長い分布になっています．分布の非対称性や尖りの程度を理解するにあたって尖度と歪度を用いることがあります．
+
+<div class="blog-custom-border">
+<strong>Def: 歪度(skewness)と尖度(kurtosis)</strong> <br>
+
+確率変数 $X$ について，歪度と尖度は以下のように定義される
+
+$$
+\begin{gather*}
+\operatorname{skewness} = \mathbb E\left[\left(\frac{X - \mathbb E[X]}{\sqrt{\operatorname{Var}(X)}}\right)^3\right]\\
+\operatorname{kurtosis} = \mathbb E\left[\left(\frac{X - \mathbb E[X]}{\sqrt{\operatorname{Var}(X)}}\right)^4\right]
+\end{gather*}
+$$
+
+</div>
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+- skewnessはpositiveならば右の裾が長く，negativeならば左に裾が長い
+- kurtosisは大きいほど，鋭いピークと長く太い裾をもった分布になる
+- skewness,kurtosisともに標準化してから3rd-moment, 4th-momentを計算しているので，non-zeroの $a, b$ を定数としたとき，$aX + b$ と変数変換を行っても，計算結果は変わらない = 尺度の変換関して不変
+
+</div>
+
+
+
+::: {#exm- .custom_problem }
+**: 一様分布の歪度と尖度**
+<br>
+
+$X\sim\operatorname{Unif}(0, 1)$ としたとき，一様分布はlocationから左右対称の分布なので計算することなく 
+
+$$
+\operatorname{skewness} = 0
+$$
+
+とわかる．一方，尖度は
+
+$$
+\begin{align*}
+\operatorname{kurtosis}
+    &= \frac{1}{\sigma^4}\int_0^1 \left(x - \frac{1}{2}\right)^4\mathrm{d}x\\
+    &= 144 \times \frac{1}{5}\left[\left(x - \frac{1}{2}\right)^5\right]^1_0\\
+    &= \frac{9}{5}
+\end{align*}
+$$
+
+標準正規分布の尖度を基準にして
+
+$$
+\operatorname{kurtosis} = \frac{9}{5}-3=-\frac{6}{5}
+$$
+
+と表現する場合もある
+
+:::

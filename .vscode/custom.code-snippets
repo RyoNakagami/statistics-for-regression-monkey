@@ -72,6 +72,14 @@
 		"description": "i.i.d follow distribution"
 	},
 
+	"mathrm": {
+        "scope": "quarto, latex",
+		"prefix": "mathrm",
+		"body":[
+			"\\,\\mathrm"
+		],
+		"description": "積分"
+	},
 
 	// --------------------------------------------
 	// code general

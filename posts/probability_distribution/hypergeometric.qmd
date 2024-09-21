@@ -300,6 +300,58 @@ $$
 
 $$\tag*{\(\blacksquare\)}$$
 
+::: {#exm- .custom_problem }
+**: 有限母集団修正**
+<br>
+
+|ID|身長|
+|---|---|
+|1|171.0|
+|2|167.3|
+|3|170.6|
+|4|178.7|
+|5|162.3|
+
+上記のような５観測単位からなる有限母集団を考える．このとき，３人を非復元抽出でサンプリングしたとき，
+その標本平均の平均と分散は以下のようになる
+
+```{python}
+#| code-fold: false
+import numpy as np
+from itertools import combinations as comb
+
+finite_population = np.array([171.0, 167.3, 170.6, 178.7, 162.3])
+means_of_comb = list(
+    map(lambda x: np.mean(finite_population[np.array(x)]), comb(range(0, 5), 3))
+)
+
+print("mean: {:.2f}, var: {:.2f}".format(np.mean(means_of_comb), np.var(means_of_comb)))
+```
+
+有限母集団修正を考えずに計算してみると
+
+
+```{python}
+# | code-fold: false
+biased_var = np.var(finite_population) / 3
+correction = (5 - 3) / (5 - 1)
+
+print(
+    "biased-var: {:.2f}, corrected-var:{:.2f}".format(
+        biased_var, correction * biased_var
+    )
+)
+```
+
+以上のように，標本平均の分散について，有限母集団修正により正しい値が得られることが分かる．
+
+:::
+
+
+
+
+
+
 ## 多変量超幾何分布
 
 <div class="blog-custom-border">

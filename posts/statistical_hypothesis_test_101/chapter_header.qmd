@@ -1,5 +1,5 @@
 ---
-title: "統計的仮説検定入門"
+title: "統計的仮説検定"
 jupyter: python3
 author: "Ryo Nakagtami"
 date: "2024-08-31"

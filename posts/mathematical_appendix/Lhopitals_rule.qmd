@@ -1,0 +1,105 @@
+---
+title: "ロピタルの定理"
+author: "Ryo Nakagami"
+date: "2024-09-21"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+$x=a$に十分近い$x$について$f(x), g(x)$は微分可能とする. さらに$x=a$以外で$g(x)\neq 0$とする
+
+(1). $\lim_{x\to a}f(x)=\lim_{x\to a}g(x)=0$のとき次式が成り立つ
+
+$$
+\lim_{x\to a}\frac{f(x)}{g(x)} = \lim_{x\to a}\frac{f^\prime(x)}{g^\prime(x)}
+$$
+
+(2). $\lim_{x\to a}\vert f(x)\vert= \infty, \lim_{x\to a}\vert g(x)\vert=\infty$のとき次式が成り立つ
+
+$$
+\lim_{x\to a}\frac{f(x)}{g(x)} = \lim_{x\to a}\frac{f^\prime(x)}{g^\prime(x)}
+$$
+
+(1), (2)で $a$ を $\infty, -\infty$ に置き換えても同様の命題が成り立つ.
+
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+<strong > &#9654;&nbsp; $a<\infty, \lim_{x\to a}f(x)=g(x)=0$ の場合</strong>
+
+平均値の定理より
+
+$$
+\begin{align*}
+\frac{f(x)}{g(x)} = \frac{f(x)-f(a)}{g(x)-g(a)}= \frac{f^\prime(\xi)}{g^\prime(\xi)}
+\end{align*}
+$$
+
+このとき, $\xi$は$a, x$の間の数. なお, $\xi\to a \text{ as }x\to a$なので
+
+$$
+\lim_{x\to a}\frac{f(x)}{g(x)} = \frac{f^\prime(a)}{g^\prime(a)}
+$$
+
+
+<strong > &#9654;&nbsp; $a=\infty, \lim_{x\to \infty}f(x)=g(x)=0$ の場合</strong>
+
+$x = \frac{1}{t}$と変換し, 次の関数を考える
+
+$$
+\begin{align*}
+&h(t) = f(1/t)\\
+&k(t) = g(1/t)\\
+& \lim_{t\to 0} h(t) = \lim_{t\to 0} k(t) =  0
+\end{align*}
+$$
+
+従って,
+
+$$
+\begin{align*}
+&\frac{h(t)}{k(t)} = \frac{h(t)-h(0)}{k(t)-k(0)} = \frac{h^\prime(\xi)}{k^\prime(\xi)}\\[3pt]
+&\Rightarrow \lim_{t\to0}\frac{h(t)}{k(t)} = \lim_{t\to0}\frac{h^\prime(t)}{k^\prime(t)}
+\end{align*}
+$$
+
+よって,
+
+$$
+\lim_{x\to\infty}\frac{f(x)}{g(x)} = \lim_{x\to\infty}\frac{f^\prime(x)}{g^\prime(x)}
+$$
+
+
+:::
+
+::: {#exm- .custom_problem }
+**: ロピタルの定理の使用例**
+<br>
+
+$$
+\begin{align*}
+\lim_{x\to\infty}\frac{x^k}{e^x} 
+      &= \lim_{x\to\infty}\frac{kx^{k-1}}{e^x}\\[3pt]
+      &= \lim_{x\to\infty}\frac{k(k-1)x^{k-2}}{e^x}\\[3pt]
+      &= \cdots\\
+      &= \lim_{x\to\infty}\frac{k!}{e^x}\\[3pt]
+      &= 0
+\end{align*}
+$$
+
+:::

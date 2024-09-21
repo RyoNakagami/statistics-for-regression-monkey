@@ -535,7 +535,43 @@ $$
 \widehat{\operatorname{C_V}} = \left(1 + \frac{1}{4N}\right)\operatorname{C_V}
 $$
 
+<strong > &#9654;&nbsp; $\sqrt{n}$ の法則</strong>
 
+確率変数 $X_1, \cdots, X_n$ 独立に同一の分布に従うとし，これらの期待値と分散を $\mu, \sigma^2$ とします．
+
+このとき，$\tilde X_n = \sum^n_{i=1} X_i$ とすると，
+
+$$
+\begin{align*}
+\mathbb E[\tilde X_n] &= n\mu\\
+\operatorname{Var}(\tilde X_n) &= n\sigma^2\\
+\operatorname{std}(\tilde X_n) &= \sqrt{n}\sigma
+\end{align*}
+$$
+
+期待値は $n$ のオーダーで増える一方，標準偏差は $\sqrt{n}$ オーダーなので
+
+$$
+\begin{align*}
+\operatorname{CV}(\tilde X_n) = \frac{\sqrt{n}\sigma}{n\mu} = \frac{\sigma}{\sqrt{n}\mu}
+\end{align*}
+$$
+
+ここから，平均と標準偏差の比率は $n$ が増えるほど，小さくなる = データのバラツキが相対的に小さくなることがわかります．
+
+とある店AとBについて，それぞれの各月の来店者人数は各店舗が立地している地域の人口に比例すると解釈して， $X_A\sim\operatorname{Binom}(200, 0.5), Y_B\sim\operatorname{Binom}(1000, 0.5)$ である場合を考えます．
+
+それぞれの店舗について来月来店人数を予測したいとき，$p_A = p_B = 0.5, N_A= 200, N_B= 1000$ であると判断し，その下で期待値をとって $100, 500$ と予測したとします．
+このとき，予測値を基準に予測誤差 5% を上回りそうな確率はそれぞれ
+
+$$
+\begin{align*}
+1 - \Pr(\vert X_A - 100\vert < 5) &\approx 0.481\\
+1 - \Pr(\vert X_B - 500\vert < 25) &\approx 0.114
+\end{align*}
+$$
+
+と店舗 B のほうがMAPE的により良い予測精度が得られそうなことがわかります．母集団parameterもそれぞれ正しく判断できているにも関わらず, MAPEという指標では店舗 B のほうが相対的に良さそうな結果がでてしまうと推察できます．
 
 
 References
