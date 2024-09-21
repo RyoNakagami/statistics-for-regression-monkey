@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2024-09-12">
+<meta name="dcterms.date" content="2024-09-21">
 
-<title>10&nbsp; ベータ関数 – Statistics for Regression Monkeys</title>
+<title>11&nbsp; ガンマ関数 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,18 +22,52 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/mathematical_appendix/gamma_function.html" rel="next">
-<link href="../../posts/mathematical_appendix/chapter_header.html" rel="prev">
+<link href="../../posts/mathematical_appendix/jensen_inequality.html" rel="next">
+<link href="../../posts/mathematical_appendix/beta_function.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -92,6 +126,25 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.32.0.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script>
+
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -134,7 +187,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/beta_function.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ベータ関数</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/gamma_function.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ガンマ関数</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -318,13 +371,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/mathematical_appendix/gamma_function.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/mathematical_appendix/gamma_function.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
   </div>
 </li>
@@ -352,16 +405,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ベータ関数の性質" id="toc-ベータ関数の性質" class="nav-link active" data-scroll-target="#ベータ関数の性質">ベータ関数の性質</a></li>
+  <li><a href="#ガンマ関数の性質" id="toc-ガンマ関数の性質" class="nav-link active" data-scroll-target="#ガンマ関数の性質">ガンマ関数の性質</a>
+  <ul class="collapse">
+  <li><a href="#ガンマ関数の有名な公式" id="toc-ガンマ関数の有名な公式" class="nav-link" data-scroll-target="#ガンマ関数の有名な公式">ガンマ関数の有名な公式</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/beta_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/gamma_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/beta_function.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ベータ関数</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/gamma_function.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ガンマ関数</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ベータ関数</span></h1>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ガンマ関数</span></h1>
 </div>
 
 
@@ -378,7 +434,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-09-12</p>
+      <p class="date">2024-09-21</p>
     </div>
   </div>
   
@@ -396,18 +452,104 @@ window.Quarto = {
 </header>
 
 
-<section id="ベータ関数の性質" class="level2">
-<h2 class="anchored" data-anchor-id="ベータ関数の性質">ベータ関数の性質</h2>
+<section id="ガンマ関数の性質" class="level2">
+<h2 class="anchored" data-anchor-id="ガンマ関数の性質">ガンマ関数の性質</h2>
+<p>ガンマ関数は，階乗関数を正の実数に拡張したものです． <span class="math inline">\(n\in\mathbb N\)</span> について階乗関数は</p>
+<p><span class="math display">\[
+n! = (n-1)!\cdot n
+\]</span></p>
+<p>と表されますが，ガンマ関数も</p>
+<p><span class="math display">\[
+\Gamma(z) = \Gamma(z-1)\cdot (z-1)
+\]</span></p>
+<p>という性質があります．</p>
 <div class="blog-custom-border">
-<p><strong>Def: ベータ関数</strong> <br></p>
-<p>実数 <span class="math inline">\(a, b\)</span> について，ベータ関数 <span class="math inline">\(\operatorname{B}(a, b)\)</span> は以下のように定義される．</p>
+<p><strong>Def: ガンマ関数</strong> <br></p>
+<p>関数 <span class="math inline">\(\Gamma: \mathbb R_{++}\to\mathbb R_{++}\)</span> を以下のように定義する：</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = \int^1_0 x^{a-1}(1-x)^{b-1}\mathrm{d}x
+\Gamma(z) = \int_0^\infty x^{z-1}\exp(-x)\mathrm{d}x
 \]</span></p>
-<p>また，ガンマ関数を用いて以下のように表せる</p>
+<p>これをガンマ関数と呼ぶ．</p>
+</div>
+<p>ガンマ関数は，正の整数 <span class="math inline">\(x\)</span> に対して，<span class="math inline">\(y=x!\)</span> という平面上の点 <span class="math inline">\((x, y)\)</span> を結ぶsmooth curveに対応します．</p>
+<div id="be4be9fe" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> express <span class="im">as</span> px</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.special <span class="im">import</span> gamma, factorial</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">6</span><span class="op">*</span><span class="fl">1.05</span>, <span class="dv">200</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>k <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="dv">7</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.line(x<span class="op">=</span>x, y<span class="op">=</span>gamma(x), title<span class="op">=</span><span class="st">'Gamma function'</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fig.add_traces(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">list</span>(px.scatter(x<span class="op">=</span>k, y<span class="op">=</span>factorial(k<span class="op">-</span><span class="dv">1</span>)).select_traces())</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>                            <div id="08e4cf95-f552-4a83-9b1b-45929c404034" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("08e4cf95-f552-4a83-9b1b-45929c404034")) {                    Plotly.newPlot(                        "08e4cf95-f552-4a83-9b1b-45929c404034",                        [{"hovertemplate":"x=%{x}\u003cbr\u003ey=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines","name":"","orientation":"v","showlegend":false,"x":[0.0,0.031658291457286436,0.06331658291457287,0.09497487437185931,0.12663316582914574,0.15829145728643218,0.18994974874371862,0.22160804020100505,0.2532663316582915,0.2849246231155779,0.31658291457286436,0.3482412060301508,0.37989949748743723,0.41155778894472367,0.4432160804020101,0.47487437185929654,0.506532663316583,0.5381909547738695,0.5698492462311558,0.6015075376884422,0.6331658291457287,0.6648241206030152,0.6964824120603016,0.728140703517588,0.7597989949748745,0.791457286432161,0.8231155778894473,0.8547738693467337,0.8864321608040202,0.9180904522613067,0.9497487437185931,0.9814070351758795,1.013065326633166,1.0447236180904524,1.076381909547739,1.1080402010050252,1.1396984924623117,1.1713567839195982,1.2030150753768845,1.234673366834171,1.2663316582914574,1.297989949748744,1.3296482412060304,1.3613065326633167,1.3929648241206032,1.4246231155778897,1.456281407035176,1.4879396984924624,1.519597989949749,1.5512562814070354,1.582914572864322,1.6145728643216082,1.6462311557788947,1.6778894472361812,1.7095477386934674,1.741206030150754,1.7728643216080404,1.804522613065327,1.8361809045226134,1.8678391959798997,1.8994974874371862,1.9311557788944727,1.962814070351759,1.9944723618090454,2.026130653266332,2.0577889447236184,2.089447236180905,2.1211055276381914,2.152763819095478,2.184422110552764,2.2160804020100504,2.247738693467337,2.2793969849246234,2.31105527638191,2.3427135678391964,2.374371859296483,2.406030150753769,2.4376884422110554,2.469346733668342,2.5010050251256284,2.532663316582915,2.5643216080402014,2.595979899497488,2.6276381909547744,2.659296482412061,2.690954773869347,2.7226130653266334,2.75427135678392,2.7859296482412064,2.817587939698493,2.8492462311557794,2.880904522613066,2.912562814070352,2.9442211055276384,2.975879396984925,3.0075376884422114,3.039195979899498,3.0708542713567843,3.102512562814071,3.1341708542713573,3.165829145728644,3.19748743718593,3.2291457286432164,3.260804020100503,3.2924623115577893,3.324120603015076,3.3557788944723623,3.387437185929649,3.419095477386935,3.4507537688442214,3.482412060301508,3.5140703517587943,3.545728643216081,3.5773869346733673,3.609045226130654,3.6407035175879403,3.672361809045227,3.704020100502513,3.7356783919597993,3.767336683417086,3.7989949748743723,3.830653266331659,3.8623115577889453,3.893969849246232,3.925628140703518,3.9572864321608043,3.988944723618091,4.020603015075378,4.052261306532664,4.08391959798995,4.115577889447237,4.147236180904523,4.17889447236181,4.210552763819096,4.242211055276383,4.273869346733669,4.305527638190956,4.337185929648242,4.368844221105528,4.400502512562815,4.432160804020101,4.463819095477388,4.495477386934674,4.527135678391961,4.558793969849247,4.590452261306533,4.62211055276382,4.653768844221106,4.685427135678393,4.717085427135679,4.748743718592966,4.780402010050252,4.812060301507538,4.843718592964825,4.875376884422111,4.907035175879398,4.938693467336684,4.970351758793971,5.002010050251257,5.033668341708544,5.06532663316583,5.096984924623116,5.128643216080403,5.160301507537689,5.191959798994976,5.223618090452262,5.255276381909549,5.286934673366835,5.318592964824122,5.350251256281408,5.381909547738694,5.413567839195981,5.445226130653267,5.476884422110554,5.50854271356784,5.540201005025127,5.571859296482413,5.603517587939699,5.635175879396986,5.666834170854272,5.698492462311559,5.730150753768845,5.761809045226132,5.793467336683418,5.825125628140704,5.856783919597991,5.888442211055277,5.920100502512564,5.95175879396985,5.983417085427137,6.015075376884423,6.04673366834171,6.078391959798996,6.110050251256282,6.141708542713569,6.173366834170855,6.205025125628142,6.236683417085428,6.268341708542715,6.300000000000001],"xaxis":"x","y":[null,31.040518420687167,15.2756550655911,10.03840281515635,7.432074480839618,5.87742817927926,4.848119096004738,4.118622588305206,3.5762159849241697,3.158306605546507,2.827363532010758,2.5595233868225944,2.338893551741992,2.154484926464565,1.9984594209367075,1.8650786108404123,1.7500467754871067,1.6500859082045907,1.562652474135255,1.4857436819349576,1.417761930884107,1.3574180346716451,1.3036608782145138,1.25562545812542,1.2125939412229048,1.1739660929987463,1.1392365508738387,1.1079771656218609,1.079823142233423,1.0544620617243388,1.0316251105208851,1.0110800179912245,0.9926253276874494,0.9760857187509671,0.9613081607492112,0.9481587348342287,0.9365199913209763,0.9262887419321645,0.9173742064321325,0.9096964498866267,0.9031850595796455,0.8977780206007053,0.8934207569561017,0.8900653112546248,0.8876696409455883,0.8861970130274602,0.88561548231364,0.8858974409026185,0.8870192285796359,0.8889607955743786,0.8917054104908713,0.895239407371657,0.8995519668060038,0.9046349267787513,0.9104826196124662,0.9170917319045997,0.9244611848227055,0.9325920325097855,0.941487376681222,0.9511522957745927,0.9615937872523915,0.9728207218620888,0.9848438088336587,0.9976755711464205,1.0113303301284848,1.025824198766634,1.0411750832046347,1.0574026919960826,1.0745285527558026,1.0925760359231023,1.1115703854122096,1.1315387559811148,1.1525102572007593,1.1745160039529325,1.197589173428018,1.2217650686335433,1.247081188461846,1.2735773044005307,1.3012955440032032,1.3302804812705782,1.3605792341237786,1.3922415691828085,1.4253200140940088,1.4598699776810875,1.4959498782252423,1.5336212802111804,1.572949039907734,1.6140014601843526,1.6568504549983725,1.7015717240226087,1.7482449379188352,1.7969539348001697,1.8477869284644954,1.9008367290220114,1.9562009765829294,2.0139823887165393,2.074289022440355,2.1372345515482376,2.2029385601392906,2.2715268532652915,2.34313178567361,2.4178926096852176,2.495955843313855,2.5774756598027375,2.6626142998299867,2.7515425077131437,2.844439993027368,2.9414959191412877,3.042909420269493,3.148890148741635,3.259658854295433,3.3754479973150957,3.496502398058053,3.6230799240421407,3.75545221790282,3.8939054681763774,4.038741225620797,4.190277267851811,4.348848515248271,4.5148080012689835,4.688527900523505,4.870400618152765,5.0608399443026935,5.26028227771633,5.469187922727967,5.688042464218097,5.917358225381098,6.157675813470348,6.409565759018683,6.67363025438764,6.950504997877773,7.240861150036738,7.545407409232938,7.864892214022313,8.200106080326837,8.551884081966413,8.921108483644984,9.30871153608727,9.715678443659542,10.143050515486276,10.591928511800063,11.06347619803615,11.558924120009022,12.079573614391665,12.62680106965974,13.20206245367045,13.806898125120135,14.442937947273771,15.111906723586698,15.815629976149166,16.556040089286505,17.335182842143464,18.155224355682776,19.01845848123717,19.927314659582944,20.884366281458053,21.892339582536515,22.954123108106987,24.072777785091464,25.251547641597504,26.49387121692926,27.803393707908608,29.183979900484115,30.639727938953953,32.174983988709656,33.794357852239095,35.50273960223048,37.30531730000599,39.20759587221575,41.215417223749675,43.33498167021314,45.57287077907584,47.936071714779125,50.43200318969967,53.06854312994694,55.854058172560585,58.79743511879569,61.90811447689255,65.19612623705075,68.67212803132318,72.34744584185451,76.23411743236328,80.34493869007271,84.69351307847403,89.29430441544935,94.1626932064275,99.315036778499,104.7687334788395,110.54229121947056,116.65540067043223,123.1290134249266,129.98542548305628,137.24836642550437,144.94309467504993,153.0964992722737,161.73720862236857,170.89570670275964,180.60445725641608,190.89803653352814,201.81327518474774],"yaxis":"y","type":"scatter"},{"hovertemplate":"x=%{x}\u003cbr\u003ey=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#636efa","symbol":"circle"},"mode":"markers","name":"","orientation":"v","showlegend":false,"x":[1,2,3,4,5,6],"xaxis":"x","y":[1.0,1.0,2.0,6.0,24.0,120.0],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"x"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"y"}},"legend":{"tracegroupgap":0},"title":{"text":"Gamma function"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('08e4cf95-f552-4a83-9b1b-45929c404034');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+<p><strong> ▶&nbsp; <span class="math inline">\(\Gamma(n) = (n-1)!\)</span> の確認</strong></p>
+<p>まず，<span class="math inline">\(\gamma(1) = 1\)</span> を確認します．</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}
+\begin{align*}
+\Gamma(1)
+    &amp;= \int^\infty_0 x^{1-1}\exp(-x)\mathrm{d}x\\
+    &amp;= \int^\infty_0 \exp(-x)\mathrm{d}x\\
+    &amp;= \left[-\exp(-x)\right]^\infty_0\\
+    &amp;= 1 = 0!
+\end{align*}
 \]</span></p>
+<p>続いて, <span class="math inline">\(z\in\mathbb R_{++}\)</span> について，<span class="math inline">\(\Gamma(z) = \Gamma(z-1)\cdot (z-1)\)</span> が成立することを確認します．</p>
+<p><span class="math display">\[
+\begin{align*}
+\Gamma(z+1)
+    &amp;= \int^\infty_0 x^{z+1-1}\exp(-x)\mathrm{d}x\\
+    &amp;= \int^\infty_0 x^{z}\exp(-x)\mathrm{d}x\\
+    &amp;= [-x^z\exp(-x)]^\infty_0 + z\int^\infty_0 x^{z-1}\exp(-x)\mathrm{d}x\\
+    &amp;= z\Gamma(z)
+\end{align*}
+\]</span></p>
+<p>なお，</p>
+<p><span class="math display">\[
+\lim_{x\to\infty}-x^z\exp(-x)=0
+\]</span></p>
+<p>はロピタルの定理を用いています．</p>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 11.1</strong></span> <br></p>
+<p><span class="math inline">\(a &gt; 0\)</span> という定数をについて</p>
+<p><span class="math display">\[
+\int^\infty_0t^{x-1}\exp(-at)\mathrm{d}t = \frac{\Gamma(x)}{a^x}
+\]</span></p>
+</div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
@@ -415,46 +557,49 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof: ベータ関数とガンマ関数の関係
+Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>ガンマ関数の定義を用いて，</p>
+<p><span class="math inline">\(u = at\)</span> という変数変換を考える．<span class="math inline">\(\frac{\mathrm{d}t}{\mathrm{d}u}=\frac{1}{a}\)</span> であるので，</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= \int^\infty_0 x^{a-1}\exp(-x)\mathrm{d}x \int^\infty_0 y^{b-1}\exp(-y)\mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^\infty_0 x^{a-1}y^{b-1}\exp(-x-y)\mathrm{d}x \mathrm{d}y \\
+\int^\infty_0t^{x-1}\exp(-at)\mathrm{d}t
+    &amp;= \int^\infty_0\left(\frac{u}{a}\right)^{x-1}\exp(-u)\frac{1}{a}\mathrm{d}u\\
+    &amp;= \frac{1}{a^x}\int^\infty_0u^{x-1}\exp(-u)\mathrm{d}u\\
+    &amp;= \frac{\Gamma(x)}{a^x}
 \end{align*}
-\]</span></p>
-<p>ここで, <span class="math inline">\(x + y = u, x/(x + y) = v\)</span> という変数変換を考える．つまり，</p>
-<p><span class="math display">\[
-\begin{align*}
-x = uv, y = u(1-v)
-\end{align*}
-\]</span></p>
-<p>このときのヤコビアンは</p>
-<p><span class="math display">\[
-\begin{align*}
-\vert\operatorname{det} J \vert= u
-\end{align*}
-\]</span></p>
-<p>従って，</p>
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;=\int^\infty_0 \int^\infty_0 (uv)^{a-1}[u(1-v)]^{b-1}\exp(-u) u\mathrm{d}x \mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^\infty_0 u^{a+b-1}\exp(-u) v^{a-1}(1-v)^{b-1}\mathrm{d}x \mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^1_0 u^{a+b-1}\exp(-u) v^{a-1}(1-v)^{b-1}\mathrm{d}v \mathrm{d}u \\
-                   &amp;= \int^\infty_0 u^{a+b-1}\exp(-u) \mathrm{d}u \int^1_0 v^{a-1}(1-v)^{b-1}\mathrm{d}v \\
-                   &amp;= \operatorname{\Gamma}(a+b)\operatorname{B}(a, b)
-\end{align*}
-\]</span></p>
-<p>つまり，</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
 \]</span></p>
 </div>
+</div>
+</div>
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 11.1</strong></span> <br></p>
+<p><span class="math display">\[
+\int^\infty_{-\infty}x^2\exp(-ax^2)\mathrm{d}x
+\]</span></p>
+<p>も上述の定理を使うと簡単に計算できます．<span class="math inline">\(x^2 = u\)</span> という変数変換を念頭に以下，</p>
+<p><span class="math display">\[
+\begin{align*}
+\int^\infty_{-\infty}x^2\exp(-ax^2)\mathrm{d}x
+    &amp;= 2\int^\infty_{0}x^2\exp(-ax^2)\mathrm{d}x \quad\because \text{偶関数}\\
+    &amp;= 2\int^\infty_{0}u\exp(-au)\times \frac{1}{2\sqrt{u}}\mathrm{d} u\\
+    &amp;= \int^\infty_{0}u^{\frac{3}{2}-1}\exp(-au)\mathrm{d} u\\
+    &amp;= \frac{\Gamma(3/2)}{a^{\frac{3}{2}}}\\
+    &amp;=\frac{\sqrt{\pi}}{2a\sqrt{a}}
+\end{align*}
+\]</span></p>
+<p><span class="math display">\[\tag*{\(\blacksquare\)}\]</span></p>
+</div>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 11.2</strong></span> <br></p>
+<p>ガンマ関数について，以下の等式が成り立つ</p>
+<p><span class="math display">\[
+\Gamma(s) = 2\int_0^\infty t^{2s-1}\exp(-t^2)\mathrm{d}t
+\]</span></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -463,52 +608,31 @@ x = uv, y = u(1-v)
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof: 座標変換
+Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>ガンマ関数は <span class="math inline">\(z^2 = x\)</span> という変数変換を用いると以下のように変換できる</p>
+<p>ガンマ関数について <span class="math inline">\(t = u^2\)</span> という変数変換を行うと以下のように導けます．</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{\Gamma}(a) &amp;= \int^\infty_0 x^{a-1}\exp(-x)\mathrm{d}x \\
-          &amp;= \int^\infty_0 z^{2a-2}\exp(-z^2)\frac{\mathrm{d}x}{\mathrm{d}z}\mathrm{d}z \\
-          &amp;= 2\int^\infty_0 z^{2a-1}\exp(-z^2)\mathrm{d}z
+\Gamma(s)
+    &amp;= \int_0^\infty t^{s-1}\exp(-t)\mathrm{d}t\\
+    &amp;= \int_0^\infty u^{2s-2}\exp(-u^2)\times 2u \mathrm{d}u\\
+    &amp;= 2\int_0^\infty u^{2s-1}\exp(-u^2)\mathrm{d}u\\
 \end{align*}
-\]</span></p>
-<p>これを用いて</p>
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= 4\int^\infty_0 x^{2a-1}\exp(-x^2)\mathrm{d}x \int^\infty_0 y^{2b-1}\exp(-y^2)\mathrm{d}y \\
-                   &amp;= 4\int^\infty_0 \int^\infty_0 x^{2a-1}y^{2b-1}\exp(-(x^2+y^2))\mathrm{d}x \mathrm{d}y
-\end{align*}
-\]</span></p>
-<p>ここで, <span class="math inline">\(x = r\cos\theta, y=r\sin\theta\)</span> という変数変換を行う．このときのヤコビアンは</p>
-<p><span class="math display">\[
-\vert \operatorname{det} J \vert = r
-\]</span></p>
-<p>よって， <span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= 4\int^\infty_0 \int^\infty_0 x^{2a-1}y^{2b-1}\exp(-(x^2+y^2))\mathrm{d}x \mathrm{d}y\\
-                   &amp;= 4\int^{\pi/2}_0 \int^\infty_0 r^{2a+2b-2} \cos^{2a-1}\theta \sin^{2b-1}\theta \exp(-r^2) r \mathrm{d}r \mathrm{d}\theta\\
-                   &amp;= \left(2\int^{\pi/2}_0 \cos^{2a-1}\theta \sin^{2b-1}\theta \mathrm{d}\theta\right) \times \left(\int^\infty_0r^{2(a+b)-1}\exp(-r^2)\mathrm{d}r \right)\\
-                   &amp;= \operatorname{B}(a, b) \times \operatorname{\Gamma}(a+b)
-\end{align*}
-\]</span></p>
-<p>従って，</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
 \]</span></p>
 </div>
 </div>
 </div>
+<section id="ガンマ関数の有名な公式" class="level3">
+<h3 class="anchored" data-anchor-id="ガンマ関数の有名な公式">ガンマ関数の有名な公式</h3>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 10.1</strong></span> <strong>三角関数とベータ関数の関係</strong> <br></p>
-<p>正の実数 <span class="math inline">\(a, b\)</span> について，以下が成立する</p>
+<p><span class="theorem-title"><strong>Theorem 11.3</strong></span> <br></p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = 2\int^{\pi/2}_0\cos^{2a-1}\theta\sin^{2b-1}\theta \mathrm{d}\theta
+\Gamma\bigg(\frac{1}{2}\bigg) = \sqrt{\pi}
 \]</span></p>
 </div>
 </div>
@@ -518,31 +642,25 @@ Proof: 座標変換
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Proof: ガウス積分を用いる場合
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>ベータ関数について <span class="math inline">\(x = \cos^2\theta\)</span> を用いた置換積分で以下のように示すことができます．</p>
+<p><span class="math inline">\(t = u^2\)</span> という変数変換を考える．</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{B}(a, b) &amp;= \int^1_0 x^{a-1}(1-x)^{b-1} \mathrm{d}x\\
-                       &amp;= \int^0_{\pi/2} (\cos^2\theta)^{a-1}(1 - \cos^2\theta)^{b-1} \cdot (-2\cos\theta\sin\theta) \mathrm{d}\theta\\
-                       &amp;= 2\int^{\pi/2}_0 \cos^{2a-1}\theta \sin^{2b-1}\theta\mathrm{d}\theta
+\int^\infty_0t^{-1/2}\exp(-t)\mathrm{d}t
+    &amp;= \int^\infty_0u^{-1}\exp(-u^2)2u\mathrm{d}u\\[3pt]
+    &amp;= 2\int^\infty_0\exp(-u^2)\mathrm{d}u\\[3pt]
+    &amp;= \int^\infty_{-\infty}\exp(-u^2)\mathrm{d}u\\[3pt]
+    &amp;= \int^\infty_{-\infty}\exp\bigg(-\frac{u^2}{2\times(\frac{1}{\sqrt 2})^2}\bigg)\mathrm{d}u\\[3pt]
+    &amp;= \sqrt{2\pi}\frac{1}{\sqrt 2}\\
+    &amp;= \sqrt{\pi}
 \end{align*}
 \]</span></p>
-<p>なお, <span class="math inline">\(\sin^2\theta = 1 - \cos^2\theta\)</span> 及び <span class="math inline">\(\displaystyle\frac{\mathrm{d}\cos^2\theta}{\mathrm{d}\theta} = -2\cos\theta\sin\theta\)</span> を用いている．</p>
 </div>
-</div>
-</div>
-<div class="blog-custom-border">
-<div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 10.2</strong></span> <strong>引数の交換性</strong> <br></p>
-<p>正の実数 <span class="math inline">\(a, b\)</span> について，以下が成立する</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \operatorname{B}(b, a)
-\]</span></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -551,7 +669,7 @@ Proof
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Proof: 極座標変換を用いる場合
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -559,17 +677,37 @@ Proof
 <div class="callout-body-container callout-body">
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{B}(a, b) &amp;= \int^1_0 x^{a-1}(1-x)^{b-1} \mathrm{d}x\\
-                       &amp;= \int^0_1 (1-z)^{a-1}z^{b-1} \frac{\mathrm{d}x}{\mathrm{d}z}\mathrm{d}z\\
-                       &amp;= \int^1_0 (1-z)^{a-1}z^{b-1} \mathrm{d}z\\
-                       &amp;= \operatorname{B}(b, a)
+\Gamma\bigg(\frac{1}{2}\bigg)^2 &amp;= \bigg(\int^\infty_0t^{-1/2}\exp(-t)\mathrm{d}t\bigg)^2\\[3pt]
+                                &amp;= \int^\infty_0x^{-1/2}\exp(-x)\mathrm{d}x\int^\infty_0y^{-1/2}\exp(-y)\mathrm{d}y
 \end{align*}
+\]</span></p>
+<p>ここで，<span class="math inline">\(x=u^2, y=v^2\)</span> と置換積分する．</p>
+<p><span class="math display">\[
+\begin{align*}
+\int^\infty_0x^{-1/2}\exp(-x)\mathrm{d}x\int^\infty_0y^{-1/2}\exp(-y)\mathrm{d}y
+    &amp;= 4\int^\infty_0\exp(-u^2)\mathrm{d}u\int^\infty_0\exp(-v^2)\mathrm{d}v\\
+    &amp;= 4\int^\infty_0\int^\infty_0\exp[-(u^2+v^2)]\mathrm{d}u\mathrm{d}v
+\end{align*}
+\]</span></p>
+<p>更に，<span class="math inline">\(u = r\cos\theta, v=r\sin\theta\)</span> という極座標変換を行う．<span class="math inline">\(u, v\geq 0\)</span> であることに留意すると，<span class="math inline">\(r\in(0, \infty), \theta\in (0, \pi/2)\)</span> になるので</p>
+<p><span class="math display">\[
+\begin{align*}
+4\int^\infty_0\int^\infty_0\exp[-(u^2+v^2)]\mathrm{d}u\mathrm{d}v &amp;= 4\int^\infty_0\int^{\pi/2}_0\exp[-r^2]r \mathrm{d}\theta \mathrm{d}r \  \  \because u, v\geq 0 \\[3pt]
+&amp;= 4\times \frac{\pi}{2} \int^{\infty}_0\exp[-r^2]r\mathrm{d}r\\[3pt]
+&amp;= 4\times \frac{\pi}{2}\bigg[\frac{\exp(-r^2)}{-2}\bigg]^\infty_0\\[3pt]
+&amp;= \pi
+\end{align*}
+\]</span></p>
+<p>ガンマ関数の定義より，<span class="math inline">\(\Gamma(1/2) &gt; 0\)</span> なので，</p>
+<p><span class="math display">\[
+\Gamma(1/2)^2 = \pi \Rightarrow \Gamma(1/2) = \sqrt{\pi}
 \]</span></p>
 </div>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1149,13 +1287,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/mathematical_appendix/chapter_header.html" class="pagination-link" aria-label="Mathematical Appendix">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Mathematical Appendix</span>
+      <a href="../../posts/mathematical_appendix/beta_function.html" class="pagination-link" aria-label="ベータ関数">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ベータ関数</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/mathematical_appendix/gamma_function.html" class="pagination-link" aria-label="ガンマ関数">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/mathematical_appendix/jensen_inequality.html" class="pagination-link" aria-label="Jensen's Inequality">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1176,7 +1314,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/beta_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/gamma_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

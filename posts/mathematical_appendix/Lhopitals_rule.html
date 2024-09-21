@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2024-09-12">
+<meta name="dcterms.date" content="2024-09-21">
 
-<title>2&nbsp; 確率密度関数 – Statistics for Regression Monkeys</title>
+<title>13&nbsp; ロピタルの定理 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,8 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/statistics101/expectation.html" rel="next">
-<link href="../../posts/statistics101/averages.html" rel="prev">
+<link href="../../posts/mathematical_appendix/jensen_inequality.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -134,7 +133,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistics101/chapter_header.html">統計学入門</a></li><li class="breadcrumb-item"><a href="../../posts/statistics101/density_function.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">確率密度関数</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/Lhopitals_rule.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -207,8 +206,8 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/statistics101/density_function.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">確率密度関数</span></span></a>
+  <a href="../../posts/statistics101/random_variable.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -240,12 +239,18 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/normal_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a href="../../posts/statistical_hypothesis_test_101/chapter_header.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">統計的仮説検定入門</span></a>
+ <span class="menu-text">統計的仮説検定</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -254,7 +259,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
       </ul>
@@ -271,7 +276,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -288,7 +293,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
       </ul>
@@ -313,13 +318,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/mathematical_appendix/gamma_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/jensen_inequality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/mathematical_appendix/Lhopitals_rule.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
   </div>
 </li>
       </ul>
@@ -329,21 +346,15 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#連続確率変数と確率密度関数" id="toc-連続確率変数と確率密度関数" class="nav-link active" data-scroll-target="#連続確率変数と確率密度関数">連続確率変数と確率密度関数</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistics101/density_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistics101/chapter_header.html">統計学入門</a></li><li class="breadcrumb-item"><a href="../../posts/statistics101/density_function.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">確率密度関数</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/Lhopitals_rule.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">確率密度関数</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></h1>
 </div>
 
 
@@ -360,14 +371,14 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-09-12</p>
+      <p class="date">2024-09-21</p>
     </div>
   </div>
   
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-09-18</p>
+      <p class="date-modified">2024-09-21</p>
     </div>
   </div>
     
@@ -378,32 +389,19 @@ window.Quarto = {
 </header>
 
 
-<p>実務の分析における測定は有理数となりますが，値が任意の実数である確率変数を考えた方が分析上扱いやすくなる場合があります． 定義域が実数となると標本空間が非可算集合となるため，測度論的確率による理解が必要となりますが，その説明は別のノートで行います．</p>
-<section id="連続確率変数と確率密度関数" class="level2">
-<h2 class="anchored" data-anchor-id="連続確率変数と確率密度関数">連続確率変数と確率密度関数</h2>
-<div class="blog-custom-border">
-<p><strong>Def: 絶対連続型の確率変数</strong> <br></p>
-<p>累積分布関数 <span class="math inline">\(F\)</span> をもつ確率変数 <span class="math inline">\(X\)</span> が次の条件を満たす確率密度関数 <span class="math inline">\(f\)</span> を持つとき，絶対連続(absolutely continuous)という：</p>
-<p><span class="math display">\[
-\begin{gather}
-f(x) \geq 0 \quad \forall x\\
-F(b) - F(a) = \int^b_a f(x)\mathrm{d}x \quad \text{where } a\leq b
-\end{gather}
-\]</span></p>
-</div>
-<p><br> <span class="math inline">\(f\)</span> のnon-negativity性質は，累積分布関数はnon-decreasingであること，及び <span class="math inline">\(F^\prime(x) = f(x)\)</span> であることから分かる． また確率変数 <span class="math inline">\(X\)</span> が確率密度関数 <span class="math inline">\(f(x)\)</span> を持つとき，<strong>「<span class="math inline">\(X\)</span> は <span class="math inline">\(f(x)\)</span> に従う」</strong>とよく言われる．</p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 2.1</strong></span> <strong>変数変換と確率密度関数</strong> <br></p>
-<p><span class="math inline">\(f\)</span> を確率密度関数，<span class="math inline">\(a &gt; 0\)</span> とし，</p>
+<p><span class="theorem-title"><strong>Theorem 13.1</strong></span> <br></p>
+<p><span class="math inline">\(x=a\)</span>に十分近い<span class="math inline">\(x\)</span>について<span class="math inline">\(f(x), g(x)\)</span>は微分可能とする. さらに<span class="math inline">\(x=a\)</span>以外で<span class="math inline">\(g(x)\neq 0\)</span>とする</p>
+<p>(1). <span class="math inline">\(\lim_{x\to a}f(x)=\lim_{x\to a}g(x)=0\)</span>のとき次式が成り立つ</p>
 <p><span class="math display">\[
-g(x) = af(ax)
+\lim_{x\to a}\frac{f(x)}{g(x)} = \lim_{x\to a}\frac{f^\prime(x)}{g^\prime(x)}
 \]</span></p>
-<p>と関数 <span class="math inline">\(g\)</span> を定義すると</p>
+<p>(2). <span class="math inline">\(\lim_{x\to a}\vert f(x)\vert= \infty, \lim_{x\to a}\vert g(x)\vert=\infty\)</span>のとき次式が成り立つ</p>
 <p><span class="math display">\[
-\int^\infty_{-\infty} g(x)\mathrm{d} x = 1
+\lim_{x\to a}\frac{f(x)}{g(x)} = \lim_{x\to a}\frac{f^\prime(x)}{g^\prime(x)}
 \]</span></p>
-<p>となる</p>
+<p>(1), (2)で <span class="math inline">\(a\)</span> を <span class="math inline">\(\infty, -\infty\)</span> に置き換えても同様の命題が成り立つ.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -418,20 +416,55 @@ Proof
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(a &gt; 0, f\geq 0\)</span> より <span class="math inline">\(g\geq 0\)</span> は自明．また，<span class="math inline">\(ax = z\)</span> と変数変換すると</p>
+<p><strong> ▶&nbsp; <span class="math inline">\(a&lt;\infty, \lim_{x\to a}f(x)=g(x)=0\)</span> の場合</strong></p>
+<p>平均値の定理より</p>
 <p><span class="math display">\[
 \begin{align*}
-\int^\infty_{-\infty} g(x)\mathrm{d} x &amp;= \int^\infty_{-\infty} af(ax)\mathrm{d} x \\
-                                       &amp;= \int^\infty_{-\infty} af(z) \frac{\mathrm{d} x}{\mathrm{d} z}\mathrm{d} z\\
-                                       &amp;= \int^\infty_{-\infty} af(z) \frac{1}{a}\mathrm{d} z = 1
+\frac{f(x)}{g(x)} = \frac{f(x)-f(a)}{g(x)-g(a)}= \frac{f^\prime(\xi)}{g^\prime(\xi)}
 \end{align*}
+\]</span></p>
+<p>このとき, <span class="math inline">\(\xi\)</span>は<span class="math inline">\(a, x\)</span>の間の数. なお, <span class="math inline">\(\xi\to a \text{ as }x\to a\)</span>なので</p>
+<p><span class="math display">\[
+\lim_{x\to a}\frac{f(x)}{g(x)} = \frac{f^\prime(a)}{g^\prime(a)}
+\]</span></p>
+<p><strong> ▶&nbsp; <span class="math inline">\(a=\infty, \lim_{x\to \infty}f(x)=g(x)=0\)</span> の場合</strong></p>
+<p><span class="math inline">\(x = \frac{1}{t}\)</span>と変換し, 次の関数を考える</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;h(t) = f(1/t)\\
+&amp;k(t) = g(1/t)\\
+&amp; \lim_{t\to 0} h(t) = \lim_{t\to 0} k(t) =  0
+\end{align*}
+\]</span></p>
+<p>従って,</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;\frac{h(t)}{k(t)} = \frac{h(t)-h(0)}{k(t)-k(0)} = \frac{h^\prime(\xi)}{k^\prime(\xi)}\\[3pt]
+&amp;\Rightarrow \lim_{t\to0}\frac{h(t)}{k(t)} = \lim_{t\to0}\frac{h^\prime(t)}{k^\prime(t)}
+\end{align*}
+\]</span></p>
+<p>よって,</p>
+<p><span class="math display">\[
+\lim_{x\to\infty}\frac{f(x)}{g(x)} = \lim_{x\to\infty}\frac{f^\prime(x)}{g^\prime(x)}
 \]</span></p>
 </div>
 </div>
 </div>
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 13.1</strong></span> <strong>: ロピタルの定理の使用例</strong> <br></p>
+<p><span class="math display">\[
+\begin{align*}
+\lim_{x\to\infty}\frac{x^k}{e^x}
+      &amp;= \lim_{x\to\infty}\frac{kx^{k-1}}{e^x}\\[3pt]
+      &amp;= \lim_{x\to\infty}\frac{k(k-1)x^{k-2}}{e^x}\\[3pt]
+      &amp;= \cdots\\
+      &amp;= \lim_{x\to\infty}\frac{k!}{e^x}\\[3pt]
+      &amp;= 0
+\end{align*}
+\]</span></p>
+</div>
 
 
-</section>
 
 </main> <!-- /main -->
 <script>
@@ -1010,14 +1043,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/statistics101/averages.html" class="pagination-link" aria-label="代表値">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">代表値</span></span>
+      <a href="../../posts/mathematical_appendix/jensen_inequality.html" class="pagination-link" aria-label="Jensen's Inequality">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/statistics101/expectation.html" class="pagination-link" aria-label="期待値">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">期待値</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->
@@ -1037,7 +1067,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistics101/density_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/Lhopitals_rule.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
