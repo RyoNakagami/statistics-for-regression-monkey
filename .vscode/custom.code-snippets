@@ -49,6 +49,17 @@
 		],
 		"description": ""
 	},
+	"property": {
+        "scope": "quarto",
+		"prefix": "property",
+		"body": [
+			":::{.callout-note}",
+			"## Property",
+			":::"
+		],
+		"description": "property"
+	},
+
 	"solution-block":{
 		"prefix": "sol-block",
 		"body": [
