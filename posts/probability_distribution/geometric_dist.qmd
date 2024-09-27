@@ -141,7 +141,7 @@ $$
 \mathbb E[X] = \sum_{x=0}^\infty \Pr(X> x)
 $$
 
-が知られている([参考:期待値 > Example 3.4](../statistics101//expectation.qmd))ので
+が知られている([参考:期待値 > Example 3.4](../statistics101//expectation.qmd#exm-discrete-tail))ので
 
 $$
 \begin{align*}
