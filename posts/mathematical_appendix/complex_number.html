@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2024-09-12">
+<meta name="dcterms.date" content="2024-09-26">
 
-<title>16&nbsp; ベータ関数 – Statistics for Regression Monkeys</title>
+<title>15&nbsp; 複素数 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -32,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/mathematical_appendix/gamma_function.html" rel="next">
-<link href="../../posts/mathematical_appendix/complex_number.html" rel="prev">
+<link href="../../posts/mathematical_appendix/beta_function.html" rel="next">
+<link href="../../posts/mathematical_appendix/chapter_header.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -134,7 +168,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/beta_function.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/complex_number.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">複素数</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -348,13 +382,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/mathematical_appendix/complex_number.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/mathematical_appendix/complex_number.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
   </div>
 </li>
@@ -388,16 +422,17 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ベータ関数の性質" id="toc-ベータ関数の性質" class="nav-link active" data-scroll-target="#ベータ関数の性質">ベータ関数の性質</a></li>
+  <li><a href="#複素数の性質" id="toc-複素数の性質" class="nav-link active" data-scroll-target="#複素数の性質">複素数の性質</a></li>
+  <li><a href="#複素平面" id="toc-複素平面" class="nav-link" data-scroll-target="#複素平面">複素平面</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/beta_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/complex_number.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/beta_function.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/complex_number.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">複素数</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></h1>
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">複素数</span></h1>
 </div>
 
 
@@ -414,7 +449,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-09-12</p>
+      <p class="date">2024-09-26</p>
     </div>
   </div>
   
@@ -432,18 +467,59 @@ window.Quarto = {
 </header>
 
 
-<section id="ベータ関数の性質" class="level2">
-<h2 class="anchored" data-anchor-id="ベータ関数の性質">ベータ関数の性質</h2>
+<section id="複素数の性質" class="level2">
+<h2 class="anchored" data-anchor-id="複素数の性質">複素数の性質</h2>
 <div class="blog-custom-border">
-<p><strong>Def: ベータ関数</strong> <br></p>
-<p>実数 <span class="math inline">\(a, b\)</span> について，ベータ関数 <span class="math inline">\(\operatorname{B}(a, b)\)</span> は以下のように定義される．</p>
+<p><strong>Def: 複素数</strong> <br></p>
+<p>２つの実数 <span class="math inline">\(a, b\)</span> を用いて</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = \int^1_0 x^{a-1}(1-x)^{b-1}\mathrm{d}x
+z = a + bi
 \]</span></p>
-<p>また，ガンマ関数を用いて以下のように表せる</p>
+<p>と表される数 <span class="math inline">\(z\)</span> を複素数という．<span class="math inline">\(a\)</span> を上の複素数の実部，<span class="math inline">\(b\)</span> を虚部と呼ぶ． 複素数全体の集合は一般に <span class="math inline">\(\mathbb C\)</span> と表される．</p>
+</div>
+<p>複素数 <span class="math inline">\(z = a + bi\)</span> の実数の組 <span class="math inline">\((a, b)\)</span> について，</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}
+\begin{align*}
+a &amp;= \text{Re}\, z\\
+b &amp;= \text{Im}\, z
+\end{align*}
 \]</span></p>
+<p>と表したりします．それぞれ，real part, imaginary partの略と理解できます．</p>
+<p><strong> ▶&nbsp; 複素数の加減乗除</strong></p>
+<p><span class="math inline">\(z_1 = a + bi, z_2 = c + di\)</span> としたとき，四則演算は以下のように計算されます</p>
+<p><span class="math display">\[
+\begin{align*}
+z_1 + z_2 &amp;= (a + c) + (b + d)i\\
+z_1 - z_2 &amp;= (a - c) + (b - d)i\\
+z_1z_2    &amp;= ac + (ad + bc)i + bdi^2\\
+          &amp;= (ac - bd) + (ad + bc)i \quad \because i^2 =-1\\
+\frac{z_1}{z_2}
+          &amp;= \frac{a + bi}{c + di}\\
+          &amp;= \frac{a + bi}{c + di}\frac{c - di}{c - di}\\
+          &amp;= \frac{(a + bi)(c - di)}{c^2+d^2}\\
+          &amp;= \frac{(ac + bd) + (bc - ad)i}{c^2+d^2}
+\end{align*}
+\]</span></p>
+<div class="blog-custom-border">
+<p><strong>Def: 共役複素数</strong> <br></p>
+<p>複素数 <span class="math inline">\(z = a+bi\)</span> に対し，</p>
+<p><span class="math display">\[
+\bar z = a - bi
+\]</span></p>
+<p>を <span class="math inline">\(z\)</span> の共役複素数（きょうやくふくそすう）と呼ぶ．</p>
+</div>
+<p>共役複素数は，複素数平面上で実軸に関して対称移動させたものと解釈することができます．また，定義より自明ですが 複素数と共役複素数について，和と積が実数になるという特徴もあります．</p>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 15.1</strong></span> <br></p>
+<p>２つの複素数 <span class="math inline">\(z_1, z_2\)</span> について，次が成り立つ</p>
+<p><span class="math display">\[
+\begin{align*}
+\overline{z_1 + z_2} &amp;= \bar z_1 + \bar z_2\\
+\overline{z_1z_2} &amp;= \bar z_1\bar z_2
+\end{align*}
+\]</span></p>
+</div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
@@ -451,159 +527,127 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof: ベータ関数とガンマ関数の関係
+Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>ガンマ関数の定義を用いて，</p>
+<p><span class="math inline">\(z_1 = a_1 + b_1i, z_2 = a_2 + b_2i\)</span> としたとき，</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= \int^\infty_0 x^{a-1}\exp(-x)\mathrm{d}x \int^\infty_0 y^{b-1}\exp(-y)\mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^\infty_0 x^{a-1}y^{b-1}\exp(-x-y)\mathrm{d}x \mathrm{d}y \\
+\overline{z_1 + z_2}
+    &amp;= \overline{(a_1 + a_2) + (b_1 +b_2)i}\\
+    &amp;= (a_1 + a_2) - (b_1 +b_2)i\\
+    &amp;= a_1 - b_1i + a_2 - b_2i\\
+    &amp;= \bar z_1 + \bar z_2
 \end{align*}
 \]</span></p>
-<p>ここで, <span class="math inline">\(x + y = u, x/(x + y) = v\)</span> という変数変換を考える．つまり，</p>
+<p>積については</p>
 <p><span class="math display">\[
 \begin{align*}
-x = uv, y = u(1-v)
+\overline{z_1z_2}
+    &amp;= \overline{(a_1a_2 - b_1b_2) + (a_1b_2 + a_2b_1)i}\\
+    &amp;= (a_1a_2 - b_1b_2) - (a_1b_2 + a_2b_1)i\\
+    &amp;= a_1a_2 - (a_1b_2 + a_2b_1)i + b_1b_2i^2\\
+    &amp;= (a_1 - b_1i)(a_2 - b_2i)\\
+    &amp;= \bar z_1\bar z_2
 \end{align*}
-\]</span></p>
-<p>このときのヤコビアンは</p>
-<p><span class="math display">\[
-\begin{align*}
-\vert\operatorname{det} J \vert= u
-\end{align*}
-\]</span></p>
-<p>従って，</p>
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;=\int^\infty_0 \int^\infty_0 (uv)^{a-1}[u(1-v)]^{b-1}\exp(-u) u\mathrm{d}x \mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^\infty_0 u^{a+b-1}\exp(-u) v^{a-1}(1-v)^{b-1}\mathrm{d}x \mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^1_0 u^{a+b-1}\exp(-u) v^{a-1}(1-v)^{b-1}\mathrm{d}v \mathrm{d}u \\
-                   &amp;= \int^\infty_0 u^{a+b-1}\exp(-u) \mathrm{d}u \int^1_0 v^{a-1}(1-v)^{b-1}\mathrm{d}v \\
-                   &amp;= \operatorname{\Gamma}(a+b)\operatorname{B}(a, b)
-\end{align*}
-\]</span></p>
-<p>つまり，</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
-\]</span></p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Proof: 座標変換
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>ガンマ関数は <span class="math inline">\(z^2 = x\)</span> という変数変換を用いると以下のように変換できる</p>
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a) &amp;= \int^\infty_0 x^{a-1}\exp(-x)\mathrm{d}x \\
-          &amp;= \int^\infty_0 z^{2a-2}\exp(-z^2)\frac{\mathrm{d}x}{\mathrm{d}z}\mathrm{d}z \\
-          &amp;= 2\int^\infty_0 z^{2a-1}\exp(-z^2)\mathrm{d}z
-\end{align*}
-\]</span></p>
-<p>これを用いて</p>
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= 4\int^\infty_0 x^{2a-1}\exp(-x^2)\mathrm{d}x \int^\infty_0 y^{2b-1}\exp(-y^2)\mathrm{d}y \\
-                   &amp;= 4\int^\infty_0 \int^\infty_0 x^{2a-1}y^{2b-1}\exp(-(x^2+y^2))\mathrm{d}x \mathrm{d}y
-\end{align*}
-\]</span></p>
-<p>ここで, <span class="math inline">\(x = r\cos\theta, y=r\sin\theta\)</span> という変数変換を行う．このときのヤコビアンは</p>
-<p><span class="math display">\[
-\vert \operatorname{det} J \vert = r
-\]</span></p>
-<p>よって， <span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= 4\int^\infty_0 \int^\infty_0 x^{2a-1}y^{2b-1}\exp(-(x^2+y^2))\mathrm{d}x \mathrm{d}y\\
-                   &amp;= 4\int^{\pi/2}_0 \int^\infty_0 r^{2a+2b-2} \cos^{2a-1}\theta \sin^{2b-1}\theta \exp(-r^2) r \mathrm{d}r \mathrm{d}\theta\\
-                   &amp;= \left(2\int^{\pi/2}_0 \cos^{2a-1}\theta \sin^{2b-1}\theta \mathrm{d}\theta\right) \times \left(\int^\infty_0r^{2(a+b)-1}\exp(-r^2)\mathrm{d}r \right)\\
-                   &amp;= \operatorname{B}(a, b) \times \operatorname{\Gamma}(a+b)
-\end{align*}
-\]</span></p>
-<p>従って，</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
 \]</span></p>
 </div>
 </div>
 </div>
 <div class="blog-custom-border">
-<div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 16.1</strong></span> <strong>三角関数とベータ関数の関係</strong> <br></p>
-<p>正の実数 <span class="math inline">\(a, b\)</span> について，以下が成立する</p>
+<p><strong>Def: 複素数の絶対値</strong> <br></p>
+<p>複素数 <span class="math inline">\(z = a + bi\)</span> の絶対値 <span class="math inline">\(\vert z\vert\)</span> は次のように計算される：</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = 2\int^{\pi/2}_0\cos^{2a-1}\theta\sin^{2b-1}\theta \mathrm{d}\theta
+\vert z \vert = \sqrt{a^2 + b^2}
 \]</span></p>
 </div>
+<p>定義より，<span class="math inline">\((a, b) = (0, 0)\)</span> のときは，<span class="math inline">\(\vert z\vert =0\)</span>．逆に <span class="math inline">\(\vert z\vert =0\)</span> ならば，</p>
+<p><span class="math display">\[
+a^2 + b^2 =0
+\]</span></p>
+<p>を満たす実数の組は <span class="math inline">\((0, 0)\)</span> 歯科存在しないので，<span class="math inline">\(z = 0\)</span> となります．</p>
+</section>
+<section id="複素平面" class="level2">
+<h2 class="anchored" data-anchor-id="複素平面">複素平面</h2>
+<p>複素数 <span class="math inline">\(z = x + yi\)</span> が与えられたとき，２つの実数の組 <span class="math inline">\((x, y)\)</span> が与えられた状況とも解釈できます． また，２つの実数の組 <span class="math inline">\((x, y)\)</span> が与えられた状況とは，<span class="math inline">\(xy\)</span>-平面上の点を与えられる状況とも考えることができます． つまり，複素数が与えられたとき，</p>
+<ul>
+<li>実部を <span class="math inline">\(x\)</span> 軸</li>
+<li>虚部を <span class="math inline">\(y\)</span> 軸</li>
+</ul>
+<p>とする <span class="math inline">\(xy\)</span>-平面を考えることができます．<span class="math inline">\(z = 1 + \sqrt{3}\)</span> を描いてみると，</p>
+<div id="b018cee5" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pi <span class="op">=</span> np.pi</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set parameters</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> pi<span class="op">/</span><span class="dv">3</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> r <span class="op">*</span> np.cos(theta)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>x_range <span class="op">=</span> np.linspace(<span class="dv">0</span>, x, <span class="dv">1000</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>theta_range <span class="op">=</span> np.linspace(<span class="dv">0</span>, theta, <span class="dv">1000</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plt.subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'polar'</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>ax.plot((<span class="dv">0</span>, theta), (<span class="dv">0</span>, r), marker<span class="op">=</span><span class="st">'o'</span>, color<span class="op">=</span><span class="st">'b'</span>)          <span class="co"># Plot r</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>ax.plot(np.zeros(x_range.shape), x_range, color<span class="op">=</span><span class="st">'b'</span>)       <span class="co"># Plot x</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>ax.plot(theta_range, x <span class="op">/</span> np.cos(theta_range), color<span class="op">=</span><span class="st">'b'</span>)        <span class="co"># Plot y</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>ax.plot(theta_range, np.full(theta_range.shape, <span class="fl">0.1</span>), color<span class="op">=</span><span class="st">'r'</span>)  <span class="co"># Plot theta</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>ax.margins(<span class="dv">0</span>) <span class="co"># Let the plot starts at origin</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"Trigonometry of complex numbers"</span>, va<span class="op">=</span><span class="st">'bottom'</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    fontsize<span class="op">=</span><span class="st">'x-large'</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>ax.set_rmax(<span class="dv">2</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>ax.set_rticks((<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="fl">1.5</span>, <span class="dv">2</span>))  <span class="co"># Less radial ticks</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>ax.set_rlabel_position(<span class="op">-</span><span class="fl">88.5</span>)    <span class="co"># Get radial labels away from plotted line</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>ax.text(theta, r<span class="op">+</span><span class="fl">0.01</span> , <span class="vs">r'$z = x + iy = 1 + \sqrt</span><span class="sc">{3}</span><span class="vs">\, i$'</span>)   <span class="co"># Label z</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>ax.text(theta<span class="op">+</span><span class="fl">0.2</span>, <span class="dv">1</span> , <span class="vs">r'$\vert z\vert = 2$'</span>)                             <span class="co"># Label r</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="dv">0</span><span class="op">-</span><span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="st">'$x = 1$'</span>)                            <span class="co"># Label x</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">0.5</span>, <span class="fl">1.2</span>, <span class="vs">r'$y = \sqrt</span><span class="sc">{3}</span><span class="vs">$'</span>)                      <span class="co"># Label y</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>ax.text(<span class="fl">0.25</span>, <span class="fl">0.15</span>, <span class="vs">r'$\text{arg } $z$ = 60^o$'</span>)                   <span class="co"># Label theta</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="complex_number_files/figure-html/cell-2-output-1.png" width="524" height="539" class="figure-img"></p>
+</figure>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
-Proof
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>ベータ関数について <span class="math inline">\(x = \cos^2\theta\)</span> を用いた置換積分で以下のように示すことができます．</p>
+<p>複素数が <span class="math inline">\(xy\)</span>-平面上の点で表すことができるということは，原点からの長さと角度 <span class="math inline">\((r, \theta)\)</span> によって点を表現できることになります． このとき，以下のように表します:</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{B}(a, b) &amp;= \int^1_0 x^{a-1}(1-x)^{b-1} \mathrm{d}x\\
-                       &amp;= \int^0_{\pi/2} (\cos^2\theta)^{a-1}(1 - \cos^2\theta)^{b-1} \cdot (-2\cos\theta\sin\theta) \mathrm{d}\theta\\
-                       &amp;= 2\int^{\pi/2}_0 \cos^{2a-1}\theta \sin^{2b-1}\theta\mathrm{d}\theta
+r &amp; = \vert z\vert\\
+\theta &amp;= \operatorname{arg}z = \arctan \left(\frac{y}{x}\right)
 \end{align*}
 \]</span></p>
-<p>なお, <span class="math inline">\(\sin^2\theta = 1 - \cos^2\theta\)</span> 及び <span class="math inline">\(\displaystyle\frac{\mathrm{d}\cos^2\theta}{\mathrm{d}\theta} = -2\cos\theta\sin\theta\)</span> を用いている．</p>
-</div>
-</div>
-</div>
+<p>このことから次の定義が導けます．</p>
 <div class="blog-custom-border">
-<div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 16.2</strong></span> <strong>引数の交換性</strong> <br></p>
-<p>正の実数 <span class="math inline">\(a, b\)</span> について，以下が成立する</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \operatorname{B}(b, a)
-\]</span></p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Proof
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
+<p><strong>Def: 複素数の極形式</strong> <br></p>
+<p>複素平面上の点 <span class="math inline">\(z = x + yi\)</span> は極座標を用いて次のように表せる:</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{B}(a, b) &amp;= \int^1_0 x^{a-1}(1-x)^{b-1} \mathrm{d}x\\
-                       &amp;= \int^0_1 (1-z)^{a-1}z^{b-1} \frac{\mathrm{d}x}{\mathrm{d}z}\mathrm{d}z\\
-                       &amp;= \int^1_0 (1-z)^{a-1}z^{b-1} \mathrm{d}z\\
-                       &amp;= \operatorname{B}(b, a)
+&amp;z = r(\cos \theta + i\sin\theta)\\
+&amp;\text{where } r = \vert z\vert, \theta = \operatorname{arg} z
 \end{align*}
 \]</span></p>
 </div>
-</div>
-</div>
+<p><strong> ▶&nbsp; 複素数の積と複素平面</strong></p>
 
 
 </section>
@@ -1185,13 +1229,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/mathematical_appendix/complex_number.html" class="pagination-link" aria-label="複素数">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">複素数</span></span>
+      <a href="../../posts/mathematical_appendix/chapter_header.html" class="pagination-link" aria-label="Mathematical Appendix">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Mathematical Appendix</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/mathematical_appendix/gamma_function.html" class="pagination-link" aria-label="ガンマ関数">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/mathematical_appendix/beta_function.html" class="pagination-link" aria-label="ベータ関数">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1212,7 +1256,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/beta_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/complex_number.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

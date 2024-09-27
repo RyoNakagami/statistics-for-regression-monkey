@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2024-09-12">
+<meta name="dcterms.date" content="2024-09-25">
 
-<title>16&nbsp; ベータ関数 – Statistics for Regression Monkeys</title>
+<title>8&nbsp; ポワソン分布 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,8 +32,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/mathematical_appendix/gamma_function.html" rel="next">
-<link href="../../posts/mathematical_appendix/complex_number.html" rel="prev">
+<link href="../../posts/probability_distribution/geometric_dist.html" rel="next">
+<link href="../../posts/probability_distribution/binomial_dist.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -134,7 +134,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/beta_function.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/poisson_dist.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ポワソン分布</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -254,7 +254,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/probability_distribution/poisson_dist.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/probability_distribution/poisson_dist.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
   </div>
 </li>
@@ -354,7 +354,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
   </div>
 </li>
@@ -388,16 +388,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ベータ関数の性質" id="toc-ベータ関数の性質" class="nav-link active" data-scroll-target="#ベータ関数の性質">ベータ関数の性質</a></li>
+  <li><a href="#ポワソン分布の性質" id="toc-ポワソン分布の性質" class="nav-link active" data-scroll-target="#ポワソン分布の性質">ポワソン分布の性質</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/beta_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/probability_distribution/poisson_dist.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/beta_function.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/poisson_dist.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ポワソン分布</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></h1>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ポワソン分布</span></h1>
 </div>
 
 
@@ -414,7 +414,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-09-12</p>
+      <p class="date">2024-09-25</p>
     </div>
   </div>
   
@@ -432,18 +432,53 @@ window.Quarto = {
 </header>
 
 
-<section id="ベータ関数の性質" class="level2">
-<h2 class="anchored" data-anchor-id="ベータ関数の性質">ベータ関数の性質</h2>
+<section id="ポワソン分布の性質" class="level2">
+<h2 class="anchored" data-anchor-id="ポワソン分布の性質">ポワソン分布の性質</h2>
+<p><strong> ▶&nbsp; 確率母関数の計算</strong></p>
+<p>確率変数 <span class="math inline">\(X\sim\operatorname{Poisson}(\lambda)\)</span> としたとき，PGF <span class="math inline">\(G_X(s)\)</span> は</p>
+<p><span class="math display">\[
+\begin{align*}
+G_X(s)
+    &amp;= \sum_{x=0}^\infty s^x\frac{\lambda^x}{x!}\exp(-\lambda)\\
+    &amp;= \exp(-\lambda)\sum_{x=0}^\infty \frac{(s\lambda)^x}{x!}\\
+    &amp;= \exp(-\lambda)\exp(s\lambda)\\
+    &amp;= \exp((s-1)\lambda)
+\end{align*}
+\]</span></p>
+<p>期待値は</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[X]
+    &amp;= G_X^\prime(1)\\
+    &amp;= \lambda \exp((1-1)\lambda)\\
+    &amp;= \lambda
+\end{align*}
+\]</span></p>
+<p>分散は <span class="math inline">\(\operatorname{Var}(X) = \mathbb E[X(X-1)] + \mathbb E[X](1 - \mathbb E[X])\)</span> なので</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[X(X-1)]
+    &amp;= G_X^{\prime\prime}(1)\\
+    &amp;= \lambda \lambda\exp((1-1)\lambda)\\
+    &amp;= \lambda^2
+\end{align*}
+\]</span></p>
+<p>従って，</p>
+<p><span class="math display">\[
+\begin{align*}
+\operatorname{Var}(X)
+    &amp;= \lambda^2 + \lambda(1-\lambda)\\
+    &amp;= \lambda
+\end{align*}
+\]</span></p>
 <div class="blog-custom-border">
-<p><strong>Def: ベータ関数</strong> <br></p>
-<p>実数 <span class="math inline">\(a, b\)</span> について，ベータ関数 <span class="math inline">\(\operatorname{B}(a, b)\)</span> は以下のように定義される．</p>
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 8.1</strong></span> <strong>: ポワソン分布のの再生性</strong> <br></p>
+<p>互いに独立な確率変数 <span class="math inline">\(X\sim\operatorname{Poisson}(\lambda_x), Y\sim\operatorname{Poisson}(\lambda_y)\)</span> について, <span class="math inline">\(X + Y\)</span> もパラメーター <span class="math inline">\(\lambda_x + \lambda_y\)</span> のポワソン分布に従う．つまり，</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = \int^1_0 x^{a-1}(1-x)^{b-1}\mathrm{d}x
+X + Y \sim \operatorname{Poisson}(\lambda_x + \lambda_y)
 \]</span></p>
-<p>また，ガンマ関数を用いて以下のように表せる</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}
-\]</span></p>
+</div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
@@ -451,156 +486,21 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof: ベータ関数とガンマ関数の関係
+Proof: PGFを用いた証明
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>ガンマ関数の定義を用いて，</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= \int^\infty_0 x^{a-1}\exp(-x)\mathrm{d}x \int^\infty_0 y^{b-1}\exp(-y)\mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^\infty_0 x^{a-1}y^{b-1}\exp(-x-y)\mathrm{d}x \mathrm{d}y \\
+G_{X+Y}(s)
+    &amp;= G_{X}(s)G_{Y}(s)\\
+    &amp;= \exp(-\lambda_x)\exp(s\lambda_x)\exp(-\lambda_y)\exp(s\lambda_y)\\
+    &amp;= \exp(-(\lambda_x+\lambda_y))\exp(s(\lambda_x+\lambda_y))
 \end{align*}
 \]</span></p>
-<p>ここで, <span class="math inline">\(x + y = u, x/(x + y) = v\)</span> という変数変換を考える．つまり，</p>
-<p><span class="math display">\[
-\begin{align*}
-x = uv, y = u(1-v)
-\end{align*}
-\]</span></p>
-<p>このときのヤコビアンは</p>
-<p><span class="math display">\[
-\begin{align*}
-\vert\operatorname{det} J \vert= u
-\end{align*}
-\]</span></p>
-<p>従って，</p>
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;=\int^\infty_0 \int^\infty_0 (uv)^{a-1}[u(1-v)]^{b-1}\exp(-u) u\mathrm{d}x \mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^\infty_0 u^{a+b-1}\exp(-u) v^{a-1}(1-v)^{b-1}\mathrm{d}x \mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^1_0 u^{a+b-1}\exp(-u) v^{a-1}(1-v)^{b-1}\mathrm{d}v \mathrm{d}u \\
-                   &amp;= \int^\infty_0 u^{a+b-1}\exp(-u) \mathrm{d}u \int^1_0 v^{a-1}(1-v)^{b-1}\mathrm{d}v \\
-                   &amp;= \operatorname{\Gamma}(a+b)\operatorname{B}(a, b)
-\end{align*}
-\]</span></p>
-<p>つまり，</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
-\]</span></p>
-</div>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Proof: 座標変換
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>ガンマ関数は <span class="math inline">\(z^2 = x\)</span> という変数変換を用いると以下のように変換できる</p>
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a) &amp;= \int^\infty_0 x^{a-1}\exp(-x)\mathrm{d}x \\
-          &amp;= \int^\infty_0 z^{2a-2}\exp(-z^2)\frac{\mathrm{d}x}{\mathrm{d}z}\mathrm{d}z \\
-          &amp;= 2\int^\infty_0 z^{2a-1}\exp(-z^2)\mathrm{d}z
-\end{align*}
-\]</span></p>
-<p>これを用いて</p>
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= 4\int^\infty_0 x^{2a-1}\exp(-x^2)\mathrm{d}x \int^\infty_0 y^{2b-1}\exp(-y^2)\mathrm{d}y \\
-                   &amp;= 4\int^\infty_0 \int^\infty_0 x^{2a-1}y^{2b-1}\exp(-(x^2+y^2))\mathrm{d}x \mathrm{d}y
-\end{align*}
-\]</span></p>
-<p>ここで, <span class="math inline">\(x = r\cos\theta, y=r\sin\theta\)</span> という変数変換を行う．このときのヤコビアンは</p>
-<p><span class="math display">\[
-\vert \operatorname{det} J \vert = r
-\]</span></p>
-<p>よって， <span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= 4\int^\infty_0 \int^\infty_0 x^{2a-1}y^{2b-1}\exp(-(x^2+y^2))\mathrm{d}x \mathrm{d}y\\
-                   &amp;= 4\int^{\pi/2}_0 \int^\infty_0 r^{2a+2b-2} \cos^{2a-1}\theta \sin^{2b-1}\theta \exp(-r^2) r \mathrm{d}r \mathrm{d}\theta\\
-                   &amp;= \left(2\int^{\pi/2}_0 \cos^{2a-1}\theta \sin^{2b-1}\theta \mathrm{d}\theta\right) \times \left(\int^\infty_0r^{2(a+b)-1}\exp(-r^2)\mathrm{d}r \right)\\
-                   &amp;= \operatorname{B}(a, b) \times \operatorname{\Gamma}(a+b)
-\end{align*}
-\]</span></p>
-<p>従って，</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
-\]</span></p>
-</div>
-</div>
-</div>
-<div class="blog-custom-border">
-<div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 16.1</strong></span> <strong>三角関数とベータ関数の関係</strong> <br></p>
-<p>正の実数 <span class="math inline">\(a, b\)</span> について，以下が成立する</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = 2\int^{\pi/2}_0\cos^{2a-1}\theta\sin^{2b-1}\theta \mathrm{d}\theta
-\]</span></p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Proof
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p>ベータ関数について <span class="math inline">\(x = \cos^2\theta\)</span> を用いた置換積分で以下のように示すことができます．</p>
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{B}(a, b) &amp;= \int^1_0 x^{a-1}(1-x)^{b-1} \mathrm{d}x\\
-                       &amp;= \int^0_{\pi/2} (\cos^2\theta)^{a-1}(1 - \cos^2\theta)^{b-1} \cdot (-2\cos\theta\sin\theta) \mathrm{d}\theta\\
-                       &amp;= 2\int^{\pi/2}_0 \cos^{2a-1}\theta \sin^{2b-1}\theta\mathrm{d}\theta
-\end{align*}
-\]</span></p>
-<p>なお, <span class="math inline">\(\sin^2\theta = 1 - \cos^2\theta\)</span> 及び <span class="math inline">\(\displaystyle\frac{\mathrm{d}\cos^2\theta}{\mathrm{d}\theta} = -2\cos\theta\sin\theta\)</span> を用いている．</p>
-</div>
-</div>
-</div>
-<div class="blog-custom-border">
-<div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 16.2</strong></span> <strong>引数の交換性</strong> <br></p>
-<p>正の実数 <span class="math inline">\(a, b\)</span> について，以下が成立する</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \operatorname{B}(b, a)
-\]</span></p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Proof
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{B}(a, b) &amp;= \int^1_0 x^{a-1}(1-x)^{b-1} \mathrm{d}x\\
-                       &amp;= \int^0_1 (1-z)^{a-1}z^{b-1} \frac{\mathrm{d}x}{\mathrm{d}z}\mathrm{d}z\\
-                       &amp;= \int^1_0 (1-z)^{a-1}z^{b-1} \mathrm{d}z\\
-                       &amp;= \operatorname{B}(b, a)
-\end{align*}
-\]</span></p>
+<p>これは，パラメーター <span class="math inline">\(\lambda_x + \lambda_y\)</span> のポワソン分布のPGFに一致する．</p>
 </div>
 </div>
 </div>
@@ -1185,13 +1085,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/mathematical_appendix/complex_number.html" class="pagination-link" aria-label="複素数">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">複素数</span></span>
+      <a href="../../posts/probability_distribution/binomial_dist.html" class="pagination-link" aria-label="二項分布">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">二項分布</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/mathematical_appendix/gamma_function.html" class="pagination-link" aria-label="ガンマ関数">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/probability_distribution/geometric_dist.html" class="pagination-link" aria-label="幾何分布">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">幾何分布</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1212,7 +1112,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/beta_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/probability_distribution/poisson_dist.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

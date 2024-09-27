@@ -9,7 +9,7 @@
 <meta name="author" content="Ryo Nakagami">
 <meta name="dcterms.date" content="2024-09-14">
 
-<title>6&nbsp; 正規分布 – Statistics for Regression Monkeys</title>
+<title>11&nbsp; 正規分布 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/normal_dist.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">正規分布</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/normal_dist.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">正規分布</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -219,8 +219,14 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/statistics101/moment_generating_function.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/order_statistic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
   </div>
 </li>
       </ul>
@@ -236,14 +242,38 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/discrete_uniform_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/binomial_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/poisson_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/geometric_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/hypergeometric.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/normal_dist.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
   </div>
 </li>
       </ul>
@@ -260,7 +290,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
       </ul>
@@ -277,7 +307,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -294,7 +324,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
       </ul>
@@ -318,26 +348,32 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/mathematical_appendix/complex_number.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/gamma_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/jensen_inequality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/Lhopitals_rule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
   </div>
 </li>
       </ul>
@@ -364,9 +400,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/normal_dist.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">正規分布</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/normal_dist.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">正規分布</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">正規分布</span></h1>
+<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">正規分布</span></h1>
 </div>
 
 
@@ -390,7 +426,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-09-21</p>
+      <p class="date-modified">2024-09-27</p>
     </div>
   </div>
     
@@ -440,7 +476,7 @@ f_Z(z) = \sigma f_X(\sigma z + \mu)=\frac{1}{\sqrt{2\pi}}\exp\left\{-\frac{z^2}{
 <p>大体の目安として, <span class="math inline">\(3\sigma\)</span> 範囲はいわゆる「千三つ」であることは覚えといて損はないと思います．</p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 6.1</strong></span> <br></p>
+<p><span class="theorem-title"><strong>Theorem 11.1</strong></span> <br></p>
 <p><span class="math display">\[
 \int^\infty_{-\infty}\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left\{-\frac{(x-\mu)^2}{2\sigma^2}\right\}\mathrm{d}x = 1
 \]</span></p>
@@ -534,7 +570,7 @@ m! \approx \sqrt{2\pi m} m^m\exp(-m)
 <p><span class="math display">\[\tag*{\(\blacksquare\)}\]</span></p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 6.2</strong></span> <br></p>
+<p><span class="theorem-title"><strong>Theorem 11.2</strong></span> <br></p>
 <p>標準正規分布の確率密度関数を <span class="math inline">\(\phi(x)\)</span> とするとき，</p>
 <p><span class="math display">\[
 \begin{gather*}
@@ -575,7 +611,7 @@ Proof
 </div>
 </div>
 <div id="exm-" class="custom_problem theorem example">
-<p><span class="theorem-title"><strong>Example 6.1</strong></span> <strong>: 標準正規分布の4次モーメントの導出</strong> <br></p>
+<p><span class="theorem-title"><strong>Example 11.1</strong></span> <strong>: 標準正規分布の4次モーメントの導出</strong> <br></p>
 <p><span class="math inline">\(X\sim N(0, 1)\)</span> の4次モーメントについて，ガンマ関数 <span class="math inline">\(\Gamma(1/2) = \sqrt{\pi}\)</span> を用いて以下のように計算できます．</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -643,7 +679,7 @@ Proof
 <h3 class="anchored" data-anchor-id="mgfと特性関数">MGFと特性関数</h3>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 6.3</strong></span> <strong>: 標準正規分布の積率母関数と特性関数</strong> <br></p>
+<p><span class="theorem-title"><strong>Theorem 11.3</strong></span> <strong>: 標準正規分布の積率母関数と特性関数</strong> <br></p>
 <p><span class="math inline">\(X\sim N(0, 1)\)</span> としたとき，積率母関数 <span class="math inline">\(M_Z(t)\)</span> 及び，特性関数 <span class="math inline">\(\varphi_Z(t)\)</span> は以下のようになる</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -720,7 +756,7 @@ M_Z(t)
 </div>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 6.4</strong></span> <strong>: MGF of non-standard normal distribution</strong> <br></p>
+<p><span class="theorem-title"><strong>Theorem 11.4</strong></span> <strong>: MGF of non-standard normal distribution</strong> <br></p>
 <p><span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> の積率母関数および特性関数は</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -765,7 +801,7 @@ M_X(t) &amp;= \mathbb E[\exp(t(\sigma Z + \mu))]\\[5pt]
 </div>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 6.5</strong></span> <br></p>
+<p><span class="theorem-title"><strong>Theorem 11.5</strong></span> <br></p>
 <p><span class="math inline">\(X\sim N(\mu, \sigma^2)\)</span> とする．定数 <span class="math inline">\(a, b\)</span> に対して</p>
 <p><span class="math display">\[
 Y = aX + b
@@ -819,7 +855,7 @@ Z&amp; \sim F
 <p>二項分布，負の二項分布，ポアソン分布，正規分布などは，再生性を持つことがしられています．</p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 6.6</strong></span> <strong>: 正規分布の再生性</strong> <br></p>
+<p><span class="theorem-title"><strong>Theorem 11.6</strong></span> <strong>: 正規分布の再生性</strong> <br></p>
 <p>正規分布は，location parameter, scale parameter両方について再生性を持つ．つまり，</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -929,7 +965,7 @@ X+Y\sim N(\mu_x + \mu_y, \sigma^2_x + \sigma^2_y)
 <p><span class="math display">\[\tag*{\(\blacksquare\)}\]</span></p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 6.7</strong></span> <br></p>
+<p><span class="theorem-title"><strong>Theorem 11.7</strong></span> <br></p>
 <p>平均 <span class="math inline">\(\mu\)</span>, 分散 <span class="math inline">\(\sigma^2\)</span> をもつ確率分布のうち，正規分布は微分エントロピーを最大にする分布である．</p>
 </div>
 </div>
@@ -960,7 +996,7 @@ Proof: ラグランジュの未定係数法
 \begin{align*}
 \frac{\partial F}{\partial p(x)} &amp;= -\int^\infty_{-\infty}(1 + \ln(p(x)) - \lambda_1 - \lambda_2(x-\mu) - \lambda_3(x-\mu)^2)\,\mathrm{d}x = 0\tag{A}\\
 \frac{\partial F}{\partial \lambda_1} &amp;= \int^\infty_{-\infty}p(x)\,\mathrm{d}x-1 = 0\tag{B}\\
-\frac{\partial F}{\partial \lambda_2} &amp;= \int^\infty_{-\infty}(x-\mu)p(x)\,\mathrm{d}x\int^\infty_{-\infty}(x-\mu)p(x)\,\mathrm{d}x = 0\tag{C}\\
+\frac{\partial F}{\partial \lambda_2} &amp;= \int^\infty_{-\infty}(x-\mu)p(x)\,\mathrm{d}x = 0\tag{C}\\
 \frac{\partial F}{\partial \lambda_3} &amp;= \int^\infty_{-\infty}(x-\mu)^2p(x)\,\mathrm{d}x-\sigma^2= 0\tag{D}
 \end{align*}
 \]</span></p>
@@ -1636,7 +1672,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../posts/probability_distribution/hypergeometric.html" class="pagination-link" aria-label="超幾何分布">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">超幾何分布</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">超幾何分布</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

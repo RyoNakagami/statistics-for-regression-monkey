@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2024-09-12">
+<meta name="dcterms.date" content="2024-09-22">
 
-<title>16&nbsp; ベータ関数 – Statistics for Regression Monkeys</title>
+<title>6&nbsp; 離散一様分布 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,8 +32,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/mathematical_appendix/gamma_function.html" rel="next">
-<link href="../../posts/mathematical_appendix/complex_number.html" rel="prev">
+<link href="../../posts/probability_distribution/binomial_dist.html" rel="next">
+<link href="../../posts/probability_distribution/chapter_header.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -134,7 +134,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/beta_function.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/discrete_uniform_dist.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">離散一様分布</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -242,7 +242,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/probability_distribution/discrete_uniform_dist.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/probability_distribution/discrete_uniform_dist.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
   </div>
 </li>
@@ -354,7 +354,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
   </div>
 </li>
@@ -388,16 +388,20 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ベータ関数の性質" id="toc-ベータ関数の性質" class="nav-link active" data-scroll-target="#ベータ関数の性質">ベータ関数の性質</a></li>
+  <li><a href="#離散一様分布の性質" id="toc-離散一様分布の性質" class="nav-link active" data-scroll-target="#離散一様分布の性質">離散一様分布の性質</a></li>
+  <li><a href="#k-個のサイコロの目の合計" id="toc-k-個のサイコロの目の合計" class="nav-link" data-scroll-target="#k-個のサイコロの目の合計"><span class="math inline">\(k\)</span> 個のサイコロの目の合計</a>
+  <ul class="collapse">
+  <li><a href="#k-個のサイコロの目の合計の確率分布" id="toc-k-個のサイコロの目の合計の確率分布" class="nav-link" data-scroll-target="#k-個のサイコロの目の合計の確率分布"><span class="math inline">\(k\)</span> 個のサイコロの目の合計の確率分布</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/beta_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/probability_distribution/discrete_uniform_dist.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/beta_function.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/discrete_uniform_dist.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">離散一様分布</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">離散一様分布</span></h1>
 </div>
 
 
@@ -414,7 +418,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-09-12</p>
+      <p class="date">2024-09-22</p>
     </div>
   </div>
   
@@ -432,65 +436,56 @@ window.Quarto = {
 </header>
 
 
-<section id="ベータ関数の性質" class="level2">
-<h2 class="anchored" data-anchor-id="ベータ関数の性質">ベータ関数の性質</h2>
+<section id="離散一様分布の性質" class="level2">
+<h2 class="anchored" data-anchor-id="離散一様分布の性質">離散一様分布の性質</h2>
 <div class="blog-custom-border">
-<p><strong>Def: ベータ関数</strong> <br></p>
-<p>実数 <span class="math inline">\(a, b\)</span> について，ベータ関数 <span class="math inline">\(\operatorname{B}(a, b)\)</span> は以下のように定義される．</p>
+<p><strong>Def: 離散一様分布</strong> <br></p>
+<p><span class="math inline">\(n\in\mathbb N\)</span> に対して，確率変数 <span class="math inline">\(X\)</span> が <span class="math inline">\(S = \{1, 2, \cdots, n\}\)</span> を標本空間し，</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = \int^1_0 x^{a-1}(1-x)^{b-1}\mathrm{d}x
+\Pr(X = k) = \frac{1}{n}\quad k\in S
 \]</span></p>
-<p>また，ガンマ関数を用いて以下のように表せる</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}
-\]</span></p>
+<p>を満たすとき，<span class="math inline">\(X\)</span> は離散一様分布に従うという．(<span class="math inline">\(X\sim \operatorname{DU}(n)\)</span>)</p>
 </div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<p>フェアなサイコロをふったときに出る目を確率変数 <span class="math inline">\(X\)</span> とみなしたとき，<span class="math inline">\(X\sim \operatorname{DU}(6)\)</span> となります．</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof: ベータ関数とガンマ関数の関係
+Property: 累積分布関数
 </div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>ガンマ関数の定義を用いて，</p>
+<p>離散一様分布の累積分布関数(分布関数)は</p>
 <p><span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= \int^\infty_0 x^{a-1}\exp(-x)\mathrm{d}x \int^\infty_0 y^{b-1}\exp(-y)\mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^\infty_0 x^{a-1}y^{b-1}\exp(-x-y)\mathrm{d}x \mathrm{d}y \\
-\end{align*}
-\]</span></p>
-<p>ここで, <span class="math inline">\(x + y = u, x/(x + y) = v\)</span> という変数変換を考える．つまり，</p>
-<p><span class="math display">\[
-\begin{align*}
-x = uv, y = u(1-v)
-\end{align*}
-\]</span></p>
-<p>このときのヤコビアンは</p>
-<p><span class="math display">\[
-\begin{align*}
-\vert\operatorname{det} J \vert= u
-\end{align*}
-\]</span></p>
-<p>従って，</p>
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;=\int^\infty_0 \int^\infty_0 (uv)^{a-1}[u(1-v)]^{b-1}\exp(-u) u\mathrm{d}x \mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^\infty_0 u^{a+b-1}\exp(-u) v^{a-1}(1-v)^{b-1}\mathrm{d}x \mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^1_0 u^{a+b-1}\exp(-u) v^{a-1}(1-v)^{b-1}\mathrm{d}v \mathrm{d}u \\
-                   &amp;= \int^\infty_0 u^{a+b-1}\exp(-u) \mathrm{d}u \int^1_0 v^{a-1}(1-v)^{b-1}\mathrm{d}v \\
-                   &amp;= \operatorname{\Gamma}(a+b)\operatorname{B}(a, b)
-\end{align*}
-\]</span></p>
-<p>つまり，</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
+F(x) = \Pr(X\leq x) = \left\{\begin{array}{c}
+0 &amp; x &lt; 1\\
+\frac{\lfloor x\rfloor}{n} &amp; 1\leq 1 \leq n\\
+1 &amp; x \geq n
+\end{array}\right.
 \]</span></p>
 </div>
+</div>
+<p>離散一様分布のQuantile functionは，</p>
+<p><span class="math display">\[
+Q_X(u) = \inf\{x\in\mathbb R: F_X(x) \geq u\}
+\]</span></p>
+<p>なので，<span class="math inline">\(u\in(0, 1]\)</span> について</p>
+<p><span class="math display">\[
+Q_X(u) = \lceil np\rceil
+\]</span></p>
+<p>と定義されます．</p>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 6.1</strong></span> <strong>: 期待値と分散</strong> <br></p>
+<p>離散一様分布に従う確率変数 <span class="math inline">\(X\sim \operatorname{DU}(n)\)</span> について，</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[X] &amp;= \frac{n+1}{2}\\
+\operatorname{Var}(X) &amp;= \frac{n^2-1}{2}\\
+\end{align*}
+\]</span></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -499,52 +494,36 @@ x = uv, y = u(1-v)
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof: 座標変換
+Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>ガンマ関数は <span class="math inline">\(z^2 = x\)</span> という変数変換を用いると以下のように変換できる</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{\Gamma}(a) &amp;= \int^\infty_0 x^{a-1}\exp(-x)\mathrm{d}x \\
-          &amp;= \int^\infty_0 z^{2a-2}\exp(-z^2)\frac{\mathrm{d}x}{\mathrm{d}z}\mathrm{d}z \\
-          &amp;= 2\int^\infty_0 z^{2a-1}\exp(-z^2)\mathrm{d}z
+\mathbb E[X] &amp;= \sum_{k=1}^nk\frac{1}{n} = \frac{n(n+1)}{2n}=\frac{n+1}{2}\\
 \end{align*}
 \]</span></p>
-<p>これを用いて</p>
+<p>分散については</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= 4\int^\infty_0 x^{2a-1}\exp(-x^2)\mathrm{d}x \int^\infty_0 y^{2b-1}\exp(-y^2)\mathrm{d}y \\
-                   &amp;= 4\int^\infty_0 \int^\infty_0 x^{2a-1}y^{2b-1}\exp(-(x^2+y^2))\mathrm{d}x \mathrm{d}y
-\end{align*}
-\]</span></p>
-<p>ここで, <span class="math inline">\(x = r\cos\theta, y=r\sin\theta\)</span> という変数変換を行う．このときのヤコビアンは</p>
-<p><span class="math display">\[
-\vert \operatorname{det} J \vert = r
-\]</span></p>
-<p>よって， <span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= 4\int^\infty_0 \int^\infty_0 x^{2a-1}y^{2b-1}\exp(-(x^2+y^2))\mathrm{d}x \mathrm{d}y\\
-                   &amp;= 4\int^{\pi/2}_0 \int^\infty_0 r^{2a+2b-2} \cos^{2a-1}\theta \sin^{2b-1}\theta \exp(-r^2) r \mathrm{d}r \mathrm{d}\theta\\
-                   &amp;= \left(2\int^{\pi/2}_0 \cos^{2a-1}\theta \sin^{2b-1}\theta \mathrm{d}\theta\right) \times \left(\int^\infty_0r^{2(a+b)-1}\exp(-r^2)\mathrm{d}r \right)\\
-                   &amp;= \operatorname{B}(a, b) \times \operatorname{\Gamma}(a+b)
+\mathbb E[X^2] &amp;= \sum_{k=1}^nk^2\frac{1}{n} = \frac{(n+1)(2n+1)}{6}
 \end{align*}
 \]</span></p>
 <p>従って，</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
+\operatorname{Var}(X) = \frac{n^2-1}{12}
 \]</span></p>
 </div>
 </div>
 </div>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 16.1</strong></span> <strong>三角関数とベータ関数の関係</strong> <br></p>
-<p>正の実数 <span class="math inline">\(a, b\)</span> について，以下が成立する</p>
+<p><span class="theorem-title"><strong>Theorem 6.2</strong></span> <strong>: 確率母関数</strong> <br></p>
+<p><span class="math inline">\(X\sim \operatorname{DU}(n)\)</span> について，確率母関数 <span class="math inline">\(G_X(s)\)</span> は</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = 2\int^{\pi/2}_0\cos^{2a-1}\theta\sin^{2b-1}\theta \mathrm{d}\theta
+G_X(s) = \frac{s(1 - s^n)}{n(1-s)}
 \]</span></p>
 </div>
 </div>
@@ -560,24 +539,41 @@ Proof
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>ベータ関数について <span class="math inline">\(x = \cos^2\theta\)</span> を用いた置換積分で以下のように示すことができます．</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{B}(a, b) &amp;= \int^1_0 x^{a-1}(1-x)^{b-1} \mathrm{d}x\\
-                       &amp;= \int^0_{\pi/2} (\cos^2\theta)^{a-1}(1 - \cos^2\theta)^{b-1} \cdot (-2\cos\theta\sin\theta) \mathrm{d}\theta\\
-                       &amp;= 2\int^{\pi/2}_0 \cos^{2a-1}\theta \sin^{2b-1}\theta\mathrm{d}\theta
+G_X(s) &amp;= \mathbb E[s^x]\\
+       &amp;= \sum_{k=1}^n \frac{s^x}{n}\\
+       &amp;= \frac{s(1-s^n)}{n(1-s)}
 \end{align*}
 \]</span></p>
-<p>なお, <span class="math inline">\(\sin^2\theta = 1 - \cos^2\theta\)</span> 及び <span class="math inline">\(\displaystyle\frac{\mathrm{d}\cos^2\theta}{\mathrm{d}\theta} = -2\cos\theta\sin\theta\)</span> を用いている．</p>
 </div>
 </div>
 </div>
+<p><strong> ▶&nbsp; 確率母関数を用いたモーメントの計算</strong></p>
+<p><span class="math display">\[
+(1-s^n) = (1 - s)(1 + s + s^2 + \cdots + s^{n-1})
+\]</span></p>
+<p>より</p>
+<p><span class="math display">\[
+G_X(s) = \frac{s + s^2 + \cdots + s^n}{n}
+\]</span></p>
+<p>従って，</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[X] &amp;= G_X^\prime(s)\bigg\vert_{s=0} \\
+             &amp;= \frac{n+1}{2}\\
+\mathbb E[X(X-1)]
+    &amp;= G_X^{\prime\prime}(s)\bigg\vert_{s=0}\\
+    &amp;= \frac{1}{n}\sum_{k=1}^nk(k-1)\\
+    &amp;= \frac{(n+1)(2n+1)}{6} - \frac{n+1}{2}
+\end{align*}
+\]</span></p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 16.2</strong></span> <strong>引数の交換性</strong> <br></p>
-<p>正の実数 <span class="math inline">\(a, b\)</span> について，以下が成立する</p>
+<p><span class="theorem-title"><strong>Theorem 6.3</strong></span> <br></p>
+<p><span class="math inline">\(X\sim \operatorname{DU}(n)\)</span> について，MGF <span class="math inline">\(M_X(t)\)</span> は</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = \operatorname{B}(b, a)
+M_X(t) = \frac{\exp(t) - \exp(t(n+1))}{n(1 - \exp(t))}
 \]</span></p>
 </div>
 </div>
@@ -594,18 +590,367 @@ Proof
 <div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><span class="math display">\[
+\mathbb E[\exp(tX)] = \frac{1}{n}\sum_{k=1}^n \exp(tk) = \frac{\exp(t) - \exp(t(n+1))}{n(1 - \exp(t))}
+\]</span></p>
+</div>
+</div>
+</div>
+<p><strong> ▶&nbsp; 特性関数</strong></p>
+<p>特性関数は</p>
+<p><span class="math display">\[
+\varphi_X(t) = \frac{\exp(it) - \exp(it(n+1))}{n(1 - \exp(it))}
+\]</span></p>
+<p><strong> ▶&nbsp; 歪度</strong></p>
+<p><span class="math display">\[
+\mathbb E[(X - \mathbb E[X])^3] = (\mathbb E[X^3] – 3\mathbb E[X^2]E[X] + 2\mathbb E[X]^3)
+\]</span></p>
+<p>なので，これをまず計算します．</p>
+<p><span class="math display">\[
+\mathbb E[X^3] = M_X^{\prime\prime\prime}(t) \bigg\vert_{t=0} = n\left(\frac{n+1}{2}\right)^2
+\]</span></p>
+<p>これを用いて計算すると，<span class="math inline">\(n - 2n-1 + n+1 = 0\)</span> より <span class="math inline">\(\operatorname{skewness} = 0\)</span>． 平均を中心に対称な分布なので，計算しなくても歪度は0であると判断することもできます．</p>
+<p><strong> ▶&nbsp; エントロピー</strong></p>
+<p>離散確率変数 <span class="math inline">\(X\)</span> の確率関数を <span class="math inline">\(p(x)\)</span> とします．このとき，エントロピーを以下のように定義します．</p>
+<p><span class="math display">\[
+\mathrm{H}(X) = -\sum_x p(x) \log(p(x)) \qquad (\lim_{p\to 0}p\log(p) = 0 \text{とする})
+\]</span></p>
+<p><span class="math inline">\(X\sim \operatorname{DU}(n)\)</span> としたとき，エントロピーは</p>
+<p><span class="math display">\[
 \begin{align*}
-\operatorname{B}(a, b) &amp;= \int^1_0 x^{a-1}(1-x)^{b-1} \mathrm{d}x\\
-                       &amp;= \int^0_1 (1-z)^{a-1}z^{b-1} \frac{\mathrm{d}x}{\mathrm{d}z}\mathrm{d}z\\
-                       &amp;= \int^1_0 (1-z)^{a-1}z^{b-1} \mathrm{d}z\\
-                       &amp;= \operatorname{B}(b, a)
+\mathrm{H}(X) = -\frac{1}{n}\sum_x \log(\frac{1}{n}) = \log(n)
+\end{align*}
+\]</span></p>
+</section>
+<section id="k-個のサイコロの目の合計" class="level2">
+<h2 class="anchored" data-anchor-id="k-個のサイコロの目の合計"><span class="math inline">\(k\)</span> 個のサイコロの目の合計</h2>
+<p><span class="math inline">\(k\)</span> 個のフェアなサイコロの目の合計の確率分布はモーメント母関数を用いて導出することができるのでこのセクションで紹介します．</p>
+<div class="blog-custom-border">
+<p><strong>Def: 離散確率変数のMGF</strong> <br></p>
+<p>確率変数 <span class="math inline">\(X\)</span> が離散確率変数 <span class="math inline">\(\Pr(X = x_i) = p_i, i = 1, \cdots, k\)</span> の場合，MGFは以下のように表現される：</p>
+<p><span class="math display">\[
+\begin{align*}
+M_X(t)
+    &amp;= \mathbb E[\exp(tX)]\\
+    &amp;= p_1\exp(tx_1) + p_2\exp(tx_2) + \cdots + p_k\exp(tx_k)
+\end{align*}
+\]</span></p>
+</div>
+<p>上記の定義より，フェアなサイコロのMGFは以下のようになります</p>
+<p><span class="math display">\[
+M_X(t) = \frac{1}{6}\left(\exp(t) + \exp(2t) + \cdots + \exp(6t)\right)
+\]</span></p>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 6.4</strong></span> <strong>: 互いに独立な確率変数の和とMGF</strong> <br></p>
+<p>互いに独立な確率変数 <span class="math inline">\(X, Y\)</span> について，<span class="math inline">\(Z = X +Y\)</span> と確率変数を定義したとき，</p>
+<p><span class="math display">\[
+M_Z(t) = M_X(t)M_Y(t)
+\]</span></p>
+<p>が成立する・</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+\begin{align*}
+M_Z(t)
+    &amp;= \mathbb E[\exp(tZ)]\\
+    &amp;= \mathbb E[\exp(tX + tY)]\\
+    &amp;= \mathbb E[\exp(tX)\exp(tY)]\\
+    &amp;= \mathbb E[\exp(tX)]\mathbb E[\exp(tY)]\\
+    &amp;= M_X(t)M_Y(t)
 \end{align*}
 \]</span></p>
 </div>
 </div>
 </div>
+<section id="k-個のサイコロの目の合計の確率分布" class="level3">
+<h3 class="anchored" data-anchor-id="k-個のサイコロの目の合計の確率分布"><span class="math inline">\(k\)</span> 個のサイコロの目の合計の確率分布</h3>
+<p><span class="math inline">\(k\)</span> 個のフェアなサイコロを独立に投げ，それぞれの目を <span class="math inline">\(X_1, \cdots, X_k\)</span> としたとき，サイコロの目の合計 <span class="math inline">\(Y\)</span> は</p>
+<p><span class="math display">\[
+Y = X_1 + \cdots + X_k
+\]</span></p>
+<p>このとき，上で確認したMGFの性質より</p>
+<p><span class="math display">\[
+M_Y(t) = \frac{1}{6}(\exp(t)+\exp(2t)+\cdots + \exp(6t))^k
+\]</span></p>
+<p><strong> ▶&nbsp; <span class="math inline">\(k=2\)</span> の場合</strong></p>
+<p><span class="math display">\[
+\begin{align*}
+M_Y(t)
+    =&amp; \frac{1}{6}(\exp(2t) + 2\exp(3t)+3\exp(4t) + 4\exp(5t)\\[4pt]
+    &amp;+ 5\exp(6t)+ 6\exp(7t)+ 5\exp(8t)+ 4\exp(9t)+ 3\exp(10t)\\[4pt]
+    &amp;+ + 2\exp(11t)+ \exp(12t))
+\end{align*}
+\]</span></p>
+<p>各係数が確率関数に対応していることがわかります．</p>
+<p><strong> ▶&nbsp; <span class="math inline">\(k=4\)</span> の場合</strong></p>
+<p>基本的には，<span class="math inline">\(Y = \lfloor\mathbb E[X_i] \times 4\rfloor\)</span> が最頻値となることを留意すると</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 8%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td colspan="2"><span class="math inline">\(k=1\)</span></td>
+<td colspan="2"><span class="math inline">\(k=2\)</span></td>
+<td colspan="2"><span class="math inline">\(k=3\)</span></td>
+<td colspan="2"><span class="math inline">\(k=4\)</span></td>
+</tr>
+<tr class="even">
+<td>value</td>
+<td>freq</td>
+<td>value</td>
+<td>freq</td>
+<td>value</td>
+<td>freq</td>
+<td>value</td>
+<td>freq</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(2\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(3\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(4\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(2\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(3\)</span></td>
+<td><span class="math inline">\(2\)</span></td>
+<td><span class="math inline">\(4\)</span></td>
+<td><span class="math inline">\(3\)</span></td>
+<td><span class="math inline">\(5\)</span></td>
+<td><span class="math inline">\(4\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(3\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(4\)</span></td>
+<td><span class="math inline">\(3\)</span></td>
+<td><span class="math inline">\(5\)</span></td>
+<td><span class="math inline">\(6\)</span></td>
+<td><span class="math inline">\(6\)</span></td>
+<td><span class="math inline">\(10\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(4\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(5\)</span></td>
+<td><span class="math inline">\(4\)</span></td>
+<td><span class="math inline">\(6\)</span></td>
+<td><span class="math inline">\(10\)</span></td>
+<td><span class="math inline">\(7\)</span></td>
+<td><span class="math inline">\(20\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(5\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(6\)</span></td>
+<td><span class="math inline">\(5\)</span></td>
+<td><span class="math inline">\(7\)</span></td>
+<td><span class="math inline">\(15\)</span></td>
+<td><span class="math inline">\(8\)</span></td>
+<td><span class="math inline">\(35\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(6\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(7\)</span></td>
+<td><span class="math inline">\(6\)</span></td>
+<td><span class="math inline">\(8\)</span></td>
+<td><span class="math inline">\(21\)</span></td>
+<td><span class="math inline">\(9\)</span></td>
+<td><span class="math inline">\(56\)</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td><span class="math inline">\(8\)</span></td>
+<td><span class="math inline">\(5\)</span></td>
+<td><span class="math inline">\(9\)</span></td>
+<td><span class="math inline">\(25\)</span></td>
+<td><span class="math inline">\(10\)</span></td>
+<td><span class="math inline">\(80\)</span></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td><span class="math inline">\(9\)</span></td>
+<td><span class="math inline">\(4\)</span></td>
+<td><span class="math inline">\(10\)</span></td>
+<td><span class="math inline">\(27\)</span></td>
+<td><span class="math inline">\(11\)</span></td>
+<td><span class="math inline">\(104\)</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td><span class="math inline">\(10\)</span></td>
+<td><span class="math inline">\(3\)</span></td>
+<td><span class="math inline">\(11\)</span></td>
+<td><span class="math inline">\(27\)</span></td>
+<td><span class="math inline">\(12\)</span></td>
+<td><span class="math inline">\(125\)</span></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td><span class="math inline">\(11\)</span></td>
+<td><span class="math inline">\(2\)</span></td>
+<td><span class="math inline">\(12\)</span></td>
+<td><span class="math inline">\(25\)</span></td>
+<td><span class="math inline">\(13\)</span></td>
+<td><span class="math inline">\(140\)</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td><span class="math inline">\(12\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(13\)</span></td>
+<td><span class="math inline">\(21\)</span></td>
+<td><span class="math inline">\(14\)</span></td>
+<td><span class="math inline">\(146\)</span></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="math inline">\(14\)</span></td>
+<td><span class="math inline">\(15\)</span></td>
+<td><span class="math inline">\(15\)</span></td>
+<td><span class="math inline">\(140\)</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="math inline">\(15\)</span></td>
+<td><span class="math inline">\(10\)</span></td>
+<td><span class="math inline">\(16\)</span></td>
+<td><span class="math inline">\(125\)</span></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="math inline">\(16\)</span></td>
+<td><span class="math inline">\(6\)</span></td>
+<td><span class="math inline">\(17\)</span></td>
+<td><span class="math inline">\(104\)</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="math inline">\(17\)</span></td>
+<td><span class="math inline">\(3\)</span></td>
+<td><span class="math inline">\(18\)</span></td>
+<td><span class="math inline">\(80\)</span></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="math inline">\(18\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+<td><span class="math inline">\(19\)</span></td>
+<td><span class="math inline">\(56\)</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="math inline">\(20\)</span></td>
+<td><span class="math inline">\(35\)</span></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="math inline">\(21\)</span></td>
+<td><span class="math inline">\(20\)</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="math inline">\(22\)</span></td>
+<td><span class="math inline">\(10\)</span></td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="math inline">\(23\)</span></td>
+<td><span class="math inline">\(4\)</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><span class="math inline">\(24\)</span></td>
+<td><span class="math inline">\(1\)</span></td>
+</tr>
+</tbody>
+</table>
+<div class="blog-custom-border">
+<p><strong>📘 REMARKS</strong> <br></p>
+<ul>
+<li>最小値と最大値の頻度は <span class="math inline">\(1\)</span> となる</li>
+<li>最頻値はちょうど真ん中の値となる(<span class="math inline">\(Y = \lfloor\mathbb E[X_i] \times 4\rfloor\)</span>)</li>
+<li>頻度 <span class="math inline">\(f\)</span> は最頻値に達するまで，以下のようにrecursiveに計算できる</li>
+</ul>
+<p><span class="math display">\[
+f_k(y) = f_k(y-1) + f_{k-1}(y-1) - f_{k-1}(y-7)
+\]</span></p>
+<p>上記において，<span class="math inline">\(f_{k}(y)\)</span> が存在しない場合は <span class="math inline">\(0\)</span> と扱う</p>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1185,13 +1530,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/mathematical_appendix/complex_number.html" class="pagination-link" aria-label="複素数">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">複素数</span></span>
+      <a href="../../posts/probability_distribution/chapter_header.html" class="pagination-link" aria-label="確率分布">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">確率分布</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/mathematical_appendix/gamma_function.html" class="pagination-link" aria-label="ガンマ関数">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/probability_distribution/binomial_dist.html" class="pagination-link" aria-label="二項分布">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">二項分布</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1212,7 +1557,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/beta_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/probability_distribution/discrete_uniform_dist.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

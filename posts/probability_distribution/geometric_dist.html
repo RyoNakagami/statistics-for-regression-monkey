@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2024-09-12">
+<meta name="dcterms.date" content="2024-09-25">
 
-<title>16&nbsp; ベータ関数 – Statistics for Regression Monkeys</title>
+<title>9&nbsp; 幾何分布 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,18 +22,52 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/mathematical_appendix/gamma_function.html" rel="next">
-<link href="../../posts/mathematical_appendix/complex_number.html" rel="prev">
+<link href="../../posts/probability_distribution/hypergeometric.html" rel="next">
+<link href="../../posts/probability_distribution/poisson_dist.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -92,6 +126,25 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.32.0.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script>
+
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -134,7 +187,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/beta_function.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/geometric_dist.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">幾何分布</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -260,7 +313,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/probability_distribution/geometric_dist.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/probability_distribution/geometric_dist.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
   </div>
 </li>
@@ -354,7 +407,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
   </div>
 </li>
@@ -388,16 +441,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ベータ関数の性質" id="toc-ベータ関数の性質" class="nav-link active" data-scroll-target="#ベータ関数の性質">ベータ関数の性質</a></li>
+  <li><a href="#幾何分布の性質" id="toc-幾何分布の性質" class="nav-link active" data-scroll-target="#幾何分布の性質">幾何分布の性質</a>
+  <ul class="collapse">
+  <li><a href="#幾何分布の母関数" id="toc-幾何分布の母関数" class="nav-link" data-scroll-target="#幾何分布の母関数">幾何分布の母関数</a></li>
+  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/beta_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/probability_distribution/geometric_dist.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/chapter_header.html">Mathematical Appendix</a></li><li class="breadcrumb-item"><a href="../../posts/mathematical_appendix/beta_function.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/geometric_dist.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">幾何分布</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">幾何分布</span></h1>
 </div>
 
 
@@ -414,7 +470,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-09-12</p>
+      <p class="date">2024-09-25</p>
     </div>
   </div>
   
@@ -432,18 +488,231 @@ window.Quarto = {
 </header>
 
 
-<section id="ベータ関数の性質" class="level2">
-<h2 class="anchored" data-anchor-id="ベータ関数の性質">ベータ関数の性質</h2>
+<p>成功確率 <span class="math inline">\(p\)</span> のベルヌーイ試行を独立に行っていき，初めて成功するまでに要した失敗の回数を <span class="math inline">\(X\)</span> とするとき， <span class="math inline">\(X\)</span> の回数は幾何分布に従います．</p>
+<div id="e36b34a0" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> geom</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> express <span class="im">as</span> px</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.4</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(geom.ppf(<span class="fl">0.01</span>, p), geom.ppf(<span class="fl">0.99</span>, p))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># note that scipy follows p(x) = (1-p)^{x-1}p </span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>rv <span class="op">=</span> geom(p)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.bar(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>x<span class="op">-</span><span class="dv">1</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>rv.pmf(x),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"geometric distribution with p=0.4"</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">"x"</span>: <span class="st">"x"</span>, <span class="st">"y"</span>: <span class="st">"probability"</span>},</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>fig.update_traces(width<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>                            <div id="e0f2c34d-b794-4cad-9053-4b7b87c40f09" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("e0f2c34d-b794-4cad-9053-4b7b87c40f09")) {                    Plotly.newPlot(                        "e0f2c34d-b794-4cad-9053-4b7b87c40f09",                        [{"alignmentgroup":"True","hovertemplate":"x=%{x}\u003cbr\u003eprobability=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"","offsetgroup":"","orientation":"v","showlegend":false,"textposition":"auto","x":[0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0],"xaxis":"x","y":[0.4,0.24,0.144,0.08639999999999999,0.05184,0.031103999999999993,0.018662399999999996,0.011197439999999998,0.006718463999999998],"yaxis":"y","type":"bar","width":0.5}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"x"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"probability"}},"legend":{"tracegroupgap":0},"title":{"text":"geometric distribution with p=0.4"},"barmode":"relative"},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('e0f2c34d-b794-4cad-9053-4b7b87c40f09');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+<p>上記のように，幾何級数列的に減少する確率分布であるため，幾何分布と呼ばれます．</p>
+<section id="幾何分布の性質" class="level2">
+<h2 class="anchored" data-anchor-id="幾何分布の性質">幾何分布の性質</h2>
 <div class="blog-custom-border">
-<p><strong>Def: ベータ関数</strong> <br></p>
-<p>実数 <span class="math inline">\(a, b\)</span> について，ベータ関数 <span class="math inline">\(\operatorname{B}(a, b)\)</span> は以下のように定義される．</p>
+<p><strong>Def: 幾何分布</strong> <br></p>
+<p>標本空間 <span class="math inline">\(\mathcal{X} = \{0, 1, 2, \cdots\}\)</span> をもつ確率変数 <span class="math inline">\(X\)</span> の確率関数が</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = \int^1_0 x^{a-1}(1-x)^{b-1}\mathrm{d}x
+\Pr(X=k) = (1-p)^{k}p \qquad (0&lt;p&lt;1)
 \]</span></p>
-<p>また，ガンマ関数を用いて以下のように表せる</p>
+<p>のとき，<span class="math inline">\(X\)</span> はパラメータ <span class="math inline">\(p\)</span> の幾何分布に従うという．つまり，</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}
+X\sim\operatorname{Geo}(p)
 \]</span></p>
+</div>
+<p>幾何分布は，時間を <span class="math inline">\(0, 1, 2, \cdots\)</span> と離散的に考えるとき，初めてイベント <span class="math inline">\(S\)</span> が起こるまでの時間の長さを表す確率分布 = 離散的な待ち時間分布とみなすことができます．一回あたりのイベント <span class="math inline">\(S\)</span> の生起確率が <span class="math inline">\(p\)</span> であるとすると，ちょうど１回の <span class="math inline">\(S\)</span> を得るまで平均的に</p>
+<p><span class="math display">\[
+\frac{1}{p}
+\]</span></p>
+<p>の時間がかかるので，生起までの待ち時間として <span class="math inline">\(\frac{1}{p}-1 = \frac{1-p}{p}\)</span> と直感的に理解することができます．</p>
+<p><strong> ▶&nbsp; 累積分布関数</strong></p>
+<p>幾何分布の累積分布関数は以下のように表すことができます:</p>
+<p><span class="math inline">\(x \geq 0\)</span> のもとで</p>
+<p><span class="math display">\[
+\begin{align*}
+\Pr(X\leq x)
+    &amp;= \sum_{k=0}^x \Pr(X=k)\\
+    &amp;= \sum_{k=0}^{\lfloor x\rfloor} pq^k\\
+    &amp;= p\frac{1-q^{\lfloor x\rfloor+1}}{1- q}\\
+    &amp;= 1-q^{\lfloor x\rfloor+1}
+\end{align*}
+\]</span></p>
+<div id="5e88fb7b" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> geom</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> express <span class="im">as</span> px</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> <span class="fl">0.4</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(geom.ppf(<span class="fl">0.01</span>, p), geom.ppf(<span class="fl">0.99995</span>, p))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># note that scipy follows p(x) = (1-p)^{x-1}p </span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>rv <span class="op">=</span> geom(p)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.line(</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span>x<span class="op">-</span><span class="dv">1</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>rv.cdf(x),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">"geometric distribution with p=0.4"</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>{<span class="st">"x"</span>: <span class="st">"x"</span>, <span class="st">"y"</span>: <span class="st">"probability"</span>},</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    markers<span class="op">=</span><span class="st">'x'</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>                            <div id="5b18dcc0-ca3e-4684-8a9c-60f8bfac3ab4" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("5b18dcc0-ca3e-4684-8a9c-60f8bfac3ab4")) {                    Plotly.newPlot(                        "5b18dcc0-ca3e-4684-8a9c-60f8bfac3ab4",                        [{"hovertemplate":"x=%{x}\u003cbr\u003eprobability=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"","orientation":"v","showlegend":false,"x":[0.0,1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0,11.0,12.0,13.0,14.0,15.0,16.0,17.0,18.0],"xaxis":"x","y":[0.4,0.64,0.784,0.8704000000000001,0.92224,0.953344,0.9720064,0.98320384,0.989922304,0.9939533824,0.99637202944,0.997823217664,0.9986939305984,0.99921635835904,0.999529815015424,0.9997178890092544,0.9998307334055526,0.9998984400433316,0.999939064025999],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"x"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"probability"}},"legend":{"tracegroupgap":0},"title":{"text":"geometric distribution with p=0.4"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('5b18dcc0-ca3e-4684-8a9c-60f8bfac3ab4');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+<p><strong> ▶&nbsp; 幾何分布の期待値</strong></p>
+<p><span class="math inline">\(q=1-p\)</span>とおくと</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[X]
+    &amp;= \sum_{x=0}^\infty xq^xp\\
+    &amp;= p\sum_{x=1}^\infty xq^x
+\end{align*}
+\]</span></p>
+<p>ここで，<span class="math inline">\(S = \sum_{x=1}^\infty xq^x\)</span> について考えると， <span class="math display">\[
+\begin{align*}
+S &amp;= q + 2q^2 + 3q^3 + \cdots\\
+qS &amp;= q^2 + 2q^3 + \cdots\\
+(1-q)S&amp; = q + q^2 + q^3 + \cdots
+\end{align*}
+\]</span></p>
+<p>従って，<span class="math inline">\(S = \frac{q}{(1-q)^2}\)</span> を得る．以上より</p>
+<p><span class="math display">\[
+\mathbb E[X] = p \frac{q}{(1-q)^2} = \frac{1-p}{p}
+\]</span></p>
+<p><strong> ▶&nbsp; 分布関数を用いた幾何分布の期待値の導出</strong></p>
+<p>離散確率変数 <span class="math inline">\(X\)</span> について，</p>
+<p><span class="math display">\[
+\mathbb E[X] = \sum_{x=0}^\infty \Pr(X&gt; x)
+\]</span></p>
+<p>が知られている(<a href="../../posts/statistics101/expectation.html">参考:期待値 &gt; Example 3.4</a>)ので</p>
+<p><span class="math display">\[
+\begin{align*}
+\Pr(X&gt; x)
+    &amp;= 1 - \Pr(X\leq x)\\
+    &amp;= 1 - (1 - q^{x+1})\\
+    &amp;= q^{x+1}
+\end{align*}
+\]</span></p>
+<p>従って，</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[X]
+    &amp;= \sum_{x=0}^\infty q^{x+1}\\
+    &amp;= \frac{q}{1-q}\\
+    &amp;= \frac{1-p}{p}
+\end{align*}
+\]</span></p>
+<p><strong> ▶&nbsp; 確率の公理を用いた幾何分布の期待値の導出</strong></p>
+<p><span class="math display">\[
+\sum_{x=0}^\infty q^xp = 1
+\]</span></p>
+<p>に留意すると</p>
+<p><span class="math display">\[
+\begin{align*}
+\sum_{x=0}^\infty xq^xp - q\sum_{x=0}^\infty xq^xp
+    &amp;= \sum_{x=0}^\infty q^xp - p\\
+    &amp;= 1-p
+\end{align*}
+\]</span></p>
+<p>従って，<span class="math inline">\(\mathbb E[X] - q\mathbb E[X] = 1-p\)</span> を得る．これを整理すると</p>
+<p><span class="math display">\[
+\mathbb E[X] = \frac{1-p}{p}
+\]</span></p>
+<p><strong> ▶&nbsp; 幾何分布の分散</strong></p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[X^2]
+    &amp;= \sum_{x=0}^\infty x^2q^xp\\
+    &amp;= p\sum_{x=1}^\infty x^2q^x
+\end{align*}
+\]</span></p>
+<p>ここで，<span class="math inline">\(S = \sum_{x=1}^\infty x^2q^x\)</span> について考えると， <span class="math display">\[
+\begin{align*}
+S &amp;= 1^2q + 2^2q^2 + 3^2q^3 + \cdots\\
+qS &amp;= 1^2q^2 + 2^2q^3 + \cdots\\
+(1-q)S&amp; = 1^2q + (2^2-1^2)q^2 + (3^2-2^2)q^3 + \cdots\\
+      &amp;= \sum_{x=1}^\infty [x^2 - (x-1)^2]q^x\\
+      &amp;= \sum_{x=1}^\infty [2x-1]q^x\\
+      &amp;= \frac{2-2p}{p^2} - \frac{1-p}{p}\\
+      &amp;= \frac{(1-p)(2-p)}{p^2}
+\end{align*}
+\]</span></p>
+<p><span class="math inline">\(\mathbb E[X^2] = pS = (1-q)S\)</span> より，</p>
+<p><span class="math display">\[
+\operatorname{Var}(X) = \frac{(1-p)(2-p)}{p^2} - \frac{(1-p)^2}{p^2} = \frac{(1-p)}{p^2}
+\]</span></p>
+<section id="幾何分布の母関数" class="level3">
+<h3 class="anchored" data-anchor-id="幾何分布の母関数">幾何分布の母関数</h3>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 9.1</strong></span> <strong>: 幾何分布の確率母関数</strong> <br></p>
+<p><span class="math inline">\(X\sim\operatorname{Geo}(p)\)</span> のとき，確率母関数は</p>
+<p><span class="math display">\[
+G_X(s) = \frac{p}{1-sq}
+\]</span></p>
+<p>と表される</p>
+</div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
@@ -451,46 +720,88 @@ window.Quarto = {
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof: ベータ関数とガンマ関数の関係
+Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>ガンマ関数の定義を用いて，</p>
+<p>確率変数 <span class="math inline">\(X\sim\operatorname{Geo}(p)\)</span> としたとき，確率関数は <span class="math inline">\(x = 0, 1, 2, \cdots\)</span> について</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= \int^\infty_0 x^{a-1}\exp(-x)\mathrm{d}x \int^\infty_0 y^{b-1}\exp(-y)\mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^\infty_0 x^{a-1}y^{b-1}\exp(-x-y)\mathrm{d}x \mathrm{d}y \\
+\Pr(X=x)
+    &amp;= p(1-p)^x\\
+    &amp;=pq^x \qquad \text{where } q = 1-p
 \end{align*}
 \]</span></p>
-<p>ここで, <span class="math inline">\(x + y = u, x/(x + y) = v\)</span> という変数変換を考える．つまり，</p>
+<p>と表されるので</p>
 <p><span class="math display">\[
 \begin{align*}
-x = uv, y = u(1-v)
-\end{align*}
-\]</span></p>
-<p>このときのヤコビアンは</p>
-<p><span class="math display">\[
-\begin{align*}
-\vert\operatorname{det} J \vert= u
+G_X(s)
+    &amp;= \sum_{x=0}^\infty s^xpq^x\\
+    &amp;= p\sum_{x=0}^\infty (sq)^x\\
+    &amp;= \frac{p}{1-sq} \quad \text{for all} s \text{ such that } \vert qs\vert &lt; 1
 \end{align*}
 \]</span></p>
 <p>従って，</p>
 <p><span class="math display">\[
+G_X(s) = \frac{p}{1-sq} \text{ for } \vert s\vert &lt; \frac{1}{q}
+\]</span></p>
+<p>となります．PGFより期待値は</p>
+<p><span class="math display">\[
 \begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;=\int^\infty_0 \int^\infty_0 (uv)^{a-1}[u(1-v)]^{b-1}\exp(-u) u\mathrm{d}x \mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^\infty_0 u^{a+b-1}\exp(-u) v^{a-1}(1-v)^{b-1}\mathrm{d}x \mathrm{d}y \\
-                   &amp;= \int^\infty_0 \int^1_0 u^{a+b-1}\exp(-u) v^{a-1}(1-v)^{b-1}\mathrm{d}v \mathrm{d}u \\
-                   &amp;= \int^\infty_0 u^{a+b-1}\exp(-u) \mathrm{d}u \int^1_0 v^{a-1}(1-v)^{b-1}\mathrm{d}v \\
-                   &amp;= \operatorname{\Gamma}(a+b)\operatorname{B}(a, b)
+G_X^\prime(s)
+    &amp;= q\frac{p}{(1-sq)^2}\\
+\Rightarrow \mathbb E[X] &amp;= \frac{q}{p} = \frac{1-p}{p}   
 \end{align*}
 \]</span></p>
-<p>つまり，</p>
+<p>分散は</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
+\begin{align*}
+G_X^{\prime\prime}(s)
+        &amp;= 2q^2\frac{p}{(1-sq)^3}\\
+\Rightarrow \operatorname{Var}(X) &amp;= \frac{2q^2}{p^2} + \frac{q}{p}(1-\frac{q}{p})\\
+        &amp;= \frac{q}{p}\left(\frac{q}{p}+1\right)\\
+        &amp;=\frac{1-p}{p^2}
+\end{align*}
 \]</span></p>
 </div>
+</div>
+</div>
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 9.1</strong></span> <br></p>
+<p>初めての成功までに要した回数という形で幾何分布を変更した場合を考えます．つまり， <span class="math inline">\(\mathcal{X} = \{1, 2, \cdots\}\)</span> と標本空間が表され，確率関数は</p>
+<p><span class="math display">\[
+\Pr(X = x) = pq^{x-1}
+\]</span></p>
+<p>この場合の確率母関数は</p>
+<p><span class="math display">\[
+\begin{align*}
+G_X(s)
+    &amp;= \sum_{x=1}^\infty s^xpq^{x-1}\\
+    &amp;= q^{-1}p\sum_{x=1}^\infty (sq)^x\\
+    &amp;= \frac{p}{q}\frac{sq}{1-sq} \quad \text{for all} s \text{ such that } \vert qs\vert &lt; 1
+\end{align*}
+\]</span></p>
+<p>期待値を求めてみると</p>
+<p><span class="math display">\[
+\begin{align*}
+G_X^\prime(s)
+    &amp;= \frac{p}{q}\frac{q}{1-sq} + p\frac{sq}{(1-sq)^2}
+\end{align*}
+\]</span></p>
+<p>従って，</p>
+<p><span class="math display">\[
+\mathbb E[X] = G_X^\prime(0) = \frac{1}{p}
+\]</span></p>
+</div>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 9.2</strong></span> <strong>: 積率母関数</strong> <br></p>
+<p><span class="math inline">\(X\sim\operatorname{Geo}(p)\)</span> のとき，積率母関数は</p>
+<p><span class="math display">\[
+M_X(t) = \frac{p}{1 - q\exp(t)}, \qquad t &lt; -\log q
+\]</span></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -499,52 +810,30 @@ x = uv, y = u(1-v)
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof: 座標変換
+Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-2" class="callout-2-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>ガンマ関数は <span class="math inline">\(z^2 = x\)</span> という変数変換を用いると以下のように変換できる</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{\Gamma}(a) &amp;= \int^\infty_0 x^{a-1}\exp(-x)\mathrm{d}x \\
-          &amp;= \int^\infty_0 z^{2a-2}\exp(-z^2)\frac{\mathrm{d}x}{\mathrm{d}z}\mathrm{d}z \\
-          &amp;= 2\int^\infty_0 z^{2a-1}\exp(-z^2)\mathrm{d}z
+\mathbb E[\exp(tX)]
+    &amp;= \sum_{x=0}^\infty pq^x\exp(tx)\\
+    &amp;= p\sum_{x=0}^\infty q^x\exp(tx)\\
+    &amp;= p \frac{1}{1 - q\exp(t)}
 \end{align*}
 \]</span></p>
-<p>これを用いて</p>
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= 4\int^\infty_0 x^{2a-1}\exp(-x^2)\mathrm{d}x \int^\infty_0 y^{2b-1}\exp(-y^2)\mathrm{d}y \\
-                   &amp;= 4\int^\infty_0 \int^\infty_0 x^{2a-1}y^{2b-1}\exp(-(x^2+y^2))\mathrm{d}x \mathrm{d}y
-\end{align*}
-\]</span></p>
-<p>ここで, <span class="math inline">\(x = r\cos\theta, y=r\sin\theta\)</span> という変数変換を行う．このときのヤコビアンは</p>
-<p><span class="math display">\[
-\vert \operatorname{det} J \vert = r
-\]</span></p>
-<p>よって， <span class="math display">\[
-\begin{align*}
-\operatorname{\Gamma}(a)\operatorname{\Gamma}(b) &amp;= 4\int^\infty_0 \int^\infty_0 x^{2a-1}y^{2b-1}\exp(-(x^2+y^2))\mathrm{d}x \mathrm{d}y\\
-                   &amp;= 4\int^{\pi/2}_0 \int^\infty_0 r^{2a+2b-2} \cos^{2a-1}\theta \sin^{2b-1}\theta \exp(-r^2) r \mathrm{d}r \mathrm{d}\theta\\
-                   &amp;= \left(2\int^{\pi/2}_0 \cos^{2a-1}\theta \sin^{2b-1}\theta \mathrm{d}\theta\right) \times \left(\int^\infty_0r^{2(a+b)-1}\exp(-r^2)\mathrm{d}r \right)\\
-                   &amp;= \operatorname{B}(a, b) \times \operatorname{\Gamma}(a+b)
-\end{align*}
-\]</span></p>
-<p>従って，</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
-\]</span></p>
+<p>ただし，収束するためには <span class="math inline">\(q\exp(t) &lt; 1\)</span>，すなわち <span class="math inline">\(t &lt; -\log(q)\)</span> が条件となります．</p>
 </div>
 </div>
 </div>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 16.1</strong></span> <strong>三角関数とベータ関数の関係</strong> <br></p>
-<p>正の実数 <span class="math inline">\(a, b\)</span> について，以下が成立する</p>
+<p><span class="theorem-title"><strong>Theorem 9.3</strong></span> <strong>: 特性関数</strong> <br></p>
+<p><span class="math inline">\(X\sim\operatorname{Geo}(p)\)</span> のとき，特性関数は</p>
 <p><span class="math display">\[
-\operatorname{B}(a, b) = 2\int^{\pi/2}_0\cos^{2a-1}\theta\sin^{2b-1}\theta \mathrm{d}\theta
+\varphi(t) = \frac{p}{1 - q\exp(it)}, \qquad t \in \mathbb R
 \]</span></p>
 </div>
 </div>
@@ -560,52 +849,21 @@ Proof
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p>ベータ関数について <span class="math inline">\(x = \cos^2\theta\)</span> を用いた置換積分で以下のように示すことができます．</p>
 <p><span class="math display">\[
 \begin{align*}
-\operatorname{B}(a, b) &amp;= \int^1_0 x^{a-1}(1-x)^{b-1} \mathrm{d}x\\
-                       &amp;= \int^0_{\pi/2} (\cos^2\theta)^{a-1}(1 - \cos^2\theta)^{b-1} \cdot (-2\cos\theta\sin\theta) \mathrm{d}\theta\\
-                       &amp;= 2\int^{\pi/2}_0 \cos^{2a-1}\theta \sin^{2b-1}\theta\mathrm{d}\theta
+\mathbb E[\exp(itX)]
+    &amp;= \sum_{x=0}^\infty pq^x\exp(itx)\\
+    &amp;= p\sum_{x=0}^\infty q^x\exp(itx)\\
+    &amp;= p \frac{1}{1 - q\exp(it)}
 \end{align*}
 \]</span></p>
-<p>なお, <span class="math inline">\(\sin^2\theta = 1 - \cos^2\theta\)</span> 及び <span class="math inline">\(\displaystyle\frac{\mathrm{d}\cos^2\theta}{\mathrm{d}\theta} = -2\cos\theta\sin\theta\)</span> を用いている．</p>
-</div>
-</div>
-</div>
-<div class="blog-custom-border">
-<div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 16.2</strong></span> <strong>引数の交換性</strong> <br></p>
-<p>正の実数 <span class="math inline">\(a, b\)</span> について，以下が成立する</p>
-<p><span class="math display">\[
-\operatorname{B}(a, b) = \operatorname{B}(b, a)
-\]</span></p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Proof
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[
-\begin{align*}
-\operatorname{B}(a, b) &amp;= \int^1_0 x^{a-1}(1-x)^{b-1} \mathrm{d}x\\
-                       &amp;= \int^0_1 (1-z)^{a-1}z^{b-1} \frac{\mathrm{d}x}{\mathrm{d}z}\mathrm{d}z\\
-                       &amp;= \int^1_0 (1-z)^{a-1}z^{b-1} \mathrm{d}z\\
-                       &amp;= \operatorname{B}(b, a)
-\end{align*}
-\]</span></p>
+<p><span class="math inline">\(\vert q\exp(it)\vert &lt; 1\)</span> であるので，<span class="math inline">\(t\in \mathbb R\)</span> で上記の式は収束します．</p>
 </div>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1185,13 +1443,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/mathematical_appendix/complex_number.html" class="pagination-link" aria-label="複素数">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">複素数</span></span>
+      <a href="../../posts/probability_distribution/poisson_dist.html" class="pagination-link" aria-label="ポワソン分布">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/mathematical_appendix/gamma_function.html" class="pagination-link" aria-label="ガンマ関数">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/probability_distribution/hypergeometric.html" class="pagination-link" aria-label="超幾何分布">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">超幾何分布</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1212,7 +1470,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/mathematical_appendix/beta_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/probability_distribution/geometric_dist.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
