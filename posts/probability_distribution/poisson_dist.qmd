@@ -1,0 +1,96 @@
+---
+title: "ポワソン分布"
+author: "Ryo Nakagami"
+date: "2024-09-25"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## ポワソン分布の性質
+
+
+
+<strong > &#9654;&nbsp; 確率母関数の計算</strong>
+
+確率変数 $X\sim\operatorname{Poisson}(\lambda)$ としたとき，PGF $G_X(s)$ は
+
+$$
+\begin{align*}
+G_X(s)
+    &= \sum_{x=0}^\infty s^x\frac{\lambda^x}{x!}\exp(-\lambda)\\
+    &= \exp(-\lambda)\sum_{x=0}^\infty \frac{(s\lambda)^x}{x!}\\
+    &= \exp(-\lambda)\exp(s\lambda)\\
+    &= \exp((s-1)\lambda)
+\end{align*}
+$$
+
+期待値は
+
+$$
+\begin{align*}
+\mathbb E[X]
+    &= G_X^\prime(1)\\
+    &= \lambda \exp((1-1)\lambda)\\
+    &= \lambda
+\end{align*}
+$$
+
+分散は $\operatorname{Var}(X) = \mathbb E[X(X-1)] + \mathbb E[X](1 - \mathbb E[X])$ なので
+
+$$
+\begin{align*}
+\mathbb E[X(X-1)]
+    &= G_X^{\prime\prime}(1)\\
+    &= \lambda \lambda\exp((1-1)\lambda)\\
+    &= \lambda^2
+\end{align*}
+$$
+
+従って，
+
+$$
+\begin{align*}
+\operatorname{Var}(X)
+    &= \lambda^2 + \lambda(1-\lambda)\\
+    &= \lambda
+\end{align*}
+$$
+
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: ポワソン分布のの再生性**
+<br>
+
+互いに独立な確率変数 $X\sim\operatorname{Poisson}(\lambda_x), Y\sim\operatorname{Poisson}(\lambda_y)$ について,
+$X + Y$ もパラメーター $\lambda_x + \lambda_y$ のポワソン分布に従う．つまり，
+
+$$
+X + Y \sim \operatorname{Poisson}(\lambda_x + \lambda_y)
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: PGFを用いた証明
+
+$$
+\begin{align*}
+G_{X+Y}(s)
+    &= G_{X}(s)G_{Y}(s)\\
+    &= \exp(-\lambda_x)\exp(s\lambda_x)\exp(-\lambda_y)\exp(s\lambda_y)\\
+    &= \exp(-(\lambda_x+\lambda_y))\exp(s(\lambda_x+\lambda_y))
+\end{align*}
+$$
+
+これは，パラメーター $\lambda_x + \lambda_y$ のポワソン分布のPGFに一致する．
+
+:::

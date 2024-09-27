@@ -1,7 +1,7 @@
 ---
 title: "確率分布"
 jupyter: python3
-author: "Ryo Nakagtami"
+author: "Ryo Nakagami"
 date: "2024-09-14"
 date-modified: last-modified
 comments:
@@ -10,3 +10,15 @@ comments:
          label: discussion
 # when you run this file locally, do not forget to run poetry shell
 ---
+
+<strong > &#9654;&nbsp; この章のスコープ</strong>
+
+データの背後にある確率モデルを構築するときには，研究対象の特徴と確率分布の特徴を踏まえて
+適した分布の選択を行うことが望ましいです．例として，
+
+- 所得ならば正の値をとり，右に長い裾をもつので対数正規分布
+- 生物・人体測定値ならば正規分布
+- システムの耐久年数を表すならばガンマ分布
+- 捕獲再捕獲の確率ならば超幾何分布
+
+この章では，代表的な確率分布に関して，確率分布の形状や特性値，確率分布がもっている性質について解説していきます．

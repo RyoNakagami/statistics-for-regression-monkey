@@ -1,0 +1,392 @@
+---
+title: "幾何分布"
+author: "Ryo Nakagami"
+date: "2024-09-25"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+成功確率 $p$ のベルヌーイ試行を独立に行っていき，初めて成功するまでに要した失敗の回数を $X$ とするとき，
+$X$ の回数は幾何分布に従います．
+
+```{python}
+#| code-fold: true
+import numpy as np
+from scipy.stats import geom
+from plotly import express as px
+
+p = 0.4
+x = np.arange(geom.ppf(0.01, p), geom.ppf(0.99, p))
+
+# note that scipy follows p(x) = (1-p)^{x-1}p 
+rv = geom(p)
+
+fig = px.bar(
+    x=x-1,
+    y=rv.pmf(x),
+    title="geometric distribution with p=0.4",
+    labels={"x": "x", "y": "probability"},
+)
+fig.update_traces(width=0.5)
+fig.show()
+```
+
+上記のように，幾何級数列的に減少する確率分布であるため，幾何分布と呼ばれます．
+
+## 幾何分布の性質
+
+<div class="blog-custom-border">
+<strong>Def: 幾何分布</strong> <br>
+
+標本空間 $\mathcal{X} = \{0, 1, 2, \cdots\}$ をもつ確率変数 $X$ の確率関数が
+
+$$
+\Pr(X=k) = (1-p)^{k}p \qquad (0<p<1)
+$$
+
+のとき，$X$ はパラメータ $p$ の幾何分布に従うという．つまり，
+
+$$
+X\sim\operatorname{Geo}(p)
+$$
+
+</div>
+
+幾何分布は，時間を $0, 1, 2, \cdots$ と離散的に考えるとき，初めてイベント $S$ が起こるまでの時間の長さを表す確率分布 = 離散的な待ち時間分布とみなすことができます．一回あたりのイベント $S$ の生起確率が $p$ であるとすると，ちょうど１回の $S$ を得るまで平均的に
+
+$$
+\frac{1}{p}
+$$
+
+の時間がかかるので，生起までの待ち時間として $\frac{1}{p}-1 = \frac{1-p}{p}$ と直感的に理解することができます．
+
+
+<strong > &#9654;&nbsp; 累積分布関数</strong>
+
+幾何分布の累積分布関数は以下のように表すことができます:
+
+$x \geq 0$ のもとで
+
+$$
+\begin{align*}
+\Pr(X\leq x)
+    &= \sum_{k=0}^x \Pr(X=k)\\
+    &= \sum_{k=0}^{\lfloor x\rfloor} pq^k\\
+    &= p\frac{1-q^{\lfloor x\rfloor+1}}{1- q}\\
+    &= 1-q^{\lfloor x\rfloor+1}
+\end{align*}
+$$
+
+```{python}
+#| code-fold: true
+import numpy as np
+from scipy.stats import geom
+from plotly import express as px
+
+p = 0.4
+x = np.arange(geom.ppf(0.01, p), geom.ppf(0.99995, p))
+
+# note that scipy follows p(x) = (1-p)^{x-1}p 
+rv = geom(p)
+
+fig = px.line(
+    x=x-1,
+    y=rv.cdf(x),
+    title="geometric distribution with p=0.4",
+    labels={"x": "x", "y": "probability"},
+    markers='x'
+)
+fig.show()
+```
+
+
+<strong > &#9654;&nbsp; 幾何分布の期待値</strong>
+
+$q=1-p$とおくと
+
+$$
+\begin{align*}
+\mathbb E[X]
+    &= \sum_{x=0}^\infty xq^xp\\
+    &= p\sum_{x=1}^\infty xq^x
+\end{align*}
+$$
+
+ここで，$S = \sum_{x=1}^\infty xq^x$ について考えると，
+$$
+\begin{align*}
+S &= q + 2q^2 + 3q^3 + \cdots\\
+qS &= q^2 + 2q^3 + \cdots\\
+(1-q)S& = q + q^2 + q^3 + \cdots
+\end{align*}
+$$
+
+従って，$S = \frac{q}{(1-q)^2}$ を得る．以上より
+
+$$
+\mathbb E[X] = p \frac{q}{(1-q)^2} = \frac{1-p}{p}
+$$
+
+<strong > &#9654;&nbsp; 分布関数を用いた幾何分布の期待値の導出</strong>
+
+離散確率変数 $X$ について，
+
+$$
+\mathbb E[X] = \sum_{x=0}^\infty \Pr(X> x)
+$$
+
+が知られている([参考:期待値 > Example 3.4](../statistics101//expectation.qmd))ので
+
+$$
+\begin{align*}
+\Pr(X> x)
+    &= 1 - \Pr(X\leq x)\\
+    &= 1 - (1 - q^{x+1})\\
+    &= q^{x+1}
+\end{align*}
+$$
+
+従って，
+
+$$
+\begin{align*}
+\mathbb E[X] 
+    &= \sum_{x=0}^\infty q^{x+1}\\
+    &= \frac{q}{1-q}\\
+    &= \frac{1-p}{p}
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; 確率の公理を用いた幾何分布の期待値の導出</strong>
+
+$$
+\sum_{x=0}^\infty q^xp = 1
+$$
+
+に留意すると
+
+$$
+\begin{align*}
+\sum_{x=0}^\infty xq^xp - q\sum_{x=0}^\infty xq^xp
+    &= \sum_{x=0}^\infty q^xp - p\\
+    &= 1-p
+\end{align*}
+$$
+
+従って，$\mathbb E[X] - q\mathbb E[X] = 1-p$ を得る．これを整理すると
+
+$$
+\mathbb E[X] = \frac{1-p}{p}
+$$
+
+
+<strong > &#9654;&nbsp; 幾何分布の分散</strong>
+
+$$
+\begin{align*}
+\mathbb E[X^2]
+    &= \sum_{x=0}^\infty x^2q^xp\\
+    &= p\sum_{x=1}^\infty x^2q^x
+\end{align*}
+$$
+
+ここで，$S = \sum_{x=1}^\infty x^2q^x$ について考えると，
+$$
+\begin{align*}
+S &= 1^2q + 2^2q^2 + 3^2q^3 + \cdots\\
+qS &= 1^2q^2 + 2^2q^3 + \cdots\\
+(1-q)S& = 1^2q + (2^2-1^2)q^2 + (3^2-2^2)q^3 + \cdots\\
+      &= \sum_{x=1}^\infty [x^2 - (x-1)^2]q^x\\
+      &= \sum_{x=1}^\infty [2x-1]q^x\\
+      &= \frac{2-2p}{p^2} - \frac{1-p}{p}\\
+      &= \frac{(1-p)(2-p)}{p^2}
+\end{align*}
+$$
+
+$\mathbb E[X^2] = pS = (1-q)S$ より，
+
+$$
+\operatorname{Var}(X) = \frac{(1-p)(2-p)}{p^2} - \frac{(1-p)^2}{p^2} = \frac{(1-p)}{p^2}
+$$
+
+### 幾何分布の母関数
+
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: 幾何分布の確率母関数**
+<br>
+
+$X\sim\operatorname{Geo}(p)$ のとき，確率母関数は
+
+$$
+G_X(s) = \frac{p}{1-sq} 
+$$
+
+と表される
+
+:::
+
+</div>
+
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+確率変数 $X\sim\operatorname{Geo}(p)$ としたとき，確率関数は $x = 0, 1, 2, \cdots$ について
+
+$$
+\begin{align*}
+\Pr(X=x)
+    &= p(1-p)^x\\
+    &=pq^x \qquad \text{where } q = 1-p
+\end{align*}
+$$
+
+と表されるので
+
+$$
+\begin{align*}
+G_X(s)
+    &= \sum_{x=0}^\infty s^xpq^x\\
+    &= p\sum_{x=0}^\infty (sq)^x\\
+    &= \frac{p}{1-sq} \quad \text{for all} s \text{ such that } \vert qs\vert < 1
+\end{align*}
+$$
+
+従って，
+
+$$
+G_X(s) = \frac{p}{1-sq} \text{ for } \vert s\vert < \frac{1}{q} 
+$$
+
+となります．PGFより期待値は
+
+$$
+\begin{align*}
+G_X^\prime(s)
+    &= q\frac{p}{(1-sq)^2}\\
+\Rightarrow \mathbb E[X] &= \frac{q}{p} = \frac{1-p}{p}   
+\end{align*}
+$$
+
+分散は
+
+
+$$
+\begin{align*}
+G_X^{\prime\prime}(s)
+        &= 2q^2\frac{p}{(1-sq)^3}\\
+\Rightarrow \operatorname{Var}(X) &= \frac{2q^2}{p^2} + \frac{q}{p}(1-\frac{q}{p})\\
+        &= \frac{q}{p}\left(\frac{q}{p}+1\right)\\
+        &=\frac{1-p}{p^2}
+\end{align*}
+$$
+
+:::
+
+::: {#exm- .custom_problem }
+<br>
+
+初めての成功までに要した回数という形で幾何分布を変更した場合を考えます．つまり，
+$\mathcal{X} = \{1, 2, \cdots\}$ と標本空間が表され，確率関数は
+
+$$
+\Pr(X = x) = pq^{x-1}
+$$
+
+この場合の確率母関数は
+
+$$
+\begin{align*}
+G_X(s)
+    &= \sum_{x=1}^\infty s^xpq^{x-1}\\
+    &= q^{-1}p\sum_{x=1}^\infty (sq)^x\\
+    &= \frac{p}{q}\frac{sq}{1-sq} \quad \text{for all} s \text{ such that } \vert qs\vert < 1
+\end{align*}
+$$
+
+期待値を求めてみると
+
+$$
+\begin{align*}
+G_X^\prime(s)
+    &= \frac{p}{q}\frac{q}{1-sq} + p\frac{sq}{(1-sq)^2}
+\end{align*}
+$$
+
+従って，
+
+$$
+\mathbb E[X] = G_X^\prime(0) = \frac{1}{p}
+$$
+
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: 積率母関数**
+<br>
+
+$X\sim\operatorname{Geo}(p)$ のとき，積率母関数は
+
+$$
+M_X(t) = \frac{p}{1 - q\exp(t)}, \qquad t < -\log q
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+\mathbb E[\exp(tX)]
+    &= \sum_{x=0}^\infty pq^x\exp(tx)\\
+    &= p\sum_{x=0}^\infty q^x\exp(tx)\\
+    &= p \frac{1}{1 - q\exp(t)}
+\end{align*}
+$$
+
+ただし，収束するためには $q\exp(t) < 1$，すなわち $t < -\log(q)$ が条件となります．
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: 特性関数**
+<br>
+
+$X\sim\operatorname{Geo}(p)$ のとき，特性関数は
+
+$$
+\varphi(t) = \frac{p}{1 - q\exp(it)}, \qquad t \in \mathbb R
+$$
+
+:::
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+\mathbb E[\exp(itX)]
+    &= \sum_{x=0}^\infty pq^x\exp(itx)\\
+    &= p\sum_{x=0}^\infty q^x\exp(itx)\\
+    &= p \frac{1}{1 - q\exp(it)}
+\end{align*}
+$$
+
+$\vert q\exp(it)\vert < 1$ であるので，$t\in \mathbb R$ で上記の式は収束します．
+
+:::

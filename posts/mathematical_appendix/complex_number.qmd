@@ -1,0 +1,225 @@
+---
+title: "複素数"
+author: "Ryo Nakagami"
+date: "2024-09-26"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## 複素数の性質
+
+<div class="blog-custom-border">
+<strong>Def: 複素数</strong> <br>
+
+２つの実数 $a, b$ を用いて
+
+$$
+z = a + bi
+$$
+
+と表される数 $z$ を複素数という．$a$ を上の複素数の実部，$b$ を虚部と呼ぶ．
+複素数全体の集合は一般に $\mathbb C$ と表される．
+
+</div>
+
+複素数 $z = a + bi$ の実数の組 $(a, b)$ について，
+
+$$
+\begin{align*}
+a &= \text{Re}\, z\\
+b &= \text{Im}\, z
+\end{align*}
+$$
+
+と表したりします．それぞれ，real part, imaginary partの略と理解できます．
+
+
+<strong > &#9654;&nbsp; 複素数の加減乗除</strong>
+
+$z_1 = a + bi, z_2 = c + di$ としたとき，四則演算は以下のように計算されます
+
+$$
+\begin{align*}
+z_1 + z_2 &= (a + c) + (b + d)i\\
+z_1 - z_2 &= (a - c) + (b - d)i\\
+z_1z_2    &= ac + (ad + bc)i + bdi^2\\
+          &= (ac - bd) + (ad + bc)i \quad \because i^2 =-1\\
+\frac{z_1}{z_2}
+          &= \frac{a + bi}{c + di}\\
+          &= \frac{a + bi}{c + di}\frac{c - di}{c - di}\\
+          &= \frac{(a + bi)(c - di)}{c^2+d^2}\\
+          &= \frac{(ac + bd) + (bc - ad)i}{c^2+d^2}
+\end{align*}
+$$
+
+<div class="blog-custom-border">
+<strong>Def: 共役複素数</strong> <br>
+
+複素数 $z = a+bi$ に対し，
+
+$$
+\bar z = a - bi
+$$
+
+を $z$ の共役複素数（きょうやくふくそすう）と呼ぶ．
+
+</div>
+
+共役複素数は，複素数平面上で実軸に関して対称移動させたものと解釈することができます．また，定義より自明ですが
+複素数と共役複素数について，和と積が実数になるという特徴もあります．
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+２つの複素数 $z_1, z_2$ について，次が成り立つ
+
+$$
+\begin{align*}
+\overline{z_1 + z_2} &= \bar z_1 + \bar z_2\\
+\overline{z_1z_2} &= \bar z_1\bar z_2
+\end{align*}
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$z_1 = a_1 + b_1i, z_2 = a_2 + b_2i$ としたとき，
+
+$$
+\begin{align*}
+\overline{z_1 + z_2} 
+    &= \overline{(a_1 + a_2) + (b_1 +b_2)i}\\
+    &= (a_1 + a_2) - (b_1 +b_2)i\\
+    &= a_1 - b_1i + a_2 - b_2i\\
+    &= \bar z_1 + \bar z_2
+\end{align*}
+$$
+
+積については
+
+$$
+\begin{align*}
+\overline{z_1z_2} 
+    &= \overline{(a_1a_2 - b_1b_2) + (a_1b_2 + a_2b_1)i}\\
+    &= (a_1a_2 - b_1b_2) - (a_1b_2 + a_2b_1)i\\
+    &= a_1a_2 - (a_1b_2 + a_2b_1)i + b_1b_2i^2\\
+    &= (a_1 - b_1i)(a_2 - b_2i)\\
+    &= \bar z_1\bar z_2
+\end{align*}
+$$
+
+:::
+
+<div class="blog-custom-border">
+<strong>Def: 複素数の絶対値</strong> <br>
+
+複素数 $z = a + bi$ の絶対値 $\vert z\vert$ は次のように計算される：
+
+$$
+\vert z \vert = \sqrt{a^2 + b^2}
+$$
+
+</div>
+
+定義より，$(a, b) = (0, 0)$ のときは，$\vert z\vert =0$．逆に $\vert z\vert =0$ ならば，
+
+$$
+a^2 + b^2 =0
+$$
+
+を満たす実数の組は $(0, 0)$ 歯科存在しないので，$z = 0$ となります．
+
+## 複素平面
+
+複素数 $z = x + yi$ が与えられたとき，２つの実数の組 $(x, y)$ が与えられた状況とも解釈できます．
+また，２つの実数の組 $(x, y)$ が与えられた状況とは，$xy$-平面上の点を与えられる状況とも考えることができます．
+つまり，複素数が与えられたとき，
+
+- 実部を $x$ 軸
+- 虚部を $y$ 軸
+
+とする $xy$-平面を考えることができます．$z = 1 + \sqrt{3}$ を描いてみると，
+
+
+```{python}
+import matplotlib.pyplot as plt
+import numpy as np
+
+pi = np.pi
+
+
+# Set parameters
+r = 2
+theta = pi/3
+x = r * np.cos(theta)
+x_range = np.linspace(0, x, 1000)
+theta_range = np.linspace(0, theta, 1000)
+
+# Plot
+fig = plt.figure(figsize=(6, 6))
+ax = plt.subplot(111, projection='polar')
+
+ax.plot((0, theta), (0, r), marker='o', color='b')          # Plot r
+ax.plot(np.zeros(x_range.shape), x_range, color='b')       # Plot x
+ax.plot(theta_range, x / np.cos(theta_range), color='b')        # Plot y
+ax.plot(theta_range, np.full(theta_range.shape, 0.1), color='r')  # Plot theta
+
+ax.margins(0) # Let the plot starts at origin
+
+ax.set_title("Trigonometry of complex numbers", va='bottom',
+    fontsize='x-large')
+
+ax.set_rmax(2)
+ax.set_rticks((0.5, 1, 1.5, 2))  # Less radial ticks
+ax.set_rlabel_position(-88.5)    # Get radial labels away from plotted line
+
+ax.text(theta, r+0.01 , r'$z = x + iy = 1 + \sqrt{3}\, i$')   # Label z
+ax.text(theta+0.2, 1 , r'$\vert z\vert = 2$')                             # Label r
+ax.text(0-0.2, 0.5, '$x = 1$')                            # Label x
+ax.text(0.5, 1.2, r'$y = \sqrt{3}$')                      # Label y
+ax.text(0.25, 0.15, r'$\text{arg } $z$ = 60^o$')                   # Label theta
+
+ax.grid(True)
+plt.show()
+
+```
+
+複素数が $xy$-平面上の点で表すことができるということは，原点からの長さと角度 $(r, \theta)$ によって点を表現できることになります．
+このとき，以下のように表します:
+
+$$
+\begin{align*}
+r & = \vert z\vert\\
+\theta &= \operatorname{arg}z = \arctan \left(\frac{y}{x}\right)
+\end{align*}
+$$
+
+このことから次の定義が導けます．
+
+<div class="blog-custom-border">
+<strong>Def: 複素数の極形式</strong> <br>
+
+複素平面上の点 $z = x + yi$ は極座標を用いて次のように表せる:
+
+$$
+\begin{align*}
+&z = r(\cos \theta + i\sin\theta)\\
+&\text{where } r = \vert z\vert, \theta = \operatorname{arg} z
+\end{align*}
+$$
+
+
+</div>
+
+<strong > &#9654;&nbsp; 複素数の積と複素平面</strong>

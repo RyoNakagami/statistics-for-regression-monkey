@@ -662,7 +662,7 @@ $$
 \begin{align*}
 \frac{\partial F}{\partial p(x)} &= -\int^\infty_{-\infty}(1 + \ln(p(x)) - \lambda_1 - \lambda_2(x-\mu) - \lambda_3(x-\mu)^2)\,\mathrm{d}x = 0\tag{A}\\
 \frac{\partial F}{\partial \lambda_1} &= \int^\infty_{-\infty}p(x)\,\mathrm{d}x-1 = 0\tag{B}\\
-\frac{\partial F}{\partial \lambda_2} &= \int^\infty_{-\infty}(x-\mu)p(x)\,\mathrm{d}x\int^\infty_{-\infty}(x-\mu)p(x)\,\mathrm{d}x = 0\tag{C}\\
+\frac{\partial F}{\partial \lambda_2} &= \int^\infty_{-\infty}(x-\mu)p(x)\,\mathrm{d}x = 0\tag{C}\\
 \frac{\partial F}{\partial \lambda_3} &= \int^\infty_{-\infty}(x-\mu)^2p(x)\,\mathrm{d}x-\sigma^2= 0\tag{D}
 \end{align*}
 $$

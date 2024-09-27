@@ -46,7 +46,7 @@ $$
 実現値を小文字で表します．実現値の全体を，$X$ の標本空間といい，
 
 $$
-\chi = \{X(\omega)\vert\omega\in\Omega\}
+\mathcal{X} = \{X(\omega)\vert\omega\in\Omega\}
 $$
 
 と表されます．

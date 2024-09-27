@@ -1,0 +1,31 @@
+---
+title: "二項分布"
+author: "Ryo Nakagami"
+date: "2024-09-25"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## 二項分布の性質
+
+
+
+<strong > &#9654;&nbsp; 確率母関数の計算</strong>
+
+確率変数 $X\sim\operatorname{Binom}(n, p)$ としたとき，
+
+$$
+\begin{align*}
+G_X(s)
+    &= \sum_{x=0}^ns^x \left(\begin{array}{c}n\\ x\end{array}\right)p^x(1-p)^{n-x}\\
+    &= \sum_{x=0}^n \left(\begin{array}{c}n\\ x\end{array}\right)(sp)^x(1-p)^{n-x}\\
+    &= (sp + 1-p)^n\\[5pt]
+    &= [(s-1)p + 1]^n
+\end{align*}
+$$

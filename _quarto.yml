@@ -38,9 +38,14 @@ book:
         - posts/statistics101/averages.qmd
         - posts/statistics101/random_variable.qmd
         - posts/statistics101/expectation.qmd
+        - posts/statistics101/moment_generating_function.qmd
         - posts/statistics101/order_statistic.qmd
     - part: posts/probability_distribution/chapter_header.qmd
       chapters: 
+        - posts/probability_distribution/discrete_uniform_dist.qmd
+        - posts/probability_distribution/binomial_dist.qmd
+        - posts/probability_distribution/poisson_dist.qmd
+        - posts/probability_distribution/geometric_dist.qmd
         - posts/probability_distribution/hypergeometric.qmd
         - posts/probability_distribution/normal_dist.qmd
     - part: posts/statistical_hypothesis_test_101/chapter_header.qmd
@@ -56,6 +61,7 @@ book:
     - part: posts/econometrics101/chapter_header.qmd
     - part: posts/mathematical_appendix/chapter_header.qmd
       chapters: 
+        - posts/mathematical_appendix/complex_number.qmd
         - posts/mathematical_appendix/beta_function.qmd
         - posts/mathematical_appendix/gamma_function.qmd
         - posts/mathematical_appendix/jensen_inequality.qmd
