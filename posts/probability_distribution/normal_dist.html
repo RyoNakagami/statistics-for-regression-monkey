@@ -9,7 +9,7 @@
 <meta name="author" content="Ryo Nakagami">
 <meta name="dcterms.date" content="2024-09-14">
 
-<title>11&nbsp; 正規分布 – Statistics for Regression Monkeys</title>
+<title>13&nbsp; 正規分布 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -33,7 +33,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
 <link href="../../posts/statistical_hypothesis_test_101/chapter_header.html" rel="next">
-<link href="../../posts/probability_distribution/hypergeometric.html" rel="prev">
+<link href="../../posts/probability_distribution/continuous_uniform_dis.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -134,7 +134,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/normal_dist.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">正規分布</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/normal_dist.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">正規分布</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -266,14 +266,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/negative_binom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/hypergeometric.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/continuous_uniform_dis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/normal_dist.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
   </div>
 </li>
       </ul>
@@ -290,7 +302,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
       </ul>
@@ -307,7 +319,30 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../posts/estimation/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">統計的推定</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/estimation/method-of-moments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/estimation/m-estimator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
   </div>
 </li>
       </ul>
@@ -316,15 +351,15 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="../../posts/ExplanatoryDataAnalysis/chapter_header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Explanatory Data Analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
       </ul>
@@ -341,39 +376,45 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="../../posts/mathematical_appendix/chapter_header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mathematical Appendix</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/mathematical_appendix/permutation_combination.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">二項級数</span></span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/complex_number.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/gamma_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/jensen_inequality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/Lhopitals_rule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
   </div>
 </li>
       </ul>
@@ -393,6 +434,7 @@ window.Quarto = {
   <li><a href="#mgfと特性関数" id="toc-mgfと特性関数" class="nav-link" data-scroll-target="#mgfと特性関数">MGFと特性関数</a></li>
   <li><a href="#正規分布の再生性" id="toc-正規分布の再生性" class="nav-link" data-scroll-target="#正規分布の再生性">正規分布の再生性</a></li>
   <li><a href="#differential-entropy" id="toc-differential-entropy" class="nav-link" data-scroll-target="#differential-entropy">Differential Entropy</a></li>
+  <li><a href="#他の確率分布との関係性" id="toc-他の確率分布との関係性" class="nav-link" data-scroll-target="#他の確率分布との関係性">他の確率分布との関係性</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/probability_distribution/normal_dist.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -400,9 +442,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/normal_dist.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">正規分布</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/normal_dist.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">正規分布</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">正規分布</span></h1>
+<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">正規分布</span></h1>
 </div>
 
 
@@ -426,7 +468,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-09-27</p>
+      <p class="date-modified">2024-10-01</p>
     </div>
   </div>
     
@@ -476,7 +518,7 @@ f_Z(z) = \sigma f_X(\sigma z + \mu)=\frac{1}{\sqrt{2\pi}}\exp\left\{-\frac{z^2}{
 <p>大体の目安として, <span class="math inline">\(3\sigma\)</span> 範囲はいわゆる「千三つ」であることは覚えといて損はないと思います．</p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 11.1</strong></span> <br></p>
+<p><span class="theorem-title"><strong>Theorem 13.1</strong></span> <br></p>
 <p><span class="math display">\[
 \int^\infty_{-\infty}\frac{1}{\sqrt{2\pi\sigma^2}}\exp\left\{-\frac{(x-\mu)^2}{2\sigma^2}\right\}\mathrm{d}x = 1
 \]</span></p>
@@ -538,39 +580,9 @@ I^2 &amp;= \int^\infty_{-\infty}\int^\infty_{-\infty}\exp\left\{-\frac{a^2 + b^2
 </div>
 </div>
 </div>
-<p><strong> ▶&nbsp; 二項分布の極限分布としての正規分布</strong></p>
-<p><span class="math inline">\(n\)</span> を正の整数として，<span class="math inline">\(Y_n \sim \operatorname{Binom}(n, 1/2)\)</span> とし，</p>
-<p><span class="math display">\[
-X_n = \frac{Y_n - n/2}{\sqrt{n}/2}
-\]</span></p>
-<p>という確率変数を考えます．<span class="math inline">\(X_n \in (x - 2/\sqrt{n}, x]\)</span> となるような確率を考えてみると</p>
-<p><span class="math display">\[
-\begin{align*}
-&amp;\Pr(x - 2/\sqrt{n} &lt; X_n \leq x)\\
-    &amp;= \Pr\left(\frac{\sqrt{n}}{2}x + \frac{n}{2} - 1 &lt; Y_n \leq \frac{\sqrt{n}}{2}x + \frac{n}{2}\right)\\
-    &amp;= \Pr\bigg(\bigg\lfloor Y_n = \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor\bigg)\\
-    &amp;= \frac{n!}{\bigg\lfloor \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor ! \bigg\lceil -\frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rceil !}\left(\frac{1}{2}\right)^n
-\end{align*}
-\]</span></p>
-<p>ここでスターリングの公式より十分大きい正の整数 <span class="math inline">\(m\)</span> について</p>
-<p><span class="math display">\[
-m! \approx \sqrt{2\pi m} m^m\exp(-m)
-\]</span></p>
-<p>と近似できるので</p>
-<p><span class="math display">\[
-\begin{align*}
-&amp;\lim_{n\to\infty}\Pr(x - 2/\sqrt{n} &lt; X_n \leq x)\\
-    &amp;= \lim_{n\to\infty}\frac{n!}{\bigg\lfloor \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor ! \bigg\lceil -\frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rceil !}\left(\frac{1}{2}\right)^n\\
-    &amp;= \lim_{n\to\infty} \frac{1}{\sqrt{2\pi\left(\frac{n}{4}-\frac{x^2}{4}\right)}\left(1 - \frac{x^2}{n}\right)^{\frac{n}{2}}\left(1 + \frac{x}{\sqrt{n}}\right)^{\frac{\sqrt{n}}{2}x}\left(1 - \frac{x}{\sqrt{n}}\right)^{-\frac{\sqrt{n}}{2}x}}\left(\frac{1}{2}\right)^n\\
-    &amp;= \frac{1}{\sqrt{2\pi}\exp(-x^2/2)\exp(x^2/2)\exp(x^2/2)}\\
-    &amp;=\frac{1}{\sqrt{2\pi}}\exp(-x^2/2)\\[8pt]
-    &amp;= \phi(x)
-\end{align*}
-\]</span></p>
-<p><span class="math display">\[\tag*{\(\blacksquare\)}\]</span></p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 11.2</strong></span> <br></p>
+<p><span class="theorem-title"><strong>Theorem 13.2</strong></span> <br></p>
 <p>標準正規分布の確率密度関数を <span class="math inline">\(\phi(x)\)</span> とするとき，</p>
 <p><span class="math display">\[
 \begin{gather*}
@@ -610,8 +622,73 @@ Proof
 </div>
 </div>
 </div>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 13.3</strong></span> <br></p>
+<p>確率変数 <span class="math inline">\(X\sim N(\mu, \sigma^2)\)</span> のとし，<span class="math inline">\(f(x)\)</span> をその確率密度関数とする，このとき，</p>
+<p><span class="math display">\[
+\begin{gather*}
+\int_\mathbb R xf(x;\mu,\sigma^2) \mathrm{d}x = \mu\\
+\int_\mathbb R (x-\mu)^2f(x;\mu,\sigma^2) \mathrm{d}x = \sigma^2\\
+\end{gather*}
+\]</span></p>
+<p>が成立する．</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><strong> ▶&nbsp; location parameterについて</strong></p>
+<p><span class="math inline">\(z = x - \mu\)</span> と変数変換をすると，<span class="math inline">\(\frac{\mathrm{d}}{\mathrm{d}z}x = 1\)</span> より</p>
+<p><span class="math display">\[
+\begin{align*}
+\int_\mathbb R xf(x;\mu,\sigma^2) \mathrm{d}x
+    =&amp; \frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathbb R \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)x\,\mathrm{d}x\\
+    =&amp; \frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathbb R \exp\left(-\frac{z^2}{2\sigma^2}\right)(z +\mu)\,\mathrm{d}z\\
+    =&amp; \frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathbb R \underbrace{\exp\left(-\frac{z^2}{2\sigma^2}\right)z\mathrm{d}z}_{\text{偶関数}\times\text{奇関数}}\\
+     &amp;+ \frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathbb R \exp\left(-\frac{z^2}{2\sigma^2}\right)\mu\mathrm{d}z\\
+    =&amp; \mu
+\end{align*}
+\]</span></p>
+<p><strong> ▶&nbsp; scale parameterについて</strong></p>
+<p>確率密度関数より</p>
+<p><span class="math display">\[
+\int_\mathbb R \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\,\mathrm{d}x = \sqrt{2\pi\sigma^2}
+\]</span></p>
+<p>両辺について <span class="math inline">\(\sigma^2\)</span> で微分すると</p>
+<p><span class="math display">\[
+\begin{align*}
+\text{RHS}
+    &amp;= \frac{1}{2}\sqrt{2\pi}(\sigma^2)^{-\frac{1}{2}}\\
+\text{LHS}
+    &amp;= \int_\mathbb R \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\frac{(x-\mu)^2}{2}(\sigma^2)^{-2}\,\mathrm{d}x
+\end{align*}
+\]</span></p>
+<p>これを整理すると</p>
+<p><span class="math display">\[
+\begin{align*}
+\frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathbb R \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)(x-\mu)^2\,\mathrm{d}x = \sigma^2
+\end{align*}
+\]</span></p>
+<p>これは</p>
+<p><span class="math display">\[
+\mathbb E[(X -\mu)^2] = \sigma^2
+\]</span></p>
+<p>に相当する．</p>
+</div>
+</div>
+</div>
 <div id="exm-" class="custom_problem theorem example">
-<p><span class="theorem-title"><strong>Example 11.1</strong></span> <strong>: 標準正規分布の4次モーメントの導出</strong> <br></p>
+<p><span class="theorem-title"><strong>Example 13.1</strong></span> <strong>: 標準正規分布の4次モーメントの導出</strong> <br></p>
 <p><span class="math inline">\(X\sim N(0, 1)\)</span> の4次モーメントについて，ガンマ関数 <span class="math inline">\(\Gamma(1/2) = \sqrt{\pi}\)</span> を用いて以下のように計算できます．</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -679,7 +756,7 @@ Proof
 <h3 class="anchored" data-anchor-id="mgfと特性関数">MGFと特性関数</h3>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 11.3</strong></span> <strong>: 標準正規分布の積率母関数と特性関数</strong> <br></p>
+<p><span class="theorem-title"><strong>Theorem 13.4</strong></span> <strong>: 標準正規分布の積率母関数と特性関数</strong> <br></p>
 <p><span class="math inline">\(X\sim N(0, 1)\)</span> としたとき，積率母関数 <span class="math inline">\(M_Z(t)\)</span> 及び，特性関数 <span class="math inline">\(\varphi_Z(t)\)</span> は以下のようになる</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -690,7 +767,7 @@ M_Z(t) &amp;= \exp(t^2/2)\\
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -699,7 +776,7 @@ Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><span class="math display">\[
 \begin{align*}
@@ -756,7 +833,7 @@ M_Z(t)
 </div>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 11.4</strong></span> <strong>: MGF of non-standard normal distribution</strong> <br></p>
+<p><span class="theorem-title"><strong>Theorem 13.5</strong></span> <strong>: MGF of non-standard normal distribution</strong> <br></p>
 <p><span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> の積率母関数および特性関数は</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -767,7 +844,7 @@ M_X(t) &amp;= \exp\left(\mu t + \frac{1}{2}\sigma^2t^2\right)\\
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -776,7 +853,7 @@ Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(Z\sim N(0, 1)\)</span> とすると，<span class="math inline">\(Z = \sigma Z + \mu\)</span> と表せるので，</p>
 <p><span class="math display">\[
@@ -799,9 +876,32 @@ M_X(t) &amp;= \mathbb E[\exp(t(\sigma Z + \mu))]\\[5pt]
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof: 直接計算
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+\begin{align*}
+M_X(t)
+    &amp;= \frac{1}{\sqrt{2\pi\sigma^2}}\int_{\mathbb R}\exp(tx)\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\,\mathrm{d}x\\
+    &amp;= \frac{1}{\sqrt{2\pi\sigma^2}}\int_{\mathbb R}\exp\left(-\frac{(x-(t\sigma^2+\mu))^2}{2\sigma^2}\right)\exp\left(t\mu + \frac{t^2\sigma^2}{2}\right)\,\mathrm{d}x\\
+    &amp;= \exp\left(t\mu + \frac{t^2\sigma^2}{2}\right)
+\end{align*}
+\]</span></p>
+</div>
+</div>
+</div>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 11.5</strong></span> <br></p>
+<p><span class="theorem-title"><strong>Theorem 13.6</strong></span> <br></p>
 <p><span class="math inline">\(X\sim N(\mu, \sigma^2)\)</span> とする．定数 <span class="math inline">\(a, b\)</span> に対して</p>
 <p><span class="math display">\[
 Y = aX + b
@@ -810,7 +910,7 @@ Y = aX + b
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -819,7 +919,7 @@ Proof
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><span class="math inline">\(N(a\mu + b, a^2\sigma^2)\)</span> に従う確率変数の特性関数は</p>
 <p><span class="math display">\[
@@ -855,7 +955,7 @@ Z&amp; \sim F
 <p>二項分布，負の二項分布，ポアソン分布，正規分布などは，再生性を持つことがしられています．</p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 11.6</strong></span> <strong>: 正規分布の再生性</strong> <br></p>
+<p><span class="theorem-title"><strong>Theorem 13.7</strong></span> <strong>: 正規分布の再生性</strong> <br></p>
 <p>正規分布は，location parameter, scale parameter両方について再生性を持つ．つまり，</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -866,7 +966,7 @@ Z&amp; \sim F
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -875,7 +975,7 @@ Proof: MGFを用いた証明
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>確率変数 <span class="math inline">\(X, Y\)</span> は独立なので</p>
 <p><span class="math display">\[
@@ -894,7 +994,7 @@ X+Y\sim N(\mu_x + \mu_y, \sigma^2_x + \sigma^2_y)
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -903,7 +1003,7 @@ Proof: 畳み込みを用いた証明
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse show">
+<div id="callout-9" class="callout-9-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>確率変数 <span class="math inline">\(X, Y\)</span> のそれぞれの密度関数を <span class="math inline">\(f_X(x), f_Y(y)\)</span> で表したとき，<span class="math inline">\(Z =X+Y\)</span> の確率密度関数 <span class="math inline">\(p(z)\)</span> は畳み込みにより以下のように表せます．</p>
 <p><span class="math display">\[
@@ -938,6 +1038,46 @@ X+Y\sim N(\mu_x + \mu_y, \sigma^2_x + \sigma^2_y)
 </div>
 </div>
 </div>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 13.8</strong></span> <strong>: <span class="math inline">\(n\)</span>個の正規分布の再生性</strong> <br></p>
+<p>確率変数 <span class="math inline">\(X_1, \cdots, X_n\)</span> が互いに独立に <span class="math inline">\(N(\mu_i, \sigma^2_i)\)</span> に従うとする． <span class="math inline">\((a_1, \cdots, a_n, b)\)</span>を定数としたとき，確率変数 <span class="math inline">\(Y = \sum_i a_iX_i + b\)</span> について，</p>
+<p><span class="math display">\[
+Y\sim N(a_1\mu_1 + \cdots + a_n\mu_n +b, a_1^2\sigma^2 + \cdots, + a_n^s\sigma^2)
+\]</span></p>
+<p>が成立する．</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-10" class="callout-10-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(a_iX_i \sim N(a_i\mu_i, a_i^2\sigma^2)\)</span> 及び，互いに独立な確率変数の合計和なので</p>
+<p><span class="math display">\[
+\begin{align*}
+M_Y(t)
+    &amp;= \mathbb E[\exp(tY)]\\[5pt]
+    &amp;= \mathbb E[\exp(t(a_1X_1 + \cdots + a_nX_n+b))]\\
+    &amp;= \exp(tb)\prod_{i=1}^n\exp\left[ta_i\mu_i + \frac{t^2a_i^2\sigma_i^2}{2}\right]\\
+    &amp;= \exp\left[(a_1\mu_i + \cdots+a_1\mu_n + b)t + \frac{t^2(a_1^2\sigma_1^2 + \cdots + a_n^2\sigma_n^2)}{2}\right]
+\end{align*}
+\]</span></p>
+<p>これは確率分布 <span class="math inline">\(N(a_1\mu_1 + \cdots, + a_n\mu_n +b, a_1^2\sigma^2 + \cdots, + a_n^s\sigma^2)\)</span> の積率母関数と一致するので</p>
+<p><span class="math display">\[
+Y\sim N(a_1\mu_1 + \cdots + a_n\mu_n +b, a_1^2\sigma^2 + \cdots, + a_n^s\sigma^2)
+\]</span></p>
+<p>が成立する．</p>
+</div>
+</div>
+</div>
 </section>
 <section id="differential-entropy" class="level3">
 <h3 class="anchored" data-anchor-id="differential-entropy">Differential Entropy</h3>
@@ -965,12 +1105,12 @@ X+Y\sim N(\mu_x + \mu_y, \sigma^2_x + \sigma^2_y)
 <p><span class="math display">\[\tag*{\(\blacksquare\)}\]</span></p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 11.7</strong></span> <br></p>
+<p><span class="theorem-title"><strong>Theorem 13.9</strong></span> <br></p>
 <p>平均 <span class="math inline">\(\mu\)</span>, 分散 <span class="math inline">\(\sigma^2\)</span> をもつ確率分布のうち，正規分布は微分エントロピーを最大にする分布である．</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
@@ -979,7 +1119,7 @@ Proof: ラグランジュの未定係数法
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse show">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p>（注意: 制約付き最大化問題を解くにあたって，ラグランジュの未定係数法が使用できると仮定してます）</p>
 <p><strong> ▶&nbsp; 汎関数の定義</strong></p>
@@ -1088,6 +1228,41 @@ p^*(x) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\rig
 <li><span class="math inline">\(\lambda_2 = 0\)</span> より location paramter <span class="math inline">\(\mu\)</span> を変化させても，微分エントロピーは限界的には増えないことが分かります</li>
 <li><span class="math inline">\(\lambda_3 &lt; 0\)</span> より scale paramter <span class="math inline">\(\sigma^2\)</span> を増大させると，微分エントロピーは限界的に増大することも分かります</li>
 </ul>
+</div>
+</section>
+<section id="他の確率分布との関係性" class="level3">
+<h3 class="anchored" data-anchor-id="他の確率分布との関係性">他の確率分布との関係性</h3>
+<div id="exm-normal-binom-relation" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 13.2</strong></span> <strong>: 二項分布の極限分布としての正規分布&lt;</strong> <br></p>
+<p><span class="math inline">\(n\)</span> を正の整数として，<span class="math inline">\(Y_n \sim \operatorname{Binom}(n, 1/2)\)</span> とし，</p>
+<p><span class="math display">\[
+X_n = \frac{Y_n - n/2}{\sqrt{n}/2}
+\]</span></p>
+<p>という確率変数を考えます．<span class="math inline">\(X_n \in (x - 2/\sqrt{n}, x]\)</span> となるような確率を考えてみると</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;\Pr(x - 2/\sqrt{n} &lt; X_n \leq x)\\
+    &amp;= \Pr\left(\frac{\sqrt{n}}{2}x + \frac{n}{2} - 1 &lt; Y_n \leq \frac{\sqrt{n}}{2}x + \frac{n}{2}\right)\\
+    &amp;= \Pr\bigg(\bigg\lfloor Y_n = \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor\bigg)\\
+    &amp;= \frac{n!}{\bigg\lfloor \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor ! \bigg\lceil -\frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rceil !}\left(\frac{1}{2}\right)^n
+\end{align*}
+\]</span></p>
+<p>ここでスターリングの公式より十分大きい正の整数 <span class="math inline">\(m\)</span> について</p>
+<p><span class="math display">\[
+m! \approx \sqrt{2\pi m} m^m\exp(-m)
+\]</span></p>
+<p>と近似できるので</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;\lim_{n\to\infty}\Pr(x - 2/\sqrt{n} &lt; X_n \leq x)\\
+    &amp;= \lim_{n\to\infty}\frac{n!}{\bigg\lfloor \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor ! \bigg\lceil -\frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rceil !}\left(\frac{1}{2}\right)^n\\
+    &amp;= \lim_{n\to\infty} \frac{1}{\sqrt{2\pi\left(\frac{n}{4}-\frac{x^2}{4}\right)}\left(1 - \frac{x^2}{n}\right)^{\frac{n}{2}}\left(1 + \frac{x}{\sqrt{n}}\right)^{\frac{\sqrt{n}}{2}x}\left(1 - \frac{x}{\sqrt{n}}\right)^{-\frac{\sqrt{n}}{2}x}}\left(\frac{1}{2}\right)^n\\
+    &amp;= \frac{1}{\sqrt{2\pi}\exp(-x^2/2)\exp(x^2/2)\exp(x^2/2)}\\
+    &amp;=\frac{1}{\sqrt{2\pi}}\exp(-x^2/2)\\[8pt]
+    &amp;= \phi(x)
+\end{align*}
+\]</span></p>
+<p><span class="math display">\[\tag*{\(\blacksquare\)}\]</span></p>
 </div>
 
 
@@ -1671,8 +1846,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/probability_distribution/hypergeometric.html" class="pagination-link" aria-label="超幾何分布">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">超幾何分布</span></span>
+      <a href="../../posts/probability_distribution/continuous_uniform_dis.html" class="pagination-link" aria-label="連続一様分布">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">連続一様分布</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

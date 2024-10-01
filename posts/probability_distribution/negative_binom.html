@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2024-09-22">
+<meta name="dcterms.date" content="2024-09-28">
 
-<title>4&nbsp; 母関数 – Statistics for Regression Monkeys</title>
+<title>10&nbsp; 負の二項分布 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,8 +32,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/statistics101/order_statistic.html" rel="next">
-<link href="../../posts/statistics101/expectation.html" rel="prev">
+<link href="../../posts/probability_distribution/hypergeometric.html" rel="next">
+<link href="../../posts/probability_distribution/geometric_dist.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -134,7 +134,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistics101/chapter_header.html">統計学入門</a></li><li class="breadcrumb-item"><a href="../../posts/statistics101/moment_generating_function.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">母関数</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/negative_binom.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">負の二項分布</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -219,7 +219,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/statistics101/moment_generating_function.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../posts/statistics101/moment_generating_function.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
   </div>
 </li>
@@ -266,7 +266,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/probability_distribution/negative_binom.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/probability_distribution/negative_binom.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
   </div>
 </li>
@@ -429,16 +429,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#確率母関数" id="toc-確率母関数" class="nav-link active" data-scroll-target="#確率母関数">確率母関数</a></li>
+  <li><a href="#負の二項分布の性質" id="toc-負の二項分布の性質" class="nav-link active" data-scroll-target="#負の二項分布の性質">負の二項分布の性質</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistics101/moment_generating_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/probability_distribution/negative_binom.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistics101/chapter_header.html">統計学入門</a></li><li class="breadcrumb-item"><a href="../../posts/statistics101/moment_generating_function.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">母関数</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/negative_binom.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">負の二項分布</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">母関数</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">負の二項分布</span></h1>
 </div>
 
 
@@ -455,7 +455,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-09-22</p>
+      <p class="date">2024-09-28</p>
     </div>
   </div>
   
@@ -473,66 +473,110 @@ window.Quarto = {
 </header>
 
 
-<p>確率分布を特徴づける関数として母関数という関数があります．母関数には確率母関数，積率母関数，特性関数，キュムラント母関数という種類があります． 詳しくは後ほど説明しますが，母関数は全てのモーメントの情報を含んでいるので</p>
-<ul>
-<li>モーメントの計算が簡単になる</li>
-<li>母関数が一致する２つの分布は同じものと考えることができる</li>
-</ul>
-<p>という数理統計学上便利な性質を母関数は持っています．</p>
-<section id="確率母関数" class="level2">
-<h2 class="anchored" data-anchor-id="確率母関数">確率母関数</h2>
+<p>幾何分布やファーストサクセス分布では，1回目の成功を得るまでの失敗の回数という確率変数を扱いましたが， それを <span class="math inline">\(k\)</span> 回目の成功を得るまでの失敗の回数という確率変数に一般化した分布のことを<strong>負の二項分布(パスカル分布)</strong>といいます．</p>
+<section id="負の二項分布の性質" class="level2">
+<h2 class="anchored" data-anchor-id="負の二項分布の性質">負の二項分布の性質</h2>
 <div class="blog-custom-border">
-<p><strong>Def: 確率母関数(probability generating function)</strong> <br></p>
-<p>確率変数 <span class="math inline">\(X\)</span> の標本空間を非負の整数全体 <span class="math inline">\(\mathcal{X} = \{0, 1, 2, \cdots\}\)</span> とし， <span class="math inline">\(p(k = \Pr(X=k))\)</span> とする． <span class="math inline">\(\vert s\vert\leq 1\)</span> となる <span class="math inline">\(s\)</span> に対して，</p>
+<p><strong>Def: 負の二項分布</strong> <br></p>
+<p>確率変数 <span class="math inline">\(X\)</span> が成功回数 <span class="math inline">\(r\in\mathbb N_+\)</span>, 成功確率 <span class="math inline">\(0&lt;p&lt;1\)</span> の負の二項分布に従うとき，標本空間は <span class="math inline">\(\mathcal{X} = \{0, 1, \cdots, n\}\)</span>，確率関数 <span class="math inline">\(f_X(x)\)</span> は</p>
 <p><span class="math display">\[
-G_X(s) = \mathbb E[s^x] = \sum_{k=0}^\infty s^kp(k)
+f_X(x) = \bigg\{\begin{array}{c}{}_{r+x-1}C_x p^r(1-p)^x &amp; x \in \mathcal{X}\\0 &amp; \text{otherwise}\end{array}
 \]</span></p>
-<p>を確率母関数という．</p>
+<p>このとき，<span class="math inline">\(X\sim \operatorname{NBin}(r,p)\)</span> と表す．</p>
 </div>
-<p><span class="math inline">\(p(x)\geq 0, \sum p(k)=1\)</span> より <span class="math inline">\(\vert s\vert \leq 1\)</span> の範囲で <span class="math inline">\(\sum_{k=0}^\infty s^kp(k)\)</span> の収束が保証されるので， 「<span class="math inline">\(\vert s\vert\leq 1\)</span> となる <span class="math inline">\(s\)</span> に対して」という条件が付きます．</p>
-<p><strong> ▶&nbsp; PGFと離散確率関数</strong></p>
-<p>PGFの定義より <span class="math inline">\(p(0) = G_X(0), p(1) = G_X^\prime(0), p(2) = \frac{1}{2!}G_X^{\prime\prime}(0)\)</span> となります．一般に，</p>
+<p><strong> ▶&nbsp; 確率関数の和</strong></p>
+<p><span class="math inline">\(1/(1-q)\)</span> のマクローリン展開より，</p>
 <p><span class="math display">\[
-p(k) = \frac{1}{k!}\frac{\mathrm{d}^k}{\mathrm{s}^k}G_X(s)\bigg|_{s=0}
+\frac{1}{1-q}=1 + q + q^2 +\cdots = \sum_{k=0}^\infty q^k
 \]</span></p>
-<p>また，<span class="math inline">\(G_X(s) = \sum_{k=0}^\infty s^kp(k)\)</span> より，</p>
+<p>両辺を <span class="math inline">\(q\)</span> について微分すると</p>
 <p><span class="math display">\[
-G_X(1) = 1
+\frac{1}{(1-q)^2} =  \sum_{k=1}^\infty kq^{k-1} =\sum_{k=0}^\infty (k+1)q^{k}
 \]</span></p>
-<p>になることも分かる．このように確率母関数が与えられれば，<span class="math inline">\(G_X(s)\)</span> を <span class="math inline">\(k\)</span> 回微分し，<span class="math inline">\(s=0\)</span> と置くことで，<span class="math inline">\(p(k)\)</span> を再現することができることから，非負整数上の確率分布とその確率母関数は１対１に対応していることがわかります．</p>
-<div id="exm-" class="custom_problem theorem example">
-<p><span class="theorem-title"><strong>Example 4.1</strong></span> <strong>: PGFから確率関数を計算する</strong> <br></p>
-<p>確率変数 <span class="math inline">\(X\)</span> について，PGFが <span class="math inline">\(G_X(s) = \frac{s}{5}(2 + 3s^2)\)</span> と与えられてるとします． このとき，</p>
+<p>これを <span class="math inline">\(r-1\)</span> 回繰り返すと</p>
+<p><span class="math display">\[
+(r-1)!\frac{1}{(1-q)^r} =  \sum_{k=0}^\infty \frac{(k+r-1)!}{k!}q^{k}
+\]</span></p>
+<p>従って，</p>
+<div class="math display" style="overflow: auto">
+<p><span id="eq-comb-seq"><span class="math display">\[
+\frac{1}{(1-q)^r} = \sum_{k=0}^\infty \frac{(k+r-1)!}{(r-1)!k!}q^{k}
+\tag{10.1}\]</span></span></p>
+</div>
+<p>これを確率関数の和に代入すると</p>
 <p><span class="math display">\[
 \begin{align*}
-G_X(0) &amp;= \Pr(X=0) = 0\\
-G_X^\prime(0) &amp;= \Pr(X=1) = \frac{2}{5}\\
-\frac{1}{2!}G_X^{\prime\prime}(0) &amp;= \Pr(X=2) = 0\\
-\frac{1}{3!}G_X^{\prime\prime\prime}(0) &amp;= \Pr(X=3) = \frac{3}{5}\\
-G_X^{(r)}(0) &amp;= 0 \quad\forall r\geq 4
+\sum_{x=0}^\infty f_X(x)
+    &amp;= \sum_{x=0}^\infty {}_{r-1 +x}C_x p^r(1-p)^x\\
+    &amp;= p^r\sum_{x=0}^\infty {}_{r-1 + x}C_x (1-p)^x\\
+    &amp;= p^r\sum_{x=0}^\infty \frac{(r-1 + x)!}{(r-1)!x!}q^{x}\\
+    &amp;= p^r\frac{1}{(1-q)^r}\\
+    &amp;= 1
+\end{align*}
+\]</span></p>
+<p><span class="math display">\[\tag*{\(\blacksquare\)}\]</span></p>
+<p><strong> ▶&nbsp; 期待値の導出</strong></p>
+<p><span class="math display">\[
+\begin{align*}
+\sum_{x=0}^\infty xf_X(x)
+    &amp;= p^r\sum_{x=0}^\infty {}_{r+x-1}C_x x(1-p)^x\\
+    &amp;= rp^rq\sum_{x=1}^\infty \frac{(x+r-1)!}{(r)!(x-1)!}q^{x-1}\\
+    &amp;= rp^rq\sum_{k=0}^\infty \frac{(r+k)!}{(r)!k!}q^{k}\\
+    &amp;= rp^rq\frac{1}{(1-q)^{r+1}}\\
+    &amp;= r\frac{1-p}{p}
+\end{align*}
+\]</span></p>
+<p><span class="math display">\[\tag*{\(\blacksquare\)}\]</span></p>
+<p><strong> ▶&nbsp; 微分を用いた期待値の導出</strong></p>
+<p><a href="#eq-comb-seq" class="quarto-xref">Equation&nbsp;<span>10.1</span></a> の両辺を <span class="math inline">\(q\)</span> について微分すると</p>
+<div class="math display" style="overflow: auto">
+<p><span id="eq-comb-seq-first"><span class="math display">\[
+\begin{align*}
+r\frac{1}{(1-q)^{r+1}} = \sum_{x=1}^\infty x\frac{(x+r-1)!}{(r-1)!x!}q^{x-1}
+\end{align*}
+\tag{10.2}\]</span></span></p>
+</div>
+<p>これを整理すると</p>
+<p><span class="math display">\[
+r\frac{qp^r}{(1-q)^{r+1}} = \sum_{k=0}^\infty k\frac{(k+r-1)!}{(r-1)!k!}q^{k}p^r
+\]</span></p>
+<p>RHSは期待値と一致するので</p>
+<p><span class="math display">\[
+\mathbb E[X] = \frac{r(1-p)}{p}
+\]</span></p>
+<p><span class="math display">\[\tag*{\(\blacksquare\)}\]</span></p>
+<p><strong> ▶&nbsp; 分散の導出</strong></p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[X(X-1)]
+    &amp;= \sum_{x=0}^\infty x(x-1) \frac{(r-1 + x)!}{(r-1)!x!}q^{x}p^r\\
+    &amp;= p^rq^2 \sum_{x=2}^\infty\frac{(r-1 + x)!}{(r-1)!(x-2)!}q^{x-2}\\
+    &amp;= r(r+1)p^rq^2 \sum_{k=0}^\infty\frac{(r+1 + k)!}{(r+1)!k!}q^{k}\\
+    &amp;= r(r+1)q^2\frac{p^r}{p^{r+2}}\\
+    &amp;= r(r+1)\frac{q^2}{p^2}
 \end{align*}
 \]</span></p>
 <p>従って，</p>
 <p><span class="math display">\[
-X = \bigg\{\begin{array}{c}
-    1 &amp;\text{with probability} \frac{2}{5}\\
-    3 &amp;\text{with probability} \frac{3}{5}
-\end{array}
+\begin{align*}
+\operatorname{Var}(X)
+    &amp;= r(r+1)\frac{q^2}{p^2} + r\frac{1-p}{p}\left[1 - r\frac{1-p}{p}\right]\\
+    &amp;= r\frac{(1-p)}{p^2}
+\end{align*}
 \]</span></p>
-<p>となることがわかります</p>
+<div class="blog-custom-border">
+<p><strong>📘 REMARKS</strong> <br></p>
+<ul>
+<li>負の二項分布 <span class="math inline">\(\operatorname{NBin}(r,p)\)</span> の期待値と分散は，幾何分布 <span class="math inline">\(\operatorname{Geo}\)</span> の <span class="math inline">\(r\)</span> 倍と思えば理解しやすいです</li>
+</ul>
 </div>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 4.1</strong></span> <strong>: PGFと階乗モーメント</strong> <br></p>
-<p>確率変数 <span class="math inline">\(X\)</span> について，PGFが <span class="math inline">\(G_X(s)\)</span> と与えられているとき，</p>
-<div class="math display" style="overflow: auto">
+<p><span class="theorem-title"><strong>Theorem 10.1</strong></span> <strong>: 積率母関数</strong> <br></p>
+<p><span class="math inline">\(X\sim\operatorname{NBin}(r, p)\)</span> の積率母関数は次のように表せる，</p>
 <p><span class="math display">\[
-\begin{align*}
-&amp;\mathbb E[X] = G_X^\prime(1)\tag{a}\\
-&amp;\mathbb E[X(X-1)\cdots(X-k)] = G_X^{(k)}(1)\tag{b}
-\end{align*}
+M_X(t) = p^r[1 - (1-p)e^t]^{-r} \quad \operatorname{s.t.} \, t &lt; \log\frac{1}{1-p}
 \]</span></p>
-</div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -541,135 +585,25 @@ X = \bigg\{\begin{array}{c}
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Proof
+Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p><strong> ▶&nbsp; (a)の証明</strong></p>
 <p><span class="math display">\[
 \begin{align*}
-G^\prime_X(s) = \sum_{x=0}^\infty x s^{x-1}p(x)
+M_X(t)
+    &amp;= \mathbb E[\exp(tX)]\\
+    &amp;= \sum \exp(tx)\frac{(r-1+x)!}{(r-1)!x!}q^xp^r
 \end{align*}
 \]</span></p>
-<p>従って，</p>
+<p>このとき，<span class="math inline">\(0 &lt; e^tq &lt; 1\)</span>, つまり，<span class="math inline">\(t &lt; \log(\frac{1}{q})\)</span> であるならば</p>
 <p><span class="math display">\[
-\begin{align*}
-G^\prime_X(1)
-    &amp;= \sum_{x=0}^\infty x p(x)\\
-    &amp;= \mathbb E[X]
-\end{align*}
-\]</span></p>
-<p><strong> ▶&nbsp; (b)の証明</strong></p>
-<p><span class="math display">\[
-G^{(k)}_X(s) = \sum_{x=0}^\infty x(x-1)\cdots(x-k) s^{x-k}p(x)
-\]</span></p>
-<p>従って，</p>
-<p><span class="math display">\[
-G^{(k)}_X(1) = \mathbb E[X(X-1)\cdots(X-k)]
+M_X(t) = p^r [1 - e^tq]^{-r}
 \]</span></p>
 </div>
 </div>
-</div>
-<div class="blog-custom-border">
-<div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 4.2</strong></span> <strong>: 独立な確率変数の和についてのPGF</strong> <br></p>
-<p>互いに独立な確率変数 <span class="math inline">\(X_1, \cdots, X_n\)</span> について，<span class="math inline">\(Y = \sum_{i=1}^nX_i\)</span> と定義する．このとき，</p>
-<p><span class="math display">\[
-G_Y(s) = \prod_{i=1}^nG_{X_i}(s)
-\]</span></p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Proof
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[
-\begin{align*}
-G_Y(s)
-    &amp;= \mathbb E[s^{(X_1+\cdots+X_n)}]\\
-    &amp;= \mathbb E[s^{X_1}\cdots s^{X_n}]\\
-    &amp;= \mathbb E[s^{X_1}]\cdots \mathbb E[s^{X_n}] \because\text{ 互いに独立}\\
-    &amp;=\prod_{i=1}^nG_{X_i}(s)
-\end{align*}
-\]</span></p>
-</div>
-</div>
-</div>
-<div class="blog-custom-border">
-<div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 4.3</strong></span> <br></p>
-<p>確率変数列 <span class="math inline">\(X_1, X_2, \cdots \overset{\mathrm{iid}}{\sim}  F\)</span> とし，各確率変数 <span class="math inline">\(X_i\)</span> の確率母関数を <span class="math inline">\(G_X(s)\)</span> で表すとする． <span class="math inline">\(\{X_i\}_{i=1}\)</span> と互いに独立な確率変数 <span class="math inline">\(N\)</span> を考え，新たに以下の形で確率変数 <span class="math inline">\(T_N\)</span> を定義する:</p>
-<p><span class="math display">\[
-T_N = X_1 + \cdots + X_N
-\]</span></p>
-<p>このとき，<span class="math inline">\(T_N\)</span> についての確率母関数は</p>
-<p><span class="math display">\[
-G_{T_N}(s) = G_N(G_X(s))
-\]</span></p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note no-icon callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Proof
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p><span class="math display">\[
-\begin{align*}
-G_{T_N}(s)
-&amp;= \mathbb{E}(s^{T_N})\\
-&amp;= \mathbb{E}\left( s^{X_1 + \cdots + X_N} \right)\\
-&amp;= \mathbb{E}_N \left\{ \mathbb{E} \left( s^{X_1 + \cdots + X_N} \mid N \right) \right\} \quad \text{(conditional expectation)}\\
-&amp;= \mathbb{E}_N \left\{ \mathbb{E} \left( s^{X_1} \cdots s^{X_N} \mid N \right) \right\}\\
-&amp;= \mathbb{E}_N \left\{ \mathbb{E} \left( s^{X_1} \cdots s^{X_N} \right) \right\} \quad (X_i \text{と} N \text{は互いに独立})\\
-&amp;= \mathbb{E}_N \left\{ \mathbb{E} \left( s^{X_1} \right) \cdots \mathbb{E} \left( s^{X_N} \right) \right\} \quad (X_i \text{は互いに独立})\\
-&amp;= \mathbb{E}_N \left\{ \left( G_X(s) \right)^N \right\}\\
-&amp;= G_N\left( G_X(s) \right) \quad (G_N\text{の定義より})
-\end{align*}
-\]</span></p>
-</div>
-</div>
-</div>
-<div id="exm-" class="custom_problem theorem example">
-<p><span class="theorem-title"><strong>Example 4.2</strong></span> <strong>: ATMの引き出し金額</strong> <br></p>
-<p>とあるATMでお金を引き出す人の一日あたりの合計人数 <span class="math inline">\(N\)</span> という確率変数を考える． ATMで各個人が引き出す金額 <span class="math inline">\(X_i\)</span> は 互いに独立に 平均 <span class="math inline">\(\mu\)</span>, 分散 <span class="math inline">\(\sigma^2\)</span>, PGF <span class="math inline">\(G_X(s)\)</span> の同一分布に従うとします．</p>
-<p>このとき，一日あたりのATM引き出し金額 <span class="math inline">\(T_N = X_1 + \cdots + X_N\)</span> について，</p>
-<p><span class="math display">\[
-\begin{align*}
-\mathbb E[T_n]
-    &amp;= G_N^\prime(G_X(1))\cdot G_X^\prime(1)\\
-    &amp;= G_N^\prime(1) \cdot \mathbb E[X_i] \quad\because G_X(1) = 1\\
-    &amp;= \mathbb E[N] \cdot \mathbb E[X_i]
-\end{align*}
-\]</span></p>
-<p>と期待値を表すことができる．</p>
-</div>
-<div class="blog-custom-border">
-<p><strong>📘 REMARKS</strong> <br></p>
-<p>積率母関数と確率母関数について以下の関係が知られています:</p>
-<p><span class="math display">\[
-\begin{align*}
-G_X(t) &amp;= M_X(\log(t))\\
-M_X(t) &amp;= G_X(\exp(t))
-\end{align*}
-\]</span></p>
-<p>以上より，一方が求まっていれば，それをもとにもう一方を求めることができることがわかります．</p>
 </div>
 
 
@@ -1252,13 +1186,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/statistics101/expectation.html" class="pagination-link" aria-label="期待値">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">期待値</span></span>
+      <a href="../../posts/probability_distribution/geometric_dist.html" class="pagination-link" aria-label="幾何分布">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">幾何分布</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/statistics101/order_statistic.html" class="pagination-link" aria-label="順序統計量">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">順序統計量</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/probability_distribution/hypergeometric.html" class="pagination-link" aria-label="超幾何分布">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">超幾何分布</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1279,7 +1213,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistics101/moment_generating_function.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/probability_distribution/negative_binom.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

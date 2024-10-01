@@ -22,10 +22,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -92,6 +126,25 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script type="text/javascript">
+window.PlotlyConfig = {MathJaxConfig: 'local'};
+if (window.MathJax && window.MathJax.Hub && window.MathJax.Hub.Config) {window.MathJax.Hub.Config({SVG: {font: "STIX-Web"}});}
+if (typeof require !== 'undefined') {
+require.undef("plotly");
+requirejs.config({
+    paths: {
+        'plotly': ['https://cdn.plot.ly/plotly-2.32.0.min']
+    }
+});
+require(['plotly'], function(Plotly) {
+    window._Plotly = Plotly;
+});
+}
+</script>
+
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -266,14 +319,26 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/negative_binom.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/hypergeometric.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/continuous_uniform_dis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/normal_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
   </div>
 </li>
       </ul>
@@ -290,7 +355,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
       </ul>
@@ -307,7 +372,30 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../posts/estimation/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">統計的推定</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/estimation/method-of-moments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/estimation/m-estimator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
   </div>
 </li>
       </ul>
@@ -316,15 +404,15 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="../../posts/ExplanatoryDataAnalysis/chapter_header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Explanatory Data Analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
       </ul>
@@ -341,39 +429,45 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="../../posts/mathematical_appendix/chapter_header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Mathematical Appendix</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-9" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-9" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/mathematical_appendix/permutation_combination.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">二項級数</span></span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/complex_number.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/gamma_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/jensen_inequality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/Lhopitals_rule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
   </div>
 </li>
       </ul>
@@ -388,7 +482,11 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#二項分布の性質" id="toc-二項分布の性質" class="nav-link active" data-scroll-target="#二項分布の性質">二項分布の性質</a></li>
+  <li><a href="#ベルヌーイ分布の性質" id="toc-ベルヌーイ分布の性質" class="nav-link active" data-scroll-target="#ベルヌーイ分布の性質">ベルヌーイ分布の性質</a></li>
+  <li><a href="#二項分布の性質" id="toc-二項分布の性質" class="nav-link" data-scroll-target="#二項分布の性質">二項分布の性質</a>
+  <ul class="collapse">
+  <li><a href="#ポワソン分布との関係" id="toc-ポワソン分布との関係" class="nav-link" data-scroll-target="#ポワソン分布との関係">ポワソン分布との関係</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/probability_distribution/binomial_dist.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -421,7 +519,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-09-27</p>
+      <p class="date-modified">2024-10-01</p>
     </div>
   </div>
     
@@ -432,10 +530,119 @@ window.Quarto = {
 </header>
 
 
+<section id="ベルヌーイ分布の性質" class="level2">
+<h2 class="anchored" data-anchor-id="ベルヌーイ分布の性質">ベルヌーイ分布の性質</h2>
+<div class="blog-custom-border">
+<p><strong>Def: ベルヌーイ分布</strong> <br></p>
+<p>確率変数 <span class="math inline">\(X\)</span> の確率関数 <span class="math inline">\(f_X(x)\)</span> が次の条件を満たすとき，ベルヌーイ分布に従うという:</p>
+<p><span class="math display">\[
+f_X(x) = \bigg\{\begin{array}{c}p^x(1-p)^{1-x} &amp; x = 0, 1\\ 0 &amp; \text{otherwise}\end{array}
+\]</span></p>
+<p>ただし，<span class="math inline">\(0 &lt; p &lt; 1\)</span> とする．</p>
+</div>
+<p>標本空間 <span class="math inline">\(\mathcal{X} = \{0, 1\}\)</span> となるような確率変数をベルヌーイ確率変数と呼んだりします． ベルヌーイ確率変数は，車を購入するか否か，現在の与党を支持するか否か，といったYes/Noクエッションの場面などで登場したりします．</p>
+<p>より一般的にいうと，事象 <span class="math inline">\(A\)</span> に対して指示関数を</p>
+<p><span class="math display">\[
+I_A(\omega) = \bigg\{\begin{array}{c}1 &amp; (\omega \in A)\\ 0 &amp; (\omega\not\in A)\end{array}
+\]</span></p>
+<p>と定義すると，<span class="math inline">\(\Pr(A) = p\)</span> をパラメーターとするベルヌーイ確率変数になります．</p>
+<p><strong> ▶&nbsp; 期待値，分散，MGF</strong></p>
+<p>確率変数 <span class="math inline">\(X \sim \operatorname{Bernoulli}(p)\)</span> とするとき，</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[X] &amp;= p\\
+\operatorname{Var}(X) &amp;= p(1-p)\\
+G_X(s) &amp;= (1-p) + ps\\
+M_X(t) &amp;= (1-p) + p\exp(t), \quad (-\infty &lt; t &lt; \infty)\\
+\varphi(t) &amp;= (1-p) + p\exp(it)
+\end{align*}
+\]</span></p>
+</section>
 <section id="二項分布の性質" class="level2">
 <h2 class="anchored" data-anchor-id="二項分布の性質">二項分布の性質</h2>
+<p>成功確率が <span class="math inline">\(p\)</span> のベルヌーイ試行を独立に <span class="math inline">\(n\)</span> 回繰り返したときの成功の回数を <span class="math inline">\(X\)</span> で表したとき，この確率変数 <span class="math inline">\(X\)</span> は二項分布に従います．</p>
+<div class="blog-custom-border">
+<p><strong>Def: 二項分布(Binomial distribution)</strong> <br></p>
+<p>確率変数 <span class="math inline">\(X\)</span> が試行回数 <span class="math inline">\(n\in\mathbb N\)</span>, 成功確率 <span class="math inline">\(0&lt;p&lt;1\)</span> の二項分布に従うとき，標本空間は <span class="math inline">\(\mathcal{X} = \{0, 1, \cdots, n\}\)</span>，確率関数 <span class="math inline">\(f_X(x)\)</span> は</p>
+<p><span class="math display">\[
+f_X(x) = \bigg\{\begin{array}{c}{}_nC_x p^x(1-p)^{n-x} &amp; x \in \mathcal{X}\\0 &amp; \text{otherwise}\end{array}
+\]</span></p>
+<p>このとき，<span class="math inline">\(X\sim \operatorname{Bin}(n,p)\)</span> と表す．</p>
+</div>
+<p>二項分布は単一の分布ではなく，特定の <span class="math inline">\(n, p\)</span> に対応する分布の集合です．このような意味で二項分布は<strong>分布族(family of distribution)</strong>を なしているといいます．分布族において，個々の分布を指定するものを分布族のパラメーターと言います．</p>
+<p><strong> ▶&nbsp; 期待値の導出</strong></p>
+<p>成功確率が <span class="math inline">\(p\)</span> のベルヌーイ試行を独立に <span class="math inline">\(n\)</span> 回繰り返したときの合計が二項分布に従う確率関数なので， 各独立のベルヌーイ確率変数を <span class="math inline">\(X_i\)</span> と表すと</p>
+<p><span class="math display">\[
+X = \sum_{i=1}^n X_i
+\]</span></p>
+<p>従って，期待値の線型性より</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[X] &amp;= \mathbb E[\sum_{i=1}^n X_i]\\
+             &amp;= \sum_{i=1}^n \mathbb E[X_i]\\
+             &amp;= np
+\end{align*}
+\]</span></p>
+<p>または，二項分布の定義通りに，<span class="math inline">\(q = 1- p\)</span> とすると</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb E[X]
+    &amp;= \sum_{k=0}^n k \frac{n!}{k!(n-k)!}p^kq^{n-k}\\
+    &amp;= np\sum_{k=1}^n \frac{(n-1)!}{(k-1)!((n-1)-(k-1))!}p^{k-1}q^{n-1-(k-1)}\\
+    &amp;= np\sum_{l=1}^{n-1} \frac{(n-1)!}{l!((n-1)-l)!}p^{l}q^{n-1-l}\\
+    &amp;= np(p+q)^{n-1}\\[5pt]
+    &amp;= np
+\end{align*}
+\]</span></p>
+<p><strong> ▶&nbsp; 二項定理を用いた期待値の導出</strong></p>
+<p><span class="math inline">\(q = 1 - p\)</span> としたとき，</p>
+<p><span class="math display">\[
+\sum_{k=0}^n{}_nC_k p^kq^{n-k} = (p + q)^n
+\]</span></p>
+<p>両辺を <span class="math inline">\(p\)</span> について微分すると，</p>
+<p><span class="math display">\[
+\sum_{k=0}^n{}_nC_k kp^{k-1}q^{n-k} = n(p + q)^{n-1}
+\]</span></p>
+<p>RHSは <span class="math inline">\(p=q = 1\)</span> より, <span class="math inline">\(\operatorname{RHS} = n\)</span>．LHSについて</p>
+<p><span class="math display">\[
+\begin{align*}
+\operatorname{LHS}
+    &amp;= \frac{1}{p}\sum_{k=0}^n{}_nC_k kp^{k}q^{n-k} \\
+    &amp;= \frac{1}{p}\mathbb E[X]
+\end{align*}
+\]</span></p>
+<p>従って，<span class="math inline">\(\mathbb E[X] = np\)</span> を得ます．</p>
+<p><strong> ▶&nbsp; 分散の導出</strong></p>
+<p>互いに独立なベルヌーイ確率変数の合計という観点から</p>
+<p><span class="math display">\[
+\begin{align*}
+\operatorname{Var}(X)
+    &amp;= \operatorname{Var}(\sum_{i=1}^n X_i)\\
+    &amp;= \sum_{i=1}^n \operatorname{Var}(X_i)\\
+    &amp;= np(1-p)
+\end{align*}
+\]</span></p>
+<p>または，二項分布の定義通りに，<span class="math inline">\(q = 1- p\)</span> とすると</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;\mathbb E[X(X-1)]\\
+    &amp;= \sum_{k=0}^n k(k-1) \frac{n!}{k!(n-k)!}p^kq^{n-k}\\
+    &amp;= n(n-1)p^2 \sum_{k=2}^n \frac{(n-2)!}{(k-2)!((n-2)-(k-2))!}p^{k-2}q^{n-2-(k-2)}\\
+    &amp;= n(n-1)p^2
+\end{align*}
+\]</span></p>
+<p>従って，</p>
+<p><span class="math display">\[
+\begin{align*}
+\operatorname{Var}(X)
+    &amp;= \mathbb E[X(X-1)] + \mathbb E[X](1 - \mathbb E[X])\\
+    &amp;= n(n-1)p^2 + np(1 - np)\\
+    &amp;= np[np-p + 1 - np]\\
+    &amp;= np(1-p)
+\end{align*}
+\]</span></p>
 <p><strong> ▶&nbsp; 確率母関数の計算</strong></p>
-<p>確率変数 <span class="math inline">\(X\sim\operatorname{Binom}(n, p)\)</span> としたとき，</p>
+<p>確率変数 <span class="math inline">\(X\sim\operatorname{Bin}(n, p)\)</span> としたとき，</p>
 <p><span class="math display">\[
 \begin{align*}
 G_X(s)
@@ -445,8 +652,172 @@ G_X(s)
     &amp;= [(s-1)p + 1]^n
 \end{align*}
 \]</span></p>
+<p>または，ベルヌーイ確率変数の合計という観点から</p>
+<p><span class="math display">\[
+\begin{align*}
+G_X(s)
+    &amp;= \prod_{i=1}^n G_{X_{i}}(s) \\
+    &amp;= (sp + 1-p)^n\\[5pt]
+    &amp;= [(s-1)p + 1]^n
+\end{align*}
+\]</span></p>
+<p>確率母関数から期待値を計算してみると</p>
+<p><span class="math display">\[
+G_X^\prime(s) = np [(s-1)p + 1]^{n-1}
+\]</span></p>
+<p>従って，</p>
+<p><span class="math display">\[
+G_X^\prime(s)\bigg\vert_{s=1} = np
+\]</span></p>
+<p><strong> ▶&nbsp; MGFの計算</strong></p>
+<p><span class="math display">\[
+\begin{align*}
+M_X(t)
+    &amp;= \sum_{x=0}^n e^{tx} \times {}_nC_xp^x(1-p)^{n-x}\\
+    &amp;= \sum_{x=0}^n \times {}_nC_x(pe^t)^{x}(1-p)^{n-x}\\
+    &amp;= [pe^t + (1 - p)]^n
+\end{align*}
+\]</span></p>
+<section id="ポワソン分布との関係" class="level3">
+<h3 class="anchored" data-anchor-id="ポワソン分布との関係">ポワソン分布との関係</h3>
+<p>二項分布において，</p>
+<ul>
+<li><span class="math inline">\(n\)</span> が大きい: 大量の観察が可能</li>
+<li><span class="math inline">\(p\)</span> が小さい: レアな事象</li>
+</ul>
+<p>である場合，両方の傾向が釣り合って，それほど大きくないけれどもある程度の <span class="math inline">\(x\)</span> が現実に観察されます． 例えば，不動産申込みからの成約率が <span class="math inline">\(p = 0.003\)</span> で月に <span class="math inline">\(n=1000\)</span> の申込みがあるとします．</p>
+<p>このとき，modeであるような</p>
+<p><span class="math display">\[
+\Pr(X = 3) = {}_{1000}C_3(0.003)^3(0.997)^{1000-3}
+\]</span></p>
+<p>は数値的に計算することが難しいです．このようなとき，ポワソン近似を用いたりします．</p>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 7.1</strong></span> <strong>: ポワソンの少数の法則</strong> <br></p>
+<p><span class="math inline">\(np=\lambda\)</span> が一定のもとで <span class="math inline">\(p\to 0, n\to\infty\)</span> とすると， 二項分布 <span class="math inline">\(\operatorname{Bin}(n, p)\)</span> はポアソン分布 <span class="math inline">\(\operatorname{Po}(\lambda)\)</span> に収束する．</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(p = \lambda/n\)</span> であるので，二項分布の確率関数は</p>
+<p><span class="math display">\[
+\begin{align*}
+p(x)
+    &amp;= \frac{n!}{x!(n-x)!}\left(\frac{\lambda}{n}\right)^x\left(1-\frac{\lambda}{n}\right)^{n-x}\\
+    &amp;= \frac{\lambda^x}{x!}\frac{n!}{(n-x)!n^x}\left(1-\frac{\lambda}{n}\right)^n\left(1-\frac{\lambda}{n}\right)^{-x}
+\end{align*}
+\]</span></p>
+<p><span class="math inline">\(n\to\infty\)</span> のとき，</p>
+<p><span class="math display">\[
+\begin{align*}
+\frac{n!}{(n-x)!n^x} &amp;\to 1\\
+\left(1-\frac{\lambda}{n}\right)^n &amp;\to \exp(-\lambda)\\
+\left(1-\frac{\lambda}{n}\right)^{-x}&amp;\to 1
+\end{align*}
+\]</span></p>
+<p>従って，</p>
+<p><span class="math display">\[
+p(x) \to \frac{\lambda^x}{x!}\exp(-\lambda)
+\]</span></p>
+<p>とポワソン分布の確率関数に収束することがわかる．</p>
+<p><strong> ▶&nbsp; pythonでの確認</strong></p>
+<div id="5da4d940" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> binom, poisson</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> express <span class="im">as</span> px</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>mu <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> [<span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">100</span>]</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(<span class="dv">0</span>, <span class="dv">9</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pl.DataFrame(</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"normalized_domain"</span>: x,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="op">**</span>{<span class="ss">f"Binom-N=</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">"</span>: binom(n<span class="op">=</span>n, p<span class="op">=</span>mu <span class="op">/</span> n).pmf(x) <span class="cf">for</span> n <span class="kw">in</span> N},</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Poisson-λ=3"</span>: poisson(mu).pmf(x),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> px.line(</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">"normalized_domain"</span>,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    y<span class="op">=</span>df.columns[<span class="dv">1</span>:],</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    title<span class="op">=</span><span class="st">'Binomial dist converges to Poisson dist with λ = 3'</span>,</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    markers<span class="op">=</span><span class="st">'x'</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>fig.update_layout(yaxis<span class="op">=</span><span class="bu">dict</span>(title<span class="op">=</span><span class="st">"probability"</span>))</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>                            <div id="cdc851e8-b2c6-4dba-9b84-07753409c402" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("cdc851e8-b2c6-4dba-9b84-07753409c402")) {                    Plotly.newPlot(                        "cdc851e8-b2c6-4dba-9b84-07753409c402",                        [{"hovertemplate":"variable=Binom-N=8\u003cbr\u003enormalized_domain=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Binom-N=8","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Binom-N=8","orientation":"v","showlegend":true,"x":[0,1,2,3,4,5,6,7,8],"xaxis":"x","y":[0.02328306436538696,0.1117587089538574,0.23469328880310047,0.2816319465637207,0.21122395992279053,0.10138750076293918,0.03041625022888183,0.005214214324951175,0.0003910660743713379],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=Binom-N=10\u003cbr\u003enormalized_domain=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Binom-N=10","line":{"color":"#EF553B","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Binom-N=10","orientation":"v","showlegend":true,"x":[0,1,2,3,4,5,6,7,8],"xaxis":"x","y":[0.0282475249,0.12106082099999989,0.2334744405000001,0.26682793199999977,0.2001209489999999,0.10291934519999989,0.036756908999999956,0.009001691999999992,0.0014467004999999982],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=Binom-N=100\u003cbr\u003enormalized_domain=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Binom-N=100","line":{"color":"#00cc96","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Binom-N=100","orientation":"v","showlegend":true,"x":[0,1,2,3,4,5,6,7,8],"xaxis":"x","y":[0.04755250792540577,0.14706961214043016,0.22515296291601947,0.22747412748216383,0.17060559561162297,0.10130806502298449,0.0496096194700181,0.020603700575176905,0.007407773789271079],"yaxis":"y","type":"scatter"},{"hovertemplate":"variable=Poisson-\u03bb=3\u003cbr\u003enormalized_domain=%{x}\u003cbr\u003evalue=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"Poisson-\u03bb=3","line":{"color":"#ab63fa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"Poisson-\u03bb=3","orientation":"v","showlegend":true,"x":[0,1,2,3,4,5,6,7,8],"xaxis":"x","y":[0.049787068367863944,0.14936120510359185,0.22404180765538775,0.22404180765538775,0.16803135574154085,0.10081881344492458,0.05040940672246224,0.02160403145248382,0.008101511794681432],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"normalized_domain"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"probability"}},"legend":{"title":{"text":"variable"},"tracegroupgap":0},"title":{"text":"Binomial dist converges to Poisson dist with \u03bb = 3"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('cdc851e8-b2c6-4dba-9b84-07753409c402');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script>        </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof: 積率母関数を用いた証明
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(p = \lambda/n\)</span> を用いて二項分布の積率母関数を表すと</p>
+<p><span class="math display">\[
+\begin{align*}
+M_X(t)
+    &amp;= [pe^t + (1-p)]^n\\
+    &amp;= \left[\frac{\lambda}{n}e^t + 1 - \frac{\lambda}{n}\right]^n\\
+    &amp;= \left[1 + \frac{\lambda}{n}(e^t - 1)\right]^n\\
+    &amp;\to \exp[\lambda (e^t - 1)]\quad (\text{as } n\to\infty)
+\end{align*}
+\]</span></p>
+<p>以上より，ポワソン分布の積率母関数に収束することがわかります．</p>
+</div>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
