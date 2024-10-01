@@ -1,7 +1,7 @@
 ---
 title: "統計的仮説検定"
 jupyter: python3
-author: "Ryo Nakagtami"
+author: "Ryo Nakagami"
 date: "2024-08-31"
 date-modified: last-modified
 comments:

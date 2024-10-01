@@ -270,6 +270,146 @@ print(HL_mean(X_0))
 
 
 <div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: L1距離最小化推定量としての中央値**
+<br>
+
+標本 $X_1, \cdots, X_n$ についてmedianを以下のように定義する
+
+$$
+\operatorname{Med}(X) = \left\{\begin{array}{cl} 
+x_{[k]} & \text{where } n = 2k-1\\
+\displaystyle \frac{x_{[k]} + x_{[k+1]}}{2} & \text{where } n = 2k
+\end{array}\right.
+$$
+
+このとき，medianは次の性質を満たす
+
+$$
+\operatorname{Med}(X) = \arg\min_a \sum \vert X_i - a\vert
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+昇順にソートし，$x_1 \leq x_2 \leq \cdots \leq x_m \leq \cdots \leq x_n, a=x_m$ とする．
+
+このとき，目的関数は以下のように変形できる
+
+$$
+\begin{align*}
+g(a) &= \sum_{i=1}^n|x_i-a| \\
+     &= \sum_{i=1}^m(a-x_i)+\sum_{i=m+1}^n(x_i-a) \\
+     &= ma-\sum_{i=1}^m x_i + \sum_{i=m+1}^n x_i -(n-m)a \\
+     &= (2m-n)a+n\bar{x}-2\sum_{i=1}^m x_i
+\end{align*}
+$$
+
+$g(x_{m-1})\geq g(x_m)$ かつ $g(x_{m+1})\geq g(x_m)$ となる $a=x_m$ を見つければ良い．
+
+$$
+\begin{align}
+g(x_{m-1}) - g(x_m)=& [2(m-1)-n]a+n\bar{x}-2\sum_{i=1}^{m-1} x_i \\
+                    &-(2m-n)a-n\bar{x}+2\sum_{i=1}^m x_i \\
+                   =&[2(m-1)-n](x_{m-1}-x_m)
+\end{align}
+$$
+
+ここで $(x_{m-1}-x_m) \leq 0$ なので，$2(m-1)-n \leq 0$ でなれけばならない．
+
+$$
+m\leq \frac{n+2}{2} \Longrightarrow g(x_{m-1}) - g(x_m)\geq 0
+$$
+
+同様に
+
+$$
+\begin{align}
+g(x_{m+1}) - g(x_m)=& [2(m+1)-n]a+n\bar{x}-2\sum_{i=1}^{m+1} x_i \\
+                    &-(2m-n)a-n\bar{x}+2\sum_{i=1}^m x_i \\
+                   =&[2m-n](x_{m+1}-x_m)
+\end{align}
+$$
+
+ここで $(x_{m+1}-x_m) \geq 0$ なので，$2m-n \geq 0$ でなれけばならない．
+
+
+$$
+\frac{n}{2}\leq m \Longrightarrow g(x_{m+1}) - g(x_m)\geq 0.
+$$
+
+以上より
+
+$$
+\frac{n}{2}\leq m \leq \frac{n+2}{2} \Longrightarrow g(x_{m-1})\geq g(x_m) \land g(x_{m+1})\geq g(x_m).
+$$
+
+:::
+
+
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: L1距離最小化推定量としての中央値 - 連続確率変数の場合**
+<br>
+
+$F(x)$ を分布関数に持つ連続確率変数 $X$ について，
+
+$$
+\operatorname{Med}(X) = \arg\min_a \mathbb E[\vert X - a\vert]
+$$
+
+が成り立つ．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align}
+g(a) =& \int_{-\infty}^\infty|x-a|f(x)\mathrm{d}x \\
+     =& \int_{-\infty}^a(a-x)f(x)\mathrm{d}x + \int_a^{\infty}(x-a)f(x)\mathrm{d}x \\
+     =& a\left[\int_{-\infty}^af(x)\mathrm{d}x-\int_{a}^\infty f(x)\mathrm{d}x\right]\\
+        &+\int_{a}^\infty xf(x)\mathrm{d}x - \int_{-\infty}^axf(x)\mathrm{d}x\\
+     =& a[2F(a)-1]+\mathbb E[X]-2\int_{-\infty}^axf(x)\mathrm{d}x
+\end{align}
+$$
+
+$a$ についてFOCを求めると
+
+$$
+\begin{align*}
+\frac{\mathrm{d}}{\mathrm{d}a}g = 2F(a)-1+2af(a)-2af(a)
+\end{align*}
+$$
+
+従って，
+
+$$
+2F(a^*) - 1 = 0 \Rightarrow F(a^*)=\frac{1}{2}
+$$
+
+また，2階条件を確認すると
+
+$$
+\frac{\mathrm{d}^2}{\mathrm{d}a^2}g\bigg|_{F(a^*)=\frac{1}{2}}=2f\left(a^*\right)>0
+$$
+
+従って，$a^* = \operatorname{Med}(X)$ が成り立つ．
+
+:::
+
+
+
+
+<div class="blog-custom-border">
 <strong>Theorem: Asymptotic distribution of sample quantile-p</strong> <br>
 
 $y_1, \cdots, y_n$ を density function $f$ 及びquantile function $Q^{(p)}$ を持つ分布からのi.i.dとします．このとき, sample quantile $\hat Q^{(p)}$ は

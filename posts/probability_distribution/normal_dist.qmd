@@ -141,48 +141,6 @@ $$
 :::
 
 
-<strong > &#9654;&nbsp; 二項分布の極限分布としての正規分布</strong>
-
-$n$ を正の整数として，$Y_n \sim \operatorname{Binom}(n, 1/2)$ とし，
-
-$$
-X_n = \frac{Y_n - n/2}{\sqrt{n}/2}
-$$
-
-という確率変数を考えます．$X_n \in (x - 2/\sqrt{n}, x]$ となるような確率を考えてみると
-
-$$
-\begin{align*}
-&\Pr(x - 2/\sqrt{n} < X_n \leq x)\\
-    &= \Pr\left(\frac{\sqrt{n}}{2}x + \frac{n}{2} - 1 < Y_n \leq \frac{\sqrt{n}}{2}x + \frac{n}{2}\right)\\
-    &= \Pr\bigg(\bigg\lfloor Y_n = \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor\bigg)\\
-    &= \frac{n!}{\bigg\lfloor \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor ! \bigg\lceil -\frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rceil !}\left(\frac{1}{2}\right)^n
-\end{align*}
-$$
-
-
-ここでスターリングの公式より十分大きい正の整数 $m$ について
-
-$$
-m! \approx \sqrt{2\pi m} m^m\exp(-m)
-$$
-
-と近似できるので
-
-$$
-\begin{align*}
-&\lim_{n\to\infty}\Pr(x - 2/\sqrt{n} < X_n \leq x)\\
-    &= \lim_{n\to\infty}\frac{n!}{\bigg\lfloor \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor ! \bigg\lceil -\frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rceil !}\left(\frac{1}{2}\right)^n\\
-    &= \lim_{n\to\infty} \frac{1}{\sqrt{2\pi\left(\frac{n}{4}-\frac{x^2}{4}\right)}\left(1 - \frac{x^2}{n}\right)^{\frac{n}{2}}\left(1 + \frac{x}{\sqrt{n}}\right)^{\frac{\sqrt{n}}{2}x}\left(1 - \frac{x}{\sqrt{n}}\right)^{-\frac{\sqrt{n}}{2}x}}\left(\frac{1}{2}\right)^n\\
-    &= \frac{1}{\sqrt{2\pi}\exp(-x^2/2)\exp(x^2/2)\exp(x^2/2)}\\
-    &=\frac{1}{\sqrt{2\pi}}\exp(-x^2/2)\\[8pt]
-    &= \phi(x)
-\end{align*}
-$$
-
-$$\tag*{\(\blacksquare\)}$$
-
-
 <div class="blog-custom-border">
 ::: {#thm- .custom_problem }
 <br>
@@ -225,6 +183,84 @@ $$
 
 
 :::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+確率変数 $X\sim N(\mu, \sigma^2)$ のとし，$f(x)$ をその確率密度関数とする，このとき，
+
+$$
+\begin{gather*}
+\int_\mathbb R xf(x;\mu,\sigma^2) \mathrm{d}x = \mu\\
+\int_\mathbb R (x-\mu)^2f(x;\mu,\sigma^2) \mathrm{d}x = \sigma^2\\
+\end{gather*}
+$$
+
+が成立する．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+<strong > &#9654;&nbsp; location parameterについて</strong>
+
+$z = x - \mu$ と変数変換をすると，$\frac{\mathrm{d}}{\mathrm{d}z}x = 1$ より
+
+$$
+\begin{align*}
+\int_\mathbb R xf(x;\mu,\sigma^2) \mathrm{d}x
+    =& \frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathbb R \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)x\,\mathrm{d}x\\
+    =& \frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathbb R \exp\left(-\frac{z^2}{2\sigma^2}\right)(z +\mu)\,\mathrm{d}z\\
+    =& \frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathbb R \underbrace{\exp\left(-\frac{z^2}{2\sigma^2}\right)z\mathrm{d}z}_{\text{偶関数}\times\text{奇関数}}\\
+     &+ \frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathbb R \exp\left(-\frac{z^2}{2\sigma^2}\right)\mu\mathrm{d}z\\
+    =& \mu
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; scale parameterについて</strong>
+
+確率密度関数より
+
+$$
+\int_\mathbb R \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\,\mathrm{d}x = \sqrt{2\pi\sigma^2}
+$$
+
+両辺について $\sigma^2$ で微分すると
+
+$$
+\begin{align*}
+\text{RHS}
+    &= \frac{1}{2}\sqrt{2\pi}(\sigma^2)^{-\frac{1}{2}}\\
+\text{LHS}
+    &= \int_\mathbb R \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\frac{(x-\mu)^2}{2}(\sigma^2)^{-2}\,\mathrm{d}x
+\end{align*}
+$$
+
+
+これを整理すると
+
+$$
+\begin{align*}
+\frac{1}{\sqrt{2\pi\sigma^2}}\int_\mathbb R \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)(x-\mu)^2\,\mathrm{d}x = \sigma^2
+\end{align*}
+$$
+
+これは
+
+$$
+\mathbb E[(X -\mu)^2] = \sigma^2
+$$
+
+に相当する．
+
+:::
+
+
+
 
 ::: {#exm- .custom_problem }
 **: 標準正規分布の4次モーメントの導出**
@@ -444,6 +480,20 @@ $$
 \end{align*}
 $$
 
+:::
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: 直接計算
+
+$$
+\begin{align*}
+M_X(t)
+    &= \frac{1}{\sqrt{2\pi\sigma^2}}\int_{\mathbb R}\exp(tx)\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\,\mathrm{d}x\\
+    &= \frac{1}{\sqrt{2\pi\sigma^2}}\int_{\mathbb R}\exp\left(-\frac{(x-(t\sigma^2+\mu))^2}{2\sigma^2}\right)\exp\left(t\mu + \frac{t^2\sigma^2}{2}\right)\,\mathrm{d}x\\
+    &= \exp\left(t\mu + \frac{t^2\sigma^2}{2}\right)
+\end{align*}
+$$
+
 
 :::
 
@@ -592,6 +642,50 @@ X+Y\sim N(\mu_x + \mu_y, \sigma^2_x + \sigma^2_y)
 $$
 
 :::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: $n$個の正規分布の再生性**
+<br>
+
+確率変数 $X_1, \cdots, X_n$ が互いに独立に $N(\mu_i, \sigma^2_i)$ に従うとする．
+$(a_1, \cdots, a_n, b)$を定数としたとき，確率変数 $Y = \sum_i a_iX_i + b$ について，
+
+$$
+Y\sim N(a_1\mu_1 + \cdots + a_n\mu_n +b, a_1^2\sigma^2 + \cdots, + a_n^s\sigma^2)
+$$
+
+が成立する．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$a_iX_i \sim N(a_i\mu_i, a_i^2\sigma^2)$ 及び，互いに独立な確率変数の合計和なので
+
+$$
+\begin{align*}
+M_Y(t)
+    &= \mathbb E[\exp(tY)]\\[5pt]
+    &= \mathbb E[\exp(t(a_1X_1 + \cdots + a_nX_n+b))]\\
+    &= \exp(tb)\prod_{i=1}^n\exp\left[ta_i\mu_i + \frac{t^2a_i^2\sigma_i^2}{2}\right]\\
+    &= \exp\left[(a_1\mu_i + \cdots+a_1\mu_n + b)t + \frac{t^2(a_1^2\sigma_1^2 + \cdots + a_n^2\sigma_n^2)}{2}\right]
+\end{align*}
+$$
+
+これは確率分布 $N(a_1\mu_1 + \cdots, + a_n\mu_n +b, a_1^2\sigma^2 + \cdots, + a_n^s\sigma^2)$ の積率母関数と一致するので
+
+$$
+Y\sim N(a_1\mu_1 + \cdots + a_n\mu_n +b, a_1^2\sigma^2 + \cdots, + a_n^s\sigma^2)
+$$
+
+が成立する．
+
+:::
+
 
 ### Differential Entropy
 
@@ -785,3 +879,51 @@ $$
 - $\lambda_3 < 0$ より scale paramter $\sigma^2$ を増大させると，微分エントロピーは限界的に増大することも分かります
 
 </div>
+
+### 他の確率分布との関係性
+
+
+::: {#exm-normal-binom-relation .custom_problem }
+**: 二項分布の極限分布としての正規分布<**
+<br>
+
+$n$ を正の整数として，$Y_n \sim \operatorname{Binom}(n, 1/2)$ とし，
+
+$$
+X_n = \frac{Y_n - n/2}{\sqrt{n}/2}
+$$
+
+という確率変数を考えます．$X_n \in (x - 2/\sqrt{n}, x]$ となるような確率を考えてみると
+
+$$
+\begin{align*}
+&\Pr(x - 2/\sqrt{n} < X_n \leq x)\\
+    &= \Pr\left(\frac{\sqrt{n}}{2}x + \frac{n}{2} - 1 < Y_n \leq \frac{\sqrt{n}}{2}x + \frac{n}{2}\right)\\
+    &= \Pr\bigg(\bigg\lfloor Y_n = \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor\bigg)\\
+    &= \frac{n!}{\bigg\lfloor \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor ! \bigg\lceil -\frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rceil !}\left(\frac{1}{2}\right)^n
+\end{align*}
+$$
+
+
+ここでスターリングの公式より十分大きい正の整数 $m$ について
+
+$$
+m! \approx \sqrt{2\pi m} m^m\exp(-m)
+$$
+
+と近似できるので
+
+$$
+\begin{align*}
+&\lim_{n\to\infty}\Pr(x - 2/\sqrt{n} < X_n \leq x)\\
+    &= \lim_{n\to\infty}\frac{n!}{\bigg\lfloor \frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rfloor ! \bigg\lceil -\frac{\sqrt{n}}{2}x + \frac{n}{2}\bigg\rceil !}\left(\frac{1}{2}\right)^n\\
+    &= \lim_{n\to\infty} \frac{1}{\sqrt{2\pi\left(\frac{n}{4}-\frac{x^2}{4}\right)}\left(1 - \frac{x^2}{n}\right)^{\frac{n}{2}}\left(1 + \frac{x}{\sqrt{n}}\right)^{\frac{\sqrt{n}}{2}x}\left(1 - \frac{x}{\sqrt{n}}\right)^{-\frac{\sqrt{n}}{2}x}}\left(\frac{1}{2}\right)^n\\
+    &= \frac{1}{\sqrt{2\pi}\exp(-x^2/2)\exp(x^2/2)\exp(x^2/2)}\\
+    &=\frac{1}{\sqrt{2\pi}}\exp(-x^2/2)\\[8pt]
+    &= \phi(x)
+\end{align*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+:::

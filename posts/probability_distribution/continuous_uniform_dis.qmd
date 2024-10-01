@@ -1,0 +1,216 @@
+---
+title: "連続一様分布"
+author: "Ryo Nakagami"
+date: "2024-09-25"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## 一様分布の性質
+
+<div class="blog-custom-border">
+<strong>Def: 一様分布</strong> <br>
+
+確率変数 $X$ がパラメータ $a, b$ の一様分布に従うとき，$X\sim\operatorname{U}[a,b]$ と表す．$X$ の値域は
+
+$$
+X(\Omega)= [a, b]
+$$
+
+であり，確率密度関数 $f_X(x)$ は
+
+$$
+f_X(x) = \bigg\{\begin{array}{c}\frac{1}{b-a} & x\in [a, b] \\ 0 & \text{otherwise}\end{array}
+$$
+
+
+</div>
+
+<strong > &#9654;&nbsp; 期待値の計算</strong>
+
+$$
+\begin{align*}
+\mathbb E[X]
+    &= \int^\infty_{-\infty}xf_X(x)\,\mathrm{d} x\\
+    &= \int^b_a \frac{1}{b-a}x\mathrm{d} x\\
+    &= \frac{a+b}{2}
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; 分散の計算</strong>
+
+$$
+\begin{align*}
+\mathbb E[X^2]
+    &= \int^\infty_{-\infty}x^2f_X(x)\,\mathrm{d} x\\
+    &= \int^b_a \frac{1}{b-a}x^2\mathrm{d} x\\
+    &= \frac{1}{b-a}\left[\frac{x^3}{3}\right]^b_a\\
+    &= \frac{a^2+ab+b^2}{3}
+\end{align*}
+$$
+
+従って，
+
+$$
+\operatorname{Var}(X) = \frac{(b-a)^2}{12}
+$$
+
+<strong > &#9654;&nbsp; 積率母関数の導出</strong>
+
+積率母関数については，$t\neq 0$ であれば
+
+$$
+\begin{align*}
+M_X(t)
+    &= \int^b_a \frac{1}{b-a}\exp(tx)\,\mathrm{d} x\\
+    &= \frac{1}{b-a}\left[\frac{1}{t}\exp(tx)\right]^b_a\\
+    &=\frac{e^{tb} - e^{ta}}{(b-a)t}
+\end{align*}
+$$
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: 一様分布の累積分布関数**
+<br>
+
+確率変数 $X \operatorname{U}[a, b]$ の累積分布関数 $F_X(x)$ は
+
+$$
+F_X(x)
+    = \left\{\begin{array}{c}
+    0 & \text{if} x < a\\
+    \frac{x-a}{b-a} & \text{if} x \in [a, b]\\
+    1& \text{if} x > b
+    \end{array}\right.
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$x<a$ のとき，$X$ の値域は $[a, b]$ であるので
+
+$$
+F_X(a) = \Pr(X \leq a) = 0
+$$
+
+$x\in [a,b]$ において，
+
+$$
+\begin{align*}
+F_X(x)
+    &= \int^x_a f_X(t)\,\mathrm{d}t\\
+    &= \frac{x-a}{b-a}
+\end{align*}
+$$
+
+$x>b$ のとき，上記より $F_X(b) = 1$.
+
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: 一様分布の微分エントロピー**
+<br>
+
+確率変数 $X \operatorname{U}[a, b]$ の微分エントロピーは
+
+$$
+\operatorname{H}(x) = \ln (b-a)
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+\operatorname{H}(x)
+    &= -\int f_X(x)\ln(f_X(x))\,\mathrm{d} x\\
+    &= \frac{\ln(b-a)}{b-a} \int^b_a\,\mathrm{d} x\\
+    &= \ln (b-a)
+\end{align*}
+$$
+
+:::
+
+## 他の確率分布との関係性
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: ベータ分布の特殊ケースとしての一様分布**
+<br>
+
+パラメータ $(\alpha, \beta)=(1,1)$ のベータ分布は標準一様分布と等しい．
+
+$$
+\operatorname{Be}(1, 1) = \operatorname{U}[0, 1]
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+確率変数 $X\sim\operatorname{Be}(\alpha, \beta)$ の確率密度関数は,
+
+$$
+f_X(x) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}\quad (0 < x < 1)
+$$
+
+$\alpha=\beta=1$ を代入すると，
+
+$$
+\begin{align*}
+f_X(x)
+    &= \frac{\Gamma(2)}{\Gamma(1)\Gamma(1)}x^{1-1}(1-x)^{1-1}\\
+    &= 1
+\end{align*}
+$$
+
+従って，$\operatorname{U}[0, 1]$ の確率密度関数と一致することがわかります．
+
+:::
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: MGFを用いた証明
+
+
+確率変数 $X\sim\operatorname{Be}(\alpha, \beta)$ のMGFは
+
+$$
+\label{eq:beta-mgf-s1}
+\begin{split}
+M_X(t) &= \int_{0}^{1} \exp[tx] \cdot \frac{1}{\mathrm{B}(\alpha, \beta)} \, x^{\alpha-1} \, (1-x)^{\beta-1} \, \mathrm{d}x \\
+&= \frac{1}{\mathrm{B}(\alpha, \beta)} \int_{0}^{1} e^{tx} \, x^{\alpha-1} \, (1-x)^{\beta-1} \, \mathrm{d}x 
+\end{split}
+$$
+
+$\alpha=\beta=1$ を代入すると，
+
+$$
+\begin{align*}
+M_X(t)
+    &= \frac{1}{\mathrm{B}(1, 1)} \int_{0}^{1} e^{tx} \, x^{1-1} \, (1-x)^{1-1} \, \mathrm{d}x \\
+    &= \frac{1}{t}[e-1]
+\end{align*}
+$$
+
+これは　$\operatorname{U}[0, 1]$ のMGFと一致するので，パラメータ $(\alpha, \beta)=(1,1)$ のベータ分布は標準一様分布と等しいことがわかります．
+
+:::

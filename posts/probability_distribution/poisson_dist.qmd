@@ -14,11 +14,80 @@ jupyter: python3
 
 ## ポワソン分布の性質
 
+稀な現象の大量観測（二項分布に置き換えるならば $n$ がおおきく，$p$ が十分小さい）において発生する個数の分布を表すのにポワソン分布が
+用いられます．例として，
 
+- ある都市の１日に起こる交通事故の件数の分布
+- ある都市で１年間に肺がんによりなくなる人数の分布
+
+<div class="blog-custom-border">
+<strong>Def: ポワソン分布(Poisson distribution)</strong> <br>
+
+確率変数 $X$ がパラメーター $\lambda > 0$ のポワソン分布に従うとき，標本空間は $\mathcal{X} = \{0, 1, \cdots, n\}$，確率関数 $f_X(x)$ は
+
+$$
+f_X(x) = \bigg\{\begin{array}{c} \frac{\lambda^x}{x!}\exp(-\lambda) & x \in \mathcal{X}\\0 & \text{otherwise}\end{array}
+$$
+
+このとき，$X\sim \operatorname{Po}(\lambda)$ と表す．
+
+</div>
+
+ポワソン分布の $\lambda > 0$ は**強度**もしくは**生起率**と呼ばれるパラメーターです．
+
+<strong > &#9654;&nbsp; 確率関数の和</strong>
+
+$$
+\begin{align*}
+\sum_{x=0}^\infty f_X(x)
+    &= \sum_{x=0}^\infty\frac{\lambda^x}{x!}\exp(-\lambda)\\
+    &= \exp(-\lambda)\sum_{x=0}^\infty\frac{\lambda^x}{x!}\\
+    &= \exp(-\lambda)\left[1 + \frac{\lambda}{1!} + \frac{\lambda^2}{2!} + \cdots\right]\\
+    &= \exp(-\lambda)\exp(\lambda) \quad\because\text{マクローリン展開より}\\
+    &= 1
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; 期待値の導出</strong>
+
+確率変数 $X\sim\operatorname{Po}(\lambda)$ について，
+
+$$
+\begin{align*}
+\mathbb E[X]
+    &= \sum_{x=0}^\infty x \frac{\lambda^x}{x!}\exp(-\lambda)\\
+    &= \lambda\exp(-\lambda)\sum_{x=1}^\infty\frac{\lambda^{x-1}}{(x-1)!}\\
+    &= \lambda\exp(-\lambda)\sum_{k=0}^\infty\frac{\lambda^k}{k!}\\
+    &= \lambda\exp(-\lambda)\exp(\lambda)\\
+    &= \lambda
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; 分散の導出</strong>
+
+$$
+\begin{align*}
+\mathbb E[X(X-1)]
+    &= \sum_{x=0}^\infty x(x-1) \frac{\lambda^x}{x!}\exp(-\lambda)\\
+    &= \lambda^2\exp(-\lambda)\sum_{x=2}^\infty\frac{\lambda^{x-2}}{(x-2)!}\\
+    &= \lambda^2
+\end{align*}
+$$
+
+従って，
+
+$$
+\begin{align*}
+\operatorname{Var}(X)
+    &= \mathbb E[X(X- 1)] + \mathbb E[X](1 - \mathbb E[X])\\
+    &= \lambda^2 + \lambda(1 - \lambda)\\
+    &= \lambda
+\end{align*}
+$$
 
 <strong > &#9654;&nbsp; 確率母関数の計算</strong>
 
-確率変数 $X\sim\operatorname{Poisson}(\lambda)$ としたとき，PGF $G_X(s)$ は
+確率変数 $X\sim\operatorname{Po}(\lambda)$ としたとき， 確率母関数 $G_X(s)$ は
 
 $$
 \begin{align*}
@@ -62,17 +131,128 @@ $$
 \end{align*}
 $$
 
+<strong > &#9654;&nbsp; 積率母関数の計算</strong>
+
+確率変数 $X\sim\operatorname{Po}(\lambda)$ としたとき， 積率母関数 $M_X(t)$ は
+
+$$
+\begin{align*}
+M_X(t)
+    &= \mathbb E[\exp(tX)]\\
+    &= \sum_{x=0}\exp(-\lambda)\exp(tX)\frac{\lambda^x}{x!}\\
+    &= \exp(-\lambda)\sum_{x=0}\frac{(\exp(t)\lambda)^x}{x!}\\
+    &= \exp(-\lambda)\exp(e^t\lambda)\\[5pt]
+    &= \exp[\lambda(e^t - 1)]
+\end{align*}
+$$x
+
+
+
+::: {#exm- .custom_problem }
+**: 19-20シーズンのMan Utdのゴール数とポワソン分布**
+<br>
+
+[Man Utd English Premier League 2019/20 fixture and results](https://fixturedownload.com/results/epl-2019/man-utd)というサイトではプレミアリーグの各シーズン及び各チームの試合結果が保存されています. 上記サイトのURLの構造は
+
+```html
+https://fixturedownload.com/results/epl-<シーズン>/<team名>
+```
+
+19-20シーズンのMan Utdのデータを抽出したい場合は次のようにパラメーターを設定します．
+
+|parameter|value|意味|
+|---|---|---|
+|team名| `man-utd`|Man Utd, すべて小文字、スペースはハイフンとなる|
+|シーズン| `2019` |2019-2020シーズン|
+
+抽出結果は以下のようになります
+
+```{python}
+import pandas as pd
+target_team = 'man-utd'
+TARGET_TEAMNAME = target_team.replace('-', ' ').title()
+URL_PATH = 'https://fixturedownload.com/results/epl-2019/'+target_team
+
+df = pd.read_html(URL_PATH, flavor="bs4")[0]
+df.head()
+```
+
+ここからMan Utdのゲームごとのゴール数配列を抽出し，ポワソン分布比較してみます．
+
+```{python}
+import numpy as np
+from plotly import express as px
+import plotly.graph_objects as go
+from scipy.stats import poisson
+
+
+def extract_goal(data, target_team):
+    score_list = data["Result"].str.split(r"\s-\s", expand=True)
+    score_list.columns = ["home_score", "away_score"]
+    score_list = score_list.astype({"home_score": "int64", "away_score": "int64"})
+
+    data = pd.concat([data, score_list], axis=1)
+    return np.where(
+        df["Home Team"] == target_team, data["home_score"], data["away_score"]
+    )
+
+
+goal_array = extract_goal(df.copy(), target_team=TARGET_TEAMNAME)
+
+## 可視化
+x, y = np.unique(goal_array, return_counts=True)
+
+fig = go.Figure()
+fig.add_trace(
+    go.Bar(
+        x=x,
+        y=y / sum(y),  # Normalizing the frequency
+        name="Goals per games", 
+        width=0.3
+    )
+)
+
+fig.add_trace(
+    go.Scatter(
+        x=x,
+        y=poisson(np.mean(goal_array)).pmf(x),
+        mode="lines+markers",
+        name="Poisson",
+        line=dict(color="gray", dash="dot"),
+    )
+)
+
+fig.update_layout(
+    title="19-20シーズン Man Utd Goal Distribution",
+    xaxis_title="Goals",  # X-axis label
+    yaxis_title="Frequency",  # Y-axis label
+    legend_title="Legend",  # Legend title
+    showlegend=True,  # Ensure legend is displayed
+)
+
+fig.show()    
+```
+
+- Fittingはそんなに悪くないが，scoreがゼロのところが理論頻度より実現値のほうが頻度が多い傾向がわかります
+- 0が過剰に含まれたデータに対してはゼロ過剰ポアソン分布(Zero-inflated Poisson Model, ZIP)を用いて対処することが考えられます
+
+
+:::
+
+
+
+
 
 <div class="blog-custom-border">
 ::: {#thm- .custom_problem }
-**: ポワソン分布のの再生性**
+**: ポワソン分布の再生性**
 <br>
 
-互いに独立な確率変数 $X\sim\operatorname{Poisson}(\lambda_x), Y\sim\operatorname{Poisson}(\lambda_y)$ について,
+互いに独立な確率変数 $X\sim\operatorname{Po}(\lambda_x), Y\sim\operatorname{Po}(\lambda_y)$ について,
 $X + Y$ もパラメーター $\lambda_x + \lambda_y$ のポワソン分布に従う．つまり，
 
 $$
-X + Y \sim \operatorname{Poisson}(\lambda_x + \lambda_y)
+X + Y \sim \operatorname{Po}(\lambda_x + \lambda_y)
 $$
 
 :::
@@ -91,6 +271,92 @@ G_{X+Y}(s)
 \end{align*}
 $$
 
-これは，パラメーター $\lambda_x + \lambda_y$ のポワソン分布のPGFに一致する．
+これは，パラメーター $\lambda_x + \lambda_y$ のポワソン分布のPGFに一致しています．
 
 :::
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: MGFを用いた証明
+
+$$
+\begin{align*}
+M_{X+Y}(t)
+    &= M_{X}(t)M_{X}(t)\\
+    &= \exp[\lambda_x(e^t - 1)]\exp[\lambda_y(e^t - 1)]\\
+    &= \exp[\lambda_x(e^t - 1) + \lambda_y(e^t - 1)]\\
+    &= \exp[(\lambda_x + \lambda_y)(e^t - 1)]
+\end{align*}
+$$
+
+これは，パラメーター $\lambda_x + \lambda_y$ のポワソン分布のMGFに一致しています．
+
+
+:::
+
+## Estimation
+### Ommited vriable and overdispersion
+
+<div class="blog-custom-border">
+<strong>Def: overdispersion</strong> <br>
+
+観察データについて，期待される分散よりも大きい分散(variation)が確認される状があるとき，overdispersionであるという．
+
+</div>
+
+ポワソン分布において，上で確認したように分散と平均は一致するはずですが，ommitted variable biasを原因として
+overdispersionが発生するケースが多くあります．
+
+$$
+\begin{align*}
+y &\sim \operatorname{Po}(\lambda)\\
+\log(\lambda) &= \beta_0 + \beta_1 x_1 + \beta_2 x_2
+\end{align*}
+$$
+
+という確率変数を考えます．このとき次のような条件を想定します：
+
+- 観察データにおいて, $x_2$ は観察不能(=missing variable)
+- $x_1 \perp x_2$
+
+このとき，$y$ について $x_1$ を条件づけたときの期待値を計算すると
+
+$$
+\begin{align*}
+\mathbb E[y\vert x_1]
+    &= \mathbb E[\mathbb E[y\vert x_1, x_2]\vert x_1]\\
+    &= \mathbb E[\exp(\beta_0 + \beta_1 x_1 + \beta_2 x_2)\vert x_1]\\
+    &= \exp(\beta_0 + \beta_1 x_1)\mathbb E[\exp(\beta_2 x_2)\vert x_1]\\
+    &= \exp(\beta_0 + \beta_1 x_1)\mathbb E[\exp(\beta_2 x_2)] \because\text{独立性}\\
+    &= \exp(\tilde\beta_0+ \beta_1 x_1)
+\end{align*}
+$$
+
+と，切片には影響を与えますが，$\beta_1$ についてはunbiasedに推定できることがわかります．一方，条件付き分散を見てみると
+
+$$
+\begin{align*}
+\operatorname{Var}(y\vert x_1)
+    =& \mathbb E[\operatorname{Var}(y\vert x_1, x_2)\vert x_1] + \operatorname{Var}(\mathbb E[y\vert x_1, x_2]\vert x_1)\\[3pt]
+    =& \mathbb E[\exp(\beta_0 + \beta_1 x_1 + \beta_2 x_2)\vert x_1] \\
+     &+ \operatorname{Var}(\exp(\beta_0 + \beta_1 x_1 + \beta_2 x_2)\vert x_1)\\
+    =& \exp(\tilde\beta_0+ \beta_1 x_1) \\
+     & + [\exp(\beta_0 + \beta_1x_1)]^2\operatorname{Var}(\exp(\beta_2 x_2))\\
+    >& \exp(\tilde\beta_0+ \beta_1 x_1) = \mathbb E[y\vert x_1]
+\end{align*}
+$$
+
+以上より，OVBのとき，ovberdispersionが発生してしまうことがわかります．
+
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+ポワソン回帰においてover-dispersionが発生した場合は以下のケースが考えられます：
+
+- 重要な特徴量が欠落変数(ommited variable)になってしまっている
+- 説明変数，被説明変数(response variable)についてmeasurement errorが発生してしまっている
+- $\log(\lambda)$ と特徴量ベクトル $\mathbf x$ のモデル特定に誤りがある
+- Outlierの存在
+- response variableが複数の確率分布の混合(mixture)に基づいている場合
+
+</div>

@@ -370,3 +370,52 @@ $$
 
 
 </div>
+
+<strong > &#9654;&nbsp; Pythonを用いた計算</strong>
+
+フェアなダイスを４つ投げたときの目の合計を $X_4$ としたとき，$X_4 = 17$ となる確率は上の表より
+
+$$
+\Pr(X_4 = 17) = \frac{104}{1296} = \frac{13}{162}
+$$
+
+となるはずです．これは `sympy` を用いて以下のように計算することができます．
+
+```{python}
+#| code-fold: false
+import sympy as sy
+from sympy import exp
+
+## variables
+number_of_dice = 4
+target = 17
+
+## set up sympy variable
+t = sy.Symbol("t", real=True)
+
+expr = sy.expand(
+    ((exp(t) + exp(t) ** 2 + exp(t) ** 3 + exp(t) ** 4 + exp(t) ** 5 + exp(t) ** 6) / 6)
+    ** number_of_dice
+)
+
+## compute Pr(X = 17)
+print(
+    expr.coeff(exp(t), target),
+)
+```
+
+上側確率の計算は
+
+```{python}
+#| code-fold: false
+## compute Pr(X >= 17)
+print(sum(map(lambda x: expr.coeff(exp(t), x), range(target, number_of_dice * 6 + 1))))
+```
+
+期待値の計算は，$t$ で微分して $t=0$ で評価すれば良いので
+
+```{python}
+#| code-fold: false
+mean_expr = sy.diff(expr, t)
+print(mean_expr.subs(t, 0))
+```

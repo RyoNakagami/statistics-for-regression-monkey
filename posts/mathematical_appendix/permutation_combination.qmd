@@ -1,0 +1,28 @@
+---
+title: "二項級数"
+author: "Ryo Nakagami"
+date: "2024-09-28"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+<div class="blog-custom-border">
+::: {#thm-for-negative-binom .custom_problem }
+**: 組み合わせの公式**
+<br>
+
+$r\in \mathbb N_+, p \in (0, 1)$ に対し，次の等式が成立する
+
+$$
+\sum_{x=0}^\infty {}_{r + x - 1}C_{x}(1 -p)^x = \frac{1}{p^r}
+$$
+
+:::
+
+</div>

@@ -1,0 +1,182 @@
+---
+title: "負の二項分布"
+author: "Ryo Nakagami"
+date: "2024-09-28"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+幾何分布やファーストサクセス分布では，1回目の成功を得るまでの失敗の回数という確率変数を扱いましたが，
+それを $k$ 回目の成功を得るまでの失敗の回数という確率変数に一般化した分布のことを**負の二項分布(パスカル分布)**といいます．
+
+## 負の二項分布の性質
+
+<div class="blog-custom-border">
+<strong>Def: 負の二項分布</strong> <br>
+
+確率変数 $X$ が成功回数 $r\in\mathbb N_+$, 成功確率 $0<p<1$ の負の二項分布に従うとき，標本空間は $\mathcal{X} = \{0, 1, \cdots, n\}$，確率関数 $f_X(x)$ は
+
+$$
+f_X(x) = \bigg\{\begin{array}{c}{}_{r+x-1}C_x p^r(1-p)^x & x \in \mathcal{X}\\0 & \text{otherwise}\end{array}
+$$
+
+このとき，$X\sim \operatorname{NBin}(r,p)$ と表す．
+
+</div>
+
+<strong > &#9654;&nbsp; 確率関数の和</strong>
+
+$1/(1-q)$ のマクローリン展開より，
+
+$$
+\frac{1}{1-q}=1 + q + q^2 +\cdots = \sum_{k=0}^\infty q^k
+$$
+
+両辺を $q$ について微分すると
+
+$$
+\frac{1}{(1-q)^2} =  \sum_{k=1}^\infty kq^{k-1} =\sum_{k=0}^\infty (k+1)q^{k}
+$$
+
+これを $r-1$ 回繰り返すと
+
+$$
+(r-1)!\frac{1}{(1-q)^r} =  \sum_{k=0}^\infty \frac{(k+r-1)!}{k!}q^{k}
+$$
+
+従って，
+
+<div class="math display" style="overflow: auto">
+$$
+\frac{1}{(1-q)^r} = \sum_{k=0}^\infty \frac{(k+r-1)!}{(r-1)!k!}q^{k}
+$${#eq-comb-seq}
+</div>
+
+
+これを確率関数の和に代入すると
+
+$$
+\begin{align*}
+\sum_{x=0}^\infty f_X(x) 
+    &= \sum_{x=0}^\infty {}_{r-1 +x}C_x p^r(1-p)^x\\
+    &= p^r\sum_{x=0}^\infty {}_{r-1 + x}C_x (1-p)^x\\
+    &= p^r\sum_{x=0}^\infty \frac{(r-1 + x)!}{(r-1)!x!}q^{x}\\
+    &= p^r\frac{1}{(1-q)^r}\\
+    &= 1
+\end{align*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+<strong > &#9654;&nbsp; 期待値の導出</strong>
+
+$$
+\begin{align*}
+\sum_{x=0}^\infty xf_X(x) 
+    &= p^r\sum_{x=0}^\infty {}_{r+x-1}C_x x(1-p)^x\\
+    &= rp^rq\sum_{x=1}^\infty \frac{(x+r-1)!}{(r)!(x-1)!}q^{x-1}\\
+    &= rp^rq\sum_{k=0}^\infty \frac{(r+k)!}{(r)!k!}q^{k}\\
+    &= rp^rq\frac{1}{(1-q)^{r+1}}\\
+    &= r\frac{1-p}{p}
+\end{align*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+<strong > &#9654;&nbsp; 微分を用いた期待値の導出</strong>
+
+@eq-comb-seq の両辺を $q$ について微分すると
+
+<div class="math display" style="overflow: auto">
+$$
+\begin{align*}
+r\frac{1}{(1-q)^{r+1}} = \sum_{x=1}^\infty x\frac{(x+r-1)!}{(r-1)!x!}q^{x-1}
+\end{align*}
+$${#eq-comb-seq-first}
+</div>
+
+これを整理すると
+
+$$
+r\frac{qp^r}{(1-q)^{r+1}} = \sum_{k=0}^\infty k\frac{(k+r-1)!}{(r-1)!k!}q^{k}p^r
+$$
+
+RHSは期待値と一致するので
+
+$$
+\mathbb E[X] = \frac{r(1-p)}{p}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+<strong > &#9654;&nbsp; 分散の導出</strong>
+
+$$
+\begin{align*}
+\mathbb E[X(X-1)]
+    &= \sum_{x=0}^\infty x(x-1) \frac{(r-1 + x)!}{(r-1)!x!}q^{x}p^r\\
+    &= p^rq^2 \sum_{x=2}^\infty\frac{(r-1 + x)!}{(r-1)!(x-2)!}q^{x-2}\\
+    &= r(r+1)p^rq^2 \sum_{k=0}^\infty\frac{(r+1 + k)!}{(r+1)!k!}q^{k}\\
+    &= r(r+1)q^2\frac{p^r}{p^{r+2}}\\
+    &= r(r+1)\frac{q^2}{p^2}
+\end{align*}
+$$
+
+従って，
+
+$$
+\begin{align*}
+\operatorname{Var}(X) 
+    &= r(r+1)\frac{q^2}{p^2} + r\frac{1-p}{p}\left[1 - r\frac{1-p}{p}\right]\\
+    &= r\frac{(1-p)}{p^2}
+\end{align*}
+$$
+
+
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+- 負の二項分布 $\operatorname{NBin}(r,p)$ の期待値と分散は，幾何分布 $\operatorname{Geo}$ の $r$ 倍と思えば理解しやすいです
+
+</div>
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: 積率母関数**
+<br>
+
+$X\sim\operatorname{NBin}(r, p)$ の積率母関数は次のように表せる，
+
+$$
+M_X(t) = p^r[1 - (1-p)e^t]^{-r} \quad \operatorname{s.t.} \, t < \log\frac{1}{1-p}
+$$
+
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Solution
+
+$$
+\begin{align*}
+M_X(t)
+    &= \mathbb E[\exp(tX)]\\
+    &= \sum \exp(tx)\frac{(r-1+x)!}{(r-1)!x!}q^xp^r
+\end{align*}
+$$
+
+このとき，$0 < e^tq < 1$, つまり，$t < \log(\frac{1}{q})$ であるならば
+
+$$
+M_X(t) = p^r [1 - e^tq]^{-r}
+$$
+
+:::

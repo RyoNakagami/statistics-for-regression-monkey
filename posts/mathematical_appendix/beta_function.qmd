@@ -26,7 +26,7 @@ $$
 また，ガンマ関数を用いて以下のように表せる
 
 $$
-\operatorname{B}(a, b) = \frac{\Gamma(a+b)}{\Gamma(a)\Gamma(b)}
+\operatorname{B}(a, b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}
 $$
 
 
@@ -75,7 +75,7 @@ $$
 つまり，
 
 $$
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
+\operatorname{B}(a, b) = \frac{\Gamma(a)\Gamma(b)}{\operatorname{\Gamma}(a+b)}
 $$
 
 :::
@@ -121,9 +121,46 @@ $$
 従って，
 
 $$
-\operatorname{B}(a, b) = \frac{\operatorname{\Gamma}(a+b)}{\operatorname{\Gamma}(a)\operatorname{\Gamma}(b)}
+\operatorname{B}(a, b) = \frac{\Gamma(a)\Gamma(b)}{\operatorname{\Gamma}(a+b)}
 $$
 
+
+:::
+
+::: {#exm- .custom_problem }
+**: ベータ関数のplot**
+<br>
+
+```{python}
+import numpy as np
+from scipy.special import beta
+import plotly.graph_objects as go
+
+X, Y = np.linspace(0, 10, 41)[1:], np.linspace(0, 10, 41)[1:]
+X, Y = np.meshgrid(X, Y)
+Z = beta(X, Y)
+
+# Create the 3D surface plot
+fig = go.Figure(
+    data=[
+        go.Surface(z=Z, x=X, y=Y, colorscale="Viridis", opacity=0.7),
+        # Adding contours
+    ]
+)
+
+# Update layout for axis labels and limits
+fig.update_layout(
+    scene=dict(
+        xaxis=dict(title="X"),
+        yaxis=dict(title="Y"),
+        zaxis=dict(title="Z"),
+    ),
+    title="3D Surface Plot of Beta Function",
+)
+
+# Show the figure
+fig.show()
+```
 
 :::
 

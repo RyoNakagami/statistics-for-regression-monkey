@@ -1,0 +1,182 @@
+---
+title: "モーメント法"
+author: "Ryo Nakagami"
+date: "2024-09-30"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## モーメント法
+
+$X_1, \cdots, X_n$ を確率関数 $f(x\vert \pmb\theta), \pmb\theta(\theta_1, \cdots, \theta_k)$ に独立に従う確率変数とします．
+各 $j$-th ($1 \leq j \leq k$)までのモーメントを
+
+$$
+\mathbb E[X^j] = g_j(\pmb\theta)
+$$
+
+とする．
+
+$$
+X_1, \cdots, X_n \overset{\mathrm{iid}}{\sim} f(x\vert \pmb\theta)
+$$
+
+なので，大数の法則より
+
+$$
+\frac{1}{n}\sum_{i=1}^nX^j_i \overset{\mathrm{p}}{\to} \mathbb E[X^j]
+$$
+
+これを用いて，
+
+$$
+\left\{\begin{array}{c}
+\frac{1}{n}\sum_{i=1}^nX_i = g_1(\theta_1, \cdots, \theta_k)\\
+\vdots\\
+\frac{1}{n}\sum_{i=1}^nX_i^j = g_j(\theta_1, \cdots, \theta_k)\\
+\vdots\\
+\frac{1}{n}\sum_{i=1}^nX_i^k = g_k(\theta_1, \cdots, \theta_k)
+\end{array}\right.
+$$
+
+という連立方程式を考えます．方程式の個数は未知パラメーターの個数と等しくなるように取ります．
+この連立方程式を $\pmb\theta$ について解いた解 $\widehat{\pmb{\theta}}$ を**モーメント推定量**と呼びます．
+
+::: {#exm- .custom_problem }
+**: 一様分布**
+<br>
+
+$X_1, \cdots, X_n \overset{\mathrm{iid}}{\sim} \operatorname{U}[a, b]$ であるとします．
+パラメータ $(a, b)$ は未知であるとします．
+
+$$
+\begin{align*}
+\mathbb E[X_i] &= \frac{a + b}{2}\\
+\mathbb E[X_i^2] &= \frac{(b-a)^2}{12}
+\end{align*}
+$$
+
+より
+
+$$
+\begin{align*}
+\mu_1 = \frac{1}{n}\sum X_i &= \frac{\hat a +\hat  b}{2}\\
+\mu_2 = \frac{1}{n}\sum X_i^2 &= \frac{1}{3}(\hat a^2 + \hat a\hat b + \hat b^2)
+\end{align*}
+$$
+
+これを整理すると，
+
+$$
+\begin{align*}
+&4\mu_1^2 - 3\mu_2 = ab\\
+&\Rightarrow a^2 - 2\mu_1 a + 4\mu_1^2 - 3\mu_2
+\end{align*}
+$$
+
+従って，$a < b$ に注意すると
+
+$$
+\begin{align*}
+\hat{a} = \mu_1 - \sqrt{3(\mu_2-\mu_1^2)} \\
+\hat{b} = \mu_1 + \sqrt{3(\mu_2-\mu_1^2)}
+\end{align*}
+$$
+
+を得ます．
+
+<strong > &#9654;&nbsp; Pythonでモーメント法の性質を確認する</strong>
+
+$X\sim\operatorname{U}[a, b]$ について, $\tilde a = \min(X), \tilde b = \max(X)$ でも推定できるので
+モーメント法(`mm_a`, `mm_b`とした)とmin-max推定量をbias及びefficiencyの観点から比較してみます．
+
+$X\sim\operatorname{U}[-3, 5]$ について 100サンプルサイズを一度に生成し，それを500回繰り返しました．
+バッチごとに $a, b$ を推定しています．
+
+```{python}
+import numpy as np
+import polars as pl
+import plotly.express as px
+
+np.random.seed(42)
+
+a, b, N = -3, 5, 100
+
+
+def compute_estimates():
+    X = np.random.uniform(a, b, N)
+    mu_1 = np.mean(X)
+    mu_2 = np.mean(X**2)
+    mm_term = np.sqrt(3 * (mu_2 - mu_1**2))
+    return min(X), max(X), mu_1 - mm_term, mu_1 + mm_term
+
+
+df = pl.DataFrame(
+    list(map(lambda x: compute_estimates(), range(500))),
+    orient="row",
+    schema=["min_a", "max_b", "mm_a", "mm_b"],
+)
+
+px.histogram(
+    df,
+    x=["min_a", "mm_a"],
+    opacity=0.7,
+    histnorm='probability',
+    title="""
+    mm-estimator (mean, var)= ({:.2f}, {:.2f})<br>min-max-estimator (mean, var)= ({:.2f}, {:.2f})
+    """.format(
+        np.mean(df.select("mm_a").to_numpy()),
+        np.var(df.select("mm_a").to_numpy()),
+        np.mean(df.select("min_a").to_numpy()),
+        np.var(df.select("min_a").to_numpy()),
+    ))
+```
+
+```{python}
+px.histogram(
+    df,
+    x=["max_b", "mm_b"],
+    opacity=0.7,
+    histnorm='probability',
+    title="""
+    mm-estimator (mean, var)= ({:.2f}, {:.2f})<br>min-max-estimator (mean, var)= ({:.2f}, {:.2f})
+    """.format(
+        np.mean(df.select("mm_b").to_numpy()),
+        np.var(df.select("mm_b").to_numpy()),
+        np.mean(df.select("max_b").to_numpy()),
+        np.var(df.select("max_b").to_numpy()),
+    ))
+```
+
+:::
+
+::: {#exm- .custom_problem }
+**: 正規分布のモーメント法パラメーター推定**
+<br>
+
+$X_i \overset{\mathrm{iid}}{\sim} N(\mu, \sigma^2)$ のとき，
+
+$$
+\begin{align*}
+\mathbb E[X] &= \mu\\
+\mathbb E[X^2] &= \sigma^2 + \mu^2
+\end{align*}
+$$
+
+従って，
+
+$$
+\begin{align*}
+\frac{1}{n}\sum X_i &= \hat\mu\\
+\frac{1}{n}\sum(X_i - \overline X)^2 &= \hat\sigma^2
+\end{align*}
+$$
+
+
+:::

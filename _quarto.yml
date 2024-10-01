@@ -46,7 +46,9 @@ book:
         - posts/probability_distribution/binomial_dist.qmd
         - posts/probability_distribution/poisson_dist.qmd
         - posts/probability_distribution/geometric_dist.qmd
+        - posts/probability_distribution/negative_binom.qmd
         - posts/probability_distribution/hypergeometric.qmd
+        - posts/probability_distribution/continuous_uniform_dis.qmd
         - posts/probability_distribution/normal_dist.qmd
     - part: posts/statistical_hypothesis_test_101/chapter_header.qmd
       chapters:
@@ -54,6 +56,10 @@ book:
     - part: posts/statistical_hypothesis_test_201/chapter_header.qmd
       chapters:
         - posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.qmd
+    - part: posts/estimation/chapter_header.qmd
+      chapters: 
+        - posts/estimation/method-of-moments.qmd
+        - posts/estimation/m-estimator.qmd
     - part: posts/ExplanatoryDataAnalysis/chapter_header.qmd
       chapters: 
         - posts/ExplanatoryDataAnalysis/gini_coefficient.qmd
@@ -61,6 +67,7 @@ book:
     - part: posts/econometrics101/chapter_header.qmd
     - part: posts/mathematical_appendix/chapter_header.qmd
       chapters: 
+        - posts/mathematical_appendix/permutation_combination.qmd
         - posts/mathematical_appendix/complex_number.qmd
         - posts/mathematical_appendix/beta_function.qmd
         - posts/mathematical_appendix/gamma_function.qmd

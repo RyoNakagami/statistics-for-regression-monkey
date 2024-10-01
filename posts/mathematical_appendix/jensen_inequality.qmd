@@ -1,7 +1,7 @@
 ---
 title: "Jensen's Inequality"
 jupyter: python3
-author: "Ryo Nakagtami"
+author: "Ryo Nakagami"
 date: "2024-09-14"
 date-modified: last-modified
 comments:

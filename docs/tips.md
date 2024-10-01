@@ -61,6 +61,24 @@ References
 :::
 ```
 
+## Mathjax関連
+
+<strong > &#9654;&nbsp; 式番号の文中引用</strong>
+
+引用したいmathjax equationに対して，以下のようにラベル付をします．
+
+```latex
+<div class="math display" style="overflow: auto">
+$$
+\frac{1}{(1-q)^r} = \sum_{k=0}^\infty \frac{(k+r-1)!}{(r-1)!k!}q^{k}
+$${#eq-comb-seq}
+</div>
+```
+
+その後，文中で `@eq-comb-seq` とすると引用することができます．
+
+
+
 ## Quarto FAQ
 
 <strong > &#9654;&nbsp;Q: icon fieldで利用可能なiconのリストはどこでみれるのか？</strong>

@@ -19,6 +19,9 @@ statsmodels = "^0.14.2"
 polars = "^1.6.0"
 altair = "^5.4.1"
 pyarrow = "^17.0.0"
+sympy = "^1.13.3"
+html5lib = "^1.1"
+scikit-learn-extra = "^0.3.0"
 
 
 [build-system]

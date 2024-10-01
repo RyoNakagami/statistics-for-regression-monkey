@@ -71,7 +71,7 @@ $$
 
 幾何分布の累積分布関数は以下のように表すことができます:
 
-$x \geq 0$ のもとで
+$X\sim\operatorname{geo}(p)$ について，$x \geq 0$ のもとで, $q = 1- p$ とすると
 
 $$
 \begin{align*}
@@ -105,6 +105,19 @@ fig = px.line(
 fig.show()
 ```
 
+<strong > &#9654;&nbsp; Tail probability</strong>
+
+$X\sim\operatorname{geo}(p)$ について，$x\geq 0$ のもとで，, $q = 1- p$ とすると
+
+$$
+\begin{align*}
+\Pr(X\geq x) 
+    &= \sum_{k=\lceil x \rceil}^\infty pq^k\\
+    &= p \frac{q^{\lceil x \rceil}}{1-q}\\
+    &= q^{\lceil x \rceil}\\
+    &= (1-p)^{\lceil x \rceil}
+\end{align*}
+$$
 
 <strong > &#9654;&nbsp; 幾何分布の期待値</strong>
 
@@ -141,7 +154,7 @@ $$
 \mathbb E[X] = \sum_{x=0}^\infty \Pr(X> x)
 $$
 
-が知られている([参考:期待値 > Example 3.4](../statistics101//expectation.qmd#exm-discrete-tail))ので
+が知られている([参考:期待値 > Discrete Tail Probability](../statistics101//expectation.qmd#exm-discrete-tail))ので
 
 $$
 \begin{align*}
@@ -388,5 +401,177 @@ $$
 $$
 
 $\vert q\exp(it)\vert < 1$ であるので，$t\in \mathbb R$ で上記の式は収束します．
+
+:::
+
+### 無記憶性
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: 幾何分布の無記憶性**
+<br>
+
+$m, n$ を非負の整数とし，確率変数 $X\sim\operatorname{Geo}(p)$ とする．このとき，
+
+$$
+\Pr(X \geq m+n \vert X \geq m) = \Pr(X\geq n)
+$$
+
+が成立する．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$q = 1 - p$ としたとき
+
+$$
+\Pr(X\geq m) = q^m
+$$
+
+となるので，条件付き確率は
+
+$$
+\begin{align*}
+\Pr(X \geq m+n \vert X \geq m) 
+    &= \frac{q^{m+n}}{q^m}\\[5pt]
+    &= q^n\\[5pt]
+    &= \Pr(X\geq n)
+\end{align*}
+$$
+
+:::
+
+## 他の確率分布との関係性
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: 指数分布との関係性**
+<br>
+
+$n\in\mathbb N$ に対して，$U_n$ が成功確率 $p_n\in(0,1)$ をもつ幾何分布に従うとします．ここで，
+$np_n\to r >0 \text{ as } n\to\infty$ が成立するとき，
+
+$$
+U_n/n \overset{\mathrm{d}}{\to} \operatorname{Exp}(r)
+$$
+
+が成立する．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$F_n$ を $U_n/n$ の累積分布関数とすると，
+
+$$
+\begin{align*}
+F_n(x)
+    &= \Pr(U_n/n \leq x)\\[5pt]
+    &= \Pr(U_n \leq nx)\\[5pt]
+    &= \Pr(U_n \leq \lfloor nx\rfloor)\\[5pt]
+    &= 1 - (1 - p_n)^{\lfloor nx\rfloor + 1}\\[5pt]
+    &= 1 - (1 - p_n)^{\lfloor nx\rfloor}(1 - p_n)
+\end{align*}
+$$
+
+ここで，
+
+$$
+\begin{align*}
+\lim_{n\to\infty} (1 -p_n)^n
+    &= \lim_{n\to\infty} \left(1 -\frac{np_n}{n}\right)^n\\
+    &= \exp(-p_n)\\
+\lim_{n\to\infty} (1 -p_n)
+    &= \lim_{n\to\infty} \left(1 -\frac{np_n}{n}\right)\\
+    &= \lim_{n\to\infty} \left(1 - \frac{r}{n}\right)\\
+    &= 1
+\end{align*}
+$$
+
+であるので，
+
+$$
+F_n(x) \to 1 - \exp(-rx) \quad \text{as } n\to \infty
+$$
+
+
+これは指数分布の累積分布関数とするので，
+
+$$
+U_n/n \overset{\mathrm{d}}{\to} \operatorname{Exp}(r)
+$$
+
+が成立する．
+
+<strong > &#9654;&nbsp; 収束の確認</strong>
+
+
+```{python}
+#| code-fold: false
+import numpy as np
+from scipy.stats import expon, geom
+import polars as pl
+from plotly import express as px
+
+r = 1
+N = [2, 5, 10, 50]
+
+x = np.linspace(0, 4, 1000)
+df = pl.DataFrame(
+    {
+        "normalized_domain": x,
+        **{f"Geom-N={n}": geom.cdf(x * n, r / n) for n in N},
+        "Expon": expon.cdf(x),
+    }
+)
+
+fig = px.line(
+    df, x="normalized_domain", y=df.columns[1:], title="Geometric dist converges to exponential dist"
+)
+fig.update_layout(yaxis=dict(title="cumulative probability"))
+fig.show()
+```
+
+:::
+
+
+
+::: {#exm-geom-uniform-relation .custom_problem }
+**: 離散一様分布との関係性**
+<br>
+
+確率変数列 $X = (X_1, X_2, \cdots)$ を互いに独立なパラメータ $p\in(0,1)$ のベルヌーイ確率変数列とします．
+$n\in\mathbb N$ について，
+
+$$
+Y_n = \sum_{i=1}^nX_i
+$$
+
+と定義します．このとき，$Y_n\sim\operatorname{Binom}(n, p)$ となります．
+
+次に，ベルヌーイ試行列で初めて成功を引くまでに要した回数を確率変数 $N$ とし，$Y_n = 1$ の条件の下での確率分布を計算すると，
+以下のように標本空間 $\mathcal{X}= \{1, 2, \cdots, n\}$ とする離散一様分布と一致することがわかります．
+
+$j\in\{1, 2, \cdots, n\}$ に対して，
+
+$$
+\begin{align*}
+\Pr(N = j\vert Y_n = 1)
+    &= \frac{\Pr(N=j, Y_n=1)}{\Pr(Y_n=1)}\\
+    &= \frac{\Pr(Y_{j-1} = 0,X_j=1, Y_n=1)}{\Pr(Y_n=1)}\\
+    &= \frac{(1-p)^{j-1}p(1-p)^{n-j}}{np(1-p)^{n-1}}\\
+    &= \frac{1}{n}
+\end{align*}
+$$
+
+上記より，条件付き分布はパラメータ $p$ に依存しないことがわかります．
+
 
 :::

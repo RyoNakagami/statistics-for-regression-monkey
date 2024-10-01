@@ -1,0 +1,49 @@
+---
+title: "統計的推定"
+author: "Ryo Nakagami"
+date: "2024-09-30"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## 点推定
+
+想定されるパラメトリックな確率分布が $k$ 個の未知パラメータ 
+
+$$
+\pmb{\theta} = (\theta_1, \cdots, \theta_k)
+$$
+
+を含んでいるとし，確率関数を $f(x;\pmb\theta)$ で表します．$\pmb X = (X_1, \cdots, X_n)$ が
+$f(x;\pmb\theta)$ から独立にサンプリングされるとすると，
+
+$$
+X_1, \cdots, X_n \overset{\mathrm{iid}}{\sim} f(x;\pmb\theta)
+$$
+
+と表せます．
+
+<div class="blog-custom-border">
+<strong>Def: 点推定，推定量，推定値</strong> <br>
+
+$\pmb X$ の関数として，未知のパラメータ $\pmb{\theta}$ を求めることを点推定と呼ぶ．
+また，この関数を $\widehat{\pmb{\theta}}(\pmb{X})$ と表記し，$\pmb{\theta}$ の推定量と呼ぶ．
+この関数に $\pmb{X}$ の実現値 $\pmb{x}$ を代入した $\widehat{\pmb{\theta}}(\pmb{x})$ を推定値と呼ぶ．
+
+</div>
+
+### 望ましい推定量の性質
+
+<div class="blog-custom-border">
+<strong>Def: 一致性(consistency)</strong> <br>
+
+$n\to\infty$ のとき，推定量 $\widehat{\pmb{\theta}}(\pmb{X})$ が $\pmb{\theta}$
+に確率収束するとき， $\widehat{\pmb{\theta}}(\pmb{X})$ は $\pmb{\theta}$ の一致推定量という．
+
+</div>

@@ -12,13 +12,168 @@ comments:
 jupyter: python3
 ---
 
+## ベルヌーイ分布の性質
+
+<div class="blog-custom-border">
+<strong>Def: ベルヌーイ分布</strong> <br>
+
+確率変数 $X$ の確率関数 $f_X(x)$ が次の条件を満たすとき，ベルヌーイ分布に従うという:
+
+$$
+f_X(x) = \bigg\{\begin{array}{c}p^x(1-p)^{1-x} & x = 0, 1\\ 0 & \text{otherwise}\end{array}
+$$
+
+ただし，$0 < p < 1$ とする．
+
+
+</div>
+
+標本空間 $\mathcal{X} = \{0, 1\}$ となるような確率変数をベルヌーイ確率変数と呼んだりします．
+ベルヌーイ確率変数は，車を購入するか否か，現在の与党を支持するか否か，といったYes/Noクエッションの場面などで登場したりします．
+
+より一般的にいうと，事象 $A$ に対して指示関数を
+
+$$
+I_A(\omega) = \bigg\{\begin{array}{c}1 & (\omega \in A)\\ 0 & (\omega\not\in A)\end{array}
+$$
+
+と定義すると，$\Pr(A) = p$ をパラメーターとするベルヌーイ確率変数になります．
+
+<strong > &#9654;&nbsp; 期待値，分散，MGF</strong>
+
+確率変数 $X \sim \operatorname{Bernoulli}(p)$ とするとき，
+
+$$
+\begin{align*}
+\mathbb E[X] &= p\\
+\operatorname{Var}(X) &= p(1-p)\\
+G_X(s) &= (1-p) + ps\\
+M_X(t) &= (1-p) + p\exp(t), \quad (-\infty < t < \infty)\\
+\varphi(t) &= (1-p) + p\exp(it)
+\end{align*}
+$$
+
+
+
 ## 二項分布の性質
 
+成功確率が $p$ のベルヌーイ試行を独立に $n$ 回繰り返したときの成功の回数を $X$ で表したとき，この確率変数 $X$
+は二項分布に従います． 
+
+<div class="blog-custom-border">
+<strong>Def: 二項分布(Binomial distribution)</strong> <br>
+
+確率変数 $X$ が試行回数 $n\in\mathbb N$, 成功確率 $0<p<1$ の二項分布に従うとき，標本空間は $\mathcal{X} = \{0, 1, \cdots, n\}$，確率関数 $f_X(x)$ は
+
+$$
+f_X(x) = \bigg\{\begin{array}{c}{}_nC_x p^x(1-p)^{n-x} & x \in \mathcal{X}\\0 & \text{otherwise}\end{array}
+$$
+
+このとき，$X\sim \operatorname{Bin}(n,p)$ と表す．
+
+</div>
+
+二項分布は単一の分布ではなく，特定の $n, p$ に対応する分布の集合です．このような意味で二項分布は**分布族(family of distribution)**を
+なしているといいます．分布族において，個々の分布を指定するものを分布族のパラメーターと言います．
+
+<strong > &#9654;&nbsp; 期待値の導出</strong>
+
+成功確率が $p$ のベルヌーイ試行を独立に $n$ 回繰り返したときの合計が二項分布に従う確率関数なので，
+各独立のベルヌーイ確率変数を $X_i$ と表すと
+
+$$
+X = \sum_{i=1}^n X_i
+$$
+
+従って，期待値の線型性より
+
+$$
+\begin{align*}
+\mathbb E[X] &= \mathbb E[\sum_{i=1}^n X_i]\\
+             &= \sum_{i=1}^n \mathbb E[X_i]\\
+             &= np
+\end{align*}
+$$
+
+または，二項分布の定義通りに，$q = 1- p$ とすると
+
+$$
+\begin{align*}
+\mathbb E[X]
+    &= \sum_{k=0}^n k \frac{n!}{k!(n-k)!}p^kq^{n-k}\\
+    &= np\sum_{k=1}^n \frac{(n-1)!}{(k-1)!((n-1)-(k-1))!}p^{k-1}q^{n-1-(k-1)}\\
+    &= np\sum_{l=1}^{n-1} \frac{(n-1)!}{l!((n-1)-l)!}p^{l}q^{n-1-l}\\
+    &= np(p+q)^{n-1}\\[5pt]
+    &= np
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; 二項定理を用いた期待値の導出</strong>
+
+$q = 1 - p$ としたとき，
+
+$$
+\sum_{k=0}^n{}_nC_k p^kq^{n-k} = (p + q)^n
+$$
+
+両辺を $p$ について微分すると，
+
+$$
+\sum_{k=0}^n{}_nC_k kp^{k-1}q^{n-k} = n(p + q)^{n-1}
+$$
+
+RHSは $p=q = 1$ より, $\operatorname{RHS} = n$．LHSについて
+
+$$
+\begin{align*}
+\operatorname{LHS}
+    &= \frac{1}{p}\sum_{k=0}^n{}_nC_k kp^{k}q^{n-k} \\
+    &= \frac{1}{p}\mathbb E[X]
+\end{align*}
+$$
+
+従って，$\mathbb E[X] = np$ を得ます．
+
+<strong > &#9654;&nbsp;  分散の導出</strong>
+
+互いに独立なベルヌーイ確率変数の合計という観点から
+
+$$
+\begin{align*}
+\operatorname{Var}(X)
+    &= \operatorname{Var}(\sum_{i=1}^n X_i)\\
+    &= \sum_{i=1}^n \operatorname{Var}(X_i)\\
+    &= np(1-p)
+\end{align*}
+$$
+
+または，二項分布の定義通りに，$q = 1- p$ とすると
+
+$$
+\begin{align*}
+&\mathbb E[X(X-1)]\\
+    &= \sum_{k=0}^n k(k-1) \frac{n!}{k!(n-k)!}p^kq^{n-k}\\
+    &= n(n-1)p^2 \sum_{k=2}^n \frac{(n-2)!}{(k-2)!((n-2)-(k-2))!}p^{k-2}q^{n-2-(k-2)}\\
+    &= n(n-1)p^2
+\end{align*}
+$$
+
+従って，
+
+$$
+\begin{align*}
+\operatorname{Var}(X) 
+    &= \mathbb E[X(X-1)] + \mathbb E[X](1 - \mathbb E[X])\\
+    &= n(n-1)p^2 + np(1 - np)\\
+    &= np[np-p + 1 - np]\\
+    &= np(1-p)
+\end{align*}
+$$
 
 
 <strong > &#9654;&nbsp; 確率母関数の計算</strong>
 
-確率変数 $X\sim\operatorname{Binom}(n, p)$ としたとき，
+確率変数 $X\sim\operatorname{Bin}(n, p)$ としたとき，
 
 $$
 \begin{align*}
@@ -29,3 +184,151 @@ G_X(s)
     &= [(s-1)p + 1]^n
 \end{align*}
 $$
+
+または，ベルヌーイ確率変数の合計という観点から 
+
+$$
+\begin{align*}
+G_X(s) 
+    &= \prod_{i=1}^n G_{X_{i}}(s) \\
+    &= (sp + 1-p)^n\\[5pt]
+    &= [(s-1)p + 1]^n
+\end{align*}
+$$
+
+確率母関数から期待値を計算してみると
+
+$$
+G_X^\prime(s) = np [(s-1)p + 1]^{n-1}
+$$
+
+従って，
+
+$$
+G_X^\prime(s)\bigg\vert_{s=1} = np
+$$
+
+<strong > &#9654;&nbsp; MGFの計算</strong>
+
+$$
+\begin{align*}
+M_X(t)
+    &= \sum_{x=0}^n e^{tx} \times {}_nC_xp^x(1-p)^{n-x}\\
+    &= \sum_{x=0}^n \times {}_nC_x(pe^t)^{x}(1-p)^{n-x}\\
+    &= [pe^t + (1 - p)]^n
+\end{align*}
+$$
+
+### ポワソン分布との関係
+
+二項分布において，
+
+- $n$ が大きい: 大量の観察が可能
+- $p$ が小さい: レアな事象
+
+である場合，両方の傾向が釣り合って，それほど大きくないけれどもある程度の $x$ が現実に観察されます．
+例えば，不動産申込みからの成約率が $p = 0.003$ で月に $n=1000$ の申込みがあるとします．
+
+このとき，modeであるような
+
+$$
+\Pr(X = 3) = {}_{1000}C_3(0.003)^3(0.997)^{1000-3}
+$$
+
+は数値的に計算することが難しいです．このようなとき，ポワソン近似を用いたりします．
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: ポワソンの少数の法則**
+<br>
+
+$np=\lambda$ が一定のもとで $p\to 0, n\to\infty$ とすると，
+二項分布 $\operatorname{Bin}(n, p)$ はポアソン分布 $\operatorname{Po}(\lambda)$ に収束する．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$p = \lambda/n$ であるので，二項分布の確率関数は
+
+$$
+\begin{align*}
+p(x) 
+    &= \frac{n!}{x!(n-x)!}\left(\frac{\lambda}{n}\right)^x\left(1-\frac{\lambda}{n}\right)^{n-x}\\
+    &= \frac{\lambda^x}{x!}\frac{n!}{(n-x)!n^x}\left(1-\frac{\lambda}{n}\right)^n\left(1-\frac{\lambda}{n}\right)^{-x}
+\end{align*}
+$$
+
+$n\to\infty$ のとき，
+
+$$
+\begin{align*}
+\frac{n!}{(n-x)!n^x} &\to 1\\
+\left(1-\frac{\lambda}{n}\right)^n &\to \exp(-\lambda)\\
+\left(1-\frac{\lambda}{n}\right)^{-x}&\to 1
+\end{align*}
+$$
+
+
+従って，
+
+$$
+p(x) \to \frac{\lambda^x}{x!}\exp(-\lambda)
+$$
+
+とポワソン分布の確率関数に収束することがわかる．
+
+<strong > &#9654;&nbsp;  pythonでの確認</strong>
+
+```{python}
+#| code-fold: false
+import numpy as np
+from scipy.stats import binom, poisson
+import polars as pl
+from plotly import express as px
+
+mu = 3
+N = [8, 10, 100]
+
+x = np.arange(0, 9)
+df = pl.DataFrame(
+    {
+        "normalized_domain": x,
+        **{f"Binom-N={n}": binom(n=n, p=mu / n).pmf(x) for n in N},
+        "Poisson-λ=3": poisson(mu).pmf(x),
+    }
+)
+
+fig = px.line(
+    df,
+    x="normalized_domain",
+    y=df.columns[1:],
+    title='Binomial dist converges to Poisson dist with λ = 3',
+    markers='x'
+)
+fig.update_layout(yaxis=dict(title="probability"))
+fig.show()
+```
+:::
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: 積率母関数を用いた証明
+
+$p = \lambda/n$ を用いて二項分布の積率母関数を表すと
+
+$$
+\begin{align*}
+M_X(t)
+    &= [pe^t + (1-p)]^n\\
+    &= \left[\frac{\lambda}{n}e^t + 1 - \frac{\lambda}{n}\right]^n\\
+    &= \left[1 + \frac{\lambda}{n}(e^t - 1)\right]^n\\
+    &\to \exp[\lambda (e^t - 1)]\quad (\text{as } n\to\infty)
+\end{align*}
+$$
+
+以上より，ポワソン分布の積率母関数に収束することがわかります．
+
+:::
