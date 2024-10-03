@@ -36,10 +36,12 @@ book:
     - part: posts/statistics101/chapter_header.qmd
       chapters:
         - posts/statistics101/averages.qmd
+        - posts/statistics101/correlation.qmd
         - posts/statistics101/random_variable.qmd
         - posts/statistics101/expectation.qmd
         - posts/statistics101/moment_generating_function.qmd
         - posts/statistics101/order_statistic.qmd
+        - posts/statistics101/delta-method.qmd
     - part: posts/probability_distribution/chapter_header.qmd
       chapters: 
         - posts/probability_distribution/discrete_uniform_dist.qmd
@@ -50,6 +52,8 @@ book:
         - posts/probability_distribution/hypergeometric.qmd
         - posts/probability_distribution/continuous_uniform_dis.qmd
         - posts/probability_distribution/normal_dist.qmd
+        - posts/probability_distribution/exponential_dist.qmd
+        - posts/probability_distribution/gamma_dist.qmd
     - part: posts/statistical_hypothesis_test_101/chapter_header.qmd
       chapters:
         - posts/statistical_hypothesis_test_101/fisher_exact_test.qmd
@@ -60,21 +64,21 @@ book:
       chapters: 
         - posts/estimation/method-of-moments.qmd
         - posts/estimation/m-estimator.qmd
+    - part: posts/bayesian_estimation/chapter_header.qmd
+      chapters: 
+        - posts/bayesian_estimation/bayesian_linear_regression.qmd
     - part: posts/ExplanatoryDataAnalysis/chapter_header.qmd
       chapters: 
         - posts/ExplanatoryDataAnalysis/gini_coefficient.qmd
     - part: posts/robust_statistics/chapter_header.qmd
     - part: posts/econometrics101/chapter_header.qmd
-    - part: posts/mathematical_appendix/chapter_header.qmd
-      chapters: 
-        - posts/mathematical_appendix/permutation_combination.qmd
-        - posts/mathematical_appendix/complex_number.qmd
-        - posts/mathematical_appendix/beta_function.qmd
-        - posts/mathematical_appendix/gamma_function.qmd
-        - posts/mathematical_appendix/jensen_inequality.qmd
-        - posts/mathematical_appendix/Lhopitals_rule.qmd
-
-
+  appendices: 
+    - posts/mathematical_appendix/permutation_combination.qmd
+    - posts/mathematical_appendix/complex_number.qmd
+    - posts/mathematical_appendix/beta_function.qmd
+    - posts/mathematical_appendix/gamma_function.qmd
+    - posts/mathematical_appendix/jensen_inequality.qmd
+    - posts/mathematical_appendix/Lhopitals_rule.qmd
 
 format:
   html:
@@ -85,6 +89,7 @@ format:
     include-after-body: include/custom_section.html
     lang: ja_JP.UTF-8
     number-depth: 1
+    jupyter: python3
     theme: 
       light: 
         - cosmo
@@ -103,5 +108,3 @@ format:
     csl: reference.csl
     mainfont: "Noto Sans JP"
     monofont: monospace
-
-  

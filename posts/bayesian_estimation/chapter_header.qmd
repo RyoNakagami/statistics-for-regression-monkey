@@ -1,0 +1,210 @@
+---
+title: "ベイズ推定"
+author: "Ryo Nakagami"
+date: "2024-10-03"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## ベイズ推測の考え方
+
+ベイズ推測における確率は，**未知の量について人々のもつ合理的な情報や信念(belief)を数値的に表したもの**としています．
+日常生活において，情報が更新されることにあわせて信念が更新されますが(例: 相手が飛車を振ってきたら，少なくとも居飛車はないだろうなど)，
+ベイズ推測でもベイズルールに基づいて，新たな情報の観測によって信念を更新していきます．
+
+ある集団の一般的な特性を表すパラメータ $\theta$ について，その集団からサンプリングされた標本データ $y$ が得られる前では，
+そのパラメータは不確定ですが，データ $y$ が得られたあとでは，その情報がパラメータに関する不確実性(uncertainty)を減らすことになります．
+この不確実性の変化を測るのがベイズ推測の目的の一つとなります．
+
+::: {.callout-note}
+# ベイズルール
+
+$$
+p(\theta\vert y)
+    = \frac{p(y\vert \theta)p(\theta)}{\int_{\Theta}p(y\vert\tilde\theta)p(\tilde\theta)\,\mathrm{d}\tilde\theta}
+$$
+
+上に基づいて，観測データと事前分布から事後分布を更新しますが，ベイズルールが示しているのは
+事後分布がどうあるべきではなくて，新たな情報を得たときに事後分布がどう変化するか？です．
+
+:::
+
+### ベイズ法による推定
+
+確率変数 $\pmb X \sim D(\pmb\theta)$ について，確率分布 $D$ を特徴づけるパラメーター $\pmb\theta$
+を推定したいとします．ベイズ推測では，同時確率（密度）関数 $f(\pmb x\vert \pmb \theta)$ において
+$\pmb \theta$ を確率変数とみなして確率分布を仮定します．
+
+この $\pmb \theta$ について仮定された分布のことを $\pmb \theta$ についての事前分布といい，
+
+$$
+\pi(\pmb \theta\vert \pmb\xi)
+$$
+
+と表したりします．$\pmb\xi$ は事前分布のパラメータでhyper-parameter(超母数)と呼ばれるものです．
+ここまでのモデルを整理すると次のようになります
+
+$$
+\begin{align*}
+\left\{\begin{array}{c}
+\pmb X\vert \pmb\theta & \sim f(\pmb x\vert \pmb\theta)\\
+\pmb\theta & \sim \pi(\pmb \theta\vert \pmb\xi)
+\end{array}\right.
+\end{align*}
+$$
+
+このとき，$\pmb X = \pmb x$ を与えたときの $\pmb\theta$ の事後分布は，$f_\pi(\pmb x\vert\pmb\xi)$ を
+$\pmb X$ の周辺分布とすると
+
+$$
+\begin{gather}
+f_\pi(\pmb x\vert\pmb\xi) = \int f(\pmb x\vert \pmb\theta)\pi(\pmb\theta\vert\xi)\,\mathrm{d}\theta\\
+\pi(\pmb\theta\vert \pmb x, \pmb \xi) = \frac{f(\pmb x\vert \pmb\theta)\pi(\pmb \theta\vert \pmb\xi)}{f_\pi(\pmb x\vert\pmb\xi)}
+\end{gather}
+$$
+
+この事後分布 $\pi(\pmb\theta\vert \pmb x, \pmb \xi)$ から推定量を導くのがベイズ法です．事後分布のモードを
+Bayesian maximum likelihood estimatorと呼んだりします．
+
+<strong > &#9654;&nbsp; 十分統計量とベイズ法</strong>
+
+$\pmb\theta$ に対する十分統計量を $T(\pmb X)$ とすると，$\pmb X$ の条件付き確率密度関数は
+
+$$
+\begin{align*}
+f(\pmb x\vert\pmb\theta) &= h(\pmb x) g(T(\pmb x)\vert\pmb\theta)\\
+h(\pmb x) &= P(\pmb X = \pmb x\vert T(\pmb X))
+\end{align*}
+$$
+
+と十分統計量の定義より表せます．これを用いると事後分布 $\pi(\pmb\theta\vert \pmb x, \pmb \xi)$ は次のように整理できます:
+
+$$
+\begin{align*}
+\pi(\pmb\theta\vert \pmb x, \pmb \xi)
+    &= \frac{f(\pmb x\vert \pmb\theta) \pi(\pmb\theta \vert\pmb\xi)}{\int f(\pmb x\vert \pmb\theta)\pi(\pmb\theta\vert\xi)\,\mathrm{d}\theta}\\[5pt]
+    &= \frac{h(\pmb x)g(T(\pmb x) \vert \pmb\theta)\pi(\pmb \theta\vert \pmb\xi)}{\int h(\pmb x)g(T(\pmb x) \vert \pmb\theta)\pi(\pmb\theta\vert\xi)\,\mathrm{d}\theta}\\[5pt]
+    &= \frac{g(T(\pmb x) \vert \pmb\theta)\pi(\pmb \theta\vert \pmb\xi)}{\int g(T(\pmb x) \vert \pmb\theta)\pi(\pmb\theta\vert\xi)\,\mathrm{d}\theta}\\
+\end{align*}
+$$
+
+::: {#exm- .custom_problem }
+**: 事前分布平均と標本平均の加重平均**
+<br>
+
+確率変数 $X\sim\operatorname{Binom}(n, \theta)$ とし，$\theta$ に事前分布 $\operatorname{Beta}(\alpha, \beta)$ を仮定します．
+$x$ をデータとして観測したとき，$\theta$ の事後分布は，$x, \theta$ の同時分布に比例するので
+
+$$
+\begin{align*}
+f(x\vert\theta)\pi(\theta\vert\alpha,\beta)
+    &\propto \theta^x(1 - \theta)^{n-x}\theta^{\alpha-1}(1 - \theta)^{\beta-1}\\[5pt]
+    &= \theta^{x+\alpha-1}(1 - \theta)^{n-x+\beta-1}
+\end{align*}
+$${#eq-bayesian-exm} 
+
+従って，$\theta$ の事後分布は
+
+$$
+\theta\vert\pmb x, \alpha,\beta \sim \operatorname{Beta}(x+\alpha, n-x+\beta)
+$$
+
+事後分布の期待値をベイズ推定量 $\hat\theta$ とすると, $w = \alpha + \beta, \theta_0 = \frac{\alpha }{\alpha + \beta}$ とおくことで
+
+$$
+\hat\theta = \frac{n}{w + n}\frac{X}{n} + \frac{w}{w + n}\theta_0
+$$
+
+ベイズ更新後の $\theta$ の期待値は事前分布における期待値と標本平均の加重平均となっていることがわかります．
+
+::: {.nte- .callout-tip icon="false"}
+# 🍵 Green Tea Break
+
+@eq-bayesian-exm で ${}_nC_{x}$ (以下では $C(x)$ と表記する) 及び ベータ分布の規格化定数($\operatorname{B}$ と表記する)という項が消えていますが，次のように事後分布の計算には不必要であることがわかります
+
+$$
+\begin{align*}
+&\frac{C(x)\theta^x(1 - \theta)^{n-x}\operatorname{B}\theta^{\alpha-1}(1 - \theta)^{\beta-1}}{\int C(x)\theta^x(1 - \theta)^{n-x}\operatorname{B}\theta^{\alpha-1}(1 - \theta)^{\beta-1}\mathrm{d}\theta }\\
+&=\frac{\theta^{x+\alpha-1}(1 - \theta)^{n-x+\beta-1}}{\int \theta^{x+\alpha-1}(1 - \theta)^{n-x+\beta-1}\mathrm{d}\theta }\\
+\end{align*}
+$$
+
+結局分子と分母で打ち消されあうので考慮しなくて良いことがわかります．また最後の式は $\operatorname{Beta}(x+\alpha, n-x+\beta)$ となっていることがわかります．
+この例では，事前分布と事後分布が同じ分布族に入っています．このような事前分布を**共役事前分布(conjugate prioor distribution)**と呼びます．
+
+
+:::
+:::
+
+::: {#exm- .custom_problem }
+**: 正規分布とベイズ推定**
+<br>
+
+$X_1, \cdots, X_n \overset{\mathrm{iid}}{\sim} N(\mu, \sigma)$, $\mu$ についての事前分布を $N(\xi, \tau^2)$ とする．
+ここでは $(\sigma, \xi, \tau^2)$ はハイパーパラメータとする．
+
+$(x_1, \cdots, x_n)$ を観測した下での, $\mu$ の事後分布 $\pi(\mu\vert \pmb x)$ は
+
+$$
+\begin{align*}
+\pi(\mu\vert \pmb x)
+    &\propto \phi(\pmb x\vert \mu, \sigma^2)\pi(\mu\vert \xi, \tau^2)\\[5pt]
+    &\propto \exp\left(-\frac{\sum (x_i -\mu)^2}{2\sigma^2}\right)\exp\left(-\frac{(\mu - \xi)^2}{2\tau^2}\right)
+\end{align*}
+$${#eq-base-loss}
+
+ここで，$\overline{x}$ を標本平均とすると
+
+$$
+\begin{align*}
+\sum (x_i -\mu)^2 
+    &= \sum (x_i -\overline{x} + \overline{x} - \mu)^2 \\
+    &= \sum (x_i -\overline{x})^2 + 2 \underbrace{\sum x_i(x_i -\overline{x})}_{=0} + \sum (\overline{x} - \mu)^2\\
+    &= \sum (x_i -\overline{x})^2 + n(\overline{x} - \mu)^2
+\end{align*}
+$$
+
+従って，@eq-base-loss は次のように整理できます
+
+$$
+\begin{align*}
+&\exp\left(-\frac{\sum (x_i -\mu)^2}{2\sigma^2}\right)\exp\left(-\frac{(\mu - \xi)^2}{2\tau^2}\right)\\
+&=\exp\left\{-\frac{1}{2}\left(\frac{\sum (x_i - \overline{x})^2 + n(\overline{x} - \mu)^2}{\sigma^2} + \frac{\mu^2 - 2\xi\mu + \xi^2}{\tau^2}\right)\right\}\\
+&\propto \exp\left\{-\frac{1}{2}\left(\frac{n\mu^2 - 2n\overline{x}\mu}{\sigma^2} + \frac{\mu^2 - 2\xi\mu}{\tau^2}\right)\right\}\\
+&\propto \exp\left\{-\frac{1}{2}\left(\frac{n}{\sigma^2}{ + \frac{1}{\tau^2}}\right)\left(\mu - \frac{(n/\sigma^2)\overline{x} + (1/\tau^2)\xi}{n/\sigma^2 + 1/\tau^2}\right)^2\right\}
+\end{align*}
+$$
+
+分子分母で $\mu$ と関係のない項はキャンセルアウトされるので
+
+$$
+\begin{align*}
+\hat\mu_{B} &= \frac{(n/\sigma^2)\overline{x} + (1/\tau^2)\xi}{n/\sigma^2 + 1/\tau^2}
+\end{align*}
+$$
+
+と表記すると
+
+$$
+\begin{align*}
+\pi(\mu\vert \pmb x)
+    &= \frac{\exp\left\{\frac{(\mu - \hat\mu_{B})^2}{2(n/\sigma^2 + 1/\tau^2)^{-1}}\right\}}{\int \exp\left\{\frac{(\mu - \hat\mu_{B})^2}{2(n/\sigma^2 + 1/\tau^2)^{-1}}\right\} \,\mathrm{d}\mu}\\
+    &=\frac{1}{\sqrt{2\pi (n/\sigma^2 + 1/\tau^2)^{-1}}}\exp\left\{\frac{(\mu - \hat\mu_{B})^2}{2(n/\sigma^2 + 1/\tau^2)^{-1}}\right\}
+\end{align*}
+$$
+
+従って，これは $N(\hat\mu_{B}, [n/\sigma^2 + 1/\tau^2]^{-1})$ の密度関数の形をしているので
+
+$$
+\mu\vert\pmb{X} \sim N(\hat\mu_{B}, [n/\sigma^2 + 1/\tau^2]^{-1})
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+:::

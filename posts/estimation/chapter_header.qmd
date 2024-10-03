@@ -46,4 +46,9 @@ $\pmb X$ の関数として，未知のパラメータ $\pmb{\theta}$ を求め�
 $n\to\infty$ のとき，推定量 $\widehat{\pmb{\theta}}(\pmb{X})$ が $\pmb{\theta}$
 に確率収束するとき， $\widehat{\pmb{\theta}}(\pmb{X})$ は $\pmb{\theta}$ の一致推定量という．
 
+$$
+\lim_{n\to\infty}\Pr(\vert\widehat{{\pmb\theta}}-\pmb\theta\vert > \epsilon; \pmb\theta) = 0 \quad\forall \epsilon > 0
+$$
+
+
 </div>

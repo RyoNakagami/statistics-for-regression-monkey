@@ -1,0 +1,321 @@
+---
+title: "ベイジアン線形回帰"
+author: "Ryo Nakagami"
+date: "2024-10-03"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+## Recap of OLS
+
+$(Y_i, \pmb{x}_i)$ をrandom vectorとして，$Y_i \in \mathbb R, \pmb{x}_i \in \mathbb R^k$ とします．
+線形回帰では，$(Y_i, \pmb{x}_i)$ について次のようにパラメーターに関して線形な関係があるとして回帰問題を考えます．
+
+$$
+\begin{align*}
+Y_i &= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors})
+\end{align*}
+$$
+
+これを行列表現にした場合，$\pmb{Y} = (Y_1, \cdots, Y_n)^T$, $\pmb{X} = (\pmb{x}_1, \cdots, \pmb{x}_n)^T$ として
+
+$$
+\pmb{Y} = \pmb{X}\pmb{\beta} + \pmb{\epsilon}
+$$
+
+
+<div class="blog-custom-border">
+<strong>Assumption: OLSの仮定</strong> <br>
+
+(1) mutually independent and identical distribution
+
+    $$
+    (Y_i, \pmb{x_i^T}), i = 1, \cdots, n \text{ は i.i.d}
+    $$
+
+(2) Linear model
+
+    $$
+    \pmb{Y} = \pmb{X}\pmb{\beta} + \pmb{\epsilon}
+    $$
+
+(3) error term is conditional-mean zero
+
+    $$
+    \mathbb E[\epsilon_i\vert \pmb{x}_i] = 0
+    $$
+
+(4) finite moments
+
+    $$
+    \begin{align*}
+        \mathbb E[Y_i^2] &< \infty\\
+        \mathbb E[\|\pmb{x}_i^2\|] &< \infty
+    \end{align*}
+    $$
+
+(5) Full rank condition
+
+    $\operatorname{rank}(\pmb{X}) = k$，つまり完全な多重共線性がない
+
+</div>
+
+議論の単純化のため，以下では
+
+$$
+\epsilon_1, \cdots, \epsilon_m \overset{\mathrm{iid}}{\sim} N(0, \sigma^2)
+$$ {#eq-normality}
+
+つまり， Homoscedasticityの仮定の下で話を進めます．
+
+<strong > &#9654;&nbsp; $\pmb\beta$ の推定</strong>
+
+仮定 (2), (3) より $\mathbb E[Y_i\vert \pmb{x}_i] = \pmb{x}_i^T\pmb{\beta}$ であるので，
+
+$$
+\pmb{\beta} = \arg\min_{b} \mathbb E[(Y_i - \pmb{x}_i^T\pmb{b})^2]
+$${#eq-OLS-loss-func}
+
+the joint distribution $(Y_i, \pmb{x}_i)$ は事前には知られていないので、sample analogを用いて以下のように推定します
+
+$$
+\begin{align*}
+\widehat{\pmb{\beta}} 
+    &= \arg\min_{b} \frac{1}{N}\sum_{i=1}^N(Y_i - \pmb{x}_i^T\pmb{b})^2\\
+    &= \arg\min_{b} (\pmb{Y} - \pmb{X}\pmb{\beta})^T(\pmb{Y} - \pmb{X}\pmb{\beta})
+\end{align*}
+$$
+
+上記について，$b$ のFOCをとると
+
+$$
+\pmb{X}^T(\pmb{Y} - \pmb{X}\widehat{\pmb{\beta}}) = 0
+$$
+
+仮定 (5) より $\operatorname{rank}(\pmb{X}) = k$, つまりfull rankであるので $(\pmb{X}^T\pmb{X})^{-1}$ がとれます．従って，
+
+$$
+\widehat{\pmb{\beta}} = (\pmb{X}^T\pmb{X})^{-1}(\pmb{X}^T\pmb{Y})
+$${#eq-OLS-estimator}
+
+<strong > &#9654;&nbsp; $\widehat{\pmb{\beta}}$ の漸近分散</strong>
+
+population $\pmb{\beta}$ を用いてerror termを以下のように表します
+
+$$
+\begin{align*}
+\pmb{Y}_i 
+    &= \pmb{x}_i^T\pmb{\beta} + (\pmb{Y_i} - \pmb{x}_i^T\pmb{\beta})\\
+    &= \pmb{x}_i^T\pmb{\beta} + \epsilon_i
+\end{align*}
+$$
+
+両辺に $[\pmb{X}^T\pmb{X}]^{-1}\pmb{X}^T$ をかけると @eq-OLS-estimator より
+
+$$
+\widehat{\pmb{\beta}} = \pmb{\beta} + \left[\sum\pmb{x}_i\pmb{x}_i^T\right]^{-1}\sum \pmb{x}_i\epsilon_i
+$$
+
+つぎに $\sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta})$ で漸近分散を考えると，
+
+$$
+\sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta}) = n\left[\sum\pmb{x}_i\pmb{x}_i^T\right]^{-1}\frac{1}{\sqrt{n}}\sum \pmb{x}_i\epsilon_i
+$$
+
+$\mathbb E[\pmb{x}_ie_i] = 0$ であるので，$\frac{1}{\sqrt{n}}\sum \pmb{x}_i\epsilon_i$ は location は 0であることがわかります．従って，
+
+$$
+\frac{1}{\sqrt{n}}\sum \pmb{x}_i\epsilon_i = \sqrt{n}\left\{\frac{1}{n}\sum \pmb{x}_i\epsilon_i - 0\right\}\overset{\mathrm{d}}{\to} N(0, \mathbb E[\pmb{x}_i\pmb{x}^T\epsilon_i^2]) 
+$$
+
+また，$\frac{1}{n}\sum\pmb{x}_i\pmb{x}_i^T$ が $\mathbb E[\pmb{x}_i\pmb{x}_i^T]$ に確率収束するので，スラツキーの定理とCLTにより
+
+$$
+\begin{align*}
+\sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta}) \overset{\mathrm{d}}{\to}  N(0, \mathbb E[\pmb{x}_i\pmb{x}]^{-1}\mathbb E[\pmb{x}_i\pmb{x}^T\epsilon_i^2]\mathbb E[\pmb{x}_i\pmb{x}]^{-1})
+\end{align*}
+$$
+
+@eq-normality より
+
+$$
+\mathbb E[\pmb{x}_i\pmb{x}^T\epsilon_i^2] = \sigma^2\mathbb E[\pmb{x}_i\pmb{x}^T]
+$$
+
+が成立するので
+
+$$
+\sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta}) \overset{\mathrm{d}}{\to}  N(0, \sigma^2\mathbb E[\pmb{x}_i\pmb{x}]^{-1})
+$$
+
+$\pmb{X}$ で条件付けた分散は
+
+$$
+\begin{align*}
+\operatorname{Var}(\widehat{\pmb{\beta}}\vert \pmb{X})
+    & = \mathbb E[(\pmb{X}^T\pmb{X})^{-1}\pmb{X}^T\pmb\epsilon\pmb\epsilon^T\pmb{X}(\pmb{X}^T\pmb{X})^{-1}\vert \pmb{X}]\\
+&= (\pmb{X}^T\pmb{X})^{-1}\pmb{X}^T\mathbb E[\pmb\epsilon\pmb\epsilon^T\vert \pmb{X}](\pmb{X}^T\pmb{X})^{-1}\pmb{X}^T\\
+&= \sigma^2(\pmb{X}^T\pmb{X})^{-1}
+\end{align*}
+$$
+
+
+<strong > &#9654;&nbsp; $\pmb{Y}$ の条件付き同時分布 </strong>
+
+@eq-normality より$\pmb{Y}$ の条件付き同時確率密度は
+
+$$
+\begin{align*}
+p&(Y_1, \cdots, Y_n\vert \pmb{x_1}, \cdots, \pmb{x_n}, \pmb{\beta}, \sigma^2)\\
+ &= \prod p(Y_i\vert \pmb{x_i}, \pmb{\beta}, \sigma^2) \quad \because\text{i.i.d}\\
+ &= (2\pi\sigma^2)^{-n/2}\exp\{- \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \pmb{x}_i^T\pmb{\beta})^2\}
+\end{align*}
+$${#eq-joint-normality}
+
+つまり，
+
+$$
+\{\pmb{Y} \vert \pmb{X}, \pmb{\beta}, \sigma\} \sim \operatorname{N}(\pmb{X}\pmb{\beta}, \sigma^2\pmb{I}) 
+$$
+
+@eq-joint-normality の尤度最大化は
+
+$$
+\min\sum_{i=1}^n (Y_i - \pmb{x}_i^T\pmb{\beta})^2
+$$
+
+を解くことで得られますが，これは @eq-OLS-loss-func の問題と対応していることがわかります．
+
+## Bayesian Linear Regression
+
+<strong > &#9654;&nbsp; $\pmb\beta$ の事後分布の導出</strong>
+
+$\pmb{\beta}$ についての事前分布を
+
+$$
+\pmb{\beta} \sim \operatorname{N}(\pmb{\beta}_0, \pmb{\Sigma}_0)
+$$
+
+事後分布は
+
+$$
+\begin{align*}
+p&(\pmb\beta\vert \pmb Y, \pmb X, \sigma^2)\\
+&\propto p(\pmb Y\vert \pmb X, \pmb \beta, \sigma^2)\times p(\pmb\beta)\\
+&\propto \exp\{-\frac{1}{2}(-2\pmb\beta^T\pmb X^T\pmb y/\sigma^2 + \pmb\beta^T\pmb X^T\pmb X\pmb\beta/\sigma^2) - \frac{1}{2}(-2 \pmb\beta^T\pmb\Sigma_0^{-1}\pmb\beta_0 + \pmb\beta^T\pmb\Sigma_0^{-1}\pmb\beta)\} \\
+&= \exp\{\pmb\beta^T(\pmb\Sigma_0^{-1}\pmb\beta_0 + \pmb X^T\pmb Y/\sigma^2) - \frac{1}{2}\pmb\beta^T(\pmb\Sigma_0^{-1} + \pmb X^T\pmb X/\sigma^2)\pmb\beta\}
+\end{align*}
+$$
+
+多変量正規分布を仮定しているので，以下のようにまとめることができます
+
+$$
+\begin{align*}
+\operatorname{Var}(\pmb\beta\vert\pmb Y, \pmb X, \sigma^2)
+    &= (\pmb\Sigma_0^{-1} + \pmb X^T\pmb X/\sigma^2)^{-1}\\
+\mathbb E[\pmb\beta\vert\pmb Y, \pmb X, \sigma^2]
+    &= (\pmb\Sigma_0^{-1} + \pmb X^T\pmb X/\sigma^2)^{-1}(\pmb\Sigma_0^{-1}\pmb\beta_0 + \pmb X^T\pmb Y/\sigma^2)
+\end{align*}
+$${#eq-posterior-beta}
+
+::: {.nte- .callout-tip icon="false"}
+# 🍵 Green Tea Break
+@eq-posterior-beta について
+
+$$
+\begin{gather}
+\pmb\beta_0 = \pmb 0\\
+\pmb\Sigma_0 = \frac{\sigma^2}{\lambda}\pmb I 
+\end{gather}
+$$
+
+と事前分布のパラメータを設定すると，
+
+$$
+\begin{align*}
+\mathbb E[\pmb\beta\vert\pmb Y, \pmb X, \sigma^2] = (\lambda\pmb I + \pmb X^T\pmb X)^{-1}\pmb X^T\pmb Y
+\end{align*}
+$$
+
+となり，次にようにペナルティ $\lambda$ のRidge repression推定量と一致することがわかります．
+
+Ridge推定量は
+
+$$
+\pmb\beta_{ridge} =\arg\min (\pmb Y- \pmb X\pmb \beta)^T(\pmb Y-\pmb X\pmb \beta) + \lambda \|\pmb \beta\|^2
+$$
+
+の解と一致します．これについて，FOCをとると
+
+$$
+\pmb\beta_{ridge} = (\pmb X^T\pmb X + \lambda \pmb I)^{-1}\pmb X^T\pmb Y 
+$$
+
+参考までですが，Ridge推定量の条件付き漸近分散は
+
+$$
+\begin{align*}
+\operatorname{Var}(\pmb\beta_{ridge}\vert \pmb X) &= \sigma^2(\pmb X^T\pmb X + \lambda I_p)^{-1}\pmb X^T\pmb X(\pmb X^T\pmb X + \lambda \pmb I)^{-1}\\
+&\leq \sigma^2(\pmb X^T\pmb X)^{-1} = V(\pmb\beta_{ols}\vert \pmb X) 
+\end{align*}
+$$
+
+:::
+
+<strong > &#9654;&nbsp; $\sigma^2$ の事前分布</strong>
+
+多くの正規モデルでは $\sigma^2$ の準共役事前分布は逆ガンマ分布です．
+$\gamma = 1/\sigma^2$ を観測の精度とみなし，
+
+$$
+\gamma \sim \operatorname{Ga}(v_0/2, v_0\sigma^2_0/2)
+$$
+
+と事前分布を設定すると
+
+$$
+\begin{align*}
+p&(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
+&\propto p(\gamma)\times p(\pmb Y \vert \gamma, \pmb X, \pmb\beta)\\
+&\propto \left[\gamma^{v_0/2 -1} \exp(-\gamma\times v_0\sigma^2_0/2)\right] \times \left[\gamma^{n/2}\exp(-\gamma \times \operatorname{SSR}(\pmb\beta)/2)\right]\\
+&= \gamma^{(v_0+n)/2 -1} \exp(-\gamma [v_0\sigma^2_0 + \operatorname{SSR}(\pmb\beta)]/2)\\[5pt]
+&\text{where }\quad \operatorname{SSR}(\pmb\beta) = (\pmb Y - \pmb X\pmb\beta)^T(\pmb Y - \pmb X\pmb\beta)
+\end{align*}
+$$
+
+これはガンマ分布とみなせるので，$\gamma = 1/\sigma^2$ より，事後分布は
+
+$$
+\{\sigma^2\vert\pmb Y, \pmb X, \pmb\beta\} \sim \operatorname{inverse-gamma}((v_0+n)/2, [v_0\sigma^2_0 + \operatorname{SSR}(\pmb\beta)]/2)
+$$
+
+従って，ベイジアンアップデートは以下のような手順で行います.
+
+:::{.nte- .callout-note}
+## 推定手順
+
+<strong > &#9654;&nbsp; Step 1: $\pmb\beta$ の更新</strong>
+    
+1. $\pmb V = \operatorname{Var}(\pmb\beta\vert \pmb Y, \pmb X, \sigma^{2}_{(s)}), \pmb m = \mathbb E[\pmb\beta\vert \pmb Y, \pmb X, \sigma^{2}_{(s)}]$ の計算
+2. $\pmb\beta_{(s+1)}$ を次のように生成
+
+$$
+\pmb\beta_{(s+1)}\sim \operatorname{N}(\pmb m, \pmb V)
+$$ 
+
+<strong > &#9654;&nbsp; Step 2: $\sigma^2$ の更新</strong>
+
+1. $\operatorname{SSR}(\pmb\beta_{(s+1)})$ を計算
+2. $\sigma^{2}_{(s+1)}$ を次のように生成
+
+$$
+\sigma^{2}_{(s+1)}\sim \operatorname{inverse-gamma}((v_0+n)/2, [v_0\sigma^2_0 + \operatorname{SSR}(\pmb\beta_{(s+1)})]/2)
+$$
+
+:::

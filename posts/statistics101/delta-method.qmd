@@ -1,0 +1,299 @@
+---
+title: "デルタ法"
+author: "Ryo Nakagami"
+date: "2024-10-01"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: スラツキーの定理**
+<br>
+
+$U_n \overset{\mathrm{d}}{\to} U, V_n\overset{\mathrm{p}}{\to} a$ とする．このとき，次の性質が成立する：
+
+$$
+\begin{align*}
+U_n + V_n &\overset{\mathrm{d}}{\to}U + a\\
+U_nV_n&\overset{\mathrm{d}}{\to}aU
+\end{align*}
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+確率収束は分布収束を意味するので
+
+$$
+[U_n\quad V_n] \overset{\mathrm{d}}{\to} [U\quad  a]
+$$
+
+$g(x , y) = x +y, h(x, y) = xy$ と見たとき，どちらも連続関数であるので連続写像定理により
+
+$$
+\begin{align*}
+g(U_n, V_n) \overset{\mathrm{d}}{\to} g(U, a)\\
+h(U_n, V_n) \overset{\mathrm{d}}{\to} h(U, a)
+\end{align*}
+$$
+
+従って，
+
+$$
+\begin{align*}
+U_n + V_n &\overset{\mathrm{d}}{\to}U + a\\
+U_nV_n&\overset{\mathrm{d}}{\to}aU
+\end{align*}
+$$
+
+:::
+
+<strong > &#9654;&nbsp; スラツキー定理の確認</strong>
+
+$X\sim\operatorname{Po}(3)$ のサンプルサイズを $N \in \{10, 20, 500\}$ に設定し
+
+$$
+\begin{align*}
+X_n &= \sqrt{N}\frac{\overline X -\lambda}{\sqrt{\lambda}}\\
+A_n &= 2 + \exp(-N)
+\end{align*}
+$$
+
+としたとき，$X_n$ はCLTにより $X_n \overset{\mathrm{d}}{\to} N(0, 1)$, $A_n \to 2$ が成り立つので
+
+$$
+\begin{align*}
+A_NX_n \overset{\mathrm{d}}{\to} 2\cdot N(0, 1) 
+\end{align*}
+$$
+
+となるはずです．各レベルの $X_n$ について 1000回ずつシミュレーションを行い，density plotを以下確認してみました．
+期待することとしては，$N$ が大きくなるにつれて，$N(0, 4)$ の分布に近づいていくことです．
+
+```{python}
+import numpy as np
+from scipy.stats import poisson, norm
+import plotly.figure_factory as ff
+import plotly.graph_objects as go
+
+np.random.seed(42)
+
+# ------------------------
+# simulations
+# ------------------------
+N = np.array([10, 20, 500])
+mu = 3
+
+X_n = list(map(lambda x: np.mean(poisson.rvs(mu=mu, size=[x, 1000]), axis=0), N))
+A_n = 2 + np.exp(-N / 20)
+
+for i in range(0, 3):
+    tmp = A_n[i] * np.sqrt(N[i]) * (X_n[i] - mu) / np.sqrt(mu)
+    exec(f"b{i} = tmp")
+
+x_range = np.linspace(-8, 8, 1000)
+normal_density = norm(0, 2).pdf(x_range)
+
+# ------------------------
+# visualization
+# ------------------------
+hist_data = [b0, b1, b2]
+
+group_labels = ["N=10", "N=20", "N=500"]
+colors = ["#6BAED6", "#2171B5", "#08306b"]
+
+# Create distplot with curve_type set to 'normal'
+fig = ff.create_distplot(
+    hist_data, group_labels, show_hist=False, colors=colors, show_rug=False
+)
+fig.add_traces(
+    go.Scatter(
+        x=x_range,
+        y=normal_density,
+        mode="lines",
+        name="N(0,4)",
+        line=dict(color="gray", width=2, dash="dashdot"),
+    )
+)
+# Add title
+fig.update_layout(
+    title_text="Check Slutsky’s Theorem",
+    xaxis_title=dict(text="A_nX_n"),
+    yaxis_title=dict(text="density"),
+)
+fig.show()
+
+```
+
+::: {#exm- .custom_problem }
+**: t統計量の正規性**
+<br>
+
+次のようにt統計量を定義します
+
+$$
+\begin{gather}
+t_n = \frac{\sqrt{n}(\bar{X}_n-\mu)}{\sqrt{\hat{\sigma^2}}}\\
+\text{where } \hat{\sigma^2} = \frac{1}{n-1}\sum_{i=1}^n (X_i - \bar{X_n})^2.
+\end{gather}
+$$
+
+CLTにより
+
+$$
+\sqrt{n}(\bar{X}_n - \mu) \xrightarrow{d} N(0,\sigma^2)
+$$
+
+また，$\hat\sigma^2\xrightarrow{p}\sigma^2$ であり，$\sigma > 0$より連続写像定理より
+
+$$
+\frac{1}{\hat{\sigma^2}} \xrightarrow{p} \frac{1}{\sigma^2}
+$$
+
+ここでスラツキー定理より
+
+$$
+\begin{align}
+\sqrt{n}(\bar{X}_n-\mu) \times \frac{1}{\sqrt{\hat\sigma^2}} &\xrightarrow{d} N(0,\sigma^2) \times \frac{1}{\sqrt{\sigma^2}} \\
+&= \sigma N(0,1) \times \frac{1}{\sigma}\\
+&= N(0,1) 
+\end{align}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+:::
+
+
+<div class="blog-custom-border">
+<strong>Def: Delta Method</strong> <br>
+
+確率変数 $X_n$ について
+
+$$
+\frac{\sqrt{n}(X_n-\mu)}{\sigma}\overset{\mathrm{d}}{\sim} N(0, 1)
+$$
+
+が成立しているとします．関数 $g(\cdot)$ について，その微分導関数 $g^\prime(\cdot)$ が連続で $g^\prime(\mu)\neq 0$ であるとき，
+次の分布収束が成り立つ
+
+$$
+\frac{\sqrt{n}(g(X_n)-g(\mu))}{\sigma}\overset{\mathrm{d}}{\sim} N(0, [g\prime(\mu)]^2) 
+$$
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: テイラー展開
+
+$g(X_n)$ の $X_n=\mu$ 周りでのテイラー展開から
+
+$$
+g(X_n) \approx g(\mu) + g^\prime(\mu^*)(X_n - \mu)
+$$
+
+$\mu^*$ は $\vert \mu^* - \mu\vert < \vert X_n - \mu \vert$ を満たす点となります．
+スラツキーの定理より
+
+$$
+X_n - \mu = \frac{1}{\sqrt{n}}[\sqrt{n}(X_n-\mu)]\overset{\mathrm{d}}{\to} 0
+$$
+
+従って，
+
+$$
+\begin{align*}
+X_n &\overset{\mathrm{p}}{\to}  \mu\\
+\mu^* &\overset{\mathrm{p}}{\to}  \mu
+\end{align*}
+$$
+
+以上より，$g^\prime(\cdot)$ の連続性より $g^\prime(\mu^*)\overset{\mathrm{p}}{\to} g^\prime(\mu)$.
+従って，スラツキーの定理より
+
+$$
+\sqrt{n}\{g(X_n) - g(\mu)\} = \sqrt{n}[g^\prime(\mu^*)(X_n - \mu)]\overset{\mathrm{d}}{\to} g^\prime(\mu)N(0, \sigma^2)
+$$
+
+:::
+
+::: {#exm-delta-logit .custom_problem }
+**: logit**
+<br>
+
+$X_1, \cdots, X_n \overset{\mathrm{iid}}{\sim} \operatorname{Bernoulli}(p)$ のとき，
+
+$$
+\begin{align*}
+X_n &= \frac{1}{n}\sum_[i=1]^n X_i\\
+\sqrt{n}(X_n - p)&\overset{\mathrm{d}}{\to}N(0, p(1-p)) 
+\end{align*}
+$$
+
+が成立します．このとき，ロジット関数
+
+$$
+h(x) = \log\left(\frac{x}{1 - x}\right)
+$$
+
+を考えます．$h^\prime(x) = \frac{1}{x(1-x)}$ と $x\in (0,1)$ で連続関数であるので，デルタ法より
+
+$$
+\sqrt{n}\left\{\log\left(\frac{X_n}{1 - X_n}\right) - \log\left(\frac{p}{1 - p}\right) \right\}\overset{\mathrm{d}}{\to} N\left(0, \frac{p}{1-p}\right)
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+:::
+
+::: {#exm-exponential-dist-variance-delta .custom_problem }
+**: 指数分布の分散パラメーターの漸近分布**
+<br>
+
+$X_1, \cdots, X_n \overset{\mathrm{iid}}{\sim} \operatorname{Exp}(\lambda)$ とします．
+ただし，確率密度関数を
+
+$$
+f(x) = \lambda\exp(-x\lambda)\quad (x >0)
+$$
+
+と表す．
+
+このとき，$\operatorname{Var}(X_i) = \theta$ の推定はMLEより
+
+$$
+\begin{gather}
+\sum \frac{1}{\hat\lambda} - \sum X_i = 0\\
+\Rightarrow\hat\lambda = \left(\frac{1}{n}\sum X_i\right)\\
+\Rightarrow\hat\theta = \frac{1}{\hat\lambda^2} = \left(\frac{1}{n}\sum X_i\right)^2\\
+\end{gather}
+$$
+
+ここで $\hat\theta$ の漸近分布は, CLTより
+
+$$
+\sqrt{n}\left(\frac{1}{n}\sum X_i - \frac{1}{\lambda}\right)\overset{\mathrm{d}}{\to} N(0, \lambda^{-2}) 
+$$
+
+より，$g(x) = x^2$ とおくと $g^\prime(x) = 2x$ は連続かつ $\lambda \in (0, \infty)$ であるので
+
+$$
+\begin{align*}
+\sqrt{n}(\hat\theta - \theta)\overset{\mathrm{d}}{\to} N(0, 4\lambda^{-4})
+\end{align*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+:::

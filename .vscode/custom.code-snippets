@@ -49,6 +49,20 @@
 		],
 		"description": ""
 	},
+
+	"green tea break":{
+		"scope": "quarto",
+		"prefix": "green",
+		"body":[
+			"::: {.nte- .callout-tip icon=\"false\"}",
+			"# 🍵 Green Tea Break",
+			"",
+			":::",
+		],
+		"description": "adding column"
+	},
+
+
 	"property": {
         "scope": "quarto",
 		"prefix": "property",
@@ -90,6 +104,15 @@
 			"\\,\\mathrm"
 		],
 		"description": "積分"
+	},
+
+	"eqref":{
+		"scope": "quarto",
+		"prefix": "eqref",
+		"body":[
+			"{#eq-}"
+		],
+		"description": "tag"
 	},
 
 	// --------------------------------------------

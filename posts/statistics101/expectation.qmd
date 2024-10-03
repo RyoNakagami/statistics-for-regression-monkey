@@ -553,7 +553,7 @@ $$
 :::
 
 <div class="blog-custom-border">
-::: {#thm- .custom_problem }
+::: {#thm-schwarz .custom_problem }
 **Schwarz inquality**
 <br>
 
@@ -1342,6 +1342,84 @@ $$
 
 :::
 
+## Stein identity
+
+<div class="blog-custom-border">
+::: {#thm-stein-identity .custom_problem }
+**: スタインの等式**
+<br>
+
+確率変数 $X\sim N(\mu, \sigma^2)$ とする．$g(\cdot)$ が微分可能で $\mathbb E[\vert g^\prime(X)\vert]<\infty$ 及び $\mathbb E[\vert g(X)\vert]<\infty$ のとき，
+
+$$
+\mathbb E[(X-\mu)g(X)] = \sigma^2\mathbb E[g^\prime(X)]
+$$
+
+が成り立つ．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\mathbb E[(X - \mu)g(X)] = \frac{1}{\sqrt{2\pi\sigma^2}}\int^\infty_{-\infty}g(x)(x-\mu)\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\,\mathrm{d}x
+$$
+
+ここで，
+
+$$
+h(x) = -\sigma^2\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+$$
+
+とおくと，
+
+$$
+h^\prime(x) =(x-\mu)\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+$$
+
+従って，
+
+$$
+\begin{align*}
+\mathbb E[(X - \mu)g(X)] 
+    =& \frac{1}{\sqrt{2\pi\sigma^2}}[h(x)g(x)]^\infty_{-\infty} - \frac{1}{\sqrt{2\pi\sigma^2}}\int^\infty_{-\infty} g^\prime(x)h(x)\,\mathrm{d}x\\
+    =& \frac{1}{\sqrt{2\pi\sigma^2}}\left[-\sigma^2\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)g(x)\right]^\infty_{-\infty}\\
+     & + \frac{\sigma^2}{\sqrt{2\pi\sigma^2}}\int^\infty_{-\infty} g^\prime(x)\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)\,\mathrm{d}x\\
+    =& \sigma^2\mathbb E[g^\prime(X)]
+\end{align*}
+$$
+
+:::
+
+<strong > &#9654;&nbsp; スタインの等式とモーメント計算</strong>
+
+$m$ 次のモーメントは
+
+$$
+\begin{align*}
+\mathbb E[X^m]
+    &= \mathbb E[(X - \mu)X^{m-1} + \mu X^{m-1}]\\
+    &= \mathbb E[(X - \mu)X^{m-1}] + \mu \mathbb E[X^{m-1}]
+\end{align*}
+$$
+
+ここでスタインの等式を用いると
+
+$$
+\mathbb E[(X - \mu)X^{m-1}] = \sigma^2\mathbb E[(m-1)X^{m-2}]
+$$
+
+従って，
+
+$$
+\mathbb E[X^m] = \sigma^2\mathbb E[(m-1)X^{m-2}] + \mu \mathbb E[X^{m-1}]
+$$
+
+
+
 ## 分散
 
 <div class="blog-custom-border">
@@ -1381,7 +1459,47 @@ $$
 \operatorname{Var}(X + Y) = \operatorname{Var}(X) + \operatorname{Var}(Y) + 2\operatorname{Cov}(X, Y)
 $$
 
-が成立します．
+が成立します．$\mu_X = \mathbb E[X], \mu_Y = \mathbb E[Y]$ とすると，
+
+$$
+\begin{align*}
+\operatorname{Var}(X+Y) &= \mathbb E[(X+Y - \mu_x - \mu_y)^2]\\
+         &= \mathbb E[(X-\mu_x)^2] + 2\mathbb E[(X-\mu_x)(Y-\mu_y)] + \mathbb E[(Y-\mu_y)^2]\\
+         &= \operatorname{Var}(X) + \operatorname{Var}(Y) + 2\operatorname{Cov}(X,Y)
+\end{align*}
+$$
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: n個の確率変数の和の分散**
+<br>
+
+確率変数 $X_1, \cdots, X_n$, それぞれの期待値が存在し $\mu_1, \cdots, \mu_n$ と表せるとき，
+
+$$
+\operatorname{Var}(X_1+X_2 + \cdots + X_n) = \sum_i^n \operatorname{Var}(X_i) + 2\sum_{i<j}\operatorname{Cov}(X_i, X_j)
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+\operatorname{Var}(X_1+\cdots+X_n) 
+    &= \mathbb E\left[(X_1+\cdots+X_n - \mu_1 - \cdots - \mu_n)^2\right]\\[5pt]
+    &= \mathbb E\left[\{(X_1+\mu_1)\cdots + \cdots + (X_n - \mu_n)\}^2\right]\\[5pt] 
+    &= \mathbb E\left[\sum (X_i - \mu_i)^2 + 2\sum_{i<j}(X_i - \mu_i)(X_j-\mu_j)\right]\\[5pt]
+    &= \sum \mathbb E[(X_i - \mu_i)^2] +2\sum_{i<j}\mathbb E[(X_i - \mu_i)(X_j-\mu_j)]\\
+    &= \sum_i^n \operatorname{Var}(X_i) + 2\sum_{i<j}\operatorname{Cov}(X_i, X_j)
+\end{align*}
+$$
+
+:::
+
 
 ### 条件付き分散
 
@@ -1394,16 +1512,11 @@ $\operatorname{Var}(X\vert Y)$ は $Y$ のランダムネスに依存した確�
 $\operatorname{Var}(X\vert Y=y)$ は $y$ の関数という違いがある
 
 <div class="blog-custom-border">
-::: {#thm- .custom_problem }
-**条件付き分散**
-<br>
+<strong>Def: 条件付き分散</strong> <br>
 
 $$
 \operatorname{Var}(Y\vert X) = \mathbb E[(Y^2\vert X)] - (\mathbb E[(Y\vert X)])^2 = \mathbb E[(Y - \mathbb E[Y\vert X])^2\vert X]
 $$
-
-
-:::
 
 </div>
 

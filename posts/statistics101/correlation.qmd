@@ -1,0 +1,626 @@
+---
+title: "相関関係"
+author: "Ryo Nakagami"
+date: "2024-10-05"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+---
+
+二つの変数間の関係のことを一般には相関関係と呼びますが，統計学では二つの変数の間に直線関係に近い傾向が見られるときに
+「相関関係がある」ということが多いです．相関関係を形容する言葉として，「強い vs 弱い」と「正 vs 負」のふたつのレベルがあります．
+
+- **強い vs 弱い**: 直線的な傾向の程度の表現
+- **正 vs 負**: 一方の変数の増加ともう他方の変数の増加の関係が見られる場合は正の関係，一方が増加し他方が減少する傾向がある場合は負の関係
+
+
+
+## 相関係数
+
+<div class="blog-custom-border">
+<strong>Def: Pearson相関係数</strong> <br>
+
+確率変数 $X, Y$ のPearson相関係数は
+
+$$
+\operatorname{Corr}(X, Y) = \frac{\sigma_{XY}}{\sigma_X\sigma_Y}
+$$
+
+$\sigma_{XY}$ は $X, Y$ の共分散, $\sigma_X, \sigma_Y$ は標準偏差を表す．
+
+</div>
+
+Pearson相関係数 $\vert\operatorname{Corr}(X, Y) \vert\leq 1$ という性質があります．
+
+$\tilde X = X - \mu_x, \tilde Y = Y - \mu_y$ とおきます．[シュワルツの不等式](./expectation.html#thm-schwarz)を用いると
+
+$$
+\begin{align*}
+\vert\operatorname{Corr}(X, Y)\vert^2 
+    &= \frac{\vert\sigma_{XY}\vert^2}{\sigma^2_X\sigma^2_Y}\\
+    &= \frac{\mathbb E[\tilde X \tilde Y]^2}{E[\tilde X]^2E[\tilde Y]^2}\\
+    &\leq 1
+\end{align*}
+$$
+
+従って，$\vert\operatorname{Corr}(X, Y)\vert \leq 1$
+
+$$\tag*{\(\blacksquare\)}$$
+
+<strong > &#9654;&nbsp; 互いに独立な確率変数と相関係数</strong>
+
+互いに独立な確率変数 $X, Y$ について，
+
+$$
+\begin{align*}
+\operatorname{Cov}(X, Y)
+    &= \mathbb E[XY] - \mathbb E[X]\mathbb E[Y]\\
+    &= \mathbb E[X]\mathbb E[Y] - \mathbb E[X]\mathbb E[Y]\\
+    &= 0
+\end{align*}
+$$
+
+よりPeasorn相関係数の分子が0になるので，$\operatorname{Corr}(X, Y) = 0$ となることがわかります．
+ただし，Peasorn相関係数が 0 だとしても，独立性が成立するとは限りません．
+
+::: {#exm- .custom_problem }
+**: 単位円周上の点**
+<br>
+
+一様分布に従う確率変数 $\Theta\sim\operatorname{U}(0, 2\pi)$ を考えます．この確率変数を変数変換し，
+
+$$
+\begin{align*}
+X & = \cos\Theta\\
+Y & = \sin\Theta
+\end{align*}
+$$
+
+このとき，$X, Y$ の確率密度関数はそれぞれ
+
+$$
+f_X(t) = f_Y(t) = \frac{1}{2\pi}\frac{1}{\sqrt{1 - t^2}}
+$$
+
+となります．独立でない関係は定義より $X^2 + Y^2 = 1$ と明らかですが，同時密度関数 $f(x, y)$ について
+
+$$
+f(0, 0) \neq f_X(0)f_Y(0)
+$$
+
+で確認できます．このときのPearson相関係数は
+
+$$
+\begin{align*}
+\mathbb E[X] &=\frac{1}{2\pi}\int^{2\pi}_{0}\cos\theta\mathrm{d}\theta =0\\
+\mathbb E[Y] &=\frac{1}{2\pi}\int^{2\pi}_{0}\sin\theta\mathrm{d}\theta =0\\
+\mathbb E[XY] &= \frac{1}{2\pi} \int^{2\pi}_{0}\cos\theta \sin\theta \mathrm{d}\theta\\
+&= \frac{1}{4\pi} \int^{2\pi}_{0}\sin(\theta+\theta) - \sin(\theta-\theta) \mathrm{d}\theta\\
+&= \frac{1}{4\pi} \int^{2\pi}_{0}\sin(2\theta)\mathrm{d}\theta\\
+&= 0
+\end{align*}
+$$
+
+従って，$\operatorname{Corr}(X, Y) = 0$
+
+$$\tag*{\(\blacksquare\)}$$
+
+図で確認してみると以下のように，一つの $x$ に対して，２つの $y$ の値が存在しています．このように $y$ が $x$ に対してユニークにおおよその位置が定まらないときはPearson相関係数は0に近い値が出力される傾向にあります．
+
+```{python}
+import numpy as np
+import plotly.io as pio
+import plotly.express as px
+
+np.random.seed(42)
+
+# Define a custom template (without scaleanchor in template)
+custom_template = {
+    "data": {
+        "scatter": [
+            {
+                "mode": "markers",
+                "opacity": 0.5,
+                "marker": {"size": 5},
+                "line": {"width": 2},
+            }
+        ]
+    },
+    "layout": {
+        "font": {"size": 12},
+        "title": {
+            "font": {"size": 18},
+            "x": 0.1,  # Horizontal position (left-aligned),
+            "yanchor": "top",
+        },
+        "autosize": True,
+        "legend": {
+            "font": {"size": 10},
+            "bgcolor": "rgba(255, 255, 255, 0)",
+            "traceorder": "normal",
+        },
+        "xaxis": {
+            "title": "X-axis Title",
+            "titlefont": {"size": 12},
+            "tickfont": {"size": 10},
+            "scaleanchor": "y",  # Lock x-axis scale to y-axis
+            "scaleratio": 1,  # Ensure equal scale ratio
+            "showgrid": True,
+            "griddash": "dot",
+            "gridcolor": "gray",
+            "gridwidth": 0.1,
+            "zeroline": True,
+            "zerolinecolor": "gray",
+            "zerolinewidth": 0.1,
+        },
+        "yaxis": {
+            "title": "Y-axis Title",
+            "titlefont": {"size": 12},
+            "tickfont": {"size": 10},
+            "scaleanchor": "x",  # Lock y-axis scale to x-axis
+            "scaleratio": 1,  # Ensure equal scale ratio
+            "showgrid": True,
+            "griddash": "dot",
+            "gridcolor": "gray",
+            "gridwidth": 0.1,
+            "zeroline": True,
+            "zerolinecolor": "gray",
+            "zerolinewidth": 0.1,
+        },
+        "plot_bgcolor": "#EFF5F5",
+        "margin": {"l": 40, "r": 40, "t": 40, "b": 40},
+        "shapes": [],  # You can add shapes here if needed
+    },
+}
+
+# Register custom template
+pio.templates["custom_scatter"] = custom_template
+
+# Data preparation
+N = 200
+theta = np.random.uniform(0, 2 * np.pi, N)
+X, Y = np.cos(theta), np.sin(theta)
+
+# Create the figure with the template
+fig = px.scatter(
+    x=X,
+    y=Y,
+    title="一様分布乱数の単位円周上の点への変数変換<br><sup>Sample size = {}, Pearson相関係数={:.2f}</sup>".format(
+        N, np.corrcoef(X, Y)[0, 1]
+    ),
+)
+fig.update_layout(
+    template="custom_scatter",
+    xaxis=dict(
+        scaleanchor="y",  # Lock the scale of x-axis to the y-axis
+        scaleratio=1,  # Set the ratio (1:1 for equal scale)
+    ),
+    yaxis=dict(
+        scaleanchor="x",  # Lock the scale of y-axis to the x-axis
+        scaleratio=1,  # Set the ratio (1:1 for equal scale)
+    ),
+)
+fig.show()
+```
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+$\operatorname{Var}(X) >0, \operatorname{Var}(Y) >0$ の確率変数 $X, Y$ について，
+
+$$
+f_{X,Y}(x ,y) = f_{X,Y}(-x ,y)
+$$
+
+が成立するとする．このとき，
+
+$$
+\operatorname{Corr}(X, Y) = 0
+$$
+
+が成立する．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$\operatorname{Cov}(X, Y) = 0$ を示せば十分です．
+
+$$
+\begin{align*}
+\operatorname{Cov}(X, Y)
+    &= \int\int f_{X,Y}(x ,y)(x-\mu_x)(y-\mu_y)\,\mathrm{d}x\mathrm{d}y\\
+    &= \int (y-\mu_y)(\int \underbrace{f_{X,Y}(x ,y)}_{\text{偶関数}}\underbrace{(x-\mu_x)}_{\text{奇関数}}\,\mathrm{d}x)\mathrm{d}y\\
+    &= \int (y-\mu_y)\times 0\, \mathrm{d}y\\
+    &= 0
+\end{align*}
+$$
+
+従って，$\operatorname{Corr}(X, Y) = 0$
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: 平行移動 & スケール変換に対して不変**
+<br>
+
+$a_1 \neq 0, a_2\neq 0, b_1, b_2$ を定数として, 確率変数 $X, Y$ に対して以下のような変数変換を考える
+
+$$
+\begin{align*}
+U & = a_1 X + b_1\\
+V & = a_2 Y + b_2
+\end{align*}
+$$
+
+このとき，
+
+$$
+\operatorname{Corr}_{uv} = \text{sgn}(a_1a_2)\operatorname{Corr}_{xy}
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\begin{align*}
+\operatorname{Corr}_{uv}
+    &= \frac{\operatorname{Cov}(U, V)}{\sqrt{\operatorname{Var}(U)}\sqrt{\operatorname{Var}(V)}}\\
+    &= \frac{a_1a_2\operatorname{Cov}(X, Y)}{\sqrt{a_1^2\operatorname{Var}(X)}\sqrt{a_2^2\operatorname{Var}(Y)}}\\
+    &= \frac{a_1a_2}{\vert a_1a_2\vert}\operatorname{Corr}(X, Y)\\
+    &= \operatorname{sgn}(a_1a_2)\operatorname{Corr}(X, Y)
+\end{align*}
+$$
+
+:::
+
+Pearson相関係数はスケール及び平行移動について不変である性質を確認できましたが，２つの確率変数の関係性を捉える指標として相関係数の他に共分散があります．
+共分散はスケールに依存じます．上の例をベースに確認してみると．
+
+$$
+\begin{align*}
+\operatorname{Cov}(U, V) = a_1a_2\operatorname{Cov}(X, Y)
+\end{align*}
+$$
+
+より平行移動に関しては不変だが，スケール変換に対して不変ではありません．
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**正の相関係数の非推移性**
+<br>
+
+３つの確率変数 $X, Y, Z$ について
+
+$$
+\begin{alignat*}{2}
+\operatorname{Corr}(X, Y) > 0 \quad&& \operatorname{Corr}(Y, Z) > 0 
+\end{alignat*}
+$$
+
+が成立したとしても，$\operatorname{Corr}(X, Z) > 0$ とは限らない
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+3つの独立な確率変数 $X, Y, Z$ にたいして
+
+$$
+\begin{gather*}
+U = X + Y\\
+V = Y + Z\\
+W = Z - X
+\end{gather*}
+$$
+
+とおくと
+
+$$
+\begin{align*}
+\text{Cov}(U, V) &= \text{Var}(Y) > 0\\ 
+\text{Cov}(V, W) &= \text{Var}(Z) > 0\\ 
+\text{Cov}(U, W) &= -\text{Var}(X) < 0 
+\end{align*}
+$$
+
+となり, 正の推移性が成立しないことがわかる．
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: A measure of Linear relation**
+<br>
+
+確率変数 $X, Y$ について，$\vert\operatorname{Corr}(X, Y)\vert = 1$ とする．このとき，$X, Y$ は完全な線形関係で表せる．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$$
+\operatorname{Corr}(X, Y)^2 = \frac{\operatorname{Cov}(X, Y)}{\operatorname{Var}(X)}\frac{\operatorname{Cov}(X, Y)}{\operatorname{Var}(Y)} = 1
+$$
+
+$Y$ を $X$ に線形回帰するとき, $X$ の係数 $\beta$ について
+
+$$
+\beta = \frac{\operatorname{Cov}(X, Y)}{\operatorname{Var}(X)}
+$$
+
+であるので，$\vert\operatorname{Corr}(X, Y)\vert = 1$ より
+
+$$
+\frac{\operatorname{Cov}(X, Y)}{\operatorname{Var}(Y)} = \frac{1}{\beta}
+$$
+
+である必要があります．$e = Y - \mu_y - \beta(X - \mu_x)$ と定義すると
+
+$$
+\operatorname{Var}(Y) = \beta^2\operatorname(Var)(X) + \operatorname{Var}(e)
+$$
+
+であるので，
+
+$$
+\begin{align*}
+\frac{\operatorname{Cov}(X, Y)}{\operatorname{Var}(Y)} 
+    &= \frac{\operatorname{Cov}(X, Y)}{\operatorname{Var}(X)}\frac{\operatorname{Var}(X)}{\operatorname{Var}(Y)}\\
+    &= \beta\frac{\operatorname{Var}(X)}{\beta^2\operatorname{Var}(X) + \operatorname{Var}(e)}\\
+    &= \frac{1}{\beta}\frac{\operatorname{Var}(X)}{\operatorname{Var}(X) + \operatorname{Var}(e)/\beta^2}
+\end{align*}
+$$
+
+従って，
+
+$$
+\operatorname{Var}(e) = 0
+$$
+
+が必要条件であることが分かります．従って，
+
+$$
+\begin{gather}
+Y = \alpha + \beta X\\
+\text{where}\quad \alpha = \mu_y - \beta\mu_x
+\end{gather}
+$$
+
+が導けます．
+
+$$\tag*{\(\blacksquare\)}$$
+
+<strong > &#9654;&nbsp; Pythonでの確認</strong>
+
+Pearson相関係数が強いほど，線形回帰及び逆線形回帰の予測ラインが近づいていくことを以下で確認しています．
+
+
+```{python}
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+import statsmodels.api as sm
+
+X1, Y1 = np.random.multivariate_normal([0, 0], [[1, 0.4], [0.4, 1]], N).T
+
+X2, Y2 = np.random.multivariate_normal([0, 0], [[1, 0.95], [0.95, 1]], N).T
+
+# Set common x and y ranges
+x_range = np.array([-3, 3])  # Define your desired x range
+y_range = np.array([-3, 3])  # Define your desired y range
+
+# regression
+result_1_yx = sm.OLS(Y1, sm.add_constant(X1)).fit()
+result_1_xy = sm.OLS(X1, sm.add_constant(Y1)).fit()
+result_2_yx = sm.OLS(Y2, sm.add_constant(X2)).fit()
+result_2_xy = sm.OLS(X2, sm.add_constant(Y2)).fit()
+
+fig = make_subplots(rows=1, cols=2)
+fig.add_trace(go.Scatter(x=X1, y=Y1, name="相関係数:0.4"), row=1, col=1)
+fig.add_trace(
+    go.Scatter(
+        x=x_range,
+        y=result_1_yx.predict(sm.add_constant(x_range)),
+        mode="lines",
+        line=dict(color='gray'),
+        showlegend=False,
+        name="coef: {:.2f}".format(result_1_yx.params[1]),
+    ),
+    row=1,
+    col=1,
+)
+fig.add_trace(
+    go.Scatter(
+        x=result_1_xy.predict(sm.add_constant(y_range)),
+        y=y_range,
+        mode="lines",
+        line=dict(color='gray'),
+        showlegend=False,
+        name="coef: {:.2f}".format(result_1_xy.params[1]),
+    ),
+    row=1,
+    col=1,
+)
+
+fig.add_trace(go.Scatter(x=X2, y=Y2, name="相関係数:0.95"), row=1, col=2)
+fig.add_trace(
+    go.Scatter(
+        x=x_range,
+        y=result_2_yx.predict(sm.add_constant(x_range)),
+        mode="lines",
+        line=dict(color='gray'),
+        showlegend=False,
+        name="coef: {:.2f}".format(result_2_yx.params[1]),
+    ),
+    row=1,
+    col=2,
+)
+fig.add_trace(
+    go.Scatter(
+        x=result_2_xy.predict(sm.add_constant(y_range)),
+        y=y_range,
+        mode="lines",
+        line=dict(color='gray'),
+        showlegend=False,
+        name="coef: {:.2f}".format(result_2_xy.params[1]),
+    ),
+    row=1,
+    col=2,
+)
+
+fig.update_layout(template="custom_scatter", title='相関係数水準に応じた回帰係数と逆回帰係数の比較')
+fig.update_xaxes(
+    range=x_range, scaleanchor="y", scaleratio=1, row=1, col=1
+)  # Link x-axis of plot 1 to y-axis
+fig.update_yaxes(
+    range=y_range, scaleanchor="x", scaleratio=1, row=1, col=1
+)  # Link y-axis of plot 1 to x-axis
+fig.update_xaxes(
+    range=x_range, scaleanchor="y2", scaleratio=1, row=1, col=2
+)  # Link x-axis of plot 2 to y-axis
+fig.update_yaxes(range=y_range, scaleanchor="x2", scaleratio=1, row=1, col=2)
+fig.show()
+
+```
+
+:::
+
+::: {#exm- .custom_problem }
+<br>
+
+単位円周上の一様分布に従う確率変数 $\Theta$ を考えます．円周がこの $\Theta$ によって分割されるとき，ふたつの線分ができます．このうち長い方を $X$, 短い方を $Y$ とすると，
+
+$$
+\begin{align*}
+X &\sim U(\pi, 2\pi)\\
+Y &\sim U(0, \pi)\\
+X & = 2\pi - Y
+\end{align*}
+$$
+
+と表せます．このとき，$X, Y$ の相関係数は
+
+$$
+\begin{align*}
+\operatorname{Corr}(X, Y) &= \frac{\mathbb E[XY] - \mathbb E[X]\mathbb E[Y]}{\sqrt{\mathbb V(X)\mathbb V(Y)}}\\
+&= \frac{\mathbb E[Y(2\pi - Y)] - \pi/2 \cdot 3\pi/2}{\pi^2/12}\\
+&= -1
+\end{align*}
+$$
+
+と計算できます．
+
+:::
+
+<div class="blog-custom-border">
+<strong>Def: 標本Pearson相関係数</strong> <br>
+
+確率変数の組 $\{(x_i, y_i)\}_{i=1}^n$ について，それぞれの標本平均を $\overline{x}, \overline{y}$ とする．このとき標本Pearson相関係数 $\rho_{xy}$ は
+
+$$
+\rho_{xy} = \frac{\sum (x_i - \overline{x})(y_i - \overline{y})}{\sqrt{\sum (x_i - \overline{x})^2}\sqrt{\sum (y_i - \overline{y})^2}}
+$$
+
+</div>
+
+標本Peason相関係数の値域もpopulationPeason相関係数と同様に $[-1, 1]$ となります．
+シュワルツの不等式より
+
+$$
+\sum a_i^2 \sum b_i^2 \geq \bigg(\sum a_ib_i\bigg)^2
+$$
+
+ここで，$a_i = (x_i - \overline{x}), y_i = (y_i - \overline{y})$ とすると
+
+$$
+\sum_{i=1}^n (x_i - \bar x)^2 \sum_{i=1}^n (y_i - \bar y)^2 \geq \bigg(\sum_{i=1}^n (x_i - \bar x)(y_i - \bar y)\bigg)^2
+$$
+
+従って，$\rho_{xy}^2 \leq 1$ が成立することがわかります．
+
+また，シュワルツの不等式のの等号成立条件の必要十分条件は, すべての $i$ について $a_i:b_i$ が一定(ここではその比率を $k$ とおく) なので, 
+
+$$
+y_i = kx_i + \bar y - k\bar x = kx_i + c \quad (c:\text{定数})
+$$
+
+のとき，$\vert\rho_{xy}\vert = 1$．また，変数感に１次式の関係があるとき $\vert\rho_{xy}\vert = 1$ が成立することがわかります．
+
+
+
+## Appendix
+
+<strong > &#9654;&nbsp; 母集団相関係数の絶対値が1以下になる証明</strong>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: 判別式を用いた証明
+
+任意の $t\in\mathbb R$ について
+
+$$
+\begin{align*}
+\operatorname{Var}(tX + Y) &= t^2\operatorname{Var}(X) + 2t\operatorname{Cov}(X, Y) + \operatorname{Var}(Y)\\
+                   &\geq 0
+\end{align*}
+$$
+
+非負の２次形式の判別式 $D$ は0以下なので
+
+$$
+\begin{align*}
+D &= \operatorname{Cov}(X, Y)^2 - \operatorname{Var}(X)\operatorname{Var}(Y)\\
+  &\leq 0
+\end{align*}
+$$
+
+整理すると
+
+$$
+\begin{align*}
+&\frac{\operatorname{Cov}(X, Y)^2 }{\operatorname{Var}(X)\operatorname{Var}(Y)} \leq 1\\[3pt]
+&\Rightarrow \vert \operatorname{Corr}_{xy}\vert^2 \leq 1\\[3pt]
+&\Rightarrow -1 \leq \operatorname{Corr}_{xy} \leq 1
+\end{align*}
+$$
+
+:::
+
+::: {.callout-note collapse="false" icon=false}
+## Proof: 分散標準化した変数の和
+
+確率変数 $X, Y$ の標準偏差をそれぞれ $\sigma_x, \sigma_y$ とします．
+
+$$
+\begin{align*}
+0 &\leq \operatorname{Var}\bigg(\frac{X}{\sigma_x} \pm \frac{Y}{\sigma_y}\bigg)\\[3pt]
+  &= \operatorname{Var}\bigg(\frac{X}{\sigma_x}\bigg) \pm 2\operatorname{Cov}\bigg(\frac{X}{\sigma_x},\frac{Y}{\sigma_y}\bigg) + \operatorname{Var}\bigg(\frac{Y}{\sigma_y}\bigg)\\[3pt]
+  &= \frac{1}{\sigma^2_x}\operatorname{Var}(X) \pm \frac{2}{\sigma_x\sigma_y}\operatorname{Cov}(X, Y) + \frac{1}{\sigma^2_y}\operatorname{Var}(Y)\\[3pt]
+  &= 2 \pm \frac{2}{\sigma_x\sigma_y}\operatorname{Cov}(X, Y)\\[3pt]
+  &= 2\pm 2 \operatorname{Corr}_{xy}
+\end{align*}
+$$
+
+従って，$-1 \leq \operatorname{Corr}_{xy} \leq 1$ を得ます．
+
+:::

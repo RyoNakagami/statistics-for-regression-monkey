@@ -1,0 +1,129 @@
+---
+title: "ガンマ分布"
+author: "Ryo Nakagami"
+date: "2024-10-05"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+---
+
+## ガンマ分布の性質
+
+<div class="blog-custom-border">
+<strong>Def: ガンマ分布</strong> <br>
+
+確率変数 $\operatorname{X}$ がガンマ分布に従うとき，その確率密度関数は
+
+
+$$
+\begin{align*}
+\operatorname{Gam}(x; a, b) &= \frac{1}{b^a\Gamma(a)} x^{a-1} \exp[-x/b], \quad x > 0\\
+\text{where}\quad & a >0, b > 0
+\end{align*}
+$$
+
+このとき，$X$ はパラメータ $(a, b)$ のガンマ分布に従うという．
+
+- $a$: 形状パラメーター(shape parameter)
+- $b$: 尺度パラメーター(scale parameter)
+
+</div>
+
+```{python}
+from regmonkey_style import stylewizard as sw
+from scipy.stats import gamma
+import plotly.graph_objs as go
+import numpy as np
+
+sw.set_templates('custom_line_with_colors')
+N = 1000
+x = np.linspace(0, 6, N)[1:]
+a= [0.5, 2, 5]
+scale = 1
+y_values =list( map(lambda shape: gamma(a=shape, scale=1).pdf(x), a))
+
+# Create traces for each shape parameter
+traces = []
+for i, shape in enumerate(a):
+    traces.append(go.Scatter(
+        x=x,
+        y=list(y_values)[i],
+        mode='lines',
+        name=f'Gamma(a={shape})'
+    ))
+# Create figure and add traces
+fig = go.Figure(data=traces)
+fig.update_layout(
+    yaxis=dict(
+        range=[0, 0.8]  # Set the y-axis range from 0 to 0.4
+    ),
+    xaxis=dict(
+        range=[0, 5]  # Set the y-axis range from 0 to 0.4
+    ),
+    title="Gamma Distribution PDF for Different Shape Parameters",
+    xaxis_title="x",
+    yaxis_title="PDF"
+)
+# Show the plot
+fig.show()
+```
+
+
+
+
+<strong > &#9654;&nbsp; 期待値の導出</strong>
+
+$$
+\begin{align*}
+\mathbb E[X]
+    &= \int_0^\infty x \frac{1}{b^a\Gamma(a)} x^{a-1} \exp[-x/b] \mathrm{d}x\\
+    &= ab\int_0^\infty \underbrace{\frac{1}{b^{a+1}\Gamma(a+1)} x^{(a+1)-} \exp[-x/b]}_{\operatorname{Gam}(a+1, b)\text{の密度関数}} \mathrm{d}x\\
+    &=ab
+\end{align*}
+$$
+
+$$\tag*{\(\blacksquare\)}$$
+
+または，$z = x/b$ という変数変換を用いて以下のようにも示せます．
+
+$$
+\begin{align*}
+\mathbb E[X]
+    &= \int_0^\infty x \frac{1}{b^a\Gamma(a)} x^{a-1} \exp[-x/b] \mathrm{d}x\\
+    &= \int_0^\infty \frac{1}{b^a\Gamma(a)} x^{a} \exp[-x/b] \mathrm{d}x\\
+    &= \int_0^\infty \frac{1}{b^{a+1}\Gamma(a)} (bz)^a \exp[-z] \mathrm{d}z\\
+    &= \frac{1}{b\Gamma(a)}\underbrace{\int_0^\infty z^{(a+1)-1} \exp[-z] \mathrm{d}z}_{=\Gamma(a+1)}\\
+    &= \frac{a\Gamma(a)}{b\Gamma(a)} \quad\because \Gamma(a+1) = a\Gamma(a)\\
+    &= ab
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; 分散の導出</strong>
+
+$$
+\begin{align*}
+\mathbb E[X^2]
+    &= \int_0^\infty x^2 \frac{1}{b^a\Gamma(a)} x^{a-1} \exp[-x/b] \mathrm{d}x\\
+    &= a(a+1)b^2 \int_0^\infty \underbrace{\frac{1}{b^{a+2}\Gamma(a+2)} x^{a+2-1} \exp[-x/b]}_{=\operatorname{Gam}(a+2, b)} \mathrm{d}x\\
+    &= a(a+1)b^2
+\end{align*}
+$$
+
+従って，
+
+$$
+\begin{align*}
+\operatorname{Var}(X)
+    &= \mathbb E[X^2] - \mathbb E[X]^2\\
+    &= a(a+1)b^2 - (ab)^2\\
+    &= ab^2
+\end{align*}
+$$
+
+
+
+## MGF
