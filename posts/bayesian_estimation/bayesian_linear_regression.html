@@ -584,7 +584,11 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 <p><span class="math display">\[
 \sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta}) = n\left[\sum\pmb{x}_i\pmb{x}_i^T\right]^{-1}\frac{1}{\sqrt{n}}\sum \pmb{x}_i\epsilon_i
 \]</span></p>
-<p><span class="math inline">\(\mathbb E[\pmb{x}_ie_i] = 0\)</span> であるので，<span class="math inline">\(\frac{1}{\sqrt{n}}\sum \pmb{x}_i\epsilon_i\)</span> は location は 0であることがわかります．<span class="math inline">\(\frac{1}{n}\sum\pmb{x}_i\pmb{x}_i^T\)</span> が <span class="math inline">\(\mathbb E[\pmb{x}_i\pmb{x}_i^T]\)</span> に確率収束するので，スラツキーの定理とCLTにより</p>
+<p><span class="math inline">\(\mathbb E[\pmb{x}_ie_i] = 0\)</span> であるので，<span class="math inline">\(\frac{1}{\sqrt{n}}\sum \pmb{x}_i\epsilon_i\)</span> は location は 0であることがわかります．従って，</p>
+<p><span class="math display">\[
+\frac{1}{\sqrt{n}}\sum \pmb{x}_i\epsilon_i = \sqrt{n}\left\{\frac{1}{n}\sum \pmb{x}_i\epsilon_i - 0\right\}\overset{\mathrm{d}}{\to} N(0, \mathbb E[\pmb{x}_i\pmb{x}^T\epsilon_i^2])
+\]</span></p>
+<p>また，<span class="math inline">\(\frac{1}{n}\sum\pmb{x}_i\pmb{x}_i^T\)</span> が <span class="math inline">\(\mathbb E[\pmb{x}_i\pmb{x}_i^T]\)</span> に確率収束するので，スラツキーの定理とCLTにより</p>
 <p><span class="math display">\[
 \begin{align*}
 \sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta}) \overset{\mathrm{d}}{\to}  N(0, \mathbb E[\pmb{x}_i\pmb{x}]^{-1}\mathbb E[\pmb{x}_i\pmb{x}^T\epsilon_i^2]\mathbb E[\pmb{x}_i\pmb{x}]^{-1})
