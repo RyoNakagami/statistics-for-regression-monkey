@@ -2,138 +2,150 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/index.html</loc>
-    <lastmod>2024-10-01T04:08:20.260Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.775Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/averages.html</loc>
-    <lastmod>2024-10-01T04:08:20.264Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.780Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/random_variable.html</loc>
-    <lastmod>2024-10-01T04:08:20.265Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.780Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/expectation.html</loc>
-    <lastmod>2024-10-01T04:08:20.264Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.780Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/moment_generating_function.html</loc>
-    <lastmod>2024-10-01T04:08:20.264Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.780Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/order_statistic.html</loc>
-    <lastmod>2024-10-01T04:08:20.265Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.780Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/delta-method.html</loc>
+    <lastmod>2024-10-03T08:53:00.780Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/discrete_uniform_dist.html</loc>
-    <lastmod>2024-10-01T04:08:20.262Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.778Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/binomial_dist.html</loc>
-    <lastmod>2024-10-01T04:08:20.262Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.778Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/poisson_dist.html</loc>
-    <lastmod>2024-10-01T04:08:20.263Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.779Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/geometric_dist.html</loc>
-    <lastmod>2024-10-01T04:08:20.262Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.778Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/negative_binom.html</loc>
-    <lastmod>2024-10-01T04:08:20.263Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.778Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/hypergeometric.html</loc>
-    <lastmod>2024-10-01T04:08:20.263Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.778Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/continuous_uniform_dis.html</loc>
-    <lastmod>2024-10-01T04:08:20.262Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.778Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/normal_dist.html</loc>
-    <lastmod>2024-10-01T04:08:20.263Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.778Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/exponential_dist.html</loc>
+    <lastmod>2024-10-03T08:53:00.778Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistical_hypothesis_test_101/fisher_exact_test.html</loc>
-    <lastmod>2024-10-01T04:08:20.263Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.779Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html</loc>
-    <lastmod>2024-10-01T04:08:20.264Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.779Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/estimation/method-of-moments.html</loc>
-    <lastmod>2024-10-01T04:08:20.261Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.777Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/estimation/m-estimator.html</loc>
-    <lastmod>2024-10-01T04:08:20.261Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.777Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/bayesian_estimation/bayesian_linear_regression.html</loc>
+    <lastmod>2024-10-03T08:53:00.776Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/ExplanatoryDataAnalysis/gini_coefficient.html</loc>
-    <lastmod>2024-10-01T04:08:20.261Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.776Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/mathematical_appendix/permutation_combination.html</loc>
-    <lastmod>2024-10-01T04:08:20.262Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.777Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/mathematical_appendix/complex_number.html</loc>
-    <lastmod>2024-10-01T04:08:20.262Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.777Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/mathematical_appendix/beta_function.html</loc>
-    <lastmod>2024-10-01T04:08:20.262Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.777Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/mathematical_appendix/gamma_function.html</loc>
-    <lastmod>2024-10-01T04:08:20.262Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.777Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/mathematical_appendix/jensen_inequality.html</loc>
-    <lastmod>2024-10-01T04:08:20.262Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.777Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/mathematical_appendix/Lhopitals_rule.html</loc>
-    <lastmod>2024-10-01T04:08:20.261Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.777Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistics101/chapter_header.html</loc>
-    <lastmod>2024-10-01T04:08:20.264Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.780Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/probability_distribution/chapter_header.html</loc>
-    <lastmod>2024-10-01T04:08:20.262Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.778Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistical_hypothesis_test_101/chapter_header.html</loc>
-    <lastmod>2024-10-01T04:08:20.263Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.779Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/statistical_hypothesis_test_201/chapter_header.html</loc>
-    <lastmod>2024-10-01T04:08:20.263Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.779Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/estimation/chapter_header.html</loc>
-    <lastmod>2024-10-01T04:08:20.261Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.777Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/bayesian_estimation/chapter_header.html</loc>
+    <lastmod>2024-10-03T08:53:00.776Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/ExplanatoryDataAnalysis/chapter_header.html</loc>
-    <lastmod>2024-10-01T04:08:20.261Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.776Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/robust_statistics/chapter_header.html</loc>
-    <lastmod>2024-10-01T04:08:20.263Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.779Z</lastmod>
   </url>
   <url>
     <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/econometrics101/chapter_header.html</loc>
-    <lastmod>2024-10-01T04:08:20.261Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ryonakagami.github.io/statistics-for-regression-monkey/posts/mathematical_appendix/chapter_header.html</loc>
-    <lastmod>2024-10-01T04:08:20.262Z</lastmod>
+    <lastmod>2024-10-03T08:53:00.777Z</lastmod>
   </url>
 </urlset>
