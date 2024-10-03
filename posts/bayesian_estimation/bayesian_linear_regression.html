@@ -724,19 +724,19 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 <div class="callout-body-container callout-body">
 <p><strong> ▶&nbsp; Step 1: <span class="math inline">\(\pmb\beta\)</span> の更新</strong></p>
 <ol type="1">
-<li><span class="math inline">\(\pmb V = \operatorname{Var}(\pmb\beta\vert \pmb Y, \pmb X, \sigma^{2(s)}), \pmb m = \mathbb E[\pmb\beta\vert \pmb Y, \pmb X, \sigma^{2(s)}]\)</span> の計算</li>
-<li><span class="math inline">\(\pmb\beta^{s+1}\)</span> を次のように生成</li>
+<li><span class="math inline">\(\pmb V = \operatorname{Var}(\pmb\beta\vert \pmb Y, \pmb X, \sigma^{2}_{(s)}), \pmb m = \mathbb E[\pmb\beta\vert \pmb Y, \pmb X, \sigma^{2}_{(s)}]\)</span> の計算</li>
+<li><span class="math inline">\(\pmb\beta_{s+1}\)</span> を次のように生成</li>
 </ol>
 <p><span class="math display">\[
-\pmb\beta^{s+1}\sim \operatorname{N}(\pmb m, \pmb V)
+\pmb\beta_{(s+1)}\sim \operatorname{N}(\pmb m, \pmb V)
 \]</span></p>
 <p><strong> ▶&nbsp; Step 2: <span class="math inline">\(\sigma^2\)</span> の更新</strong></p>
 <ol type="1">
-<li><span class="math inline">\(\operatorname{SSR}(\pmb\beta^{(s+1)})\)</span> を計算</li>
-<li><span class="math inline">\(\sigma^{2(s+1)}\)</span> を次のように生成</li>
+<li><span class="math inline">\(\operatorname{SSR}(\pmb\beta_{(s+1)})\)</span> を計算</li>
+<li><span class="math inline">\(\sigma^{2}_{(s+1)}\)</span> を次のように生成</li>
 </ol>
 <p><span class="math display">\[
-\sigma^{2(s+1)}\sim \operatorname{inverse-gamma}((v_0+n)/2, [v_0\sigma^2_0 + \operatorname{SSR}(\pmb\beta^{(s+1)})]/2)
+\sigma^{2}_{(s+1)}\sim \operatorname{inverse-gamma}((v_0+n)/2, [v_0\sigma^2_0 + \operatorname{SSR}(\pmb\beta_{(s+1)})]/2)
 \]</span></p>
 </div>
 </div>
