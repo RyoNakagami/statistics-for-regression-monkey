@@ -9,7 +9,7 @@
 <meta name="author" content="Ryo Nakagami">
 <meta name="dcterms.date" content="2024-10-01">
 
-<title>15&nbsp; 指数分布 – Statistics for Regression Monkeys</title>
+<title>16&nbsp; 指数分布 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/statistical_hypothesis_test_101/chapter_header.html" rel="next">
+<link href="../../posts/probability_distribution/gamma_dist.html" rel="next">
 <link href="../../posts/probability_distribution/normal_dist.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
@@ -168,7 +168,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/exponential_dist.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">指数分布</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/exponential_dist.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">指数分布</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -241,32 +241,38 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/statistics101/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">相関関係</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/random_variable.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/expectation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/moment_generating_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/order_statistic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/delta-method.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
   </div>
 </li>
       </ul>
@@ -283,55 +289,61 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/discrete_uniform_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/binomial_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/poisson_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/geometric_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/negative_binom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/hypergeometric.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/continuous_uniform_dis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/normal_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/exponential_dist.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/gamma_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ分布</span></span></a>
   </div>
 </li>
       </ul>
@@ -348,7 +360,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
       </ul>
@@ -365,7 +377,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -382,13 +394,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/method-of-moments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/m-estimator.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
   </div>
 </li>
       </ul>
@@ -405,7 +417,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/bayesian_estimation/bayesian_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
   </div>
 </li>
       </ul>
@@ -422,7 +434,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
       </ul>
@@ -499,15 +511,16 @@ window.Quarto = {
   <li><a href="#ガンマ分布との関係" id="toc-ガンマ分布との関係" class="nav-link" data-scroll-target="#ガンマ分布との関係">ガンマ分布との関係</a></li>
   </ul></li>
   <li><a href="#無記憶性" id="toc-無記憶性" class="nav-link" data-scroll-target="#無記憶性">無記憶性</a></li>
+  <li><a href="#ハザード関数" id="toc-ハザード関数" class="nav-link" data-scroll-target="#ハザード関数">ハザード関数</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/probability_distribution/exponential_dist.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/exponential_dist.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">指数分布</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/probability_distribution/chapter_header.html">確率分布</a></li><li class="breadcrumb-item"><a href="../../posts/probability_distribution/exponential_dist.html"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">指数分布</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">指数分布</span></h1>
+<h1 class="title"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">指数分布</span></h1>
 </div>
 
 
@@ -531,7 +544,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-03</p>
+      <p class="date-modified">2024-10-05</p>
     </div>
   </div>
     
@@ -563,7 +576,7 @@ F(x)
 \]</span></p>
 </div>
 <p>指数分布は連続的な待ち時間分布の性質(=幾何分布の連続変数版)という特徴を持ちます．そのため後述しますが無記憶性の性質を持っています． 指数分布は，故障率が一定のシステムの偶発的な故障までの待ち時間（耐用年数や寿命）を当てはめる際に用いられたりします．</p>
-<div id="268c424d" class="cell" data-execution_count="1">
+<div id="05d04140" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
@@ -659,7 +672,7 @@ F(x)
 <p><span class="math display">\[\tag*{\(\blacksquare\)}\]</span></p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 15.1</strong></span> <strong>: Median</strong> <br></p>
+<p><span class="theorem-title"><strong>Theorem 16.1</strong></span> <strong>: Median</strong> <br></p>
 <p>確率変数 <span class="math inline">\(X \sim \operatorname{Exp}(\lambda)\)</span> について，</p>
 <p><span class="math display">\[
 \operatorname{Median}(X) = \frac{\log 2}{\lambda}
@@ -692,7 +705,7 @@ Proof
 </div>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 15.2</strong></span> <strong>: Quantile function</strong> <br></p>
+<p><span class="theorem-title"><strong>Theorem 16.2</strong></span> <strong>: Quantile function</strong> <br></p>
 <p>確率変数 <span class="math inline">\(X \sim \operatorname{Exp}(\lambda)\)</span> について，分位点関数は</p>
 <p><span class="math display">\[
 Q_X(p) = \left\{
@@ -743,7 +756,7 @@ p = 1 - \exp(-\lambda x)\\
 <h3 class="anchored" data-anchor-id="mgf">MGF</h3>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 15.3</strong></span> <strong>: MGF</strong> <br></p>
+<p><span class="theorem-title"><strong>Theorem 16.3</strong></span> <strong>: MGF</strong> <br></p>
 <p><span class="math inline">\(X\sim\operatorname{Exp}(\lambda)\)</span> について，MGFは</p>
 <p><span class="math display">\[
 M_X(t) = \frac{\lambda}{\lambda - t}
@@ -793,8 +806,8 @@ M_X(t) &amp;= \frac{\lambda}{t-\lambda} \left[ \lim_{x\rightarrow \infty} e^{x(t
 <h3 class="anchored" data-anchor-id="ガンマ分布との関係">ガンマ分布との関係</h3>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 15.4</strong></span> <strong>ガンマ分布と指数分布</strong> <br></p>
-<p>確率変数 <span class="math inline">\(X \sim \operatorname{Ga}(1, \lambda)\)</span> は <span class="math inline">\(\operatorname{Exp}(\lambda)\)</span> と一致する．</p>
+<p><span class="theorem-title"><strong>Theorem 16.4</strong></span> <strong>ガンマ分布と指数分布</strong> <br></p>
+<p>確率変数 <span class="math inline">\(X \sim \operatorname{Gam}(1, \lambda^{-1})\)</span> は <span class="math inline">\(\operatorname{Exp}(\lambda)\)</span> と一致する．</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -809,32 +822,31 @@ Proof
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(\operatorname{Ga}(a, b)\)</span> の確率密度関数は</p>
+<p><span class="math inline">\(\operatorname{Gam}(a, b)\)</span> の確率密度関数は</p>
 <p><span class="math display">\[
-\frac{b^a}{\Gamma(a)}x^{a-1}\exp(-bx)
+\frac{1}{b^a\Gamma(a)}x^{a-1}\exp(-x/b)
 \]</span></p>
-<p>これに <span class="math inline">\(a = 1, b = \lambda\)</span> を代入すると</p>
+<p>これに <span class="math inline">\(a = 1, b = \lambda^{-1}\)</span> を代入すると</p>
 <p><span class="math display">\[
 \begin{align*}
-\frac{\lambda^1}{\Gamma(1)}x^{1-1}\exp(-\lambda x) = \lambda\exp(-\lambda x)
+\frac{1}{\lambda^{-1}\Gamma(1)}x^{1-1}\exp(-\lambda x) = \lambda\exp(-\lambda x)
 \end{align*}
 \]</span></p>
 <p>これは指数分布 <span class="math inline">\(\operatorname{Exp}(\lambda)\)</span> の確率密度関数と一致する．</p>
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="無記憶性" class="level2">
-<h2 class="anchored" data-anchor-id="無記憶性">無記憶性</h2>
 <div class="blog-custom-border">
-<div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 15.5</strong></span> <strong>: 指数分布の無記憶性</strong> <br></p>
-<p><span class="math inline">\(s, t\)</span> を非負の実数とし，確率変数 <span class="math inline">\(X \sim \operatorname{Exp}(\lambda)\)</span> のとき．</p>
+<div id="thm-gamma-exp-relation" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 16.5</strong></span> <strong>: 指数分布に従う確率変数の和とガンマ分布</strong> <br></p>
+<p><span class="math inline">\(\operatorname{Exp}(\lambda)\)</span> に独立に従う確率変数 <span class="math inline">\(X_1, \cdots, X_n\)</span> について，</p>
 <p><span class="math display">\[
-\Pr(X \geq s + t\vert X \geq s) = \Pr(X\geq t)
+Z = X_1 + \cdots +  X_n
 \]</span></p>
-<p>が成立する．</p>
+<p>このとき，</p>
+<p><span class="math display">\[
+Z \sim \operatorname{Gam}(n, \lambda^{-1})
+\]</span></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
@@ -849,17 +861,227 @@ Proof
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
+<p><span class="math inline">\(Z\)</span> についての特性関数は</p>
 <p><span class="math display">\[
 \begin{align*}
-\Pr(X \geq s + t\vert X \geq s)
-    &amp;= \frac{\Pr(X \geq s + t, X \geq s)}{\Pr(X \geq s)}\\
-    &amp;= \frac{\Pr(X \geq s + t)}{\Pr(X \geq s)}
+\phi(t) &amp;= \left(\frac{\lambda}{\lambda - it}\right)^n\\
+        &amp;= (1 - it/\lambda)^{-n}
 \end{align*}
 \]</span></p>
-<p><span class="math inline">\(\operatorname{Exp}(\lambda)\)</span> の上側確率は <span class="math inline">\(\Pr(X\geq x) = \exp(\lambda x)\)</span> であるので，</p>
+<p>従って，<span class="math inline">\(\operatorname{Gam}(n, 1/\lambda)\)</span> の特性関数と一致する．</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="無記憶性" class="level2">
+<h2 class="anchored" data-anchor-id="無記憶性">無記憶性</h2>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 16.6</strong></span> <strong>: 指数分布の無記憶性</strong> <br></p>
+<p><span class="math inline">\(s, t\)</span> を非負の実数とし，確率変数 <span class="math inline">\(X \sim \operatorname{Exp}(\lambda)\)</span> のとき．</p>
 <p><span class="math display">\[
-\frac{\exp(-\lambda (s + t))}{\exp(-\lambda s)} = \exp(-\lambda t) = \Pr(X\geq t)
+P(X \geq s + t\vert X \geq s) = P(X\geq t)
 \]</span></p>
+<p>が成立する．</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-6" class="callout-6-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+\begin{align*}
+P(X \geq s + t\vert X \geq s)
+    &amp;= \frac{P(X \geq s + t, X \geq s)}{P(X \geq s)}\\
+    &amp;= \frac{P(X \geq s + t)}{P(X \geq s)}
+\end{align*}
+\]</span></p>
+<p><span class="math inline">\(\operatorname{Exp}(\lambda)\)</span> の上側確率は <span class="math inline">\(P(X\geq x) = \exp(\lambda x)\)</span> であるので，</p>
+<p><span class="math display">\[
+\frac{\exp(-\lambda (s + t))}{\exp(-\lambda s)} = \exp(-\lambda t) = P(X\geq t)
+\]</span></p>
+</div>
+</div>
+</div>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 16.7</strong></span> <strong>: 無記憶性を持つ連続型分布は指数分布のみ</strong> <br></p>
+<p><span class="math inline">\(\mathbb R_{+} = [0, \infty)\)</span> で定義される連続型確率確率変数 <span class="math inline">\(X\)</span> が，任意の <span class="math inline">\(s, t\geq 0\)</span> について</p>
+<p><span class="math display">\[
+P(X &gt; s + t \vert X &gt; s) = P(X &gt; t)
+\]</span></p>
+<p>を満たすとする．このとき <span class="math inline">\(X\)</span> は指数分布に従う．</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>テール確率 <span class="math inline">\(S_X(t) = P(X &gt; t), 0 \leq t &lt; \infty\)</span> を考えます．このとき，<span class="math inline">\(S(t)\)</span> は</p>
+<p><span class="math display">\[
+\begin{gather}
+S(0) = 1\\
+\lim_{t\infty}S(t) = 0
+\end{gather}
+\]</span></p>
+<p>を満たす単調非増加関数です．無記憶性の定義から</p>
+<p><span class="math display">\[
+\frac{S(s + t)}{S(s)} = S(t) \Rightarrow S(s + t) = S(s)S(t)
+\]</span></p>
+<p>両辺より <span class="math inline">\(S(s)\)</span> を引いて <span class="math inline">\(t &gt;0\)</span>で割ると，</p>
+<p><span class="math display">\[
+\begin{align*}
+\frac{S(s + t) - S(s)}{t}
+    &amp;= S(s)\frac{S(t) - 1}{t}\\
+    &amp;= S(s)\frac{S(t) - S(0)}{t}
+\end{align*}
+\]</span></p>
+<p>この両辺を <span class="math inline">\(t\to 0\)</span> と近づけると連続型確率変数なので<span class="math inline">\(S(\cdot)\)</span> は微分可能であるので</p>
+<p><span class="math display">\[
+S^\prime(s) = S(s)S^\prime(0)
+\]</span></p>
+<p>テール確率の単調非増加性を踏まえ <span class="math inline">\(S^\prime(0) = -\lambda, (\lambda &gt;0)\)</span> とおくと</p>
+<p><span class="math display">\[
+\frac{S^\prime(s)}{S(s)} = -\lambda
+\]</span></p>
+<p>これを <span class="math inline">\(s\)</span> について不定積分すると</p>
+<p><span class="math display">\[
+\log(S(s)) = -\lambda s + C
+\]</span></p>
+<p><span class="math inline">\(S(0)=1\)</span> より <span class="math inline">\(C= 0\)</span>． 従って， <span class="math display">\[
+S(s) = \exp(-\lambda s)
+\]</span></p>
+<p>従って，この確率変数の分布確率は</p>
+<p><span class="math display">\[
+F_X(x) = 1 - \exp(-\lambda x)
+\]</span></p>
+<p>となり，<span class="math inline">\(\operatorname{Exp}(\lambda)\)</span> の分布関数と一致する．</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ハザード関数" class="level2">
+<h2 class="anchored" data-anchor-id="ハザード関数">ハザード関数</h2>
+<div class="blog-custom-border">
+<p><strong>Def: ハザード関数</strong> <br></p>
+<p>非負の確率変数 <span class="math inline">\(T\)</span> のハザード関数は次のように定義される</p>
+<p><span class="math display">\[
+\lambda(t) = \lim_{\mathrm{d}t\rightarrow0} \frac{P\{t \le T &lt; t + \mathrm{d}t |
+T \ge t \} }{\mathrm{d}t} = \frac{f(t)}{1 - F(t)}
+\]</span></p>
+</div>
+<p><span class="math inline">\(t\)</span> まで動作している条件のもとで次の瞬間に故障する確率密度を表していると解釈できます．</p>
+<p><span class="math display">\[
+\begin{align*}
+P\{t \le T &lt; t + dt \vert T \ge t \}
+    &amp;= \frac{P\{t \le T &lt; t + \mathrm{d}t , T \geq t\}}{P(T\geq t)}\\
+    &amp;= \frac{P\{t \le T &lt; t + \mathrm{d}t\}}{P(T\geq t)}\\
+    &amp;= \frac{F(t + \mathrm{d}t) - F(t)}{1 - F(t)}
+\end{align*}
+\]</span></p>
+<p>と展開できるので，<span class="math inline">\(\mathrm{d}t\)</span> で割り，<span class="math inline">\(\lim_{\mathrm{d}t\to 0}\)</span> とすることで <span class="math inline">\(\frac{f(t)}{1 - F(t)}\)</span> が得られることがわかります．</p>
+<p><strong> ▶&nbsp; 指数分布のハザード関数</strong></p>
+<p><span class="math inline">\(\lambda \in \{0.2, 1, 2\}\)</span> のパラメータを用いて各指数分布のハザード関数をplotしたのが次です．</p>
+<div id="36350d41" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib <span class="im">as</span> mpl</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>lambda_vals <span class="op">=</span> [<span class="fl">0.5</span>, <span class="dv">1</span>, <span class="dv">2</span>]</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>x_grid <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">200</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _lambda <span class="kw">in</span> lambda_vals:</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> stats.expon(scale<span class="op">=</span><span class="dv">1</span> <span class="op">/</span> _lambda)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    ax.plot(x_grid, z.pdf(x_grid)<span class="op">/</span>(<span class="dv">1</span> <span class="op">-</span> z.cdf(x_grid)), alpha<span class="op">=</span><span class="fl">0.8</span>, lw<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f"$\lambda=</span><span class="sc">{</span>_lambda<span class="sc">}</span><span class="ss">$"</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"x"</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">"hazard function"</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="exponential_dist_files/figure-html/cell-3-output-1.png" width="591" height="432" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>このようにしす分布については常に <span class="math inline">\(\lambda(x) = \lambda\)</span> で時間 <span class="math inline">\(x\)</span> には無関係になる = 瞬間故障確率は常に一定であることがわかります．これは指数分布の無記憶性とも整合的です．</p>
+<p><span class="math display">\[
+\begin{align*}
+\frac{f(x)}{1 - F(x)} = \frac{\lambda\exp(-\lambda x)}{\exp(-\lambda x)} = \lambda
+\end{align*}
+\]</span></p>
+<p>のように確かめることもできます</p>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 16.8</strong></span> <br></p>
+<p>非負の連続型確率変数 <span class="math inline">\(X\)</span> が <span class="math inline">\(t \geq 0\)</span> について</p>
+<p><span class="math display">\[
+P(t &lt; X \leq t + \Delta t\vert X &gt; t) = \lambda \Delta t + o(\Delta t), \quad\lambda &gt; 0
+\]</span></p>
+<p>をみたすとき, <span class="math inline">\(X\)</span> は指数分布に従う</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-8" class="callout-8-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>テール確率を <span class="math inline">\(S(x)\)</span> と表すと</p>
+<p><span class="math display">\[
+\begin{align*}
+P(t &lt; X \leq t + \Delta t\vert X &gt; t) = \frac{S(t) - S(t + \Delta t)}{S(t)}
+\end{align*}
+\]</span></p>
+<p>従って，</p>
+<p><span class="math display">\[
+\frac{S(t) - S(t + \Delta t)}{S(t)}= \lambda \Delta t + o(\Delta t)
+\]</span></p>
+<p>両辺を <span class="math inline">\(-\Delta t\)</span> で割ると</p>
+<p><span class="math display">\[
+\frac{S(t + \Delta t) - S(t)}{\Delta t}\frac{1}{S(t)}= -\lambda - \frac{o(\Delta t)}{\Delta t}
+\]</span></p>
+<p><span class="math inline">\(\Delta t\to 0\)</span> に近づけると</p>
+<p><span class="math display">\[
+\begin{align*}
+\lim_{\Delta t\to 0}\frac{S(t + \Delta t) - S(t)}{\Delta t}\frac{1}{S(t)} &amp;= \frac{S^\prime(t)}{S(t)}\\
+\lim_{\Delta t\to 0}-\lambda - \frac{o(\Delta t)}{\Delta t} &amp;= -\lambda
+\end{align*}
+\]</span></p>
+<p>従って，<span class="math inline">\(S(0) = 1\)</span> 及び単調非増加関数であるので</p>
+<p><span class="math display">\[
+S(t) =\exp(-\lambda t) \Rightarrow F(t) = 1 - \exp(-\lambda t)
+\]</span></p>
+<p>従って，<span class="math inline">\(\operatorname{Exp}(\lambda)\)</span> の確率分布関数と一致することが分かる．</p>
 </div>
 </div>
 </div>
@@ -1445,12 +1667,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../posts/probability_distribution/normal_dist.html" class="pagination-link" aria-label="正規分布">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">正規分布</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正規分布</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/statistical_hypothesis_test_101/chapter_header.html" class="pagination-link" aria-label="統計的仮説検定">
-        <span class="nav-page-text">統計的仮説検定</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/probability_distribution/gamma_dist.html" class="pagination-link" aria-label="ガンマ分布">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ分布</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

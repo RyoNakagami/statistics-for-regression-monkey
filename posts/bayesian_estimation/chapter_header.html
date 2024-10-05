@@ -93,6 +93,35 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -178,32 +207,38 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/statistics101/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">相関関係</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/random_variable.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/expectation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/moment_generating_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/order_statistic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/delta-method.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
   </div>
 </li>
       </ul>
@@ -220,55 +255,61 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/discrete_uniform_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/binomial_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/poisson_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/geometric_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/negative_binom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/hypergeometric.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/continuous_uniform_dis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/normal_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/exponential_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/gamma_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ分布</span></span></a>
   </div>
 </li>
       </ul>
@@ -285,7 +326,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
       </ul>
@@ -302,7 +343,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -319,13 +360,13 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/method-of-moments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/m-estimator.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
   </div>
 </li>
       </ul>
@@ -342,7 +383,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/bayesian_estimation/bayesian_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
   </div>
 </li>
       </ul>
@@ -359,7 +400,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
       </ul>
@@ -424,8 +465,17 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#ベイズ推測の考え方" id="toc-ベイズ推測の考え方" class="nav-link active" data-scroll-target="#ベイズ推測の考え方">ベイズ推測の考え方</a>
+  <ul class="collapse">
+  <li><a href="#ベイズ法による推定" id="toc-ベイズ法による推定" class="nav-link" data-scroll-target="#ベイズ法による推定">ベイズ法による推定</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/bayesian_estimation/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -456,7 +506,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-03</p>
+      <p class="date-modified">2024-10-05</p>
     </div>
   </div>
     
@@ -467,8 +517,161 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </header>
 
 
+<section id="ベイズ推測の考え方" class="level2">
+<h2 class="anchored" data-anchor-id="ベイズ推測の考え方">ベイズ推測の考え方</h2>
+<p>ベイズ推測における確率は，<strong>未知の量について人々のもつ合理的な情報や信念(belief)を数値的に表したもの</strong>としています． 日常生活において，情報が更新されることにあわせて信念が更新されますが(例: 相手が飛車を振ってきたら，少なくとも居飛車はないだろうなど)， ベイズ推測でもベイズルールに基づいて，新たな情報の観測によって信念を更新していきます．</p>
+<p>ある集団の一般的な特性を表すパラメータ <span class="math inline">\(\theta\)</span> について，その集団からサンプリングされた標本データ <span class="math inline">\(y\)</span> が得られる前では， そのパラメータは不確定ですが，データ <span class="math inline">\(y\)</span> が得られたあとでは，その情報がパラメータに関する不確実性(uncertainty)を減らすことになります． この不確実性の変化を測るのがベイズ推測の目的の一つとなります．</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+ベイズルール
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math display">\[
+p(\theta\vert y)
+    = \frac{p(y\vert \theta)p(\theta)}{\int_{\Theta}p(y\vert\tilde\theta)p(\tilde\theta)\,\mathrm{d}\tilde\theta}
+\]</span></p>
+<p>上に基づいて，観測データと事前分布から事後分布を更新しますが，ベイズルールが示しているのは 事後分布がどうあるべきではなくて，新たな情報を得たときに事後分布がどう変化するか？です．</p>
+</div>
+</div>
+<section id="ベイズ法による推定" class="level3">
+<h3 class="anchored" data-anchor-id="ベイズ法による推定">ベイズ法による推定</h3>
+<p>確率変数 <span class="math inline">\(\pmb X \sim D(\pmb\theta)\)</span> について，確率分布 <span class="math inline">\(D\)</span> を特徴づけるパラメーター <span class="math inline">\(\pmb\theta\)</span> を推定したいとします．ベイズ推測では，同時確率（密度）関数 <span class="math inline">\(f(\pmb x\vert \pmb \theta)\)</span> において <span class="math inline">\(\pmb \theta\)</span> を確率変数とみなして確率分布を仮定します．</p>
+<p>この <span class="math inline">\(\pmb \theta\)</span> について仮定された分布のことを <span class="math inline">\(\pmb \theta\)</span> についての事前分布といい，</p>
+<p><span class="math display">\[
+\pi(\pmb \theta\vert \pmb\xi)
+\]</span></p>
+<p>と表したりします．<span class="math inline">\(\pmb\xi\)</span> は事前分布のパラメータでhyper-parameter(超母数)と呼ばれるものです． ここまでのモデルを整理すると次のようになります</p>
+<p><span class="math display">\[
+\begin{align*}
+\left\{\begin{array}{c}
+\pmb X\vert \pmb\theta &amp; \sim f(\pmb x\vert \pmb\theta)\\
+\pmb\theta &amp; \sim \pi(\pmb \theta\vert \pmb\xi)
+\end{array}\right.
+\end{align*}
+\]</span></p>
+<p>このとき，<span class="math inline">\(\pmb X = \pmb x\)</span> を与えたときの <span class="math inline">\(\pmb\theta\)</span> の事後分布は，<span class="math inline">\(f_\pi(\pmb x\vert\pmb\xi)\)</span> を <span class="math inline">\(\pmb X\)</span> の周辺分布とすると</p>
+<p><span class="math display">\[
+\begin{gather}
+f_\pi(\pmb x\vert\pmb\xi) = \int f(\pmb x\vert \pmb\theta)\pi(\pmb\theta\vert\xi)\,\mathrm{d}\theta\\
+\pi(\pmb\theta\vert \pmb x, \pmb \xi) = \frac{f(\pmb x\vert \pmb\theta)\pi(\pmb \theta\vert \pmb\xi)}{f_\pi(\pmb x\vert\pmb\xi)}
+\end{gather}
+\]</span></p>
+<p>この事後分布 <span class="math inline">\(\pi(\pmb\theta\vert \pmb x, \pmb \xi)\)</span> から推定量を導くのがベイズ法です．事後分布のモードを Bayesian maximum likelihood estimatorと呼んだりします．</p>
+<p><strong> ▶&nbsp; 十分統計量とベイズ法</strong></p>
+<p><span class="math inline">\(\pmb\theta\)</span> に対する十分統計量を <span class="math inline">\(T(\pmb X)\)</span> とすると，<span class="math inline">\(\pmb X\)</span> の条件付き確率密度関数は</p>
+<p><span class="math display">\[
+\begin{align*}
+f(\pmb x\vert\pmb\theta) &amp;= h(\pmb x) g(T(\pmb x)\vert\pmb\theta)\\
+h(\pmb x) &amp;= P(\pmb X = \pmb x\vert T(\pmb X))
+\end{align*}
+\]</span></p>
+<p>と十分統計量の定義より表せます．これを用いると事後分布 <span class="math inline">\(\pi(\pmb\theta\vert \pmb x, \pmb \xi)\)</span> は次のように整理できます:</p>
+<p><span class="math display">\[
+\begin{align*}
+\pi(\pmb\theta\vert \pmb x, \pmb \xi)
+    &amp;= \frac{f(\pmb x\vert \pmb\theta) \pi(\pmb\theta \vert\pmb\xi)}{\int f(\pmb x\vert \pmb\theta)\pi(\pmb\theta\vert\xi)\,\mathrm{d}\theta}\\[5pt]
+    &amp;= \frac{h(\pmb x)g(T(\pmb x) \vert \pmb\theta)\pi(\pmb \theta\vert \pmb\xi)}{\int h(\pmb x)g(T(\pmb x) \vert \pmb\theta)\pi(\pmb\theta\vert\xi)\,\mathrm{d}\theta}\\[5pt]
+    &amp;= \frac{g(T(\pmb x) \vert \pmb\theta)\pi(\pmb \theta\vert \pmb\xi)}{\int g(T(\pmb x) \vert \pmb\theta)\pi(\pmb\theta\vert\xi)\,\mathrm{d}\theta}\\
+\end{align*}
+\]</span></p>
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 1</strong></span> <strong>: 事前分布平均と標本平均の加重平均</strong> <br></p>
+<p>確率変数 <span class="math inline">\(X\sim\operatorname{Binom}(n, \theta)\)</span> とし，<span class="math inline">\(\theta\)</span> に事前分布 <span class="math inline">\(\operatorname{Beta}(\alpha, \beta)\)</span> を仮定します． <span class="math inline">\(x\)</span> をデータとして観測したとき，<span class="math inline">\(\theta\)</span> の事後分布は，<span class="math inline">\(x, \theta\)</span> の同時分布に比例するので</p>
+<p><span id="eq-bayesian-exm"><span class="math display">\[
+\begin{align*}
+f(x\vert\theta)\pi(\theta\vert\alpha,\beta)
+    &amp;\propto \theta^x(1 - \theta)^{n-x}\theta^{\alpha-1}(1 - \theta)^{\beta-1}\\[5pt]
+    &amp;= \theta^{x+\alpha-1}(1 - \theta)^{n-x+\beta-1}
+\end{align*}
+\tag{1}\]</span></span></p>
+<p>従って，<span class="math inline">\(\theta\)</span> の事後分布は</p>
+<p><span class="math display">\[
+\theta\vert\pmb x, \alpha,\beta \sim \operatorname{Beta}(x+\alpha, n-x+\beta)
+\]</span></p>
+<p>事後分布の期待値をベイズ推定量 <span class="math inline">\(\hat\theta\)</span> とすると, <span class="math inline">\(w = \alpha + \beta, \theta_0 = \frac{\alpha }{\alpha + \beta}\)</span> とおくことで</p>
+<p><span class="math display">\[
+\hat\theta = \frac{n}{w + n}\frac{X}{n} + \frac{w}{w + n}\theta_0
+\]</span></p>
+<p>ベイズ更新後の <span class="math inline">\(\theta\)</span> の期待値は事前分布における期待値と標本平均の加重平均となっていることがわかります．</p>
+<div class="nte- callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🍵 Green Tea Break
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><a href="#eq-bayesian-exm" class="quarto-xref">Equation&nbsp;<span>1</span></a> で <span class="math inline">\({}_nC_{x}\)</span> (以下では <span class="math inline">\(C(x)\)</span> と表記する) 及び ベータ分布の規格化定数(<span class="math inline">\(\operatorname{B}\)</span> と表記する)という項が消えていますが，次のように事後分布の計算には不必要であることがわかります</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;\frac{C(x)\theta^x(1 - \theta)^{n-x}\operatorname{B}\theta^{\alpha-1}(1 - \theta)^{\beta-1}}{\int C(x)\theta^x(1 - \theta)^{n-x}\operatorname{B}\theta^{\alpha-1}(1 - \theta)^{\beta-1}\mathrm{d}\theta }\\
+&amp;=\frac{\theta^{x+\alpha-1}(1 - \theta)^{n-x+\beta-1}}{\int \theta^{x+\alpha-1}(1 - \theta)^{n-x+\beta-1}\mathrm{d}\theta }\\
+\end{align*}
+\]</span></p>
+<p>結局分子と分母で打ち消されあうので考慮しなくて良いことがわかります．また最後の式は <span class="math inline">\(\operatorname{Beta}(x+\alpha, n-x+\beta)\)</span> となっていることがわかります． この例では，事前分布と事後分布が同じ分布族に入っています．このような事前分布を<strong>共役事前分布(conjugate prioor distribution)</strong>と呼びます．</p>
+</div>
+</div>
+</div>
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 2</strong></span> <strong>: 正規分布とベイズ推定</strong> <br></p>
+<p><span class="math inline">\(X_1, \cdots, X_n \overset{\mathrm{iid}}{\sim} N(\mu, \sigma)\)</span>, <span class="math inline">\(\mu\)</span> についての事前分布を <span class="math inline">\(N(\xi, \tau^2)\)</span> とする． ここでは <span class="math inline">\((\sigma, \xi, \tau^2)\)</span> はハイパーパラメータとする．</p>
+<p><span class="math inline">\((x_1, \cdots, x_n)\)</span> を観測した下での, <span class="math inline">\(\mu\)</span> の事後分布 <span class="math inline">\(\pi(\mu\vert \pmb x)\)</span> は</p>
+<p><span id="eq-base-loss"><span class="math display">\[
+\begin{align*}
+\pi(\mu\vert \pmb x)
+    &amp;\propto \phi(\pmb x\vert \mu, \sigma^2)\pi(\mu\vert \xi, \tau^2)\\[5pt]
+    &amp;\propto \exp\left(-\frac{\sum (x_i -\mu)^2}{2\sigma^2}\right)\exp\left(-\frac{(\mu - \xi)^2}{2\tau^2}\right)
+\end{align*}
+\tag{2}\]</span></span></p>
+<p>ここで，<span class="math inline">\(\overline{x}\)</span> を標本平均とすると</p>
+<p><span class="math display">\[
+\begin{align*}
+\sum (x_i -\mu)^2
+    &amp;= \sum (x_i -\overline{x} + \overline{x} - \mu)^2 \\
+    &amp;= \sum (x_i -\overline{x})^2 + 2 \underbrace{\sum x_i(x_i -\overline{x})}_{=0} + \sum (\overline{x} - \mu)^2\\
+    &amp;= \sum (x_i -\overline{x})^2 + n(\overline{x} - \mu)^2
+\end{align*}
+\]</span></p>
+<p>従って，<a href="#eq-base-loss" class="quarto-xref">Equation&nbsp;<span>2</span></a> は次のように整理できます</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp;\exp\left(-\frac{\sum (x_i -\mu)^2}{2\sigma^2}\right)\exp\left(-\frac{(\mu - \xi)^2}{2\tau^2}\right)\\
+&amp;=\exp\left\{-\frac{1}{2}\left(\frac{\sum (x_i - \overline{x})^2 + n(\overline{x} - \mu)^2}{\sigma^2} + \frac{\mu^2 - 2\xi\mu + \xi^2}{\tau^2}\right)\right\}\\
+&amp;\propto \exp\left\{-\frac{1}{2}\left(\frac{n\mu^2 - 2n\overline{x}\mu}{\sigma^2} + \frac{\mu^2 - 2\xi\mu}{\tau^2}\right)\right\}\\
+&amp;\propto \exp\left\{-\frac{1}{2}\left(\frac{n}{\sigma^2}{ + \frac{1}{\tau^2}}\right)\left(\mu - \frac{(n/\sigma^2)\overline{x} + (1/\tau^2)\xi}{n/\sigma^2 + 1/\tau^2}\right)^2\right\}
+\end{align*}
+\]</span></p>
+<p>分子分母で <span class="math inline">\(\mu\)</span> と関係のない項はキャンセルアウトされるので</p>
+<p><span class="math display">\[
+\begin{align*}
+\hat\mu_{B} &amp;= \frac{(n/\sigma^2)\overline{x} + (1/\tau^2)\xi}{n/\sigma^2 + 1/\tau^2}
+\end{align*}
+\]</span></p>
+<p>と表記すると</p>
+<p><span class="math display">\[
+\begin{align*}
+\pi(\mu\vert \pmb x)
+    &amp;= \frac{\exp\left\{\frac{(\mu - \hat\mu_{B})^2}{2(n/\sigma^2 + 1/\tau^2)^{-1}}\right\}}{\int \exp\left\{\frac{(\mu - \hat\mu_{B})^2}{2(n/\sigma^2 + 1/\tau^2)^{-1}}\right\} \,\mathrm{d}\mu}\\
+    &amp;=\frac{1}{\sqrt{2\pi (n/\sigma^2 + 1/\tau^2)^{-1}}}\exp\left\{\frac{(\mu - \hat\mu_{B})^2}{2(n/\sigma^2 + 1/\tau^2)^{-1}}\right\}
+\end{align*}
+\]</span></p>
+<p>従って，これは <span class="math inline">\(N(\hat\mu_{B}, [n/\sigma^2 + 1/\tau^2]^{-1})\)</span> の密度関数の形をしているので</p>
+<p><span class="math display">\[
+\mu\vert\pmb{X} \sim N(\hat\mu_{B}, [n/\sigma^2 + 1/\tau^2]^{-1})
+\]</span></p>
+<p><span class="math display">\[\tag*{\(\blacksquare\)}\]</span></p>
+</div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script>
@@ -1048,12 +1251,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../posts/estimation/m-estimator.html" class="pagination-link" aria-label="M-Estimator">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">M-Estimator</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">M-Estimator</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../../posts/bayesian_estimation/bayesian_linear_regression.html" class="pagination-link" aria-label="ベイジアン線形回帰">
-        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1074,7 +1277,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/bayesian_estimation/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/bayesian_estimation/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

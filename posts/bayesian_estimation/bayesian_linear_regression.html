@@ -9,7 +9,7 @@
 <meta name="author" content="Ryo Nakagami">
 <meta name="dcterms.date" content="2024-10-03">
 
-<title>20&nbsp; ベイジアン線形回帰 – Statistics for Regression Monkeys</title>
+<title>22&nbsp; ベイジアン線形回帰 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -207,32 +207,38 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/statistics101/correlation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">相関関係</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/random_variable.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/expectation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/moment_generating_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/order_statistic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/delta-method.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
   </div>
 </li>
       </ul>
@@ -249,55 +255,61 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/discrete_uniform_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/binomial_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/poisson_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/geometric_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/negative_binom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/hypergeometric.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/continuous_uniform_dis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/normal_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/exponential_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/gamma_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ分布</span></span></a>
   </div>
 </li>
       </ul>
@@ -314,7 +326,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
       </ul>
@@ -331,7 +343,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -348,13 +360,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/method-of-moments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/m-estimator.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
   </div>
 </li>
       </ul>
@@ -371,7 +383,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/bayesian_estimation/bayesian_linear_regression.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
   </div>
 </li>
       </ul>
@@ -388,7 +400,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
       </ul>
@@ -466,9 +478,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></h1>
+<h1 class="title"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></h1>
 </div>
 
 
@@ -492,7 +504,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-03</p>
+      <p class="date-modified">2024-10-05</p>
     </div>
   </div>
     
@@ -505,7 +517,7 @@ window.Quarto = {
 
 <section id="recap-of-ols" class="level2">
 <h2 class="anchored" data-anchor-id="recap-of-ols">Recap of OLS</h2>
-<p><span class="math inline">\((Y_i, \pmb{x}_i)\)</span> をrandom vectorとして，<span class="math inline">\(Y_i \in \mathbb R, \pmb{x}_i \in \mathbb R^k\)</span> とします． 線型回帰では，<span class="math inline">\((Y_i, \pmb{x}_i)\)</span> について次のようにパラメーターに関して線形な関係があるとして回帰問題を考えます．</p>
+<p><span class="math inline">\((Y_i, \pmb{x}_i)\)</span> をrandom vectorとして，<span class="math inline">\(Y_i \in \mathbb R, \pmb{x}_i \in \mathbb R^k\)</span> とします． 線形回帰では，<span class="math inline">\((Y_i, \pmb{x}_i)\)</span> について次のようにパラメーターに関して線形な関係があるとして回帰問題を考えます．</p>
 <p><span class="math display">\[
 \begin{align*}
 Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors})
@@ -544,13 +556,13 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 <p>議論の単純化のため，以下では</p>
 <p><span id="eq-normality"><span class="math display">\[
 \epsilon_1, \cdots, \epsilon_m \overset{\mathrm{iid}}{\sim} N(0, \sigma^2)
-\tag{20.1}\]</span></span></p>
+\tag{22.1}\]</span></span></p>
 <p>つまり， Homoscedasticityの仮定の下で話を進めます．</p>
 <p><strong> ▶&nbsp; <span class="math inline">\(\pmb\beta\)</span> の推定</strong></p>
 <p>仮定 (2), (3) より <span class="math inline">\(\mathbb E[Y_i\vert \pmb{x}_i] = \pmb{x}_i^T\pmb{\beta}\)</span> であるので，</p>
 <p><span id="eq-OLS-loss-func"><span class="math display">\[
 \pmb{\beta} = \arg\min_{b} \mathbb E[(Y_i - \pmb{x}_i^T\pmb{b})^2]
-\tag{20.2}\]</span></span></p>
+\tag{22.2}\]</span></span></p>
 <p>the joint distribution <span class="math inline">\((Y_i, \pmb{x}_i)\)</span> は事前には知られていないので、sample analogを用いて以下のように推定します</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -566,7 +578,7 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 <p>仮定 (5) より <span class="math inline">\(\operatorname{rank}(\pmb{X}) = k\)</span>, つまりfull rankであるので <span class="math inline">\((\pmb{X}^T\pmb{X})^{-1}\)</span> がとれます．従って，</p>
 <p><span id="eq-OLS-estimator"><span class="math display">\[
 \widehat{\pmb{\beta}} = (\pmb{X}^T\pmb{X})^{-1}(\pmb{X}^T\pmb{Y})
-\tag{20.3}\]</span></span></p>
+\tag{22.3}\]</span></span></p>
 <p><strong> ▶&nbsp; <span class="math inline">\(\widehat{\pmb{\beta}}\)</span> の漸近分散</strong></p>
 <p>population <span class="math inline">\(\pmb{\beta}\)</span> を用いてerror termを以下のように表します</p>
 <p><span class="math display">\[
@@ -576,11 +588,11 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
     &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i
 \end{align*}
 \]</span></p>
-<p>両辺に <span class="math inline">\([\pmb{X}^T\pmb{X}]^{-1}\pmb{X}^T\)</span> をかけると <a href="#eq-OLS-estimator" class="quarto-xref">Equation&nbsp;<span>20.3</span></a> より</p>
+<p>両辺に <span class="math inline">\([\pmb{X}^T\pmb{X}]^{-1}\pmb{X}^T\)</span> をかけると <a href="#eq-OLS-estimator" class="quarto-xref">Equation&nbsp;<span>22.3</span></a> より</p>
 <p><span class="math display">\[
 \widehat{\pmb{\beta}} = \pmb{\beta} + \left[\sum\pmb{x}_i\pmb{x}_i^T\right]^{-1}\sum \pmb{x}_i\epsilon_i
 \]</span></p>
-<p>つぎに <span class="math inline">\(\sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta})\)</span> で漸近分散を考えてると，</p>
+<p>つぎに <span class="math inline">\(\sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta})\)</span> で漸近分散を考えると，</p>
 <p><span class="math display">\[
 \sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta}) = n\left[\sum\pmb{x}_i\pmb{x}_i^T\right]^{-1}\frac{1}{\sqrt{n}}\sum \pmb{x}_i\epsilon_i
 \]</span></p>
@@ -594,7 +606,7 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 \sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta}) \overset{\mathrm{d}}{\to}  N(0, \mathbb E[\pmb{x}_i\pmb{x}]^{-1}\mathbb E[\pmb{x}_i\pmb{x}^T\epsilon_i^2]\mathbb E[\pmb{x}_i\pmb{x}]^{-1})
 \end{align*}
 \]</span></p>
-<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>20.1</span></a> より</p>
+<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>22.1</span></a> より</p>
 <p><span class="math display">\[
 \mathbb E[\pmb{x}_i\pmb{x}^T\epsilon_i^2] = \sigma^2\mathbb E[\pmb{x}_i\pmb{x}^T]
 \]</span></p>
@@ -607,28 +619,28 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 \begin{align*}
 \operatorname{Var}(\widehat{\pmb{\beta}}\vert \pmb{X})
     &amp; = \mathbb E[(\pmb{X}^T\pmb{X})^{-1}\pmb{X}^T\pmb\epsilon\pmb\epsilon^T\pmb{X}(\pmb{X}^T\pmb{X})^{-1}\vert \pmb{X}]\\
-&amp;= (\pmb{X}^T\pmb{X})^{-1}\pmb{X}^T\mathbb E[\pmb\epsilon\pmb\epsilon^T|\vert \pmb{X}](\pmb{X}^T\pmb{X})^{-1}\pmb{X}^T\\
+&amp;= (\pmb{X}^T\pmb{X})^{-1}\pmb{X}^T\mathbb E[\pmb\epsilon\pmb\epsilon^T\vert \pmb{X}](\pmb{X}^T\pmb{X})^{-1}\pmb{X}^T\\
 &amp;= \sigma^2(\pmb{X}^T\pmb{X})^{-1}
 \end{align*}
 \]</span></p>
 <p><strong> ▶&nbsp; <span class="math inline">\(\pmb{Y}\)</span> の条件付き同時分布 </strong></p>
-<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>20.1</span></a> より<span class="math inline">\(\pmb{Y}\)</span> の条件付き同時確率密度は</p>
+<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>22.1</span></a> より<span class="math inline">\(\pmb{Y}\)</span> の条件付き同時確率密度は</p>
 <p><span id="eq-joint-normality"><span class="math display">\[
 \begin{align*}
 p&amp;(Y_1, \cdots, Y_n\vert \pmb{x_1}, \cdots, \pmb{x_n}, \pmb{\beta}, \sigma^2)\\
 &amp;= \prod p(Y_i\vert \pmb{x_i}, \pmb{\beta}, \sigma^2) \quad \because\text{i.i.d}\\
 &amp;= (2\pi\sigma^2)^{-n/2}\exp\{- \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \pmb{x}_i^T\pmb{\beta})^2\}
 \end{align*}
-\tag{20.4}\]</span></span></p>
+\tag{22.4}\]</span></span></p>
 <p>つまり，</p>
 <p><span class="math display">\[
 \{\pmb{Y} \vert \pmb{X}, \pmb{\beta}, \sigma\} \sim \operatorname{N}(\pmb{X}\pmb{\beta}, \sigma^2\pmb{I})
 \]</span></p>
-<p><a href="#eq-joint-normality" class="quarto-xref">Equation&nbsp;<span>20.4</span></a> の尤度最大化は</p>
+<p><a href="#eq-joint-normality" class="quarto-xref">Equation&nbsp;<span>22.4</span></a> の尤度最大化は</p>
 <p><span class="math display">\[
 \min\sum_{i=1}^n (Y_i - \pmb{x}_i^T\pmb{\beta})^2
 \]</span></p>
-<p>を解くことで得られますが，これは <a href="#eq-OLS-loss-func" class="quarto-xref">Equation&nbsp;<span>20.2</span></a> の問題と対応していることがわかります．</p>
+<p>を解くことで得られますが，これは <a href="#eq-OLS-loss-func" class="quarto-xref">Equation&nbsp;<span>22.2</span></a> の問題と対応していることがわかります．</p>
 </section>
 <section id="bayesian-linear-regression" class="level2">
 <h2 class="anchored" data-anchor-id="bayesian-linear-regression">Bayesian Linear Regression</h2>
@@ -654,18 +666,18 @@ p&amp;(\pmb\beta\vert \pmb Y, \pmb X, \sigma^2)\\
 \mathbb E[\pmb\beta\vert\pmb Y, \pmb X, \sigma^2]
     &amp;= (\pmb\Sigma_0^{-1} + \pmb X^T\pmb X/\sigma^2)^{-1}(\pmb\Sigma_0^{-1}\pmb\beta_0 + \pmb X^T\pmb Y/\sigma^2)
 \end{align*}
-\tag{20.5}\]</span></span></p>
-<div class="nte- callout callout-style-default callout-tip callout-titled">
+\tag{22.5}\]</span></span></p>
+<div class="nte- callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
-<i class="callout-icon"></i>
+<i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Coffee Break
+🍵 Green Tea Break
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="#eq-posterior-beta" class="quarto-xref">Equation&nbsp;<span>20.5</span></a> について</p>
+<p><a href="#eq-posterior-beta" class="quarto-xref">Equation&nbsp;<span>22.5</span></a> について</p>
 <p><span class="math display">\[
 \begin{gather}
 \pmb\beta_0 = \pmb 0\\
