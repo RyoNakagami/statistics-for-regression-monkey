@@ -59,10 +59,12 @@ for i, shape in enumerate(a):
 fig = go.Figure(data=traces)
 fig.update_layout(
     yaxis=dict(
-        range=[0, 0.8]  # Set the y-axis range from 0 to 0.4
+        range=[0, 0.8],
+        fixedrange = True
     ),
     xaxis=dict(
-        range=[0, 5]  # Set the y-axis range from 0 to 0.4
+        range=[0, 5],
+        fixedrange = True
     ),
     title="Gamma Distribution PDF for Different Shape Parameters",
     xaxis_title="x",
@@ -71,9 +73,6 @@ fig.update_layout(
 # Show the plot
 fig.show()
 ```
-
-
-
 
 <strong > &#9654;&nbsp; 期待値の導出</strong>
 
@@ -124,6 +123,27 @@ $$
 \end{align*}
 $$
 
-
-
 ## MGF
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: ガンマ分布の積率母関数と特性関数**
+<br>
+
+$\operatorname{Gam}(a, b)$ の積率母関数と特性関数は
+
+$$
+\begin{align*}
+M_X(t) &= (1 - bt)^{-a}\\
+\phi(t) &= (1 - bit)^{-a}\\
+\end{align*}
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+:::

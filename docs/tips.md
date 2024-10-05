@@ -13,7 +13,7 @@ tags:
 <strong > &#9654;&nbsp; `requirements.txt`へ出力</strong>
 
 ```zsh
-% poetry export -f requirements.txt --output requirements.txt
+% poetry export --without-hashes --format=requirements.txt --output requirements.txt
 ```
 
 ## Referncesの記載方法
