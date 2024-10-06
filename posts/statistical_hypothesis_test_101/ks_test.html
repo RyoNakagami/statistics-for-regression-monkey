@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2024-09-06">
+<meta name="dcterms.date" content="2024-10-06">
 
-<title>Econometrics Topics – Statistics for Regression Monkeys</title>
+<title>19&nbsp; コルモゴロフ・スミルノフ検定 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -32,8 +66,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/mathematical_appendix/permutation_combination.html" rel="next">
-<link href="../../posts/robust_statistics/chapter_header.html" rel="prev">
+<link href="../../posts/statistical_hypothesis_test_201/chapter_header.html" rel="next">
+<link href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -134,7 +168,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/econometrics101/chapter_header.html">Econometrics Topics</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/chapter_header.html">統計的仮説検定</a></li><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/ks_test.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">コルモゴロフ・スミルノフ検定</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -331,7 +365,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../../posts/statistical_hypothesis_test_101/ks_test.html" class="sidebar-item-text sidebar-link">
+  <a href="../../posts/statistical_hypothesis_test_101/ks_test.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">コルモゴロフ・スミルノフ検定</span></span></a>
   </div>
 </li>
@@ -476,17 +510,16 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#econometrics-topics-のスコープ" id="toc-econometrics-topics-のスコープ" class="nav-link active" data-scroll-target="#econometrics-topics-のスコープ">Econometrics Topics のスコープ</a></li>
-  <li><a href="#econometric-analysisの基本的な考え" id="toc-econometric-analysisの基本的な考え" class="nav-link" data-scroll-target="#econometric-analysisの基本的な考え">Econometric Analysisの基本的な考え</a></li>
+  <li><a href="#コルモゴロフスミルノフ検定の性質" id="toc-コルモゴロフスミルノフ検定の性質" class="nav-link active" data-scroll-target="#コルモゴロフスミルノフ検定の性質">コルモゴロフ・スミルノフ検定の性質</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/econometrics101/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistical_hypothesis_test_101/ks_test.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/chapter_header.html">統計的仮説検定</a></li><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/ks_test.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">コルモゴロフ・スミルノフ検定</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Econometrics Topics</h1>
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">コルモゴロフ・スミルノフ検定</span></h1>
 </div>
 
 
@@ -503,7 +536,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-09-06</p>
+      <p class="date">2024-10-06</p>
     </div>
   </div>
   
@@ -521,34 +554,177 @@ window.Quarto = {
 </header>
 
 
-<section id="econometrics-topics-のスコープ" class="level3">
-<h3 class="anchored" data-anchor-id="econometrics-topics-のスコープ">Econometrics Topics のスコープ</h3>
-<ul>
-<li></li>
-</ul>
-</section>
-<section id="econometric-analysisの基本的な考え" class="level3">
-<h3 class="anchored" data-anchor-id="econometric-analysisの基本的な考え">Econometric Analysisの基本的な考え</h3>
-<p><strong> ▶&nbsp; ceteris paribus</strong></p>
-<ul>
-<li>ceteris paribusとは「holding all other relevant factors fixed」を意味する概念</li>
-</ul>
-<p>とある確率変数 <span class="math inline">\(X\)</span> の変化が別の確率変数 <span class="math inline">\(Y\)</span> の変化を引き起こす（cause）とデータから主張するためには，単に同時分布（相関関係）を確認するだけでは不十分で，他の変数を固定した上(ceteris paribus)で， <span class="math inline">\(X\)</span> の変化が <span class="math inline">\(Y\)</span> の変化を伴うことを示す必要があります．</p>
-<p><strong> ▶&nbsp; Asymptotics</strong></p>
-<ul>
-<li>finite sample propertyと対になる概念で，<span class="math inline">\(N\to\infty\)</span> に飛ばした極限分布における統計量の性質のこと</li>
-<li>cross section dataの場合は, unit of observations を <span class="math inline">\(N\to\infty\)</span></li>
-<li>panel data analysisの場合は，time indexを固定した上で unit of entitie sを <span class="math inline">\(N\to\infty\)</span></li>
-</ul>
-<p><strong> ▶&nbsp; 説明変数(regressor)が確率的である</strong></p>
-<ul>
-<li>説明変数が非確率的である例として，実験データのように説明変数 <span class="math inline">\(\mathbf x_i\)</span> の水準について分析者が事前に決定できる場合がある
-<ul>
-<li>この場合，error termと説明変数の相関（内生性問題）は排除できる</li>
-</ul></li>
-<li>観測データの場合は，実験データのように説明変数 <span class="math inline">\(\mathbf x_i\)</span> の水準については決定できないため，「非確率的」という仮定は通常当てはまらない</li>
-</ul>
-<p>説明変数が確率的である場合，非確率的のもとでは一致性を満たす推定量(例: GLS)が一致性を満たさなくなるリスクがあります．</p>
+<section id="コルモゴロフスミルノフ検定の性質" class="level2">
+<h2 class="anchored" data-anchor-id="コルモゴロフスミルノフ検定の性質">コルモゴロフ・スミルノフ検定の性質</h2>
+<p><span class="math inline">\(X_1,\cdots, X_n\)</span> を独立に分布関数 <span class="math inline">\(F(x)\)</span> に従う確率変数とします．この確率変数が特定の分布関数 <span class="math inline">\(F_0(x)\)</span> に従うかを検定する問題を考えます:</p>
+<p><span class="math display">\[
+H_0: F(x) = F_0(x), H_1: \exists x_0 \in \mathbb R \text{ such that }F(x) \neq F_0(x)
+\]</span></p>
+<p>この問題の検定統計量として</p>
+<p><span class="math display">\[
+D_n = \sup_{x} \vert F_n(x) - F_0(x)\vert
+\]</span></p>
+<p>を用いた検定をコルモゴロフ・スミルノフ検定といいます．<span class="math inline">\(F_n(x)\)</span> は経験分布関数です．</p>
+<div id="exm-" class="custom_problem theorem example">
+<p><span class="theorem-title"><strong>Example 19.1</strong></span> <br></p>
+<p>確率変数 <span class="math inline">\(X \sim \operatorname{U}(0,1)\)</span> を <span class="math inline">\(Y = -log(X)\)</span> と変数変換すると</p>
+<p><span class="math display">\[
+Y \sim \operatorname{Exp}(1)
+\]</span></p>
+<p>に従います．25個の標準一様分布に従う乱数を発生させ，それに基づいてKS test statisticを計算すると以下のようになります．</p>
+<div id="31622898" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.distributions.empirical_distribution <span class="im">import</span> ECDF</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.lines <span class="im">import</span> Line2D</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> regmonkey_style.config <span class="im">import</span> CONFIG</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> regmonkey_style <span class="im">import</span> stylewizard <span class="im">as</span> sw</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>sw.set_templates(<span class="st">"regmonkey_twoline"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">2222</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># DGP</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>N <span class="op">=</span> <span class="dv">25</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> <span class="op">-</span>np.log(np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, N))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>ecdf <span class="op">=</span> ECDF(sample)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="bu">min</span>(sample), <span class="bu">max</span>(sample), <span class="dv">1000</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>true_cdf <span class="op">=</span> stats.expon.cdf(x)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>ecdf_values <span class="op">=</span> ecdf(x)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># compute statistic</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>sup_idx, ks_statistic <span class="op">=</span> np.argmax(np.<span class="bu">abs</span>(true_cdf <span class="op">-</span> (ecdf_values))), np.<span class="bu">max</span>(</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    np.<span class="bu">abs</span>(true_cdf <span class="op">-</span> (ecdf_values))</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>sup_x <span class="op">=</span> x[sup_idx]</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>ax.step(x, ecdf_values, label<span class="op">=</span><span class="st">"Empirical CDF"</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>ax.plot(x, true_cdf, label<span class="op">=</span><span class="st">"True CDF"</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>ax.annotate(</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="st">""</span>,</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    xy<span class="op">=</span>(sup_x, <span class="bu">min</span>(stats.expon.cdf(sup_x), ecdf(sup_x))),</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    xytext<span class="op">=</span>(sup_x, <span class="bu">max</span>(stats.expon.cdf(sup_x), ecdf(sup_x))),</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    arrowprops<span class="op">=</span><span class="bu">dict</span>(</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>        arrowstyle<span class="op">=</span><span class="st">"&lt;-&gt;"</span>, color<span class="op">=</span><span class="st">"black"</span>, linestyle<span class="op">=</span><span class="st">"dashed"</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>ax.text(</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    sup_x <span class="op">+</span> <span class="fl">0.05</span>,</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    (true_cdf[sup_idx] <span class="op">+</span> ecdf_values[sup_idx]) <span class="op">/</span> <span class="dv">2</span>,</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"KS Statistic: </span><span class="sc">{</span>ks_statistic<span class="sc">:.3f}</span><span class="ss">"</span>,</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    color<span class="op">=</span><span class="st">"black"</span>,</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    ha<span class="op">=</span><span class="st">"left"</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">"KS test statistic"</span>)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code></code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ks_test_files/figure-html/cell-2-output-2.png" width="571" height="438" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>scipy.stats.ks_1samp</code> で<code>exact</code>にテストをしてみると</p>
+<div id="e01e4558" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>stats.ks_1samp(sample, stats.expon(<span class="dv">0</span>).cdf, method<span class="op">=</span><span class="st">'exact'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>KstestResult(statistic=np.float64(0.16519761568776414), pvalue=np.float64(0.45428250331574216), statistic_location=np.float64(0.5022002367852737), statistic_sign=np.int8(1))</code></pre>
+</div>
+</div>
+</div>
+<div class="blog-custom-border">
+<p><strong>Def: 経験分布関数</strong> <br></p>
+<p><span class="math inline">\(n\)</span> 個の実数値データ <span class="math inline">\(D = \{x^{(i)}\in\mathbb R\vert i=1,\cdots, n\}\)</span> が与えられたとき，経験分布 <span class="math inline">\(\operatorname{Emp}(D)\)</span> の確率関数 <span class="math inline">\(f_n(x)\)</span> は次のように定義される</p>
+<p><span class="math display">\[
+\begin{gather}
+f_n(x) = \frac{1}{n}\sum_{i=1}^n\delta(x - x^{(i)})\\
+\text{where }\delta(\cdot) \text{ : Dirac delta function}
+\end{gather}
+\]</span></p>
+<p>累積分布関数（経験分布関数） <span class="math inline">\(F_X(x)\)</span> は次のように定義される</p>
+<p><span class="math display">\[
+\begin{align*}
+F_n(x)
+    &amp;= \frac{1}{n}\sum_{i=1}^n\int^x_{-\infty}\delta(z - x^{(i)})\,\mathrm{d}z\\
+    &amp;= \frac{1}{n}\mathbb 1(x^{(i)\leq x})
+\end{align*}
+\]</span></p>
+</div>
+<p>LLN(大数の法則)より，任意の <span class="math inline">\(x\in\mathbb R\)</span> について，</p>
+<p><span class="math display">\[
+F_n(x) \to \mathbb E \mathbb 1(X_i \leq x) = P(X_i\leq x) = F(x)
+\]</span></p>
+<p>が成立します．</p>
+<div class="blog-custom-border">
+<div id="thm-" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 19.1</strong></span> <br></p>
+<p><span class="math inline">\(F(x)\)</span> が連続のとき，</p>
+<p><span id="eq-dist-distance-sup"><span class="math display">\[
+\sup_{x\in\mathbb R} \vert F_n(x) - F(x)\vert
+\tag{19.1}\]</span></span></p>
+<p>の分布は <span class="math inline">\(F\)</span> に依存しない．</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Proof
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>累積分布関数 <span class="math inline">\(F\)</span> の逆関数を次のように定義します</p>
+<p><span class="math display">\[
+F^{-1}(y) = \min \{x: F(x)\leq y\}
+\]</span></p>
+<p><span class="math inline">\(F^{-1}\)</span> を用いて <a href="#eq-dist-distance-sup" class="quarto-xref">Equation&nbsp;<span>19.1</span></a> を次のように変形します</p>
+<p><span class="math display">\[
+\begin{align*}
+P(\sup_{x\in\mathbb R} \vert F_n(x) - F(x)\vert \leq t)
+    = P(\sup_{y\in [0, 1]} \vert F_n(F^{-1}(y)) - y\vert \leq t)
+\end{align*}
+\]</span></p>
+<p>経験分布関数 <span class="math inline">\(F_n\)</span> について</p>
+<p><span class="math display">\[
+\begin{align*}
+F_n(F^{-1}(y))
+    &amp;= \frac{1}{n}\sum \mathbb 1(X_i \leq F^{-1}(y))\\
+    &amp;= \frac{1}{n}\sum \mathbb 1(F(X_i) \leq y)
+\end{align*}
+\]</span></p>
+<p>従って，</p>
+<p><span class="math display">\[
+P(\sup_{y\in [0, 1]} \vert F_n(F^{-1}(y)) - y\vert \leq t)
+    = P\left(\sup_{y\in [0, 1]} \left\vert \frac{1}{n}\sum \mathbb 1(F(X_i) \leq y) - y\right\vert \leq t\right)
+\]</span></p>
+<p>任意の分布の累積分布関数は標準一様分布に従うので，</p>
+<p><span class="math display">\[
+F(X_i) \sim \operatorname{U}(0, 1)
+\]</span></p>
+<p><span class="math inline">\(U_i = F(X_i) \ \ \text{for } i \in \{1, \cdots, n\}\)</span> とすると，</p>
+<p><span class="math display">\[
+P(\sup_{y\in [0, 1]} \vert F_n(F^{-1}(y)) - y\vert \leq t)
+    = P\left(\sup_{y\in [0, 1]} \left\vert \frac{1}{n}\sum \mathbb 1(U_i \leq y) - y\right\vert \leq t\right)
+\]</span></p>
+<p>以上より， <a href="#eq-dist-distance-sup" class="quarto-xref">Equation&nbsp;<span>19.1</span></a> の分布は <span class="math inline">\(F\)</span> に依存しないことが示されました．</p>
+</div>
+</div>
+</div>
 
 
 </section>
@@ -1130,13 +1306,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/robust_statistics/chapter_header.html" class="pagination-link" aria-label="Data Analysis and Outliers">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Data Analysis and Outliers</span>
+      <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="pagination-link" aria-label="Fisher's exact test">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/mathematical_appendix/permutation_combination.html" class="pagination-link" aria-label="二項級数">
-        <span class="nav-page-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">二項級数</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/statistical_hypothesis_test_201/chapter_header.html" class="pagination-link" aria-label="統計的仮説検定の実践">
+        <span class="nav-page-text">統計的仮説検定の実践</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1157,7 +1333,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/econometrics101/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistical_hypothesis_test_101/ks_test.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>
