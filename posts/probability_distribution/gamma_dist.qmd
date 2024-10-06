@@ -39,7 +39,7 @@ from scipy.stats import gamma
 import plotly.graph_objs as go
 import numpy as np
 
-sw.set_templates('custom_line_with_colors')
+sw.set_templates('regmonkey_line')
 N = 1000
 x = np.linspace(0, 6, N)[1:]
 a= [0.5, 2, 5]
@@ -73,6 +73,21 @@ fig.update_layout(
 # Show the plot
 fig.show()
 ```
+
+<strong > &#9654;&nbsp; 確率密度関数の積分値が１になる確認</strong>
+
+$z = x/b$ という変数変換を用いることで以下のように示すことができます．
+
+$$
+\begin{align*}
+\int_0^\infty f(x) \mathrm{d}x
+    &= \int_0^\infty\frac{1}{b^a\Gamma(a)} x^{a-1} \exp[-x/b]\mathrm{d}x\\
+    &= \int_0^\infty\frac{1}{b\Gamma(a)} z^{a-1} \exp[-z]b\mathrm{d}z\\
+    &= \frac{1}{\Gamma(a)}\underbrace{\int_0^\infty z^{a-1} \exp[-z]\mathrm{d}z}_{=\Gamma(a)}\\
+    &=1
+\end{align*}
+$$
+
 
 <strong > &#9654;&nbsp; 期待値の導出</strong>
 
@@ -123,6 +138,69 @@ $$
 \end{align*}
 $$
 
+<strong > &#9654;&nbsp; k次モーメントの導出</strong>
+
+$k \in \mathbb Z_{++}$ について，k次モーメントは以下のように計算できます．
+
+$$
+\begin{align*}
+\mathbb E[X^k]
+    &= \int_0^\infty x^k \frac{1}{b^a\Gamma(a)}x^{a-1}\exp[-x/b]\,\mathrm{d}x\\[5pt]
+    &= b^ka(a+1)\cdots(a+k-1)\underbrace{\int_0^\infty \frac{1}{b^{a+k}\Gamma(a+k)}x^{a+k-1}\exp[-x/b]}_{=\operatorname{Gam}(a+k, b)\text{のpdf}}\,\mathrm{d}x\\
+    &= b^k \prod_{i=0}^{k-1}(a+i)
+\end{align*}
+$$
+
+
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**: スケールパラメータ**
+<br>
+
+$X\sim\operatorname{Gam}(a, b)$ のとき，$c >0$ とする任意の定数について．$Y = cX$ としたとき
+
+$$
+Y \sim \operatorname{Gam}(a, bc)
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+問題設定より
+
+$$
+\begin{gather}
+Y = g(X) = c X\\
+X = g^{-1}(Y) = \frac{1}{c} Y
+\end{gather}
+$$
+
+$g(X)$ は狭義単調増加関数なので
+
+$$
+f_Y(y) = f_X(g^{-1}(y)) \frac{\mathrm{d}g^{-1}(y)}{\mathrm{d}y}
+$$
+
+
+従って，
+
+$$
+\begin{align*}
+f_Y(y)
+    &= \frac{1}{b^a\Gamma(a)}\left(\frac{y}{c}\right)^{a-1}\exp\left(-\frac{y}{bc}\right)\frac{1}{c}\\
+    &= \frac{1}{(bc)^a\Gamma(a)}y^{a-1}\exp\left(-\frac{y}{bc}\right)
+\end{align*}
+$$
+
+これは $\operatorname{Gam}(a-1, bc)$ の確率密度関数と一致します．
+
+:::
+
 ## MGF
 
 <div class="blog-custom-border">
@@ -135,7 +213,7 @@ $\operatorname{Gam}(a, b)$ の積率母関数と特性関数は
 $$
 \begin{align*}
 M_X(t) &= (1 - bt)^{-a}\\
-\phi(t) &= (1 - bit)^{-a}\\
+\phi(t) &= (1 - bit)^{-a}
 \end{align*}
 $$
 
@@ -145,5 +223,23 @@ $$
 
 ::: {.callout-note collapse="false" icon=false}
 ## Proof
+
+$$
+\begin{align*}
+M_X(t) &= \mathbb E[\exp(tX)]\\
+    &= \int_0^\infty \exp(tx)\frac{1}{b^a\Gamma(a)} x^{a-1} \exp[-x/b] \mathrm{d}x\\
+    &= \int_0^\infty\frac{1}{b^a\Gamma(a)} x^{a-1} \exp\left[-\frac{1-bt}{b}x\right] \mathrm{d}x\\
+    &= (1-bt)^{-a}\int_0^\infty\frac{1}{(b/(1-bt))^a\Gamma(a)} x^{a-1} \exp\left[-\frac{1-bt}{b}x\right] \mathrm{d}x\\
+    &= (1-bt)^{-a}
+\end{align*}
+$$
+
+ただし，積率母関数が定義されるためには
+
+$$
+\frac{1-bt}{b}>0 \Rightarrow t< \frac{1}{b}
+$$
+
+が必要となることがわかります．特性関数は $\phi(t) = (1 - bit)^{-a}$
 
 :::

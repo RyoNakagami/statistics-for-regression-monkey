@@ -9,7 +9,6 @@ comments:
     utterances:
          repo: RyoNakagami/statistics-for-regression-monkey
          label: discussion
-jupyter: python3
 ---
 
 ## 一様分布の性質
@@ -212,5 +211,35 @@ M_X(t)
 $$
 
 これは　$\operatorname{U}[0, 1]$ のMGFと一致するので，パラメータ $(\alpha, \beta)=(1,1)$ のベータ分布は標準一様分布と等しいことがわかります．
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm-uniform-to-gamma .custom_problem }
+**: 一様分布の対数変換と指数分布**
+<br>
+
+確率変数 $X \sim \operatorname{U}(0, 1)$ について，
+
+$$
+Y = -\log(X)
+$$
+
+という変数変換を考える．このとき，$Y\sim\operatorname{Exp}(1)$ が成り立つ．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$Y = -\log(X)$ とするとその定義域は $[0, \infty)$ となります．対数変換は単調増加関数なので，$y\in[0, \infty)$ の範囲で
+
+$$
+f_Y(y) = f_X(\exp(-y))\times \left\vert\frac{\,\mathrm{d}\exp(-y)}{\,\mathrm{d}y}\right\vert = \exp(-y)
+$$
+
+これは $\operatorname{Exp}(1)$ の確率密度関数と一致するので，$Y\sim\operatorname{Exp}(1)$ が成り立つ．
 
 :::

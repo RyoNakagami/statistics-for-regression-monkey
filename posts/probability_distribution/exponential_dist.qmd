@@ -46,32 +46,9 @@ from scipy import stats
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
+from regmonkey_style import stylewizard as sw
 
-regmon_palette = ["#141F52", "#595959", "#2E45B8", "#475ED1", "#D6DBF5", "#EBEDFA"]
-
-mpl.rcParams.update(
-    {
-        "font.size": 12,
-        "axes.labelsize": 12,
-        "axes.titlesize": 14,
-        "legend.fontsize": 10,
-        "xtick.labelsize": 10,
-        "ytick.labelsize": 10,
-        "axes.grid": True,  # Add gridlines
-        "grid.linestyle": "--",
-        "grid.linewidth": 0.2,
-        "grid.color": "gray",
-        "axes.spines.top": False,
-        "axes.spines.right": False,
-        "axes.spines.left": True,
-        "axes.spines.bottom": True,
-        "axes.edgecolor": "black",
-        "axes.facecolor": "#EFF5F5",
-        "axes.linewidth": 1.2,
-        "legend.frameon": False,
-        "axes.prop_cycle": plt.cycler(color=regmon_palette),
-    }
-)
+sw.set_templates("regmonkey_line")
 
 fig, ax = plt.subplots()
 lambda_vals = [0.5, 1, 2]

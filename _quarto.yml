@@ -57,6 +57,7 @@ book:
     - part: posts/statistical_hypothesis_test_101/chapter_header.qmd
       chapters:
         - posts/statistical_hypothesis_test_101/fisher_exact_test.qmd
+        - posts/statistical_hypothesis_test_101/ks_test.qmd
     - part: posts/statistical_hypothesis_test_201/chapter_header.qmd
       chapters:
         - posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.qmd

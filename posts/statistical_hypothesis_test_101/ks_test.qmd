@@ -1,0 +1,204 @@
+---
+title: "コルモゴロフ・スミルノフ検定"
+author: "Ryo Nakagami"
+date: "2024-10-06"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+---
+
+## コルモゴロフ・スミルノフ検定の性質
+
+$X_1,\cdots, X_n$ を独立に分布関数 $F(x)$ に従う確率変数とします．この確率変数が特定の分布関数
+$F_0(x)$ に従うかを検定する問題を考えます:
+
+$$
+H_0: F(x) = F_0(x), H_1: \exists x_0 \in \mathbb R \text{ such that }F(x) \neq F_0(x)
+$$
+
+この問題の検定統計量として
+
+$$
+D_n = \sup_{x} \vert F_n(x) - F_0(x)\vert
+$$
+
+を用いた検定をコルモゴロフ・スミルノフ検定といいます．$F_n(x)$ は経験分布関数です．
+
+::: {#exm- .custom_problem }
+<br>
+
+確率変数 $X \sim \operatorname{U}(0,1)$ を $Y = -log(X)$ と変数変換すると
+
+$$
+Y \sim \operatorname{Exp}(1)
+$$
+
+に従います．25個の標準一様分布に従う乱数を発生させ，それに基づいてKS test statisticを計算すると以下のようになります．
+
+```{python}
+import numpy as np
+from statsmodels.distributions.empirical_distribution import ECDF
+from scipy import stats
+import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
+from regmonkey_style.config import CONFIG
+from regmonkey_style import stylewizard as sw
+
+sw.set_templates("regmonkey_twoline")
+
+np.random.seed(2222)
+
+# DGP
+N = 25
+sample = -np.log(np.random.uniform(0, 1, N))
+ecdf = ECDF(sample)
+x = np.linspace(min(sample), max(sample), 1000)
+true_cdf = stats.expon.cdf(x)
+ecdf_values = ecdf(x)
+
+# compute statistic
+sup_idx, ks_statistic = np.argmax(np.abs(true_cdf - (ecdf_values))), np.max(
+    np.abs(true_cdf - (ecdf_values))
+)
+sup_x = x[sup_idx]
+
+fig, ax = plt.subplots()
+
+ax.step(x, ecdf_values, label="Empirical CDF")
+ax.plot(x, true_cdf, label="True CDF")
+ax.annotate(
+    "",
+    xy=(sup_x, min(stats.expon.cdf(sup_x), ecdf(sup_x))),
+    xytext=(sup_x, max(stats.expon.cdf(sup_x), ecdf(sup_x))),
+    arrowprops=dict(
+        arrowstyle="<->", color="black", linestyle="dashed"
+    ),
+)
+ax.text(
+    sup_x + 0.05,
+    (true_cdf[sup_idx] + ecdf_values[sup_idx]) / 2,
+    f"KS Statistic: {ks_statistic:.3f}",
+    color="black",
+    ha="left"
+)
+ax.set_title("KS test statistic")
+ax.legend()
+plt.show()
+```
+
+`scipy.stats.ks_1samp` で`exact`にテストをしてみると
+
+```{python}
+#| code-fold: false
+stats.ks_1samp(sample, stats.expon(0).cdf, method='exact')
+```
+
+:::
+
+
+
+<div class="blog-custom-border">
+<strong>Def: 経験分布関数</strong> <br>
+
+$n$ 個の実数値データ $D = \{x^{(i)}\in\mathbb R\vert i=1,\cdots, n\}$ が与えられたとき，経験分布
+$\operatorname{Emp}(D)$ の確率関数 $f_n(x)$ は次のように定義される
+
+$$
+\begin{gather}
+f_n(x) = \frac{1}{n}\sum_{i=1}^n\delta(x - x^{(i)})\\
+\text{where }\delta(\cdot) \text{ : Dirac delta function}
+\end{gather}
+$$ 
+
+累積分布関数（経験分布関数） $F_X(x)$ は次のように定義される
+
+$$
+\begin{align*}
+F_n(x)
+    &= \frac{1}{n}\sum_{i=1}^n\int^x_{-\infty}\delta(z - x^{(i)})\,\mathrm{d}z\\
+    &= \frac{1}{n}\mathbb 1(x^{(i)\leq x})
+\end{align*}
+$$
+
+</div>
+
+LLN(大数の法則)より，任意の $x\in\mathbb R$ について，
+
+$$
+F_n(x) \to \mathbb E \mathbb 1(X_i \leq x) = P(X_i\leq x) = F(x)
+$$
+
+が成立します．
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+$F(x)$ が連続のとき，
+
+$$
+\sup_{x\in\mathbb R} \vert F_n(x) - F(x)\vert
+$${#eq-dist-distance-sup}
+
+の分布は $F$ に依存しない．
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+累積分布関数 $F$ の逆関数を次のように定義します
+
+$$
+F^{-1}(y) = \min \{x: F(x)\leq y\}
+$$
+
+$F^{-1}$ を用いて @eq-dist-distance-sup を次のように変形します
+
+$$
+\begin{align*}
+P(\sup_{x\in\mathbb R} \vert F_n(x) - F(x)\vert \leq t)
+    = P(\sup_{y\in [0, 1]} \vert F_n(F^{-1}(y)) - y\vert \leq t)
+\end{align*}
+$$
+
+経験分布関数 $F_n$ について
+
+$$
+\begin{align*}
+F_n(F^{-1}(y))
+    &= \frac{1}{n}\sum \mathbb 1(X_i \leq F^{-1}(y))\\
+    &= \frac{1}{n}\sum \mathbb 1(F(X_i) \leq y)
+\end{align*}
+$$
+
+従って，
+
+$$
+P(\sup_{y\in [0, 1]} \vert F_n(F^{-1}(y)) - y\vert \leq t) 
+    = P\left(\sup_{y\in [0, 1]} \left\vert \frac{1}{n}\sum \mathbb 1(F(X_i) \leq y) - y\right\vert \leq t\right)
+$$
+
+任意の分布の累積分布関数は標準一様分布に従うので，
+
+$$
+F(X_i) \sim \operatorname{U}(0, 1) 
+$$
+
+$U_i = F(X_i) \ \ \text{for } i \in \{1, \cdots, n\}$ とすると，
+
+$$
+P(\sup_{y\in [0, 1]} \vert F_n(F^{-1}(y)) - y\vert \leq t) 
+    = P\left(\sup_{y\in [0, 1]} \left\vert \frac{1}{n}\sum \mathbb 1(U_i \leq y) - y\right\vert \leq t\right)
+$$
+
+
+以上より， @eq-dist-distance-sup の分布は $F$ に依存しないことが示されました．
+
+:::

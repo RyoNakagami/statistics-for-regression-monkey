@@ -34,6 +34,9 @@ $\sigma_{XY}$ は $X, Y$ の共分散, $\sigma_X, \sigma_Y$ は標準偏差を�
 
 </div>
 
+<strong > &#9654;&nbsp; Pearson相関係数の値域</strong>
+
+
 Pearson相関係数 $\vert\operatorname{Corr}(X, Y) \vert\leq 1$ という性質があります．
 
 $\tilde X = X - \mu_x, \tilde Y = Y - \mu_y$ とおきます．[シュワルツの不等式](./expectation.html#thm-schwarz)を用いると
@@ -115,72 +118,15 @@ $$\tag*{\(\blacksquare\)}$$
 import numpy as np
 import plotly.io as pio
 import plotly.express as px
+import regmonkey_style.stylewizard as sw
 
-np.random.seed(42)
-
-# Define a custom template (without scaleanchor in template)
-custom_template = {
-    "data": {
-        "scatter": [
-            {
-                "mode": "markers",
-                "opacity": 0.5,
-                "marker": {"size": 5},
-                "line": {"width": 2},
-            }
-        ]
-    },
-    "layout": {
-        "font": {"size": 12},
-        "title": {
-            "font": {"size": 18},
-            "x": 0.1,  # Horizontal position (left-aligned),
-            "yanchor": "top",
-        },
-        "autosize": True,
-        "legend": {
-            "font": {"size": 10},
-            "bgcolor": "rgba(255, 255, 255, 0)",
-            "traceorder": "normal",
-        },
-        "xaxis": {
-            "title": "X-axis Title",
-            "titlefont": {"size": 12},
-            "tickfont": {"size": 10},
-            "scaleanchor": "y",  # Lock x-axis scale to y-axis
-            "scaleratio": 1,  # Ensure equal scale ratio
-            "showgrid": True,
-            "griddash": "dot",
-            "gridcolor": "gray",
-            "gridwidth": 0.1,
-            "zeroline": True,
-            "zerolinecolor": "gray",
-            "zerolinewidth": 0.1,
-        },
-        "yaxis": {
-            "title": "Y-axis Title",
-            "titlefont": {"size": 12},
-            "tickfont": {"size": 10},
-            "scaleanchor": "x",  # Lock y-axis scale to x-axis
-            "scaleratio": 1,  # Ensure equal scale ratio
-            "showgrid": True,
-            "griddash": "dot",
-            "gridcolor": "gray",
-            "gridwidth": 0.1,
-            "zeroline": True,
-            "zerolinecolor": "gray",
-            "zerolinewidth": 0.1,
-        },
-        "plot_bgcolor": "#EFF5F5",
-        "margin": {"l": 40, "r": 40, "t": 40, "b": 40},
-        "shapes": [],  # You can add shapes here if needed
-    },
-}
 
 # Register custom template
-pio.templates["custom_scatter"] = custom_template
+sw.set_templates("regmonkey_scatter")
 
 # Data preparation
+np.random.seed(42)
+
 N = 200
 theta = np.random.uniform(0, 2 * np.pi, N)
 X, Y = np.cos(theta), np.sin(theta)
@@ -193,17 +139,9 @@ fig = px.scatter(
         N, np.corrcoef(X, Y)[0, 1]
     ),
 )
-fig.update_layout(
-    template="custom_scatter",
-    xaxis=dict(
-        scaleanchor="y",  # Lock the scale of x-axis to the y-axis
-        scaleratio=1,  # Set the ratio (1:1 for equal scale)
-    ),
-    yaxis=dict(
-        scaleanchor="x",  # Lock the scale of y-axis to the x-axis
-        scaleratio=1,  # Set the ratio (1:1 for equal scale)
-    ),
-)
+
+# equal xy scale
+sw.equal_xy_scale(fig)
 fig.show()
 ```
 
@@ -422,6 +360,7 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import statsmodels.api as sm
 
+
 X1, Y1 = np.random.multivariate_normal([0, 0], [[1, 0.4], [0.4, 1]], N).T
 
 X2, Y2 = np.random.multivariate_normal([0, 0], [[1, 0.95], [0.95, 1]], N).T
@@ -489,7 +428,7 @@ fig.add_trace(
     col=2,
 )
 
-fig.update_layout(template="custom_scatter", title='相関係数水準に応じた回帰係数と逆回帰係数の比較')
+fig.update_layout(title='相関係数水準に応じた回帰係数と逆回帰係数の比較')
 fig.update_xaxes(
     range=x_range, scaleanchor="y", scaleratio=1, row=1, col=1
 )  # Link x-axis of plot 1 to y-axis
@@ -540,7 +479,7 @@ $$
 
 $$
 \rho_{xy} = \frac{\sum (x_i - \overline{x})(y_i - \overline{y})}{\sqrt{\sum (x_i - \overline{x})^2}\sqrt{\sum (y_i - \overline{y})^2}}
-$$
+$${#eq-sample-correlation}
 
 </div>
 
@@ -555,7 +494,7 @@ $$
 
 $$
 \sum_{i=1}^n (x_i - \bar x)^2 \sum_{i=1}^n (y_i - \bar y)^2 \geq \bigg(\sum_{i=1}^n (x_i - \bar x)(y_i - \bar y)\bigg)^2
-$$
+$${#eq-correlation-schwarz}
 
 従って，$\rho_{xy}^2 \leq 1$ が成立することがわかります．
 
@@ -566,6 +505,27 @@ y_i = kx_i + \bar y - k\bar x = kx_i + c \quad (c:\text{定数})
 $$
 
 のとき，$\vert\rho_{xy}\vert = 1$．また，変数感に１次式の関係があるとき $\vert\rho_{xy}\vert = 1$ が成立することがわかります．
+
+<strong > &#9654;&nbsp; ベクトルのなす角との関係</strong>
+
+@eq-sample-correlation について，ノルムで表現することもできます．$n$ 次元実ベクトル $\pmb{u}, \pmb{v}$ に対し，その内積を
+
+$$
+(\pmb{u}, \pmb{v}) = \sum_{i=1}^n u_iv_i
+$$
+
+とします．$\pmb{x} = (x_1 - \overline{x}, \cdots, x_n - \overline{x})^T, \pmb{y} = (y_1 - \overline{y}, \cdots, y_n - \overline{y})^T$ とすると，
+
+$$
+\rho_{xy} = \frac{(\pmb{x}, \pmb{y})}{\|\pmb{x}\|\|\pmb{y}\|}
+$${#eq-sample-correlation-norm}
+
+@eq-sample-correlation-norm について，ベクトル $\pmb{x}, \pmb{y}$ のなす角と理解することができます．実際に２つのベクトルのなす角は
+
+$$
+\cos\theta =  \frac{(\pmb{u}, \pmb{v})}{\|\pmb{u}\|\|\pmb{v}\|}
+$$
+
 
 
 
