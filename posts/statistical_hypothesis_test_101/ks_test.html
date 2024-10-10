@@ -9,7 +9,7 @@
 <meta name="author" content="Ryo Nakagami">
 <meta name="dcterms.date" content="2024-10-06">
 
-<title>19&nbsp; コルモゴロフ・スミルノフ検定 – Statistics for Regression Monkeys</title>
+<title>21&nbsp; KS検定 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -168,7 +168,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/chapter_header.html">統計的仮説検定</a></li><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/ks_test.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">コルモゴロフ・スミルノフ検定</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/chapter_header.html">統計的仮説検定</a></li><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/ks_test.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">KS検定</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -247,32 +247,38 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/statistics101/infographics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">インフォグラフィックス</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/random_variable.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/expectation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/moment_generating_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/order_statistic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/delta-method.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
   </div>
 </li>
       </ul>
@@ -289,61 +295,67 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/discrete_uniform_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/binomial_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/poisson_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/geometric_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/negative_binom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/hypergeometric.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/continuous_uniform_dis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/normal_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/exponential_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/gamma_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">ガンマ分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/chi_squared_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">カイ２乗分布</span></span></a>
   </div>
 </li>
       </ul>
@@ -360,13 +372,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/ks_test.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">コルモゴロフ・スミルノフ検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">KS検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -383,7 +395,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -399,14 +411,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/estimation/unbiased_estimator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">不偏推定量</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/method-of-moments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/m-estimator.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
   </div>
 </li>
       </ul>
@@ -423,7 +441,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/bayesian_estimation/bayesian_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
   </div>
 </li>
       </ul>
@@ -440,7 +458,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
       </ul>
@@ -455,8 +473,8 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
+            <a href="../../posts/prediction/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prediction</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -464,38 +482,61 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/prediction/bias_variance_in_prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Bias and Variance</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/mathematical_appendix/taylor_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">テイラー展開</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/permutation_combination.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">二項級数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">二項級数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/complex_number.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/gamma_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/jensen_inequality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/Lhopitals_rule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
   </div>
 </li>
       </ul>
@@ -510,16 +551,20 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#コルモゴロフスミルノフ検定の性質" id="toc-コルモゴロフスミルノフ検定の性質" class="nav-link active" data-scroll-target="#コルモゴロフスミルノフ検定の性質">コルモゴロフ・スミルノフ検定の性質</a></li>
+  <li><a href="#コルモゴロフスミルノフ検定の性質" id="toc-コルモゴロフスミルノフ検定の性質" class="nav-link active" data-scroll-target="#コルモゴロフスミルノフ検定の性質">コルモゴロフ・スミルノフ検定の性質</a>
+  <ul class="collapse">
+  <li><a href="#コルモゴロフスミルノフ検定の注意点" id="toc-コルモゴロフスミルノフ検定の注意点" class="nav-link" data-scroll-target="#コルモゴロフスミルノフ検定の注意点">コルモゴロフ・スミルノフ検定の注意点</a></li>
+  </ul></li>
+  <li><a href="#two-sample-ks-test" id="toc-two-sample-ks-test" class="nav-link" data-scroll-target="#two-sample-ks-test">Two Sample KS Test</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistical_hypothesis_test_101/ks_test.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/chapter_header.html">統計的仮説検定</a></li><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/ks_test.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">コルモゴロフ・スミルノフ検定</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/chapter_header.html">統計的仮説検定</a></li><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/ks_test.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">KS検定</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">コルモゴロフ・スミルノフ検定</span></h1>
+<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">KS検定</span></h1>
 </div>
 
 
@@ -543,7 +588,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-06</p>
+      <p class="date-modified">2024-10-10</p>
     </div>
   </div>
     
@@ -566,13 +611,13 @@ D_n = \sup_{x} \vert F_n(x) - F_0(x)\vert
 \]</span></p>
 <p>を用いた検定をコルモゴロフ・スミルノフ検定といいます．<span class="math inline">\(F_n(x)\)</span> は経験分布関数です．</p>
 <div id="exm-" class="custom_problem theorem example">
-<p><span class="theorem-title"><strong>Example 19.1</strong></span> <br></p>
+<p><span class="theorem-title"><strong>Example 21.1</strong></span> <br></p>
 <p>確率変数 <span class="math inline">\(X \sim \operatorname{U}(0,1)\)</span> を <span class="math inline">\(Y = -log(X)\)</span> と変数変換すると</p>
 <p><span class="math display">\[
 Y \sim \operatorname{Exp}(1)
 \]</span></p>
 <p>に従います．25個の標準一様分布に従う乱数を発生させ，それに基づいてKS test statisticを計算すると以下のようになります．</p>
-<div id="31622898" class="cell" data-execution_count="1">
+<div id="af8229cb" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -624,22 +669,19 @@ Y \sim \operatorname{Exp}(1)
 <span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
 <span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-stdout">
-<pre><code></code></pre>
-</div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="ks_test_files/figure-html/cell-2-output-2.png" width="571" height="438" class="figure-img"></p>
+<p><img src="ks_test_files/figure-html/cell-2-output-1.png" width="569" height="440" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><code>scipy.stats.ks_1samp</code> で<code>exact</code>にテストをしてみると</p>
-<div id="e01e4558" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>stats.ks_1samp(sample, stats.expon(<span class="dv">0</span>).cdf, method<span class="op">=</span><span class="st">'exact'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="98349a61" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>stats.ks_1samp(sample, stats.expon(<span class="dv">0</span>).cdf, method<span class="op">=</span><span class="st">'exact'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>KstestResult(statistic=np.float64(0.16519761568776414), pvalue=np.float64(0.45428250331574216), statistic_location=np.float64(0.5022002367852737), statistic_sign=np.int8(1))</code></pre>
+<pre><code>KstestResult(statistic=0.16519761568776414, pvalue=0.45428250331574216, statistic_location=0.5022002367852737, statistic_sign=1)</code></pre>
 </div>
 </div>
 </div>
@@ -665,14 +707,14 @@ F_n(x)
 <p><span class="math display">\[
 F_n(x) \to \mathbb E \mathbb 1(X_i \leq x) = P(X_i\leq x) = F(x)
 \]</span></p>
-<p>が成立します．</p>
+<p>が成立します．次に，KS Testの統計量が帰無仮説で設定した <span class="math inline">\(F\)</span> に依存しないことを示します．</p>
 <div class="blog-custom-border">
 <div id="thm-" class="custom_problem theorem">
-<p><span class="theorem-title"><strong>Theorem 19.1</strong></span> <br></p>
+<p><span class="theorem-title"><strong>Theorem 21.1</strong></span> <br></p>
 <p><span class="math inline">\(F(x)\)</span> が連続のとき，</p>
 <p><span id="eq-dist-distance-sup"><span class="math display">\[
 \sup_{x\in\mathbb R} \vert F_n(x) - F(x)\vert
-\tag{19.1}\]</span></span></p>
+\tag{21.1}\]</span></span></p>
 <p>の分布は <span class="math inline">\(F\)</span> に依存しない．</p>
 </div>
 </div>
@@ -692,7 +734,7 @@ Proof
 <p><span class="math display">\[
 F^{-1}(y) = \min \{x: F(x)\leq y\}
 \]</span></p>
-<p><span class="math inline">\(F^{-1}\)</span> を用いて <a href="#eq-dist-distance-sup" class="quarto-xref">Equation&nbsp;<span>19.1</span></a> を次のように変形します</p>
+<p><span class="math inline">\(F^{-1}\)</span> を用いて <a href="#eq-dist-distance-sup" class="quarto-xref">Equation&nbsp;<span>21.1</span></a> を次のように変形します</p>
 <p><span class="math display">\[
 \begin{align*}
 P(\sup_{x\in\mathbb R} \vert F_n(x) - F(x)\vert \leq t)
@@ -721,10 +763,94 @@ F(X_i) \sim \operatorname{U}(0, 1)
 P(\sup_{y\in [0, 1]} \vert F_n(F^{-1}(y)) - y\vert \leq t)
     = P\left(\sup_{y\in [0, 1]} \left\vert \frac{1}{n}\sum \mathbb 1(U_i \leq y) - y\right\vert \leq t\right)
 \]</span></p>
-<p>以上より， <a href="#eq-dist-distance-sup" class="quarto-xref">Equation&nbsp;<span>19.1</span></a> の分布は <span class="math inline">\(F\)</span> に依存しないことが示されました．</p>
+<p>以上より， <a href="#eq-dist-distance-sup" class="quarto-xref">Equation&nbsp;<span>21.1</span></a> の分布は <span class="math inline">\(F\)</span> に依存しないことが示されました．</p>
 </div>
 </div>
 </div>
+<p>ここからKS Test統計量を統計的仮説検定のフレームワークに乗せるためには，得られた統計量の値が <span class="math inline">\(H_0\)</span> の下でどのように評価することができるのか？を知る必要があります． 固定された <span class="math inline">\(x\)</span> においてCLTより以下のことがわかります</p>
+<p><span class="math display">\[
+\sqrt{n}(F_n(x) - F(x)) \overset{\mathrm{d}}{\to} N\big(0, F(x)(1 - F(x))\big)
+\]</span></p>
+<p>これを用いて</p>
+<p><span class="math display">\[
+\sqrt{n}\sup \vert F_n(x) - F(x)\vert
+\]</span></p>
+<p>が収束する分布を次に確認します．</p>
+<div class="blog-custom-border">
+<div id="thm-ks-test-statistic-dist" class="custom_problem theorem">
+<p><span class="theorem-title"><strong>Theorem 21.2</strong></span> <strong>: KS統計量の収束分布</strong> <br></p>
+<p><span class="math display">\[
+P\big(\sqrt{n}\sup_{x\in\mathbb R} \vert F_n(x) - F(x)\vert \leq t\big) \overset{\mathrm{d}}{\to} H(t)
+\]</span></p>
+<p><span class="math inline">\(H(t)\)</span> はKolmogorov-Smirnov分布でその累積分布関数は以下の形になります</p>
+<p><span class="math display">\[
+F_H(t) = 1 - 2\sum_{i=1}^\infty (-1)^{i-1}\exp(-2i^2t)
+\]</span></p>
+</div>
+</div>
+<p><span class="math inline">\(F_0\)</span> を帰無仮説で設定した分布としたとき，十分大きい <span class="math inline">\(n\)</span> のもとで <span class="math inline">\(F_n\)</span> は <span class="math inline">\(F\)</span> に収束するので検定統計量に基づく判断は，十分小さい <span class="math inline">\(\delta\)</span> を選び</p>
+<p><span class="math display">\[
+\sup_x \vert F_n(x) - F_0(x)\vert &gt; \delta
+\]</span></p>
+<p>これで判断できれば良いとなります．これに対して，<span class="math inline">\(\sqrt{n}\)</span> を両辺に乗じると</p>
+<p><span class="math display">\[
+D_n = \sqrt{n}\sup_x \vert F_n(x) - F_0(x)\vert &gt; \sqrt{n}\delta
+\]</span></p>
+<p>もし <span class="math inline">\(H_0\)</span> が不成立ならば</p>
+<p><span class="math display">\[
+D_n &gt; \sqrt{n}\delta \to \infty \quad\text{as } n \to \infty
+\]</span></p>
+<p>従って，Decision ruleは</p>
+<p><span class="math display">\[
+\delta =
+\left\{\begin{array}{cc}
+H_0 &amp; D_n \leq c\\
+H_1 &amp; D_n &gt; c\\
+\end{array}\right.
+\]</span></p>
+<p>このDecision ruleのもとでの有意水準 <span class="math inline">\(\alpha\)</span> は</p>
+<p><span class="math display">\[
+\alpha = P(\delta \neq H_0\vert H_0) = P(D_n &gt; c \vert H_0) \approx 1 - H(c)
+\]</span></p>
+<div class="nte- callout callout-style-default callout-tip no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+🍵 Green Tea Break
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(H(c)\)</span> を計算するのは困難な場合が多いので，有意水準 <span class="math inline">\(\alpha\)</span> に対応した <span class="math inline">\(c\)</span> の数値として</p>
+<p><span class="math display">\[
+\begin{align*}
+x_\alpha &amp;= [-(1/2)\log(\alpha/2)]^{1/2} \quad \text{(棄却点)}\\
+c &amp;= x_\alpha/\sqrt{n}
+\end{align*}
+\]</span></p>
+<p>として計算されます．</p>
+<p>また，標本におけるKS統計量の計算も</p>
+<p><span class="math display">\[
+D = \max_{1 \le i \le N} \left( F(Y_{i}) -
+               \frac{i-1} {N}, \frac{i}{N} - F(Y_{i}) \right)
+\]</span></p>
+<p>として標本における各点における帰無仮説の分布との距離のupper boundをベースに計算されます．</p>
+</div>
+</div>
+<section id="コルモゴロフスミルノフ検定の注意点" class="level3">
+<h3 class="anchored" data-anchor-id="コルモゴロフスミルノフ検定の注意点">コルモゴロフ・スミルノフ検定の注意点</h3>
+<p>KS Testは分布によらない推測法というメリットはありますが，帰無仮説の分布を指定する必要がありますし，また次の注意点があります．</p>
+<ol type="1">
+<li>連続型確率分布の検定のみしか使えない</li>
+<li>テール部分と比べ分布の中心付近での距離に対してsensitive = テール分布の違いには鈍感</li>
+<li>帰無仮説の分布をlocation, shapeなどのパラメータを全て指定しないと，同じ分布族を帰無仮説に指定していても棄却されてしまう</li>
+</ol>
+<p>このような注意点に加え， Anderson-Darling testやCramer Von-Mises testといった改良型の検定手法があるので，KS Testはあまり利用されることはありません．</p>
+</section>
+</section>
+<section id="two-sample-ks-test" class="level2">
+<h2 class="anchored" data-anchor-id="two-sample-ks-test">Two Sample KS Test</h2>
 
 
 </section>
@@ -1307,7 +1433,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="pagination-link" aria-label="Fisher's exact test">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -9,7 +9,7 @@
 <meta name="author" content="Ryo Nakagami">
 <meta name="dcterms.date" content="2024-09-25">
 
-<title>22&nbsp; M-Estimator – Statistics for Regression Monkeys</title>
+<title>25&nbsp; M-Estimator – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -187,7 +187,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/estimation/chapter_header.html">統計的推定</a></li><li class="breadcrumb-item"><a href="../../posts/estimation/m-estimator.html"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">M-Estimator</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/estimation/chapter_header.html">統計的推定</a></li><li class="breadcrumb-item"><a href="../../posts/estimation/m-estimator.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">M-Estimator</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -266,32 +266,38 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/statistics101/infographics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">インフォグラフィックス</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/random_variable.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/expectation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/moment_generating_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/order_statistic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/delta-method.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
   </div>
 </li>
       </ul>
@@ -308,61 +314,67 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/discrete_uniform_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/binomial_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/poisson_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/geometric_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/negative_binom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/hypergeometric.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/continuous_uniform_dis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/normal_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/exponential_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/gamma_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">ガンマ分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/chi_squared_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">カイ２乗分布</span></span></a>
   </div>
 </li>
       </ul>
@@ -379,13 +391,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/ks_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">コルモゴロフ・スミルノフ検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">KS検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -402,7 +414,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -418,14 +430,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/estimation/unbiased_estimator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">不偏推定量</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/method-of-moments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/m-estimator.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
   </div>
 </li>
       </ul>
@@ -442,7 +460,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/bayesian_estimation/bayesian_linear_regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
   </div>
 </li>
       </ul>
@@ -459,7 +477,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
       </ul>
@@ -474,8 +492,8 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
+            <a href="../../posts/prediction/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prediction</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -483,38 +501,61 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/prediction/bias_variance_in_prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Bias and Variance</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/mathematical_appendix/taylor_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">テイラー展開</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/permutation_combination.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">二項級数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">二項級数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/complex_number.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/gamma_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/jensen_inequality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/Lhopitals_rule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
   </div>
 </li>
       </ul>
@@ -544,9 +585,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/estimation/chapter_header.html">統計的推定</a></li><li class="breadcrumb-item"><a href="../../posts/estimation/m-estimator.html"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">M-Estimator</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/estimation/chapter_header.html">統計的推定</a></li><li class="breadcrumb-item"><a href="../../posts/estimation/m-estimator.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">M-Estimator</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">M-Estimator</span></h1>
+<h1 class="title"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">M-Estimator</span></h1>
 </div>
 
 
@@ -570,7 +611,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-06</p>
+      <p class="date-modified">2024-10-10</p>
     </div>
   </div>
     
@@ -625,7 +666,7 @@ window.Quarto = {
 \]</span></p>
 <p>に対応します．</p>
 <div id="exm-" class="custom_problem theorem example">
-<p><span class="theorem-title"><strong>Example 22.1</strong></span> <strong>: 正規分布パラメーターについてのMLE</strong> <br></p>
+<p><span class="theorem-title"><strong>Example 25.1</strong></span> <strong>: 正規分布パラメーターについてのMLE</strong> <br></p>
 <p>確率変数 <span class="math inline">\(x_i\sim N(\mu, \sigma^2)\)</span> について，<span class="math inline">\(\theta = (\mu, \sigma^2)\)</span> を推定したいとします．このとき，</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -654,21 +695,23 @@ window.Quarto = {
 </section>
 <section id="平均の推定と核関数の形状" class="level2">
 <h2 class="anchored" data-anchor-id="平均の推定と核関数の形状">平均の推定と核関数の形状</h2>
-<div id="c39bbbe1" class="cell" data-execution_count="1">
+<div id="dcc6140b" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>mu, sigma <span class="op">=</span> <span class="dv">0</span>, <span class="dv">1</span> <span class="co"># mean and standard deviation</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>X_0 <span class="op">=</span> np.random.normal(mu, sigma, <span class="dv">1000</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>X_1 <span class="op">=</span> np.append(X_0, [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">50</span>])</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""X_0: sample mean = </span><span class="sc">{:.2f}</span><span class="st">, median = </span><span class="sc">{:.2f}</span><span class="ch">\n</span><span class="st">X_1: sample mean = </span><span class="sc">{:.2f}</span><span class="st">, median = </span><span class="sc">{:.2f}</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="st">      """</span>.<span class="bu">format</span>(</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        np.mean(X_0), np.median(X_0), np.mean(X_1), np.median(X_1)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> regmonkey_style <span class="im">import</span> stylewizard <span class="im">as</span> sw</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sw.set_templates(<span class="st">"regmonkey_line"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>mu, sigma <span class="op">=</span> <span class="dv">0</span>, <span class="dv">1</span> <span class="co"># mean and standard deviation</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>X_0 <span class="op">=</span> np.random.normal(mu, sigma, <span class="dv">1000</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>X_1 <span class="op">=</span> np.append(X_0, [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">50</span>])</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"""X_0: sample mean = </span><span class="sc">{:.2f}</span><span class="st">, median = </span><span class="sc">{:.2f}</span><span class="ch">\n</span><span class="st">X_1: sample mean = </span><span class="sc">{:.2f}</span><span class="st">, median = </span><span class="sc">{:.2f}</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="st">      """</span>.<span class="bu">format</span>(</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>        np.mean(X_0), np.median(X_0), np.mean(X_1), np.median(X_1)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>X_0: sample mean = 0.02, median = 0.03
 X_1: sample mean = 0.37, median = 0.03
@@ -686,7 +729,7 @@ X_1: sample mean = 0.37, median = 0.03
     \end{array}\right.
 \]</span></p>
 <p>という核関数を刈り込み型(trimmed type)と呼びます． ある閾値 <span class="math inline">\(c\)</span> 以上のデータは使用しないことを意味し，刈り込み型平均の計算と対応します．</p>
-<div id="bef96051" class="cell" data-execution_count="2">
+<div id="3847e07f" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
@@ -695,11 +738,11 @@ X_1: sample mean = 0.37, median = 0.03
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">## plot func</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_weights(support, weights_func, xlabels, xticks, title):</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> plt.figure()</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    ax.plot(support, support <span class="op">*</span> weights_func(support))</span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    ax.set_xticks(xticks)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    ax.set_xticklabels(xlabels, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    ax.set_xticklabels(xlabels)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    ax.set_title(title)</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ax</span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
@@ -715,13 +758,13 @@ X_1: sample mean = 0.37, median = 0.03
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="m-estimator_files/figure-html/cell-3-output-1.png" width="507" height="439" class="figure-img"></p>
+<p><img src="m-estimator_files/figure-html/cell-3-output-1.png" width="579" height="440" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong> ▶&nbsp; Pythonでの推定</strong></p>
-<div id="571b7c96" class="cell" data-execution_count="3">
+<div id="339cc147" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotly <span class="im">import</span> express <span class="im">as</span> px</span>
@@ -744,9 +787,9 @@ X_1: sample mean = 0.37, median = 0.03
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>                            <div id="d3b82ca8-6b3c-4d31-8382-7d70f143d784" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("d3b82ca8-6b3c-4d31-8382-7d70f143d784")) {                    Plotly.newPlot(                        "d3b82ca8-6b3c-4d31-8382-7d70f143d784",                        [{"hovertemplate":"c-values=%{x}\u003cbr\u003eestimated mean=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"","orientation":"v","showlegend":false,"x":[0.01,4.091428571428572,8.172857142857143,12.254285714285716,16.33571428571429,20.41714285714286,24.498571428571434,28.580000000000005,32.66142857142857,36.74285714285715,40.824285714285715,44.90571428571429,48.987142857142864,53.06857142857143,57.150000000000006,61.23142857142857,65.31285714285715,69.39428571428573,73.4757142857143,77.55714285714286,81.63857142857144,85.72000000000001,89.80142857142859,93.88285714285716,97.96428571428574,102.0457142857143,106.12714285714287,110.20857142857145,114.29000000000002,118.3714285714286,122.45285714285716,126.53428571428573,130.6157142857143,134.69714285714286,138.77857142857144,142.86,146.9414285714286,151.02285714285716,155.1042857142857,159.18571428571428,163.26714285714286,167.34857142857143,171.43,175.51142857142858,179.59285714285716,183.67428571428573,187.7557142857143,191.83714285714288,195.91857142857145,200.0],"xaxis":"x","y":[0.3699574306690188,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.3682273737012218,0.3682273737012218,0.3682273737012218,0.3682273737012218],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"c-values"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"estimated mean"}},"legend":{"tracegroupgap":0},"title":{"text":"trimmed robust regressioon"}},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="102649ea-52e8-4b39-89f3-57e1fe85280a" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("102649ea-52e8-4b39-89f3-57e1fe85280a")) {                    Plotly.newPlot(                        "102649ea-52e8-4b39-89f3-57e1fe85280a",                        [{"hovertemplate":"c-values=%{x}\u003cbr\u003eestimated mean=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#4477AA","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"","orientation":"v","showlegend":false,"x":[0.01,4.091428571428572,8.172857142857143,12.254285714285716,16.33571428571429,20.41714285714286,24.498571428571434,28.580000000000005,32.66142857142857,36.74285714285715,40.824285714285715,44.90571428571429,48.987142857142864,53.06857142857143,57.150000000000006,61.23142857142857,65.31285714285715,69.39428571428573,73.4757142857143,77.55714285714286,81.63857142857144,85.72000000000001,89.80142857142859,93.88285714285716,97.96428571428574,102.0457142857143,106.12714285714287,110.20857142857145,114.29000000000002,118.3714285714286,122.45285714285716,126.53428571428573,130.6157142857143,134.69714285714286,138.77857142857144,142.86,146.9414285714286,151.02285714285716,155.1042857142857,159.18571428571428,163.26714285714286,167.34857142857143,171.43,175.51142857142858,179.59285714285716,183.67428571428573,187.7557142857143,191.83714285714288,195.91857142857145,200.0],"xaxis":"x","y":[0.3699574306690188,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.019332055822325497,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.06926279302929621,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.16899406768695155,0.3682273737012218,0.3682273737012218,0.3682273737012218,0.3682273737012218],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"scatter":[{"connectgaps":true,"line":{"width":2},"marker":{"size":5},"mode":"lines","opacity":0.9,"type":"scatter"}]},"layout":{"autosize":true,"colorway":["#4477AA","#66CCEE","#CCBB44","#AA3377","#228833","#EE6677","#BBBBBB"],"font":{"color":"#3F5661","size":12},"legend":{"bgcolor":"rgba(255, 255, 255, 0)","font":{"size":12},"traceorder":"normal"},"margin":{"b":60,"l":70,"r":30,"t":60},"paper_bgcolor":"#EFF5F5","plot_bgcolor":"#EFF5F5","title":{"font":{"size":24},"x":0.001,"xanchor":"left","xref":"paper","yanchor":"top"},"xaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"X-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1},"yaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"Y-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"c-values"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"estimated mean"}},"legend":{"tracegroupgap":0},"title":{"text":"trimmed robust regressioon"}},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('d3b82ca8-6b3c-4d31-8382-7d70f143d784');
+var gd = document.getElementById('102649ea-52e8-4b39-89f3-57e1fe85280a');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -790,7 +833,7 @@ if (outputEl) {{
 \lim_{\vert x\vert\to\infty}\varphi(x) \neq 0
 \]</span></p>
 <p>であるので，Outlierの影響が必ずしもゼロになるわけではない = <strong>最降下(redescending)の性質</strong>を持たない点に注意してください．</p>
-<div id="9b4eedfb" class="cell" data-execution_count="4">
+<div id="08924aa2" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">## 可視化</span></span>
@@ -798,7 +841,7 @@ if (outputEl) {{
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>support <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span> <span class="op">*</span> c, <span class="dv">3</span> <span class="op">*</span> c, <span class="dv">1000</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>huber_type <span class="op">=</span> np.clip(support, <span class="op">-</span>c, c)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>)</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>ax.plot(support, huber_type)</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>ax.set_xticks([<span class="op">-</span><span class="dv">3</span> <span class="op">*</span> c, <span class="dv">0</span>, <span class="dv">3</span> <span class="op">*</span> c],)</span>
@@ -809,13 +852,13 @@ if (outputEl) {{
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="m-estimator_files/figure-html/cell-5-output-1.png" width="507" height="439" class="figure-img"></p>
+<p><img src="m-estimator_files/figure-html/cell-5-output-1.png" width="579" height="444" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong> ▶&nbsp; Pythonでの推定</strong></p>
-<div id="0460b84e" class="cell" data-execution_count="5">
+<div id="099e32a0" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_huber_mean(c):</span>
@@ -836,9 +879,9 @@ if (outputEl) {{
 <span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>                            <div id="8f18e6b7-02da-4be2-a75a-e15cca931f27" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("8f18e6b7-02da-4be2-a75a-e15cca931f27")) {                    Plotly.newPlot(                        "8f18e6b7-02da-4be2-a75a-e15cca931f27",                        [{"hovertemplate":"c-values=%{x}\u003cbr\u003eestimated mean=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"","orientation":"v","showlegend":false,"x":[0.01,4.091428571428572,8.172857142857143,12.254285714285716,16.33571428571429,20.41714285714286,24.498571428571434,28.580000000000005,32.66142857142857,36.74285714285715,40.824285714285715,44.90571428571429,48.987142857142864,53.06857142857143,57.150000000000006,61.23142857142857,65.31285714285715,69.39428571428573,73.4757142857143,77.55714285714286,81.63857142857144,85.72000000000001,89.80142857142859,93.88285714285716,97.96428571428574,102.0457142857143,106.12714285714287,110.20857142857145,114.29000000000002,118.3714285714286,122.45285714285716,126.53428571428573,130.6157142857143,134.69714285714286,138.77857142857144,142.86,146.9414285714286,151.02285714285716,155.1042857142857,159.18571428571428,163.26714285714286,167.34857142857143,171.43,175.51142857142858,179.59285714285716,183.67428571428573,187.7557142857143,191.83714285714288,195.91857142857145,200.0],"xaxis":"x","y":[0.02671324798919839,0.031132746220823626,0.04271893436347273,0.054596045879108,0.06604799881738718,0.07827022163133766,0.09067749782104757,0.10277569531508551,0.11514240542373558,0.12717746255729206,0.1412663996847971,0.15326249314679286,0.16538265894356627,0.17565385479210371,0.18322570660592996,0.19215216595673934,0.20045984083168955,0.20929829048349846,0.21957724318379584,0.22895154601854228,0.23828602854028608,0.24770065390380178,0.2561925254260753,0.2658108468779902,0.27130088591236357,0.2759518074033801,0.2799950150423029,0.2850956346034895,0.2897078695230404,0.2941968497181937,0.29936762128780126,0.30464161280447,0.30860698574240825,0.31248815173599676,0.31633986870912734,0.32055221652730437,0.32522476986105064,0.3297252053052528,0.33409836484925326,0.33830326134904243,0.3420529963042314,0.3468559449053313,0.3503823832026807,0.3554910694080523,0.36041834228079234,0.3643242090456957,0.3682273737012218,0.3682273737012218,0.3682273737012218,0.3682273737012218],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"c-values"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"estimated mean"}},"legend":{"tracegroupgap":0},"title":{"text":"Huber type robust regressioon"}},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="bd081556-8217-4bb9-995f-c2d8867b3ad7" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("bd081556-8217-4bb9-995f-c2d8867b3ad7")) {                    Plotly.newPlot(                        "bd081556-8217-4bb9-995f-c2d8867b3ad7",                        [{"hovertemplate":"c-values=%{x}\u003cbr\u003eestimated mean=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#4477AA","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"","orientation":"v","showlegend":false,"x":[0.01,4.091428571428572,8.172857142857143,12.254285714285716,16.33571428571429,20.41714285714286,24.498571428571434,28.580000000000005,32.66142857142857,36.74285714285715,40.824285714285715,44.90571428571429,48.987142857142864,53.06857142857143,57.150000000000006,61.23142857142857,65.31285714285715,69.39428571428573,73.4757142857143,77.55714285714286,81.63857142857144,85.72000000000001,89.80142857142859,93.88285714285716,97.96428571428574,102.0457142857143,106.12714285714287,110.20857142857145,114.29000000000002,118.3714285714286,122.45285714285716,126.53428571428573,130.6157142857143,134.69714285714286,138.77857142857144,142.86,146.9414285714286,151.02285714285716,155.1042857142857,159.18571428571428,163.26714285714286,167.34857142857143,171.43,175.51142857142858,179.59285714285716,183.67428571428573,187.7557142857143,191.83714285714288,195.91857142857145,200.0],"xaxis":"x","y":[0.02671324798919839,0.031132746220823626,0.04271893436347273,0.054596045879108,0.06604799881738718,0.07827022163133766,0.09067749782104757,0.10277569531508551,0.11514240542373558,0.12717746255729206,0.1412663996847971,0.15326249314679286,0.16538265894356627,0.17565385479210371,0.18322570660592996,0.19215216595673934,0.20045984083168955,0.20929829048349846,0.21957724318379584,0.22895154601854228,0.23828602854028608,0.24770065390380178,0.2561925254260753,0.2658108468779902,0.27130088591236357,0.2759518074033801,0.2799950150423029,0.2850956346034895,0.2897078695230404,0.2941968497181937,0.29936762128780126,0.30464161280447,0.30860698574240825,0.31248815173599676,0.31633986870912734,0.32055221652730437,0.32522476986105064,0.3297252053052528,0.33409836484925326,0.33830326134904243,0.3420529963042314,0.3468559449053313,0.3503823832026807,0.3554910694080523,0.36041834228079234,0.3643242090456957,0.3682273737012218,0.3682273737012218,0.3682273737012218,0.3682273737012218],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"scatter":[{"connectgaps":true,"line":{"width":2},"marker":{"size":5},"mode":"lines","opacity":0.9,"type":"scatter"}]},"layout":{"autosize":true,"colorway":["#4477AA","#66CCEE","#CCBB44","#AA3377","#228833","#EE6677","#BBBBBB"],"font":{"color":"#3F5661","size":12},"legend":{"bgcolor":"rgba(255, 255, 255, 0)","font":{"size":12},"traceorder":"normal"},"margin":{"b":60,"l":70,"r":30,"t":60},"paper_bgcolor":"#EFF5F5","plot_bgcolor":"#EFF5F5","title":{"font":{"size":24},"x":0.001,"xanchor":"left","xref":"paper","yanchor":"top"},"xaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"X-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1},"yaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"Y-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"c-values"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"estimated mean"}},"legend":{"tracegroupgap":0},"title":{"text":"Huber type robust regressioon"}},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('8f18e6b7-02da-4be2-a75a-e15cca931f27');
+var gd = document.getElementById('bd081556-8217-4bb9-995f-c2d8867b3ad7');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -876,7 +919,7 @@ if (outputEl) {{
 \]</span></p>
 <p>という核関数をTukey’s Biweight型と呼びます．平均 <span class="math inline">\(\mu\)</span> から離れていくと，核関数の関与が段々と増えていき，あるところからは減り，最終的には 0 になるという性質があります．つまり，最降下の性質を持つ核関数です．</p>
 <p>望ましい性質をもっているので，非常によく使われる核関数です．</p>
-<div id="1ecc6e24" class="cell" data-execution_count="6">
+<div id="af46f1ba" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tukeys_biweight(x, mu, c):</span>
@@ -888,7 +931,7 @@ if (outputEl) {{
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>support <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span> <span class="op">*</span> c, <span class="dv">3</span> <span class="op">*</span> c, <span class="dv">1000</span>)</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>tukey_kernel <span class="op">=</span> tukeys_biweight(support, <span class="dv">0</span>, c)</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>)</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>ax.plot(support, tukey_kernel)</span>
 <span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>ax.set_xticks([<span class="op">-</span><span class="dv">3</span> <span class="op">*</span> c, <span class="dv">0</span>, <span class="dv">3</span> <span class="op">*</span> c],)</span>
@@ -899,13 +942,13 @@ if (outputEl) {{
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="m-estimator_files/figure-html/cell-7-output-1.png" width="507" height="439" class="figure-img"></p>
+<p><img src="m-estimator_files/figure-html/cell-7-output-1.png" width="579" height="444" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong> ▶&nbsp; Pythonでの推定</strong></p>
-<div id="9289f87a" class="cell" data-execution_count="7">
+<div id="9bddf685" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_tukeysbiwieght_mean(c):</span>
@@ -926,9 +969,9 @@ if (outputEl) {{
 <span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>                            <div id="52633c40-28b6-4c70-9d46-1b31b4fcd0cc" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("52633c40-28b6-4c70-9d46-1b31b4fcd0cc")) {                    Plotly.newPlot(                        "52633c40-28b6-4c70-9d46-1b31b4fcd0cc",                        [{"hovertemplate":"c-values=%{x}\u003cbr\u003eestimated mean=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#636efa","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"","orientation":"v","showlegend":false,"x":[0.01,4.091428571428572,8.172857142857143,12.254285714285716,16.33571428571429,20.41714285714286,24.498571428571434,28.580000000000005,32.66142857142857,36.74285714285715,40.824285714285715,44.90571428571429,48.987142857142864,53.06857142857143,57.150000000000006,61.23142857142857,65.31285714285715,69.39428571428573,73.4757142857143,77.55714285714286,81.63857142857144,85.72000000000001,89.80142857142859,93.88285714285716,97.96428571428574,102.0457142857143,106.12714285714287,110.20857142857145,114.29000000000002,118.3714285714286,122.45285714285716,126.53428571428573,130.6157142857143,134.69714285714286,138.77857142857144,142.86,146.9414285714286,151.02285714285716,155.1042857142857,159.18571428571428,163.26714285714286,167.34857142857143,171.43,175.51142857142858,179.59285714285716,183.67428571428573,187.7557142857143,191.83714285714288,195.91857142857145,200.0],"xaxis":"x","y":[0.36815180482559834,0.005575367395572504,0.015697145121349922,0.017727973878827595,0.018428838609625187,0.01875409001765296,0.018931030515564443,0.019037571905497805,0.019106662455291145,0.019154004386646533,0.019187854929536893,0.019212893757404117,0.019231934093204114,0.019284144293011382,0.020618775732894567,0.02305831371446126,0.02602666732904658,0.029081647211460573,0.031730652564099675,0.03437385244954047,0.03674067111303127,0.03890667994995764,0.04102595951537508,0.04301483321183451,0.04491696355352996,0.04658785357061671,0.048305627210069174,0.05086891820760853,0.05351717342285954,0.05731624940768945,0.06069170241977414,0.06383770889532676,0.06738526987999666,0.0714372229756299,0.07515903269928256,0.07940062486803656,0.08363017820885871,0.08668146027237225,0.09007231685429604,0.09342054268529548,0.09644971147746348,0.09938018020347136,0.10192136520139533,0.10435764978691633,0.10719332188155294,0.1092716925090095,0.11145878942823285,0.11353899875309335,0.11573038950628645,0.11788083523114626],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"},"margin":{"b":0,"l":0,"r":0,"t":30}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"c-values"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"estimated mean"}},"legend":{"tracegroupgap":0},"title":{"text":"tukeys biwieght type robust regressioon"}},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="8e3a49fd-1c95-4c94-b161-9836ede3fb13" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("8e3a49fd-1c95-4c94-b161-9836ede3fb13")) {                    Plotly.newPlot(                        "8e3a49fd-1c95-4c94-b161-9836ede3fb13",                        [{"hovertemplate":"c-values=%{x}\u003cbr\u003eestimated mean=%{y}\u003cextra\u003e\u003c\u002fextra\u003e","legendgroup":"","line":{"color":"#4477AA","dash":"solid"},"marker":{"symbol":"circle"},"mode":"lines+markers","name":"","orientation":"v","showlegend":false,"x":[0.01,4.091428571428572,8.172857142857143,12.254285714285716,16.33571428571429,20.41714285714286,24.498571428571434,28.580000000000005,32.66142857142857,36.74285714285715,40.824285714285715,44.90571428571429,48.987142857142864,53.06857142857143,57.150000000000006,61.23142857142857,65.31285714285715,69.39428571428573,73.4757142857143,77.55714285714286,81.63857142857144,85.72000000000001,89.80142857142859,93.88285714285716,97.96428571428574,102.0457142857143,106.12714285714287,110.20857142857145,114.29000000000002,118.3714285714286,122.45285714285716,126.53428571428573,130.6157142857143,134.69714285714286,138.77857142857144,142.86,146.9414285714286,151.02285714285716,155.1042857142857,159.18571428571428,163.26714285714286,167.34857142857143,171.43,175.51142857142858,179.59285714285716,183.67428571428573,187.7557142857143,191.83714285714288,195.91857142857145,200.0],"xaxis":"x","y":[0.36815180482559834,0.005575367395572504,0.015697145121349922,0.017727973878827595,0.018428838609625187,0.01875409001765296,0.018931030515564443,0.019037571905497805,0.019106662455291145,0.019154004386646533,0.019187854929536893,0.019212893757404117,0.019231934093204114,0.019284144293011382,0.020618775732894567,0.02305831371446126,0.02602666732904658,0.029081647211460573,0.031730652564099675,0.03437385244954047,0.03674067111303127,0.03890667994995764,0.04102595951537508,0.04301483321183451,0.04491696355352996,0.04658785357061671,0.048305627210069174,0.05086891820760853,0.05351717342285954,0.05731624940768945,0.06069170241977414,0.06383770889532676,0.06738526987999666,0.0714372229756299,0.07515903269928256,0.07940062486803656,0.08363017820885871,0.08668146027237225,0.09007231685429604,0.09342054268529548,0.09644971147746348,0.09938018020347136,0.10192136520139533,0.10435764978691633,0.10719332188155294,0.1092716925090095,0.11145878942823285,0.11353899875309335,0.11573038950628645,0.11788083523114626],"yaxis":"y","type":"scatter"}],                        {"template":{"data":{"scatter":[{"connectgaps":true,"line":{"width":2},"marker":{"size":5},"mode":"lines","opacity":0.9,"type":"scatter"}]},"layout":{"autosize":true,"colorway":["#4477AA","#66CCEE","#CCBB44","#AA3377","#228833","#EE6677","#BBBBBB"],"font":{"color":"#3F5661","size":12},"legend":{"bgcolor":"rgba(255, 255, 255, 0)","font":{"size":12},"traceorder":"normal"},"margin":{"b":60,"l":70,"r":30,"t":60},"paper_bgcolor":"#EFF5F5","plot_bgcolor":"#EFF5F5","title":{"font":{"size":24},"x":0.001,"xanchor":"left","xref":"paper","yanchor":"top"},"xaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"X-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1},"yaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"Y-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"c-values"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"estimated mean"}},"legend":{"tracegroupgap":0},"title":{"text":"tukeys biwieght type robust regressioon"}},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('52633c40-28b6-4c70-9d46-1b31b4fcd0cc');
+var gd = document.getElementById('8e3a49fd-1c95-4c94-b161-9836ede3fb13');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{
@@ -968,7 +1011,7 @@ if (outputEl) {{
     = \frac{\phi(x_i;\mu,\sigma_{MADN})^\gamma}{\sum_{i=1}^n \phi(x_i;\mu,\sigma_{MADN})^\gamma}(x-\mu)
 \]</span></p>
 <p>という形になります．</p>
-<div id="4627aec6" class="cell" data-execution_count="8">
+<div id="53a468d0" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
@@ -982,7 +1025,7 @@ if (outputEl) {{
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>support <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">3</span> <span class="op">*</span> c, <span class="dv">3</span> <span class="op">*</span> c, <span class="dv">1000</span>)</span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>normal_power_kernel <span class="op">=</span> norml_power_weight(support, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>)</span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure()</span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>)</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>ax.plot(support, normal_power_kernel)</span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'powered normal pdf with c=2, mu=0, gamma = 2'</span>)</span>
@@ -991,7 +1034,7 @@ if (outputEl) {{
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="m-estimator_files/figure-html/cell-9-output-1.png" width="507" height="431" class="figure-img"></p>
+<p><img src="m-estimator_files/figure-html/cell-9-output-1.png" width="621" height="440" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -999,7 +1042,7 @@ if (outputEl) {{
 </section>
 <section id="尤度型" class="level3">
 <h3 class="anchored" data-anchor-id="尤度型">尤度型</h3>
-<div id="0d93142b" class="cell" data-execution_count="9">
+<div id="0f184c6a" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.miscmodels.tmodel <span class="im">import</span> TLinearModel</span>
@@ -1599,7 +1642,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../posts/estimation/method-of-moments.html" class="pagination-link" aria-label="モーメント法">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">モーメント法</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">モーメント法</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

@@ -9,7 +9,7 @@
 <meta name="author" content="Ryo Nakagami">
 <meta name="dcterms.date" content="2024-10-03">
 
-<title>23&nbsp; ベイジアン線形回帰 – Statistics for Regression Monkeys</title>
+<title>26&nbsp; ベイジアン線形回帰 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,10 +22,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -92,6 +126,9 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -134,7 +171,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -213,32 +250,38 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/statistics101/infographics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">インフォグラフィックス</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/random_variable.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">確率変数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/expectation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">期待値</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/moment_generating_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">母関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/order_statistic.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">順序統計量</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistics101/delta-method.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">デルタ法</span></span></a>
   </div>
 </li>
       </ul>
@@ -255,61 +298,67 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/discrete_uniform_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">離散一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/binomial_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/poisson_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ポワソン分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/geometric_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/negative_binom.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">負の二項分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/hypergeometric.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">超幾何分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/continuous_uniform_dis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">連続一様分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/normal_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">正規分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/exponential_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">指数分布</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/probability_distribution/gamma_dist.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">ガンマ分布</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">ガンマ分布</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/chi_squared_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">カイ２乗分布</span></span></a>
   </div>
 </li>
       </ul>
@@ -326,13 +375,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/ks_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">コルモゴロフ・スミルノフ検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">KS検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -349,7 +398,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -365,14 +414,20 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/estimation/unbiased_estimator.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">不偏推定量</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/method-of-moments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/m-estimator.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
   </div>
 </li>
       </ul>
@@ -389,7 +444,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/bayesian_estimation/bayesian_linear_regression.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
   </div>
 </li>
       </ul>
@@ -406,7 +461,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
       </ul>
@@ -421,8 +476,8 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true">
- <span class="menu-text">Appendices</span></a>
+            <a href="../../posts/prediction/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Prediction</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -430,38 +485,61 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../../posts/prediction/bias_variance_in_prediction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Bias and Variance</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/mathematical_appendix/taylor_series.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">テイラー展開</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/permutation_combination.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">二項級数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">二項級数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/complex_number.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">複素数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/beta_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">ベータ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/gamma_function.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">ガンマ関数</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/jensen_inequality.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
+ <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">Jensen’s Inequality</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/Lhopitals_rule.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">F</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
+ <span class="menu-text"><span class="chapter-number">G</span>&nbsp; <span class="chapter-title">ロピタルの定理</span></span></a>
   </div>
 </li>
       </ul>
@@ -478,15 +556,16 @@ window.Quarto = {
   <ul>
   <li><a href="#recap-of-ols" id="toc-recap-of-ols" class="nav-link active" data-scroll-target="#recap-of-ols">Recap of OLS</a></li>
   <li><a href="#bayesian-linear-regression" id="toc-bayesian-linear-regression" class="nav-link" data-scroll-target="#bayesian-linear-regression">Bayesian Linear Regression</a></li>
+  <li><a href="#bayesian-linear-regression-with-jax" id="toc-bayesian-linear-regression-with-jax" class="nav-link" data-scroll-target="#bayesian-linear-regression-with-jax">Bayesian Linear Regression with JAX</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/bayesian_estimation/bayesian_linear_regression.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></h1>
+<h1 class="title"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></h1>
 </div>
 
 
@@ -510,7 +589,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-06</p>
+      <p class="date-modified">2024-10-10</p>
     </div>
   </div>
     
@@ -562,13 +641,13 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 <p>議論の単純化のため，以下では</p>
 <p><span id="eq-normality"><span class="math display">\[
 \epsilon_1, \cdots, \epsilon_m \overset{\mathrm{iid}}{\sim} N(0, \sigma^2)
-\tag{23.1}\]</span></span></p>
+\tag{26.1}\]</span></span></p>
 <p>つまり， Homoscedasticityの仮定の下で話を進めます．</p>
 <p><strong> ▶&nbsp; <span class="math inline">\(\pmb\beta\)</span> の推定</strong></p>
 <p>仮定 (2), (3) より <span class="math inline">\(\mathbb E[Y_i\vert \pmb{x}_i] = \pmb{x}_i^T\pmb{\beta}\)</span> であるので，</p>
 <p><span id="eq-OLS-loss-func"><span class="math display">\[
 \pmb{\beta} = \arg\min_{b} \mathbb E[(Y_i - \pmb{x}_i^T\pmb{b})^2]
-\tag{23.2}\]</span></span></p>
+\tag{26.2}\]</span></span></p>
 <p>the joint distribution <span class="math inline">\((Y_i, \pmb{x}_i)\)</span> は事前には知られていないので、sample analogを用いて以下のように推定します</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -584,7 +663,7 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 <p>仮定 (5) より <span class="math inline">\(\operatorname{rank}(\pmb{X}) = k\)</span>, つまりfull rankであるので <span class="math inline">\((\pmb{X}^T\pmb{X})^{-1}\)</span> がとれます．従って，</p>
 <p><span id="eq-OLS-estimator"><span class="math display">\[
 \widehat{\pmb{\beta}} = (\pmb{X}^T\pmb{X})^{-1}(\pmb{X}^T\pmb{Y})
-\tag{23.3}\]</span></span></p>
+\tag{26.3}\]</span></span></p>
 <p><strong> ▶&nbsp; <span class="math inline">\(\widehat{\pmb{\beta}}\)</span> の漸近分散</strong></p>
 <p>population <span class="math inline">\(\pmb{\beta}\)</span> を用いてerror termを以下のように表します</p>
 <p><span class="math display">\[
@@ -594,7 +673,7 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
     &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i
 \end{align*}
 \]</span></p>
-<p>両辺に <span class="math inline">\([\pmb{X}^T\pmb{X}]^{-1}\pmb{X}^T\)</span> をかけると <a href="#eq-OLS-estimator" class="quarto-xref">Equation&nbsp;<span>23.3</span></a> より</p>
+<p>両辺に <span class="math inline">\([\pmb{X}^T\pmb{X}]^{-1}\pmb{X}^T\)</span> をかけると <a href="#eq-OLS-estimator" class="quarto-xref">Equation&nbsp;<span>26.3</span></a> より</p>
 <p><span class="math display">\[
 \widehat{\pmb{\beta}} = \pmb{\beta} + \left[\sum\pmb{x}_i\pmb{x}_i^T\right]^{-1}\sum \pmb{x}_i\epsilon_i
 \]</span></p>
@@ -612,7 +691,7 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 \sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta}) \overset{\mathrm{d}}{\to}  N(0, \mathbb E[\pmb{x}_i\pmb{x}]^{-1}\mathbb E[\pmb{x}_i\pmb{x}^T\epsilon_i^2]\mathbb E[\pmb{x}_i\pmb{x}]^{-1})
 \end{align*}
 \]</span></p>
-<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>23.1</span></a> より</p>
+<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>26.1</span></a> より</p>
 <p><span class="math display">\[
 \mathbb E[\pmb{x}_i\pmb{x}^T\epsilon_i^2] = \sigma^2\mathbb E[\pmb{x}_i\pmb{x}^T]
 \]</span></p>
@@ -630,23 +709,23 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 \end{align*}
 \]</span></p>
 <p><strong> ▶&nbsp; <span class="math inline">\(\pmb{Y}\)</span> の条件付き同時分布 </strong></p>
-<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>23.1</span></a> より<span class="math inline">\(\pmb{Y}\)</span> の条件付き同時確率密度は</p>
+<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>26.1</span></a> より<span class="math inline">\(\pmb{Y}\)</span> の条件付き同時確率密度は</p>
 <p><span id="eq-joint-normality"><span class="math display">\[
 \begin{align*}
 p&amp;(Y_1, \cdots, Y_n\vert \pmb{x_1}, \cdots, \pmb{x_n}, \pmb{\beta}, \sigma^2)\\
 &amp;= \prod p(Y_i\vert \pmb{x_i}, \pmb{\beta}, \sigma^2) \quad \because\text{i.i.d}\\
 &amp;= (2\pi\sigma^2)^{-n/2}\exp\{- \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \pmb{x}_i^T\pmb{\beta})^2\}
 \end{align*}
-\tag{23.4}\]</span></span></p>
+\tag{26.4}\]</span></span></p>
 <p>つまり，</p>
 <p><span class="math display">\[
 \{\pmb{Y} \vert \pmb{X}, \pmb{\beta}, \sigma\} \sim \operatorname{N}(\pmb{X}\pmb{\beta}, \sigma^2\pmb{I})
 \]</span></p>
-<p><a href="#eq-joint-normality" class="quarto-xref">Equation&nbsp;<span>23.4</span></a> の尤度最大化は</p>
+<p><a href="#eq-joint-normality" class="quarto-xref">Equation&nbsp;<span>26.4</span></a> の尤度最大化は</p>
 <p><span class="math display">\[
 \min\sum_{i=1}^n (Y_i - \pmb{x}_i^T\pmb{\beta})^2
 \]</span></p>
-<p>を解くことで得られますが，これは <a href="#eq-OLS-loss-func" class="quarto-xref">Equation&nbsp;<span>23.2</span></a> の問題と対応していることがわかります．</p>
+<p>を解くことで得られますが，これは <a href="#eq-OLS-loss-func" class="quarto-xref">Equation&nbsp;<span>26.2</span></a> の問題と対応していることがわかります．</p>
 </section>
 <section id="bayesian-linear-regression" class="level2">
 <h2 class="anchored" data-anchor-id="bayesian-linear-regression">Bayesian Linear Regression</h2>
@@ -672,7 +751,7 @@ p&amp;(\pmb\beta\vert \pmb Y, \pmb X, \sigma^2)\\
 \mathbb E[\pmb\beta\vert\pmb Y, \pmb X, \sigma^2]
     &amp;= (\pmb\Sigma_0^{-1} + \pmb X^T\pmb X/\sigma^2)^{-1}(\pmb\Sigma_0^{-1}\pmb\beta_0 + \pmb X^T\pmb Y/\sigma^2)
 \end{align*}
-\tag{23.5}\]</span></span></p>
+\tag{26.5}\]</span></span></p>
 <div class="nte- callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -683,7 +762,7 @@ p&amp;(\pmb\beta\vert \pmb Y, \pmb X, \sigma^2)\\
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="#eq-posterior-beta" class="quarto-xref">Equation&nbsp;<span>23.5</span></a> について</p>
+<p><a href="#eq-posterior-beta" class="quarto-xref">Equation&nbsp;<span>26.5</span></a> について</p>
 <p><span class="math display">\[
 \begin{gather}
 \pmb\beta_0 = \pmb 0\\
@@ -760,6 +839,544 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 <p><span class="math display">\[
 \sigma^{2}_{(s+1)}\sim \operatorname{inverse-gamma}((v_0+n)/2, [v_0\sigma^2_0 + \operatorname{SSR}(\pmb\beta_{(s+1)})]/2)
 \]</span></p>
+</div>
+</div>
+</section>
+<section id="bayesian-linear-regression-with-jax" class="level2">
+<h2 class="anchored" data-anchor-id="bayesian-linear-regression-with-jax">Bayesian Linear Regression with JAX</h2>
+<div id="b8fc5822" class="cell" data-execution_count="1">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn <span class="im">import</span> linear_model</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> regmonkey_style <span class="im">import</span> stylewizard <span class="im">as</span> sw</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jax <span class="im">import</span> numpy <span class="im">as</span> jnp, scipy <span class="im">as</span> jscipy</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jax <span class="im">import</span> grad</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div id="86ff6237" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_stata(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"https://github.com/QuantEcon/lecture-python/blob/master/source/_static/lecture_specific/ols/maketable1.dta?raw=true"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>).dropna(subset<span class="op">=</span>[<span class="st">"logpgp95"</span>, <span class="st">"avexpr"</span>])</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">shortnam</th>
+<th data-quarto-table-cell-role="th">euro1900</th>
+<th data-quarto-table-cell-role="th">excolony</th>
+<th data-quarto-table-cell-role="th">avexpr</th>
+<th data-quarto-table-cell-role="th">logpgp95</th>
+<th data-quarto-table-cell-role="th">cons1</th>
+<th data-quarto-table-cell-role="th">cons90</th>
+<th data-quarto-table-cell-role="th">democ00a</th>
+<th data-quarto-table-cell-role="th">cons00a</th>
+<th data-quarto-table-cell-role="th">extmort4</th>
+<th data-quarto-table-cell-role="th">logem4</th>
+<th data-quarto-table-cell-role="th">loghjypl</th>
+<th data-quarto-table-cell-role="th">baseco</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>AGO</td>
+<td>8.000000</td>
+<td>1.0</td>
+<td>5.363636</td>
+<td>7.770645</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>0.0</td>
+<td>1.0</td>
+<td>280.000000</td>
+<td>5.634789</td>
+<td>-3.411248</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>ARE</td>
+<td>0.000000</td>
+<td>1.0</td>
+<td>7.181818</td>
+<td>9.804219</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>ARG</td>
+<td>60.000004</td>
+<td>1.0</td>
+<td>6.386364</td>
+<td>9.133459</td>
+<td>1.0</td>
+<td>6.0</td>
+<td>3.0</td>
+<td>3.0</td>
+<td>68.900002</td>
+<td>4.232656</td>
+<td>-0.872274</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>AUS</td>
+<td>98.000000</td>
+<td>1.0</td>
+<td>9.318182</td>
+<td>9.897972</td>
+<td>7.0</td>
+<td>7.0</td>
+<td>10.0</td>
+<td>7.0</td>
+<td>8.550000</td>
+<td>2.145931</td>
+<td>-0.170788</td>
+<td>1.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>AUT</td>
+<td>100.000000</td>
+<td>0.0</td>
+<td>9.727273</td>
+<td>9.974877</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>NaN</td>
+<td>-0.343900</td>
+<td>NaN</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="84df4660" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sw.set_templates(<span class="st">"regmonkey_scatter"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df.plot(x<span class="op">=</span><span class="st">'avexpr'</span>, y<span class="op">=</span><span class="st">'logpgp95'</span>, kind<span class="op">=</span><span class="st">'scatter'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bayesian_linear_regression_files/figure-html/cell-4-output-1.png" width="587" height="436" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong> ▶&nbsp; MLE</strong></p>
+<div id="d32863bd" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> LogLikelihood(y, x, theta):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> x.shape[<span class="dv">0</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.log(scipy.stats.multivariate_normal.pdf(y.ravel(), (theta<span class="op">*</span>x).ravel(), np.eye(N)<span class="op">*</span>sigma_n<span class="op">**</span><span class="dv">2</span>))</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> df[<span class="st">'avexpr'</span>].values</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> df[<span class="st">'logpgp95'</span>].values</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># FWL</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>x_mle <span class="op">=</span> x <span class="op">-</span> np.mean(x)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>y_mle <span class="op">=</span> y <span class="op">-</span> np.mean(y)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="co"># MLE</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>sigma_n <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">10</span>,<span class="dv">10</span>,<span class="dv">1000</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>LL <span class="op">=</span> [LogLikelihood(y_mle, x_mle, t1) <span class="cf">for</span> t1 <span class="kw">in</span> T]</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>ax.plot(T, LL)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>beta_mle <span class="op">=</span> np.<span class="bu">sum</span>(x_mle<span class="op">*</span>y_mle)<span class="op">/</span>np.<span class="bu">sum</span>(np.square(x_mle))</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>ax.vlines(beta_mle,<span class="op">*</span>ax.get_ylim(), linestyle<span class="op">=</span><span class="st">'--'</span>, label<span class="op">=</span><span class="st">'$</span><span class="ch">\\</span><span class="st">theta_</span><span class="sc">{MLE}</span><span class="st">$'</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">"$</span><span class="ch">\\</span><span class="st">theta$"</span>)<span class="op">;</span>ax.set_ylabel(<span class="st">"Log Likelihood"</span>)<span class="op">;</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>plt.legend(bbox_to_anchor<span class="op">=</span>[<span class="dv">1</span>,<span class="dv">1</span>])<span class="op">;</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"MLE beta: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(beta_mle))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>MLE beta: 0.5318712592124939</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bayesian_linear_regression_files/figure-html/cell-5-output-2.png" width="605" height="436" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong> ▶&nbsp; OLS</strong></p>
+<div id="8bebc0ea" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_ols <span class="op">=</span> df.copy()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_ols[<span class="st">'const'</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>reg_ols <span class="op">=</span> sm.OLS(endog<span class="op">=</span>df_ols[<span class="st">'logpgp95'</span>], exog<span class="op">=</span>df_ols[[<span class="st">'const'</span>, <span class="st">'avexpr'</span>]], <span class="op">\</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    missing<span class="op">=</span><span class="st">'drop'</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> reg_ols.fit()</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(results.summary())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:               logpgp95   R-squared:                       0.611
+Model:                            OLS   Adj. R-squared:                  0.608
+Method:                 Least Squares   F-statistic:                     171.4
+Date:                Thu, 10 Oct 2024   Prob (F-statistic):           4.16e-24
+Time:                        08:34:12   Log-Likelihood:                -119.71
+No. Observations:                 111   AIC:                             243.4
+Df Residuals:                     109   BIC:                             248.8
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          4.6261      0.301     15.391      0.000       4.030       5.222
+avexpr         0.5319      0.041     13.093      0.000       0.451       0.612
+==============================================================================
+Omnibus:                        9.251   Durbin-Watson:                   1.689
+Prob(Omnibus):                  0.010   Jarque-Bera (JB):                9.170
+Skew:                          -0.680   Prob(JB):                       0.0102
+Kurtosis:                       3.362   Cond. No.                         33.2
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.</code></pre>
+</div>
+</div>
+<p><strong> ▶&nbsp; Rdige</strong></p>
+<div id="34a9c868" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>reg_l2 <span class="op">=</span> sm.OLS(endog<span class="op">=</span>df_ols[<span class="st">'logpgp95'</span>], exog<span class="op">=</span>df_ols[[<span class="st">'const'</span>, <span class="st">'avexpr'</span>]], <span class="op">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    missing<span class="op">=</span><span class="st">'drop'</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>result_l2 <span class="op">=</span> reg_l2.fit_regularized(L1_wt<span class="op">=</span><span class="fl">0.</span>, alpha<span class="op">=</span>[<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,<span class="dv">1</span><span class="op">/</span><span class="dv">2</span>])</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>result_l2.params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>array([0.55745346, 1.05775113])</code></pre>
+</div>
+</div>
+<div id="1c03a872" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>reg_l2 <span class="op">=</span> sm.OLS(endog<span class="op">=</span>y_mle, exog<span class="op">=</span>x_mle, <span class="op">\</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    missing<span class="op">=</span><span class="st">'drop'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>result_l2 <span class="op">=</span> reg_l2.fit_regularized(L1_wt<span class="op">=</span><span class="fl">0.</span>, alpha<span class="op">=</span>[<span class="dv">1</span>])</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>result_l2.params</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>array([0.39242079])</code></pre>
+</div>
+</div>
+<div id="18921a15" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> ridge_regression</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>coef, intercept <span class="op">=</span> ridge_regression(x.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>), y, alpha<span class="op">=</span><span class="fl">1.0</span>, return_intercept<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coef, intercept)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[0.5319228] 4.625329</code></pre>
+</div>
+</div>
+<p><strong> ▶&nbsp; bayesian regression</strong></p>
+<div id="d9f3107f" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> set_matplotlib_formats</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jax <span class="im">import</span> random, vmap</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> jax.numpy <span class="im">as</span> jnp</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> jax.scipy.special <span class="im">import</span> logsumexp</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpyro</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpyro <span class="im">import</span> handlers</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpyro.diagnostics <span class="im">import</span> hpdi</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpyro.distributions <span class="im">as</span> dist</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpyro.infer <span class="im">import</span> MCMC, NUTS</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model(x<span class="op">=</span><span class="va">None</span>, y<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#a = numpyro.sample("a", dist.Normal(0.0, 1))</span></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    M, A <span class="op">=</span> <span class="fl">0.0</span>, <span class="fl">0.0</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        bM <span class="op">=</span> numpyro.sample(<span class="st">"bM"</span>, dist.Normal(<span class="fl">0.0</span>, <span class="dv">1</span>))</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>        M <span class="op">=</span> bM <span class="op">*</span> x</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    sigma <span class="op">=</span> numpyro.sample(<span class="st">"sigma"</span>, dist.Gamma(<span class="fl">1.0</span>))</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">#mu = a + M</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> M</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    numpyro.sample(<span class="st">"obs"</span>, dist.Normal(mu, sigma), obs<span class="op">=</span>y)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Start from this source of randomness. We will split keys for subsequent operations.</span></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>rng_key <span class="op">=</span> random.PRNGKey(<span class="dv">0</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>rng_key, rng_key_ <span class="op">=</span> random.split(rng_key)</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>kernel <span class="op">=</span> NUTS(model)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>num_samples <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>mcmc <span class="op">=</span> MCMC(kernel, num_warmup<span class="op">=</span><span class="dv">100</span>, num_samples<span class="op">=</span>num_samples)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>mcmc.run(</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>    rng_key_, x<span class="op">=</span>x_mle, y<span class="op">=</span>y_mle</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>mcmc.print_summary()</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>samples_1 <span class="op">=</span> mcmc.get_samples()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+                mean       std    median      5.0%     95.0%     n_eff     r_hat
+        bM      0.53      0.04      0.53      0.46      0.58    166.41      1.00
+     sigma      0.72      0.05      0.72      0.65      0.81     50.98      1.00
+
+Number of divergences: 0</code></pre>
+</div>
+</div>
+<div id="dffeb600" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model(x<span class="op">=</span><span class="va">None</span>, y<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> numpyro.sample(<span class="st">"a"</span>, dist.Normal(<span class="fl">0.0</span>, <span class="dv">1</span>))</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    M, A <span class="op">=</span> <span class="fl">0.0</span>, <span class="fl">0.0</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        bM <span class="op">=</span> numpyro.sample(<span class="st">"bM"</span>, dist.Normal(<span class="fl">0.0</span>, <span class="dv">1</span>))</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        M <span class="op">=</span> bM <span class="op">*</span> x</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    sigma <span class="op">=</span> numpyro.sample(<span class="st">"sigma"</span>, dist.InverseGamma(<span class="fl">1.0</span>))</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> a <span class="op">+</span> M</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    numpyro.sample(<span class="st">"obs"</span>, dist.Normal(mu, sigma), obs<span class="op">=</span>y)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Start from this source of randomness. We will split keys for subsequent operations.</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>rng_key <span class="op">=</span> random.PRNGKey(<span class="dv">42</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>rng_key, rng_key_ <span class="op">=</span> random.split(rng_key)</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>kernel <span class="op">=</span> NUTS(model)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>num_samples <span class="op">=</span> <span class="dv">2000</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>mcmc <span class="op">=</span> MCMC(kernel, num_warmup<span class="op">=</span><span class="dv">1000</span>, num_samples<span class="op">=</span>num_samples)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>mcmc.run(</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    rng_key_, x<span class="op">=</span>x, y<span class="op">=</span>y</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>mcmc.print_summary()</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>samples_1 <span class="op">=</span> mcmc.get_samples()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+                mean       std    median      5.0%     95.0%     n_eff     r_hat
+         a      4.25      0.29      4.24      3.77      4.71    661.44      1.00
+        bM      0.58      0.04      0.58      0.52      0.65    648.56      1.00
+     sigma      0.73      0.05      0.73      0.65      0.80    789.13      1.00
+
+Number of divergences: 0</code></pre>
+</div>
+</div>
+<div id="763a97ef" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_regression(x_data, y_mean, y_hpdi, y_data):</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sort values for plotting by x axis</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> jnp.argsort(x_data)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> x_data[idx]</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> y_mean[idx]</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>    hpdi <span class="op">=</span> y_hpdi[:, idx]</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> y_data[idx]</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">6</span>))</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    ax.plot(x, mean)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>    ax.plot(x, y, <span class="st">"o"</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>    ax.fill_between(x, hpdi[<span class="dv">0</span>], hpdi[<span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.3</span>, interpolate<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ax</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute empirical posterior distribution over mu</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>posterior_mu <span class="op">=</span> (</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    jnp.expand_dims(samples_1[<span class="st">"a"</span>], <span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> jnp.expand_dims(samples_1[<span class="st">"bM"</span>], <span class="op">-</span><span class="dv">1</span>) <span class="op">*</span> x</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>mean_mu <span class="op">=</span> jnp.mean(posterior_mu, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>hpdi_mu <span class="op">=</span> hpdi(posterior_mu, <span class="fl">0.9</span>)</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plot_regression(x, mean_mu, hpdi_mu, y)</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>    xlabel<span class="op">=</span><span class="st">"x value"</span>, ylabel<span class="op">=</span><span class="st">"y-value"</span>, title<span class="op">=</span><span class="st">"Regression line with 90% CI"</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bayesian_linear_regression_files/figure-html/cell-12-output-1.png" width="512" height="535" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="c5f8d370" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpyro.infer <span class="im">import</span> Predictive</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>rng_key, rng_key_ <span class="op">=</span> random.split(rng_key)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>prior_predictive <span class="op">=</span> Predictive(model, num_samples<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>prior_predictions <span class="op">=</span> prior_predictive(rng_key_, x)[</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"obs"</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>mean_prior_pred <span class="op">=</span> jnp.mean(prior_predictions, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>hpdi_prior_pred <span class="op">=</span> hpdi(prior_predictions, <span class="fl">0.9</span>)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> plot_regression(x, mean_prior_pred, hpdi_prior_pred, y)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>ax.<span class="bu">set</span>(xlabel<span class="op">=</span><span class="st">"x-value"</span>, ylabel<span class="op">=</span><span class="st">"y-value"</span>, title<span class="op">=</span><span class="st">"Predictions with 90% CI"</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bayesian_linear_regression_files/figure-html/cell-13-output-1.png" width="523" height="535" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="2448efe5" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df_bayes <span class="op">=</span> df.copy()</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>rng_key, rng_key_ <span class="op">=</span> random.split(rng_key)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>predictive <span class="op">=</span> Predictive(model, samples_1)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>predictions <span class="op">=</span> predictive(rng_key_, x<span class="op">=</span>x)[<span class="st">"obs"</span>]</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>df_bayes[<span class="st">"Mean Predictions"</span>] <span class="op">=</span> jnp.mean(predictions, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>df_bayes.loc[:, [<span class="st">"shortnam"</span>, <span class="st">"logpgp95"</span>, <span class="st">"Mean Predictions"</span>]].head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">shortnam</th>
+<th data-quarto-table-cell-role="th">logpgp95</th>
+<th data-quarto-table-cell-role="th">Mean Predictions</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">1</td>
+<td>AGO</td>
+<td>7.770645</td>
+<td>7.374135</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2</td>
+<td>ARE</td>
+<td>9.804219</td>
+<td>8.450379</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3</td>
+<td>ARG</td>
+<td>9.133459</td>
+<td>7.961685</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>AUS</td>
+<td>9.897972</td>
+<td>9.659143</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>AUT</td>
+<td>9.974877</td>
+<td>9.889718</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="5450767f" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot predicted values</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>fix, ax <span class="op">=</span> plt.subplots()</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>ax.scatter(df_bayes[<span class="st">'avexpr'</span>], df_bayes[<span class="st">"Mean Predictions"</span>],</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">'predicted'</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot observed values</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>ax.scatter(df_bayes[<span class="st">'avexpr'</span>], df_bayes[<span class="st">"logpgp95"</span>],</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        label<span class="op">=</span><span class="st">'observed'</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper left'</span>)</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Bayes predicted values'</span>)</span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'avexpr'</span>)</span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'logpgp95'</span>)</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="bayesian_linear_regression_files/figure-html/cell-15-output-1.png" width="587" height="461" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="8db2ded5" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_likelihood(rng_key, params, model, <span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> handlers.condition(model, params)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    model_trace <span class="op">=</span> handlers.trace(model).get_trace(<span class="op">*</span>args, <span class="op">**</span>kwargs)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    obs_node <span class="op">=</span> model_trace[<span class="st">"obs"</span>]</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> obs_node[<span class="st">"fn"</span>].log_prob(obs_node[<span class="st">"value"</span>])</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_pred_density(rng_key, params, model, <span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">list</span>(params.values())[<span class="dv">0</span>].shape[<span class="dv">0</span>]</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    log_lk_fn <span class="op">=</span> vmap(</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>        <span class="kw">lambda</span> rng_key, params: log_likelihood(rng_key, params, model, <span class="op">*</span>args, <span class="op">**</span>kwargs)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    log_lk_vals <span class="op">=</span> log_lk_fn(random.split(rng_key, n), params)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (logsumexp(log_lk_vals, <span class="dv">0</span>) <span class="op">-</span> jnp.log(n)).<span class="bu">sum</span>()</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>rng_key, rng_key_ <span class="op">=</span> random.split(rng_key)</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Log posterior predictive density: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>        log_pred_density(</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>            rng_key_,</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>            samples_1,</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>            model,</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span>x,</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span>y,</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Log posterior predictive density: -120.70555877685547</code></pre>
 </div>
 </div>
 
