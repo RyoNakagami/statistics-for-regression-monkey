@@ -328,6 +328,23 @@ $$
 
 :::
 
+例として，あるシステムは５回の故障が発生すると，全面的にシステムダウンしてしまうケースを考えます．
+一回の故障時間間隔 $T_i \overset{\mathrm{iid}}{\sim} \operatorname{Exp}(1/\lambda)$ とすると，システムダウンまでの時間 $X$ は
+
+$$
+X = T_1 + T_2 + T_3 +T_4 + T_5
+$$
+
+と表すことができ，@thm-gamma-exp-relation より
+
+$$
+X \sim \operatorname{Gam}(5, \lambda)
+$$
+
+となります．
+
+
+
 ## 無記憶性
 
 <div class="blog-custom-border">

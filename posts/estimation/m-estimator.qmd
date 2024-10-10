@@ -120,7 +120,9 @@ $$
 ```{python}
 #| code-fold: false
 import numpy as np
+from regmonkey_style import stylewizard as sw
 
+sw.set_templates("regmonkey_line")
 np.random.seed(42)
 
 mu, sigma = 0, 1 # mean and standard deviation
@@ -158,11 +160,11 @@ import matplotlib.pyplot as plt
 
 ## plot func
 def plot_weights(support, weights_func, xlabels, xticks, title):
-    fig = plt.figure(figsize=(6, 5))
+    fig = plt.figure()
     ax = fig.add_subplot(111)
     ax.plot(support, support * weights_func(support))
     ax.set_xticks(xticks)
-    ax.set_xticklabels(xlabels, fontsize=16)
+    ax.set_xticklabels(xlabels)
     ax.set_title(title)
     return ax
 
@@ -232,7 +234,7 @@ c = 2
 support = np.linspace(-3 * c, 3 * c, 1000)
 huber_type = np.clip(support, -c, c)
 
-fig = plt.figure(figsize=(6, 5))
+fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.plot(support, huber_type)
 ax.set_xticks([-3 * c, 0, 3 * c],)
@@ -289,7 +291,7 @@ c = 2
 support = np.linspace(-3 * c, 3 * c, 1000)
 tukey_kernel = tukeys_biweight(support, 0, c)
 
-fig = plt.figure(figsize=(6, 5))
+fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.plot(support, tukey_kernel)
 ax.set_xticks([-3 * c, 0, 3 * c],)
@@ -354,7 +356,7 @@ c = 2
 support = np.linspace(-3 * c, 3 * c, 1000)
 normal_power_kernel = norml_power_weight(support, 0, 1, 1)
 
-fig = plt.figure(figsize=(6, 5))
+fig = plt.figure()
 ax = fig.add_subplot(111)
 ax.plot(support, normal_power_kernel)
 ax.set_title('powered normal pdf with c=2, mu=0, gamma = 2')

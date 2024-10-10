@@ -87,6 +87,10 @@ from scipy.stats import binom
 import plotly.graph_objs as go
 import plotly.io as pio
 
+from regmonkey_style import stylewizard as sw
+
+sw.set_templates("regmonkey_line")
+
 n, p = 5, 0.4
 x = np.arange(-1, 7)
 prob = binom.cdf(x, n, p)

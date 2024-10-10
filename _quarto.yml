@@ -37,6 +37,7 @@ book:
       chapters:
         - posts/statistics101/averages.qmd
         - posts/statistics101/correlation.qmd
+        - posts/statistics101/infographics.qmd
         - posts/statistics101/random_variable.qmd
         - posts/statistics101/expectation.qmd
         - posts/statistics101/moment_generating_function.qmd
@@ -54,6 +55,7 @@ book:
         - posts/probability_distribution/normal_dist.qmd
         - posts/probability_distribution/exponential_dist.qmd
         - posts/probability_distribution/gamma_dist.qmd
+        - posts/probability_distribution/chi_squared_dist.qmd
     - part: posts/statistical_hypothesis_test_101/chapter_header.qmd
       chapters:
         - posts/statistical_hypothesis_test_101/fisher_exact_test.qmd
@@ -63,6 +65,7 @@ book:
         - posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.qmd
     - part: posts/estimation/chapter_header.qmd
       chapters: 
+        - posts/estimation/unbiased_estimator.qmd
         - posts/estimation/method-of-moments.qmd
         - posts/estimation/m-estimator.qmd
     - part: posts/bayesian_estimation/chapter_header.qmd
@@ -73,7 +76,12 @@ book:
         - posts/ExplanatoryDataAnalysis/gini_coefficient.qmd
     - part: posts/robust_statistics/chapter_header.qmd
     - part: posts/econometrics101/chapter_header.qmd
+    - part: posts/prediction/chapter_header.qmd
+      chapters: 
+        - posts/prediction/bias_variance_in_prediction.qmd
+
   appendices: 
+    - posts/mathematical_appendix/taylor_series.qmd
     - posts/mathematical_appendix/permutation_combination.qmd
     - posts/mathematical_appendix/complex_number.qmd
     - posts/mathematical_appendix/beta_function.qmd

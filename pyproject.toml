@@ -22,7 +22,9 @@ pyarrow = "^17.0.0"
 sympy = "^1.13.3"
 html5lib = "^1.1"
 scikit-learn-extra = "^0.3.0"
-regmonkey-style = {git = "https://github.com/RyoNakagami/regmonkey-style.git"}
+regmonkey-style = "^1.4.0"
+jax = "^0.4.34"
+numpyro = "^0.15.3"
 
 
 [build-system]

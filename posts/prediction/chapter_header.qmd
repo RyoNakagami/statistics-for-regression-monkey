@@ -1,0 +1,12 @@
+---
+title: "Prediction"
+author: "Ryo Nakagami"
+date: "2024-10-09"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+---

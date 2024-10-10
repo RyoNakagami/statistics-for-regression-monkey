@@ -618,6 +618,9 @@ $$
 ```{python}
 import polars as pl
 import plotly.express as px
+from regmonkey_style import stylewizard as sw
+
+sw.set_templates("regmonkey_line")
 
 data = {
     "Year": [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023],
@@ -637,7 +640,8 @@ data = {
 
 df = pl.DataFrame(data)
 df_unpivoted = df.unpivot(index="Year", variable_name="Month", value_name="Celsius")
-px.line(df_unpivoted, x="Month", y="Celsius", color="Year", title="東京都月別平均気温")
+fig = px.line(df_unpivoted, x="Month", y="Celsius", color="Year", title="東京都月別平均気温")
+fig.show()
 ```
 
 ここで，以下のようにFahrenheitに変換してみます．

@@ -1,0 +1,59 @@
+---
+title: "不偏推定量"
+author: "Ryo Nakagami"
+date: "2024-10-07"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+---
+
+## 不偏推定量クラス
+
+<div class="blog-custom-border">
+<strong>Def: 不偏推定量</strong> <br>
+
+パラメータ $\theta$ についての $\widehat{\theta}(\pmb{X})$ が不偏推定量であるとは
+
+$$
+\begin{align*}
+\mathbb E_\theta[\widehat{\theta}(\pmb{X})] = \theta \quad\forall \theta
+\end{align*}
+$$
+
+</div>
+
+不偏推定量というクラスを導入したので，不偏推定量以外の推定量についてその期待値と真のパラメーターのズレを考える必要があります．
+このズレのことをバイアスと呼び，推定量 $\hat\theta(\pmb{X})$ のバイアス $b(\theta)$ を
+
+$$
+b(\theta) = \mathbb E_\theta[\tilde{\theta}(\pmb{X})]  - \theta
+$$
+
+と定義します．
+
+<strong > &#9654;&nbsp; Bias-variance decomposition</strong>
+
+推定量は分散とバイアスの二乗和に分解することができます．
+
+$$
+\begin{align*}
+&\operatorname{MSE}(\hat\theta)\\
+    &= \mathbb E[\|\hat\theta - \theta\|^2]\\
+    &= \mathbb E[\|\hat\theta - \mathbb E[\hat\theta ] + \mathbb E[\hat\theta ]- \theta\|^2]\\
+    &= \mathbb E[\|\hat\theta - \mathbb E[\hat\theta]\|^2 + \underbrace{\|\mathbb E[\hat\theta ]- \theta\|^2}_{=\text{constant}} + 2\underbrace{(\hat\theta - \mathbb E[\hat\theta])^T}_{=\text{mean zero}}(\mathbb E[\hat\theta ]- \theta)]\\
+    &= \mathbb E[\|\hat\theta - \mathbb E[\hat\theta]\|^2] + \|\mathbb E[\hat\theta ]- \theta\|^2\\
+    &= \mathbb E[\operatorname{tr}[(\hat\theta - \mathbb E[\hat\theta])(\hat\theta - \mathbb E[\hat\theta])^T]] + \|\mathbb E[\hat\theta ]- \theta\|^2\\
+    &= \operatorname{tr}[\operatorname{Var}(\hat\theta)] + \|\operatorname{Bias}(\hat\theta)\|^2
+\end{align*}
+$$
+
+
+上記の式より
+
+- 推定量のバイアスは定義よりtrue parameterに依存しますが，$\operatorname{Var}(\hat\theta)$ は依存しません
+- バイアスを抑えることができれば推定量についてのMSEが小さくなると期待されることが，不偏推定量を考える一つの動機
+- ただし，MSEは推定量の分散という要素もあるので，不偏推定量に限って議論することが望ましいとは限らない

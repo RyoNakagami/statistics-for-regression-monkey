@@ -1,5 +1,5 @@
 ---
-title: "コルモゴロフ・スミルノフ検定"
+title: "KS検定"
 author: "Ryo Nakagami"
 date: "2024-10-06"
 date-modified: last-modified
@@ -132,7 +132,7 @@ $$
 F_n(x) \to \mathbb E \mathbb 1(X_i \leq x) = P(X_i\leq x) = F(x)
 $$
 
-が成立します．
+が成立します．次に，KS Testの統計量が帰無仮説で設定した $F$ に依存しないことを示します．
 
 <div class="blog-custom-border">
 ::: {#thm- .custom_problem }
@@ -202,3 +202,109 @@ $$
 以上より， @eq-dist-distance-sup の分布は $F$ に依存しないことが示されました．
 
 :::
+
+ここからKS Test統計量を統計的仮説検定のフレームワークに乗せるためには，得られた統計量の値が $H_0$ の下でどのように評価することができるのか？を知る必要があります．
+固定された $x$ においてCLTより以下のことがわかります
+
+$$
+\sqrt{n}(F_n(x) - F(x)) \overset{\mathrm{d}}{\to} N\big(0, F(x)(1 - F(x))\big) 
+$$
+
+これを用いて
+
+$$
+\sqrt{n}\sup \vert F_n(x) - F(x)\vert 
+$$
+
+が収束する分布を次に確認します．
+
+<div class="blog-custom-border">
+::: {#thm-ks-test-statistic-dist .custom_problem }
+**: KS統計量の収束分布**
+<br>
+
+$$
+P\big(\sqrt{n}\sup_{x\in\mathbb R} \vert F_n(x) - F(x)\vert \leq t\big) \overset{\mathrm{d}}{\to} H(t)
+$$
+
+$H(t)$ はKolmogorov-Smirnov分布でその累積分布関数は以下の形になります
+
+$$
+F_H(t) = 1 - 2\sum_{i=1}^\infty (-1)^{i-1}\exp(-2i^2t)
+$$
+
+:::
+
+</div>
+
+$F_0$ を帰無仮説で設定した分布としたとき，十分大きい $n$ のもとで $F_n$ は $F$ に収束するので検定統計量に基づく判断は，十分小さい $\delta$ を選び
+
+$$
+\sup_x \vert F_n(x) - F_0(x)\vert > \delta
+$$
+
+これで判断できれば良いとなります．これに対して，$\sqrt{n}$ を両辺に乗じると
+
+$$
+D_n = \sqrt{n}\sup_x \vert F_n(x) - F_0(x)\vert > \sqrt{n}\delta
+$$
+
+もし $H_0$ が不成立ならば
+
+$$
+D_n > \sqrt{n}\delta \to \infty \quad\text{as } n \to \infty
+$$
+
+従って，Decision ruleは
+
+$$
+\delta =
+\left\{\begin{array}{cc}
+H_0 & D_n \leq c\\
+H_1 & D_n > c\\
+\end{array}\right.
+$$
+
+このDecision ruleのもとでの有意水準 $\alpha$ は
+
+$$
+\alpha = P(\delta \neq H_0\vert H_0) = P(D_n > c \vert H_0) \approx 1 - H(c)
+$$
+
+::: {.nte- .callout-tip icon="false"}
+# 🍵 Green Tea Break
+
+$H(c)$ を計算するのは困難な場合が多いので，有意水準 $\alpha$ に対応した $c$ の数値として
+
+$$
+\begin{align*}
+x_\alpha &= [-(1/2)\log(\alpha/2)]^{1/2} \quad \text{(棄却点)}\\
+c &= x_\alpha/\sqrt{n}
+\end{align*}
+$$
+
+として計算されます．
+
+また，標本におけるKS統計量の計算も
+
+$$
+D = \max_{1 \le i \le N} \left( F(Y_{i}) -
+               \frac{i-1} {N}, \frac{i}{N} - F(Y_{i}) \right)
+$$
+
+として標本における各点における帰無仮説の分布との距離のupper boundをベースに計算されます．
+
+:::
+
+
+### コルモゴロフ・スミルノフ検定の注意点
+
+KS Testは分布によらない推測法というメリットはありますが，帰無仮説の分布を指定する必要がありますし，また次の注意点があります．
+
+1. 連続型確率分布の検定のみしか使えない
+2. テール部分と比べ分布の中心付近での距離に対してsensitive = テール分布の違いには鈍感
+3. 帰無仮説の分布をlocation, shapeなどのパラメータを全て指定しないと，同じ分布族を帰無仮説に指定していても棄却されてしまう
+
+このような注意点に加え， Anderson-Darling testやCramer Von-Mises testといった改良型の検定手法があるので，KS Testはあまり利用されることはありません．
+
+## Two Sample KS Test

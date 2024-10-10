@@ -12,7 +12,7 @@ comments:
 jupyter: python3
 ---
 
-## 点推定
+## 点推定の枠組み
 
 想定されるパラメトリックな確率分布が $k$ 個の未知パラメータ 
 
@@ -30,13 +30,30 @@ $$
 と表せます．
 
 <div class="blog-custom-border">
-<strong>Def: 点推定，推定量，推定値</strong> <br>
+<strong>Def: 点推定，推定量，推定値，推定対象</strong> <br>
 
-$\pmb X$ の関数として，未知のパラメータ $\pmb{\theta}$ を求めることを点推定と呼ぶ．
+分布を特徴づける未知のパラメータ $\pmb{\theta}$ （または関数 $\gamma(\pmb{\theta})$）について， $\pmb X$ の関数として
+$\pmb{\theta}$ を求めることを点推定と呼ぶ．
+このとき，推定の対象となる $\pmb{\theta}$ のことを推定対象(estimand)と呼ぶ．
+
 また，この関数を $\widehat{\pmb{\theta}}(\pmb{X})$ と表記し，$\pmb{\theta}$ の推定量と呼ぶ．
 この関数に $\pmb{X}$ の実現値 $\pmb{x}$ を代入した $\widehat{\pmb{\theta}}(\pmb{x})$ を推定値と呼ぶ．
 
 </div>
+
+多くの場面で平均二乗誤差を最小化する形で $\pmb{\theta}$ を推定しますが，一般に全ての $\pmb{\theta}$
+について一様に平均二乗誤差を最小にする推定量は存在しないです．そこで，実際に推定するときは，
+**考える推定量のクラスを制限し，制限されたクラスの中で平均二乗誤差を最小にする推定量**を求めます．
+
+推定量のクラスとして，
+
+- Linear estimator
+- unbiased estimator
+- consistent estimator
+
+などがあります．
+
+
 
 ### 望ましい推定量の性質
 

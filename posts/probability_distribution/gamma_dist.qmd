@@ -243,3 +243,47 @@ $$
 が必要となることがわかります．特性関数は $\phi(t) = (1 - bit)^{-a}$
 
 :::
+
+## 他の確率分布との関係
+
+<div class="blog-custom-border">
+::: {#thm-gamma-and-chi-squared .custom_problem }
+**: $\chi^2$分布との関係**
+<br>
+
+$m \in\mathbb Z_{++}$ とするとき，
+
+$$
+\operatorname{Gam}\big(x; a=m/2, b=2 \big) = \operatorname{\chi^2}(m)
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$\operatorname{Gam}(x; m/2, 2)$ の確率密度関数 $f(x)$ について
+
+$$
+\begin{align*}
+f(x) = \frac{1}{2^{\frac{m}{2}}\Gamma(m/2)} x^{\frac{m}{2}-1} \exp[-x/2], \quad x > 0
+\end{align*}
+$$
+
+と計算されます．これは $\operatorname{\chi^2}(m)$ の確率密度関数と一致します．
+
+期待値，分散，MGFそれぞれを見てみると，$X\sim\operatorname{Gam}(x; m/2, 2)$ とすると，
+
+$$
+\begin{align*}
+\mathbb E[X] &= 2\frac{m}{2} = m\\
+\operatorname{Var}(X) &= 2^2\frac{m}{2} = 2m\\
+M_X(t) &= [1 - 2t]^{-m/2} \quad (t < \frac{1}{2})
+\end{align*}
+$$
+
+となり，$\operatorname{\chi^2}(m)$ の期待値，分散，MGFそれぞれと一致します．
+
+:::

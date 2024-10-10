@@ -319,3 +319,292 @@ $$
 $$
 
 :::
+
+## Bayesian Linear Regression with JAX
+
+
+```{python}
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+from sklearn import linear_model
+from regmonkey_style import stylewizard as sw
+from jax import numpy as jnp, scipy as jscipy
+from jax import grad
+import scipy.stats
+```
+
+
+
+```{python}
+df = pd.read_stata(
+    "https://github.com/QuantEcon/lecture-python/blob/master/source/_static/lecture_specific/ols/maketable1.dta?raw=true"
+).dropna(subset=["logpgp95", "avexpr"])
+df.head()
+```
+
+```{python}
+sw.set_templates("regmonkey_scatter")
+df.plot(x='avexpr', y='logpgp95', kind='scatter')
+plt.show()
+
+```
+
+<strong > &#9654;&nbsp; MLE</strong>
+
+```{python}
+def LogLikelihood(y, x, theta):
+    N = x.shape[0]
+    return np.log(scipy.stats.multivariate_normal.pdf(y.ravel(), (theta*x).ravel(), np.eye(N)*sigma_n**2))
+
+x = df['avexpr'].values
+y = df['logpgp95'].values
+
+# FWL
+x_mle = x - np.mean(x)
+y_mle = y - np.mean(y)
+
+# MLE
+np.random.seed(42)
+sigma_n = 10
+
+T = np.linspace(-10,10,1000)
+LL = [LogLikelihood(y_mle, x_mle, t1) for t1 in T]
+fig, ax = plt.subplots()
+ax.plot(T, LL)
+
+beta_mle = np.sum(x_mle*y_mle)/np.sum(np.square(x_mle))
+ax.vlines(beta_mle,*ax.get_ylim(), linestyle='--', label='$\\theta_{MLE}$')
+ax.set_xlabel("$\\theta$");ax.set_ylabel("Log Likelihood");
+plt.legend(bbox_to_anchor=[1,1]);
+print("MLE beta: {}".format(beta_mle))
+```
+
+
+<strong > &#9654;&nbsp; OLS</strong>
+
+```{python}
+df_ols = df.copy()
+df_ols['const'] = 1
+reg_ols = sm.OLS(endog=df_ols['logpgp95'], exog=df_ols[['const', 'avexpr']], \
+    missing='drop')
+results = reg_ols.fit()
+print(results.summary())
+```
+
+<strong > &#9654;&nbsp; Rdige</strong>
+
+```{python}
+reg_l2 = sm.OLS(endog=df_ols['logpgp95'], exog=df_ols[['const', 'avexpr']], \
+    missing='drop')
+result_l2 = reg_l2.fit_regularized(L1_wt=0., alpha=[1/2,1/2])
+result_l2.params
+```
+
+```{python}
+reg_l2 = sm.OLS(endog=y_mle, exog=x_mle, \
+    missing='drop')
+result_l2 = reg_l2.fit_regularized(L1_wt=0., alpha=[1])
+result_l2.params
+```
+
+```{python}
+from sklearn.linear_model import Ridge
+from sklearn.linear_model import ridge_regression
+coef, intercept = ridge_regression(x.reshape(-1,1), y, alpha=1.0, return_intercept=True)
+print(coef, intercept)
+```
+
+
+
+
+
+
+<strong > &#9654;&nbsp; bayesian regression</strong>
+
+
+```{python}
+
+from IPython.display import set_matplotlib_formats
+import seaborn as sns
+
+from jax import random, vmap
+import jax.numpy as jnp
+from jax.scipy.special import logsumexp
+
+import numpyro
+from numpyro import handlers
+from numpyro.diagnostics import hpdi
+import numpyro.distributions as dist
+from numpyro.infer import MCMC, NUTS
+
+
+def model(x=None, y=None):
+    #a = numpyro.sample("a", dist.Normal(0.0, 1))
+    M, A = 0.0, 0.0
+    if x is not None:
+        bM = numpyro.sample("bM", dist.Normal(0.0, 1))
+        M = bM * x
+    sigma = numpyro.sample("sigma", dist.Gamma(1.0))
+    #mu = a + M
+    mu = M
+    numpyro.sample("obs", dist.Normal(mu, sigma), obs=y)
+
+# Start from this source of randomness. We will split keys for subsequent operations.
+rng_key = random.PRNGKey(0)
+rng_key, rng_key_ = random.split(rng_key)
+
+kernel = NUTS(model)
+num_samples = 200
+mcmc = MCMC(kernel, num_warmup=100, num_samples=num_samples)
+mcmc.run(
+    rng_key_, x=x_mle, y=y_mle
+)
+mcmc.print_summary()
+samples_1 = mcmc.get_samples()
+```
+
+
+```{python}
+#| code-fold: false
+def model(x=None, y=None):
+    a = numpyro.sample("a", dist.Normal(0.0, 1))
+    M, A = 0.0, 0.0
+    if x is not None:
+        bM = numpyro.sample("bM", dist.Normal(0.0, 1))
+        M = bM * x
+    sigma = numpyro.sample("sigma", dist.InverseGamma(1.0))
+    mu = a + M
+    numpyro.sample("obs", dist.Normal(mu, sigma), obs=y)
+
+# Start from this source of randomness. We will split keys for subsequent operations.
+rng_key = random.PRNGKey(42)
+rng_key, rng_key_ = random.split(rng_key)
+
+kernel = NUTS(model)
+num_samples = 2000
+mcmc = MCMC(kernel, num_warmup=1000, num_samples=num_samples)
+mcmc.run(
+    rng_key_, x=x, y=y
+)
+mcmc.print_summary()
+samples_1 = mcmc.get_samples()
+```
+
+
+
+```{python}
+def plot_regression(x_data, y_mean, y_hpdi, y_data):
+    # Sort values for plotting by x axis
+    idx = jnp.argsort(x_data)
+    x = x_data[idx]
+    mean = y_mean[idx]
+    hpdi = y_hpdi[:, idx]
+    y = y_data[idx]
+
+    # Plot
+    fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(6, 6))
+    ax.plot(x, mean)
+    ax.plot(x, y, "o")
+    ax.fill_between(x, hpdi[0], hpdi[1], alpha=0.3, interpolate=True)
+    return ax
+
+
+# Compute empirical posterior distribution over mu
+posterior_mu = (
+    jnp.expand_dims(samples_1["a"], -1)
+    + jnp.expand_dims(samples_1["bM"], -1) * x
+)
+
+mean_mu = jnp.mean(posterior_mu, axis=0)
+hpdi_mu = hpdi(posterior_mu, 0.9)
+ax = plot_regression(x, mean_mu, hpdi_mu, y)
+ax.set(
+    xlabel="x value", ylabel="y-value", title="Regression line with 90% CI"
+);
+
+
+```
+
+
+
+```{python}
+from numpyro.infer import Predictive
+
+rng_key, rng_key_ = random.split(rng_key)
+prior_predictive = Predictive(model, num_samples=100)
+prior_predictions = prior_predictive(rng_key_, x)[
+    "obs"
+]
+mean_prior_pred = jnp.mean(prior_predictions, axis=0)
+hpdi_prior_pred = hpdi(prior_predictions, 0.9)
+
+ax = plot_regression(x, mean_prior_pred, hpdi_prior_pred, y)
+ax.set(xlabel="x-value", ylabel="y-value", title="Predictions with 90% CI");
+
+
+```
+
+
+```{python}
+df_bayes = df.copy()
+rng_key, rng_key_ = random.split(rng_key)
+predictive = Predictive(model, samples_1)
+predictions = predictive(rng_key_, x=x)["obs"]
+df_bayes["Mean Predictions"] = jnp.mean(predictions, axis=0)
+df_bayes.loc[:, ["shortnam", "logpgp95", "Mean Predictions"]].head()
+```
+
+
+```{python}
+# Plot predicted values
+
+fix, ax = plt.subplots()
+ax.scatter(df_bayes['avexpr'], df_bayes["Mean Predictions"],
+        label='predicted')
+
+# Plot observed values
+
+ax.scatter(df_bayes['avexpr'], df_bayes["logpgp95"],
+        label='observed')
+
+ax.legend(loc='upper left')
+ax.set_title('Bayes predicted values')
+ax.set_xlabel('avexpr')
+ax.set_ylabel('logpgp95')
+plt.show()
+```
+
+
+
+```{python}
+def log_likelihood(rng_key, params, model, *args, **kwargs):
+    model = handlers.condition(model, params)
+    model_trace = handlers.trace(model).get_trace(*args, **kwargs)
+    obs_node = model_trace["obs"]
+    return obs_node["fn"].log_prob(obs_node["value"])
+
+
+def log_pred_density(rng_key, params, model, *args, **kwargs):
+    n = list(params.values())[0].shape[0]
+    log_lk_fn = vmap(
+        lambda rng_key, params: log_likelihood(rng_key, params, model, *args, **kwargs)
+    )
+    log_lk_vals = log_lk_fn(random.split(rng_key, n), params)
+    return (logsumexp(log_lk_vals, 0) - jnp.log(n)).sum()
+
+rng_key, rng_key_ = random.split(rng_key)
+print(
+    "Log posterior predictive density: {}".format(
+        log_pred_density(
+            rng_key_,
+            samples_1,
+            model,
+            x=x,
+            y=y,
+        )
+    )
+)
+
+```

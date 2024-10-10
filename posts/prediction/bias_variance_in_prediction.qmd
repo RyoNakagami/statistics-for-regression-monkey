@@ -1,0 +1,126 @@
+---
+title: "Bias and Variance"
+author: "Ryo Nakagami"
+date: "2024-10-09"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+---
+
+## Bias and Variance in Prediction
+
+未知のパラメーターの推定量に焦点を当てた統計的推定とことなり，教師あり機械学習の予測では
+$x$ が与えられたときに $y$ を良く予測できる関数 $f$ 
+
+$$
+\begin{align*}
+&y = f(x) + \epsilon\\
+&\text{where }  \mathbb E[\epsilon \vert x] = 0
+\end{align*}
+$$
+
+を学習することを目指します．この関数の学習を目指して，
+
+$$
+S = \{x^{(i)}, y^{(i)}\}_{i=1}^n
+$$
+
+をtraining datasetとして，$\hat f_n$ という関数を構築したとします．母集団からランダムサンプリング
+された $S$ にはノイズ $\epsilon_i$ が含まれており，$S$ を用いて学習した $\hat f_n$ は確率的に変動する側面があります．その上で同じ母集団からi.i.dでサンプリングされた未知のデータセット $\{x^{*}, y^{*}\}$ においても $x$ を特徴量として用いることで 精度良く $y$ を予測することができること = 汎化誤差(generalization error)が小さい $\hat f^n$ が望ましい予測関数となります．
+
+汎化誤差を $y$ と $\hat f_n$ の距離と考えたとき，$(y^*, x^*)$ で条件づけたとき
+
+$$
+\begin{align*}
+&\operatorname{MSE}(\hat f_n)\\
+    &= \mathbb E[(y^* - \hat f_n(x^*))^2]\\
+    &= \mathbb E[(f(x^*) + \epsilon - \hat f_n(x^*))^2]\\
+    &= \mathbb E[\epsilon^2] + \mathbb E[(f(x^*) -\hat f_n(x^*))^2]\\
+    &= \mathbb E[\epsilon^2] + \underbrace{\mathbb E[f(x^*) -\hat f_n(x^*)]^2}_{=\text{bias and constant}} + \operatorname{Var}(f(x^*) -\hat f_n(x^*))\\
+    &= \underbrace{\operatorname{Var}(\epsilon)}_{\text{irreducible error}} + \text{Bias}(\hat f_n)^2 + \operatorname{Var}(\hat f_n)
+\end{align*}
+$$
+
+::: {#exm- .custom_problem }
+**線形クラスにおけるBias and Variance**
+<br>
+
+True functionを 
+
+$$
+f(x) = \pmb{\theta}^Tx
+$$
+
+と定義し，$\pmb{\theta}$ は未知であるとします．Training datasetを用いて，
+
+$$
+\hat f_n(x) = \widehat{\pmb{\theta}}_n^Tx
+$$
+
+を学習したとします．このとき，未知のデータセット $\pmb{D} = \{(x^*, y^*)\}$ において，
+
+$$
+\begin{align*}
+\text{Bias}(\hat f_n)
+    &= \mathbb E[\hat f_n(x) - f(x) \vert \pmb{D}]\\
+    &= \mathbb E[\widehat{\pmb{\theta}}_n^Tx - \pmb{\theta}^Tx\vert \pmb{D}]\\
+    &= \mathbb E[\widehat{\pmb{\theta}}_n - \pmb{\theta}\vert \pmb{D}]^Tx\\
+    &= \text{Bias}(\widehat{\pmb{\theta}}_n)^Tx
+\end{align*}
+$$
+
+同様に
+
+$$
+\begin{align*}
+&\operatorname{Var}(\hat f_n)\\
+    &= \mathbb E[(\hat f_n(x) - f(x))^2 \vert \pmb{D}]\\
+    &= \mathbb E[(\widehat{\pmb{\theta}}_n^Tx - \pmb{\theta}^Tx)^2\vert \pmb{D}]\\
+    &= \mathbb E[((\widehat{\pmb{\theta}}_n^T - \pmb{\theta}^T)x)^T((\widehat{\pmb{\theta}}_n^T - \pmb{\theta}^T)x)\vert \pmb{D}]\\
+    &= \mathbb E[x^T(\widehat{\pmb{\theta}}_n - \pmb{\theta})(\widehat{\pmb{\theta}}_n - \pmb{\theta})^Tx\vert D]\\
+    &= x^T\operatorname{Var}(\widehat{\pmb{\theta}})x
+\end{align*}
+$$
+
+なお，最後の式変形は $a$ を定数としたときに $\operatorname{Var}(a - X) = \operatorname{Var}(X)$ を用いています．
+
+:::
+
+::: {.nte- .callout-tip icon="false"}
+# 🍵 Green Tea Break
+
+予測におけるBias-Variance分解は *Overfitting*，*Underfitting* という結びつけて考えることができます．
+
+<strong > &#9654;&nbsp; Overfitting</strong>
+
+training dataにおける予測精度はとても良いがtest dataにおける予測精度がとても悪い予測モデルに対して*Overfitting*という評価をします．これは予測モデルがtraining dataのノイズを拾いすぎてしまったときに発生します．
+
+*Overfitting*は表現力(capacity)の高いモデルを用いたときに発生する可能性が高いです．実際に発生したときは，
+
+- high bias and high variance
+- low bias and high variance
+- high bias and low variance
+
+いずれも考えることができますが，*high bias and low variance* は $\epsilon$ はすごく小さいがi.i.dでランダムサンプリングされていないときというケースなどを除いてあまりないので，基本的にはhigh varianceを疑いアクションをとるという対処方針となります，正則化，より大きいデータセットの活用，inputeとして用いる特徴量の数を少なくする，より表現力が狭められたモデルを学習モデルに用いる，といったことをトライすることが推奨されます．
+
+<strong > &#9654;&nbsp; Underfitting</strong>
+
+*Underfitting*とは，training dataにおいても十分な学習ができていない状況を指す概念です．
+モデルの表現力が低い場合に起きることが多く，またhigh biasの状況と関連しているケースが多いです．この場合，traing dataset自体にfitできていないので，さらなるデータ収集することは費用対効果に見合いません．罰則項の緩和，特徴量の拡充，より表現力のあるモデルのトライが推奨されます．
+
+
+<strong > &#9654;&nbsp; Rule of thumbs</strong>
+
+汎化性能が悪い場合に，まずbias-varianceのどちらの要因が重きを占めているのか？を考えることが重要です．その判別方法として経験則的に知られているステップとして，
+
+- Training data errorが大きい場合は，もしモデルがトレーニングデータ自体にうまくフィットできないということになるので，そのモデルはhigh biasを持っている可能性が高いと判断する
+- Cross validation errorとprediction erro in training datasetの差は、モデルや推定量の分散として扱うことができるので，Cross validation errorが高い場合は *overfitting* の状態と判断する
+
+Training dataset errorに比べCross validation errorが高いときに，線形モデルからneural networkモデルへ変更することはあまり意味のない（むしろ状況を悪化させる）となるケースが多いというアクションになります．
+
+
+:::

@@ -1,0 +1,157 @@
+---
+title: "インフォグラフィックス"
+author: "Ryo Nakagami"
+date: "2024-10-07"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+jupyter: python3
+---
+
+
+### box-plot
+
+箱ひげ図（ボックスプロット）は，データの分布を視覚化するためのグラフです．
+データの最小値，第一四分位点，中央値，第三四分位点，および最大値を示します．
+
+```{python}
+# | code-fold: true
+import matplotlib.pyplot as plt
+import numpy as np
+from regmonkey_style import stylewizard as sw
+
+sw.set_templates("regmonkey_boxplot")
+
+# Generate example data
+np.random.seed(42)
+N = 50
+data = np.random.chisquare(1, N)
+data2 = np.random.normal(0, 1, N)
+
+# Create a box plot
+fig, ax = plt.subplots(figsize=(5, 6))
+ax.set_title("Box Plot of Random Data", weight='bold')
+ax.boxplot([data, data2], vert=True, patch_artist=True, widths=0.35)
+ax.set_xlabel("Category")
+ax.set_ylabel("Values")
+
+LOGO = ""
+ax.add_patch(
+    plt.Rectangle(
+        (-0.01, 0.99),  # Set location of rectangle by lower left corder
+        0.12,  # Width of rectangle
+        -0.04,  # Height of rectangle. Negative so it goes down.
+        facecolor="#475ED1",
+        transform=fig.transFigure,
+        clip_on=False,
+        linewidth=0,
+    )
+)
+
+ax.text(0.05, 0.98, LOGO,  # Set x, y position inside the rectangle
+        weight='bold',
+        color='white',                 # Text color
+        fontsize=10,                   # Font size
+        ha='center',                     # Horizontal alignment
+        va='top',                      # Vertical alignment
+        transform=fig.transFigure)     # Relative to the figure
+
+
+ax.plot(
+    [-0.01, 0.9],  # Set width of line
+    [0.99, 0.99],  # Set height of line
+    transform=fig.transFigure,  # Set location relative to plot
+    clip_on=False,
+    color="#475ED1",
+    linewidth=0.6,
+)
+
+plt.show()
+```
+
+上のbox plotより以下の解釈ができます:
+
+- Category 2と比べCategory 1のほうがmin-max範囲が広い
+- Category 1のmedianは第一四分位点によっているので右に歪んでいる(=右の裾が長い)
+
+
+
+### 幹葉表示
+
+分布の形状を視覚化するために定量データをグラフィカルな形式で表現するための手法として幹葉表示があります．
+観測値を昇順に並べた上で，幹と葉がそれぞれ何を表すのかを決定します．通常、葉は数値の最後の桁を含み、茎はそれ以外の桁を含みます．
+
+その後，幹と葉をグループ単位としてそれぞれのグループの出現頻度をカウントして表示します．
+以下の例では、葉は1の位を表し、茎はそれ以外の桁（10の位以上）を表します．
+
+```{python}
+#| code-fold: true
+import numpy as np
+import polars as pl
+
+np.random.seed(42)
+
+def stem_and_leaf(data, leaf_scale=1):
+    # Sort the data
+    data = sorted(data)
+    
+    # Create a dictionary to hold the stems and leaves
+    stem_leaf = {}
+    
+    for number in data:
+        # Split the number into stem and leaf based on the leaf scale
+        stem = number // (10 ** leaf_scale)
+        leaf = number % (10 ** leaf_scale)
+        
+        # Add the leaf to the appropriate stem
+        if stem in stem_leaf:
+            stem_leaf[stem].append(leaf)
+        else:
+            stem_leaf[stem] = [leaf]
+    
+    # Print the header
+    print(f"{'Freq':>4} | {'Stem':>4} | {'Leaf':<20} | {'CumFreq':>7}")
+    print('-' * 40)
+    
+    # Print the stem-and-leaf plot with frequencies and cumulative frequencies
+    cumulative_freq = 0
+    for stem, leaves in sorted(stem_leaf.items()):
+        frequency = len(leaves)
+        cumulative_freq += frequency
+        leaves_str = ' '.join(f"{leaf:0{leaf_scale}d}" for leaf in leaves)
+        print(f"{frequency:>4} | {stem:>4} | {leaves_str:<20} | {cumulative_freq:>7}")
+
+# Example data
+data = np.random.randint(0, 100, 21)
+data.sort()
+
+print("sorted data is \n{}\n".format(data))
+stem_and_leaf(data, leaf_scale=1)
+print(pl.DataFrame({'x':data}).describe())
+```
+
+::: {.nte- .callout-tip icon="false"}
+# 🍵 Green Tea Break
+
+電車の時刻表も幹葉表示の一例と言えます．
+
+|時刻（時）	|分（葉）|
+|---|---|
+|6|	05 12 18 25 32|
+|7|	10 17 23 30 37 40 47 50 51 52|
+|8|	15 22 28 35 42 50 51 52|
+|9|	20 27 33 40 47|
+|10|	20 27 |
+
+とある駅の時刻表が上のように与えられていたとき，
+
+- どの時刻に電車が来るのか？
+- どの時間帯が一番多く電車が発車するのか？
+
+という情報を視覚的に得ることができます．
+
+:::
