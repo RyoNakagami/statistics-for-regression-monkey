@@ -469,7 +469,7 @@ samples_1 = mcmc.get_samples()
 ```{python}
 #| code-fold: false
 def model(x=None, y=None):
-    a = numpyro.sample("a", dist.Normal(0.0, 1))
+    a = numpyro.sample("a", dist.Normal(5.0, 1))
     M, A = 0.0, 0.0
     if x is not None:
         bM = numpyro.sample("bM", dist.Normal(0.0, 1))
