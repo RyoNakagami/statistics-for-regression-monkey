@@ -588,7 +588,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-10</p>
+      <p class="date-modified">2024-10-12</p>
     </div>
   </div>
     
@@ -617,7 +617,7 @@ D_n = \sup_{x} \vert F_n(x) - F_0(x)\vert
 Y \sim \operatorname{Exp}(1)
 \]</span></p>
 <p>に従います．25個の標準一様分布に従う乱数を発生させ，それに基づいてKS test statisticを計算すると以下のようになります．</p>
-<div id="af8229cb" class="cell" data-execution_count="1">
+<div id="a4446429" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -678,7 +678,7 @@ Y \sim \operatorname{Exp}(1)
 </div>
 </div>
 <p><code>scipy.stats.ks_1samp</code> で<code>exact</code>にテストをしてみると</p>
-<div id="98349a61" class="cell" data-execution_count="2">
+<div id="536bc807" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>stats.ks_1samp(sample, stats.expon(<span class="dv">0</span>).cdf, method<span class="op">=</span><span class="st">'exact'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>KstestResult(statistic=0.16519761568776414, pvalue=0.45428250331574216, statistic_location=0.5022002367852737, statistic_sign=1)</code></pre>
