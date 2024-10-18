@@ -219,6 +219,43 @@ M_X(t)
 \end{align*}
 $$
 
+<strong > &#9654;&nbsp; 特性関数の計算</strong>
+
+$$
+\begin{align*}
+\varphi(t)
+    &= \mathbb E[\exp(itX)]\\
+    &= \sum_{x=0}^n \exp(itx) \times {}_nC_xp^x(1-p)^{n-x}\\
+    &= \sum_{x=0}^n {}_nC_x (e^{it}p)^x(1-p)^{n-x}\\
+    &= [pe^{it} + 1 - p]^n
+\end{align*}
+$$
+
+特性関数から期待値を求めると
+
+$$
+\begin{align*}
+\mathbb E[X]
+    &= \frac{\partial}{\partial it}\varphi(t)\bigg\vert_{t=0} \\
+    &= n [pe^{i\times 0} + 1 - p]^{n-1} p e^{i\times 0}\\
+    & = np
+\end{align*}
+$$
+
+2nd momentも同様に
+
+$$
+\begin{align*}
+\mathbb E[X^2]
+    =& \frac{\partial}{\partial^2 it}\varphi^{(2)}(t)\bigg\vert_{t=0} \\[5pt]
+    =& n(n-1)p^2 [pe^{i\times 0} + 1 - p]^{n-2} e^{2i\times 0}\\
+     & + np[pe^{i\times 0} + 1 - p]^{n-1} e^{i\times 0}\\[5pt]
+    =& n(n-1)p^2 + np
+\end{align*}
+$$
+
+
+
 ### ポワソン分布との関係
 
 二項分布において，

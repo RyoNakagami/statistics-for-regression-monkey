@@ -9,7 +9,6 @@ comments:
     utterances:
          repo: RyoNakagami/statistics-for-regression-monkey
          label: discussion
-jupyter: python3
 ---
 
 ## ポワソン分布の性質
@@ -139,12 +138,12 @@ $$
 \begin{align*}
 M_X(t)
     &= \mathbb E[\exp(tX)]\\
-    &= \sum_{x=0}\exp(-\lambda)\exp(tX)\frac{\lambda^x}{x!}\\
-    &= \exp(-\lambda)\sum_{x=0}\frac{(\exp(t)\lambda)^x}{x!}\\
+    &= \sum_{x=0}^\infty\exp(-\lambda)\exp(tX)\frac{\lambda^x}{x!}\\
+    &= \exp(-\lambda)\sum_{x=0}^\infty\frac{(\exp(t)\lambda)^x}{x!}\\
     &= \exp(-\lambda)\exp(e^t\lambda)\\[5pt]
     &= \exp[\lambda(e^t - 1)]
 \end{align*}
-$$x
+$$
 
 
 
@@ -184,6 +183,10 @@ import numpy as np
 from plotly import express as px
 import plotly.graph_objects as go
 from scipy.stats import poisson
+
+from regmonkey_style import stylewizard as sw 
+
+sw.set_templates("regmonkey_scatter")
 
 
 def extract_goal(data, target_team):
@@ -240,7 +243,7 @@ fig.show()
 :::
 
 
-
+### ポワソン分布の再生性
 
 
 <div class="blog-custom-border">
@@ -290,14 +293,84 @@ $$
 
 これは，パラメーター $\lambda_x + \lambda_y$ のポワソン分布のMGFに一致しています．
 
+:::
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$Z = X +Y$ としたとき，
+
+$$
+\begin{align*}
+P_{Z}(z)
+    &= \sum_{j=0}^z\frac{\lambda_x^j}{j!}\exp(-\lambda_x)\frac{\lambda_y^{z-j}}{(z-j)!}\exp(-\lambda_y)\\
+    &= \exp(-\lambda_x-\lambda_y)\sum_{j=0}^z\frac{\lambda_x^j\lambda_y^{z-j}}{j!(z-j)!}\frac{z!}{z!}\\
+    &= \frac{1}{{z!}}\exp(-\lambda_x-\lambda_y)\underbrace{\sum_{j=0}^z\frac{z!\lambda_x^j\lambda_y^{z-j}}{j!(z-j)!}}_{=(\lambda_x + \lambda_y)^z}\\
+    &= \frac{(\lambda_x + \lambda_y)^z}{z!}\exp(-\lambda_x-\lambda_y)
+\end{align*}
+$$
 
 :::
 
+<div class="blog-custom-border">
+<strong >📘 REMARKS</strong> <br>
+
+**「互いに独立」**という仮定が成立しないと，再生性の性質は成立しません．実際に
+
+$$
+\begin{align*}
+X_1 &\sim \operatorname{Po}(\lambda)\\
+X_1 &= X_2
+\end{align*}
+$$
+
+とした場合，$Y = X_1 + X_2$ という確率変数の確率関数は
+
+$$
+\begin{align*}
+f_Y(y) 
+    = \left\{\begin{array}{cc}
+    \frac{\lambda^{y/2}}{(y/2)!}\exp(-\lambda) & y \text{: even}\\
+    0 & y \text{: odd}
+    \end{array}\right.
+\end{align*}
+$$
+
+となり，$Y$ はポワソン分布に従う訳ではないことが確認できます．
+
+</div>
+
+## 他の確率分布との関係
+### 二項分布との関係
+
+確率変数 $X$ について
+
+$$
+X \sim \operatorname{Binom}(n, p)
+$$
+
+を考えます．このとき，$p$ は十分小さく
+
+$$
+\lim_{n\to\infty} np = \lambda
+$$
+
+が成立するとします．$X$ についての確率関数を求めると
+
+$$
+\begin{align*}
+P(X = x)
+    &= {}_nC_x p^x(1-p)^{n-x}\\
+    &= \frac{n(n-1)\cdots(n-x+1)}{x!}\left(\frac{\lambda}{n}\right)^x\left(1-\frac{\lambda}{n}\right)^{n-x}\\
+    &\to \frac{\lambda^x}{x!}\exp(-\lambda) \quad (\text{as } n\to \infty)
+\end{align*}
+$$
+
 ## Estimation
-### Ommited vriable and overdispersion
+### Ommited variable and overdispersion
 
 <div class="blog-custom-border">
-<strong>Def: overdispersion</strong> <br>
+<strong>Def: over-dispersion</strong> <br>
 
 観察データについて，期待される分散よりも大きい分散(variation)が確認される状があるとき，overdispersionであるという．
 

@@ -1,0 +1,73 @@
+---
+title: "無作為抽出法"
+author: "Ryo Nakagami"
+date: "2024-10-18"
+date-modified: last-modified
+number_sections: false
+code-fold: true
+comments:
+    utterances:
+         repo: RyoNakagami/statistics-for-regression-monkey
+         label: discussion
+---
+
+## 無作為抽出法
+
+<div class="blog-custom-border">
+<strong> 問題設定</strong> <br>
+
+A, B, C, D, Eなる５個のEntityからなる母集団から無作為に３個のEntityを選ぶ問題を考えます．
+このとき，
+
+- ３個の選び方は何通りあるか？
+- 各個別Entityの抽出確率はどれくらいか？
+
+</div>
+
+
+５個の中から３個選ぶ問題は
+
+$$
+{}_5C_3 = \frac{5!}{(5-3)!3!} = 10
+$$
+
+と計算できます．実際にPythonで計算すると以下のように確かめることができます．
+
+```{python}
+from itertools import combinations
+import numpy as np
+import polars as pl
+
+# A, B, C, D, Eのリストを用意
+entities = ['A', 'B', 'C', 'D', 'E']
+
+# 3個のEntityを選ぶ組み合わせを作成
+combinations_3 = list(combinations(entities, 3))
+
+# 組み合わせ結果をPolarsのデータフレームに変換
+df = pl.DataFrame({
+    "sample_index": np.arange(1, 11),
+    "combination": [f"{a}, {b}, {c}" for a, b, c in combinations_3]
+})
+
+# 結果を表示
+print(df)
+```
+
+これら標本がどれも当確率に選ばれるような抽出操作のことを**無作為抽出法**と呼びます．各Entityに着目すると，
+標本に含まれる確率は $\displaystyle\frac{3}{5}$ となります．実際にEntity Aに着目して，その抽出確率を求めると
+
+```{python}
+probability_A = df.filter(pl.col("combination").str.contains("A")).height / len(
+    combinations_3
+)
+print(f"Aが選ばれる確率: {probability_A:.2f}")
+```
+
+一般に母集団サイズ $N$ から サイズ $n$ の標本を無作為抽出する場合は可能な標本総数は
+
+$$
+{}_NC_n = \frac{N!}{(N-n)!n!}
+$$
+
+と表せます，

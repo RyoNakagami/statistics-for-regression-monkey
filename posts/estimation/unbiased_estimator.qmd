@@ -57,3 +57,76 @@ $$
 - 推定量のバイアスは定義よりtrue parameterに依存しますが，$\operatorname{Var}(\hat\theta)$ は依存しません
 - バイアスを抑えることができれば推定量についてのMSEが小さくなると期待されることが，不偏推定量を考える一つの動機
 - ただし，MSEは推定量の分散という要素もあるので，不偏推定量に限って議論することが望ましいとは限らない
+
+::: {#exm- .custom_problem }
+**: 分散の不偏推定量とMLE**
+<br>
+
+
+
+
+:::
+
+
+
+### 一様最小分散推定量
+
+$\hat\theta$ が不偏推定量であるとき，定義より $\operatorname{Bias}(\hat\theta) = 0$ になるので
+
+$$
+\operatorname{MSE}(\hat\theta) = \operatorname{Var}(\hat\theta)
+$$
+
+となります．従って，不偏推定量クラスに限れば，分散 $\operatorname{Var}(\hat\theta)$ を最小にする推定量が望ましいとなります．
+
+<div class="blog-custom-border">
+<strong>Def: 一様最小分散推定量(UMVU)</strong> <br>
+
+不偏推定量 $\hat\theta^*$ が，任意の不偏推定量 $\hat\theta$ に対して
+
+$$
+\operatorname{\hat\theta^*} \leq \operatorname{\hat\theta}
+$$
+
+が成り立つとき，$\hat\theta^*$ を一様最小分散推定量（Uniformly Minimum Variance Unbiased estimator）と呼ぶ．
+
+</div>
+
+いくつかの分布とパラメーターについてUVMUが存在していることが知られています．与えられた推定量がUMVUであることを示すには
+
+1. フィッシャー情報量に基づくクラメル・ラオの不等式
+2. 完備十分統計量
+
+のいずれかを用いて示す場合が多いです．
+
+### フィッシャー情報量
+
+<div class="blog-custom-border">
+<strong>Def: 一次元パラメータについてのフィッシャー情報量</strong> <br>
+
+$X = (X_1, \cdots, X_n)$ の同時密度関数を $f(x,\theta)$ で表す．$\theta$ は一次元のパラメーターとする．
+このとき，$\theta$ に関するフィッシャー情報量 $I_n(\theta)$ は次式で定義される
+
+$$
+\begin{align*}
+I_n(\theta)
+    &= \mathbb E_\theta\left[\left(\frac{\partial \log f(x, \theta)}{\partial \theta}\right)^2\right]\\
+    &= \int \left(\frac{\frac{\partial}{\partial \theta} f(x, \theta)}{f(x, \theta)}\right)^2 f(x, \theta)\,\mathrm{d} x\\
+    &= \int \frac{\left(\frac{\partial}{\partial \theta} f(x, \theta)\right)^2}{f(x, \theta)} \,\mathrm{d} x
+\end{align*}
+$$
+
+
+</div>
+
+$\frac{\partial \log f(x, \theta)}{\partial \theta}$ について, 
+
+$$
+\log f(x, \theta) = l(\theta, x), \quad l^\prime(\theta, x) = \frac{\partial l(\theta, x)}{\partial \theta}
+$$
+
+と対数尤度関数で表記し，以下のように表現される場合もあります
+
+$$
+I_n(\theta) = \mathbb E_\theta[(l^\prime(\theta, x))^2]
+$$

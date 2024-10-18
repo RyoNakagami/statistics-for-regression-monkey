@@ -56,6 +56,7 @@ book:
         - posts/probability_distribution/exponential_dist.qmd
         - posts/probability_distribution/gamma_dist.qmd
         - posts/probability_distribution/chi_squared_dist.qmd
+        - posts/probability_distribution/student_t_dist.qmd
     - part: posts/statistical_hypothesis_test_101/chapter_header.qmd
       chapters:
         - posts/statistical_hypothesis_test_101/fisher_exact_test.qmd
@@ -71,6 +72,9 @@ book:
     - part: posts/bayesian_estimation/chapter_header.qmd
       chapters: 
         - posts/bayesian_estimation/bayesian_linear_regression.qmd
+    - part: posts/survey_sampling/chapter_header.qmd
+      chapters: 
+        - posts/survey_sampling/simple_sampling.qmd
     - part: posts/ExplanatoryDataAnalysis/chapter_header.qmd
       chapters: 
         - posts/ExplanatoryDataAnalysis/gini_coefficient.qmd

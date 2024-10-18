@@ -137,15 +137,15 @@ $$
 \begin{align*}
 M_X(t)
     &= \int^\infty_0 \exp(tx) \frac{1}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})}x^{\frac{n}{2}-1}\exp(-x/2)\,\mathrm{d}x\\
-    &= \int^\infty_0\frac{1}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})}x^{\frac{n}{2}-1}\exp(-x(1-25)/2)\,\mathrm{d}x 
+    &= \int^\infty_0\frac{1}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})}x^{\frac{n}{2}-1}\exp(-x(1-2t)/2)\,\mathrm{d}x 
 \end{align*}
 $$
 
-ここで $x = \frac{1}{1-2t}z0$ と変数変換すると
+ここで $x = \frac{1}{1-2t}z$ と変数変換すると
 
 $$
 \begin{align*}
-\int^\infty_0\frac{1}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})}x^{\frac{n}{2}-1}\exp(-x(1-25)/2)\,\mathrm{d}x 
+&\int^\infty_0\frac{1}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})}x^{\frac{n}{2}-1}\exp(-x(1-2t)/2)\,\mathrm{d}x \\
     &= [1 - 2t]^{-\frac{n}{2}-1}(1 - 2t)\int^\infty_0\frac{1}{2^{\frac{n}{2}}\Gamma(\frac{n}{2})}z^{\frac{n}{2}-1}\exp(-z/2)\,\mathrm{d}z\\
     &= [1 - 2t]^{-\frac{n}{2}}
 \end{align*}
@@ -163,6 +163,41 @@ $$
 <strong > &#9654;&nbsp; 特性関数の導出</strong>
 
 
+
+### カイ２乗分布の再生性
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+確率変数 $X_1, \cdots, X_k$ について $X_i \overset{\mathrm{iid}}{\sim} \operatorname{\chi^2}(n_i)$ とする．このとき，
+$Y = \textstyle\sum_{i=1}^k X_i$ と変数を定義すると
+
+$$
+Y \sim  \operatorname{\chi^2}(\textstyle\sum_{i=1}^k n_i)
+$$
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+MGFを用いると
+
+$$
+\begin{align*}
+M_Y(t)
+    &= \textstyle\prod M_{X_i}(t)\\[5pt]
+    &= \textstyle\prod [1 - 2t]^{-n_i/2}\\[5pt]
+    &= \textstyle\prod [1 - 2t]^{-\sum n_i/2}
+\end{align*}
+$$
+
+これは $\operatorname{\chi^2}(\textstyle\sum_{i=1}^k n_i)$ のMGFと一致する．
+
+:::
 
 
 ## 他の確率分布との関係
@@ -184,5 +219,127 @@ $$
 
 ::: {.callout-note collapse="false" icon=false}
 ## Proof
+
+$U = Z^2$ は平方変換なので PDFは $u \geq 0$ について
+
+$$
+\begin{align*}
+f_U(u)
+    &= \frac{\,\mathrm{d}}{\,\mathrm{d}u} P(Z \in \{z\vert -\sqrt{u} \leq z \sqrt{u} \})\\
+    &= \frac{\,\mathrm{d}}{\,\mathrm{d}u} \int^{\sqrt{u}}_{-\sqrt{u}} \frac{1}{2\pi}\exp\left(-\frac{z^2}{2}\right)\,\mathrm{d}z\\
+    &= \frac{1}{2}\frac{1}{\sqrt{u}}\left[\frac{1}{\sqrt{2\pi}}\exp\left(-\frac{u}{2}\right) + \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{u}{2}\right)\right]\\
+    &= \frac{1}{\sqrt{2\pi}}u^{-\frac{1}{2}}\exp\left(-\frac{u}{2}\right)\\
+    &= \frac{1}{2^{1/2}\Gamma(1/2)}u^{-\frac{1}{2}}\exp\left(-\frac{u}{2}\right)
+\end{align*}
+$$
+
+$u < 0$ については $f_u(u) = 0$ であるので，$U$ のPDFは $\operatorname{\chi^2}(1)$ のPDFと一致することが示せました．
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+<br>
+
+確率変数 $Z_i \overset{\mathrm{iid}}{\sim} N(0, 1), i = 1, 2, 3, \cdots, n$ について，
+
+$$
+Y = \textstyle\sum_{i=1}^n Z_i^2
+$$
+
+としたとき，$Y \sim \operatorname{\chi^2}(n)$ 
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+$Z_i^2 \sim \operatorname{\chi^2}(1)$ であるので，
+
+$$
+M_{Z_i}(t) = [1 - 2t]^{-\frac{1}{2}}
+$$
+
+$\{Z_i\}_{i=1}^n$ は仮定より互いに独立なので，
+
+$$
+\begin{align*}
+M_Y(t) 
+    &= \prod_{i=1}^n M_{Z_i}(t)\\
+    &= \prod_{i=1}^n [1 - 2t]^{-\frac{1}{2}}\\
+    &= [1 - 2t]^{-\frac{n}{2}}
+\end{align*}
+$$
+
+これは $\operatorname{\chi^2}(n)$ のMGFと一致するので $Y \sim \operatorname{\chi^2}(n)$ 
+
+:::
+
+<div class="blog-custom-border">
+::: {#thm- .custom_problem }
+**正規分布に従う確率変数の不偏分散**
+<br>
+
+確率変数 $X_i \overset{\mathrm{iid}}{\sim} N(\mu, \sigma^2), i = 1, \cdots, n$ について
+
+$$
+\begin{align*}
+\overline{X} &= \frac{1}{n}\sum X_i\\
+S^2 &= \frac{1}{n} \sum (X_i - \overline{X})^2
+\end{align*}
+$$
+
+としたとき，
+
+$$
+(n-1)\frac{S^2}{\sigma^2} \sim \operatorname{\chi^2}(n-1)
+$$
+
+
+:::
+
+</div>
+
+::: {.callout-note collapse="false" icon=false}
+## Proof
+
+<strong > &#9654;&nbsp; Assumption</strong>
+
+$$
+\begin{align*}
+\overline{X} &= \frac{1}{n}\sum X_i\\
+S^2 &= \frac{1}{n} \sum (X_i - \overline{X})^2\\
+\Rightarrow &\overline{X} \perp S^2
+\end{align*}
+$$
+
+<strong > &#9654;&nbsp; Proof</strong>
+
+$$
+\begin{align*}
+\sum \left(\frac{X_i - \mu}{\sigma}\right)^2
+    &= \frac{1}{\sigma}\sum \left(X_i - \overline{X} + \overline{X} - \mu\right)^2\\
+    &= \frac{1}{\sigma}\sum (X_i - \overline{X})^2 + \left(\frac{\overline{X} - \mu}{\sigma/\sqrt{n}}\right)^2\\
+    &= \frac{n-1}{\sigma}S^2 + \left(\frac{\overline{X} - \mu}{\sigma/\sqrt{n}}\right)^2
+\end{align*}
+$$
+
+このとき，
+
+$$
+\begin{gather}
+\sum \left(\frac{X_i - \mu}{\sigma}\right)^2 \sim \operatorname{\chi^2}(n)\\
+\left(\frac{\overline{X} - \mu}{\sigma/\sqrt{n}}\right)^2 \sim \operatorname{\chi^2}(1)\\[5pt]
+\overline{X} \perp S^2
+\end{gather}
+$$
+
+であるので，
+
+$$
+\frac{n-1}{\sigma}S^2 \sim \operatorname{\chi^2}(n-1)
+$$
 
 :::
