@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryo Nakagami">
-<meta name="dcterms.date" content="2024-08-31">
+<meta name="dcterms.date" content="2024-10-12">
 
-<title>統計的仮説検定 – Statistics for Regression Monkeys</title>
+<title>標本調査法 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,8 +32,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" rel="next">
-<link href="../../posts/probability_distribution/student_t_dist.html" rel="prev">
+<link href="../../posts/survey_sampling/simple_sampling.html" rel="next">
+<link href="../../posts/bayesian_estimation/bayesian_linear_regression.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
@@ -105,7 +105,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/statistical_hypothesis_test_101/chapter_header.html">統計的仮説検定</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/survey_sampling/chapter_header.html">標本調査法</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -305,7 +305,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../posts/statistical_hypothesis_test_101/chapter_header.html" class="sidebar-item-text sidebar-link active">
+            <a href="../../posts/statistical_hypothesis_test_101/chapter_header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">統計的仮説検定</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -391,7 +391,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="../../posts/survey_sampling/chapter_header.html" class="sidebar-item-text sidebar-link">
+            <a href="../../posts/survey_sampling/chapter_header.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">標本調査法</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -514,7 +514,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">統計的仮説検定</h1>
+<h1 class="title">標本調査法</h1>
 </div>
 
 
@@ -531,7 +531,7 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2024-08-31</p>
+      <p class="date">2024-10-12</p>
     </div>
   </div>
   
@@ -549,6 +549,37 @@ gtag('config', 'G-QEFX7FVCDM', { 'anonymize_ip': true});
 </header>
 
 
+<p><strong> ▶&nbsp; 標本調査の目的</strong></p>
+<p>標本調査の目的は，母集団全体ではなく，その一部である標本を調べることで，母集団の特性値（平均や分散など）を推定することにあります．</p>
+<p><strong> ▶&nbsp; 標本調査と単位</strong></p>
+<p>とある母集団について統計的分析を行うとき，分析対象が集団である以上，その集団はその構成要素から成り立っていると考えるのが 普通ですが，その単位は以下のようなレベル別に考えることができます：</p>
+<ul>
+<li>統計単位</li>
+<li>観察単位(a unit of observation)</li>
+<li>抽出単位</li>
+</ul>
+<div class="blog-custom-border">
+<p><strong>Def: 統計単位</strong> <br></p>
+<p>調査で得られるデータに基づいて計算された各統計の単位のことを<em>統計単位</em>と呼ぶ．</p>
+<p>個人を観察単位とするデータから，世帯別収入を計算し，その世帯別収入のヒストグラムという統計を作成した場合，世帯が<em>統計単位</em>となる．</p>
+</div>
+<p>農業センサスにおいては多くの項目の統計単位は農家または世帯ですが，調査内容によっては個人であったり，市区帳であったりします． このように統計単位は１つの調査に固有のものではなく，調査で得られる各統計に固有なものとなります．</p>
+<div class="blog-custom-border">
+<p><strong>Def: 観察単位</strong> <br></p>
+<p>調査法における<em>観察単位</em>はデータが収集される単位のことを指す．一方，Datasetにおける<em>観察単位</em>は基本的にはDatsetのindexの単位のことを指す．</p>
+</div>
+<p>調査法における観察単位とDatasetにおける観察単位が異なる例として，日本全国の小学校の校長を対象に郵送法で調査を実施したとき，前者の単位は小学校の校長となりますが，調査の質問内容が学校生徒個人に関する場合，その調査の結果得られたデータセットは日本の小学校に在籍している生徒個人となる可能性があります．</p>
+<div class="blog-custom-border">
+<p><strong>Def: 抽出単位</strong> <br></p>
+<p>標本抽出の際に利用する単位のこと．国勢調査速報値の場合，調査員の受け持つ調査区域のこと．</p>
+</div>
+<p>抽出単位は調査毎に一意に定まるものではないことに注意が必要です．例として，2024年10月1日に日本に所在している世帯を母集団として，そこから1000世帯を標本抽出をするケースを考えます．このとき，全国の世帯に対して乱数を振り1000世帯を抽出することを考えた場合，抽出単位は世帯となりますが，</p>
+<ol type="1">
+<li>市区町村を世帯人数規模に応じてサンプリング</li>
+<li>市区町村内をいくつかの調査区域に分けてサンプリング</li>
+<li>調査区域内部で世帯をサンプリング</li>
+</ol>
+<p>という処理順番でサンプリングした場合，最終的に得られる観察単位は世帯となりますが，抽出単位は (市区町村，調査区，世帯) となります．</p>
 
 
 
@@ -1129,13 +1160,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../posts/probability_distribution/student_t_dist.html" class="pagination-link" aria-label="t分布">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">t分布</span></span>
+      <a href="../../posts/bayesian_estimation/bayesian_linear_regression.html" class="pagination-link" aria-label="ベイジアン線形回帰">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="pagination-link" aria-label="Fisher's exact test">
-        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/survey_sampling/simple_sampling.html" class="pagination-link" aria-label="無作為抽出法">
+        <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">無作為抽出法</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
@@ -1156,7 +1187,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </a>
   </li>  
 </ul>
-    <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/statistical_hypothesis_test_101/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions"><ul><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/edit/main/posts/survey_sampling/chapter_header.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/RyoNakagami/statistics-for-regression-monkey/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
       &nbsp;
     </div>

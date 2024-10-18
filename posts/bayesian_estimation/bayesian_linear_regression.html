@@ -9,7 +9,7 @@
 <meta name="author" content="Ryo Nakagami">
 <meta name="dcterms.date" content="2024-10-03">
 
-<title>26&nbsp; ベイジアン線形回帰 – Statistics for Regression Monkeys</title>
+<title>27&nbsp; ベイジアン線形回帰 – Statistics for Regression Monkeys</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +66,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../../">
-<link href="../../posts/ExplanatoryDataAnalysis/chapter_header.html" rel="next">
+<link href="../../posts/survey_sampling/chapter_header.html" rel="next">
 <link href="../../posts/bayesian_estimation/chapter_header.html" rel="prev">
 <link href="../.././img/favicon.ico" rel="icon">
 <script src="../../site_libs/quarto-html/quarto.js"></script>
@@ -171,7 +171,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -361,6 +361,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">カイ２乗分布</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/probability_distribution/student_t_dist.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">t分布</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -375,13 +381,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/fisher_exact_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Fisher’s exact test</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_101/ks_test.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">KS検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">KS検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -398,7 +404,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/statistical_hypothesis_test_201/fisher_vs_neyman_pearson.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Fisher流検定 vs Neyman-Pearson流検定</span></span></a>
   </div>
 </li>
       </ul>
@@ -415,19 +421,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/unbiased_estimator.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">不偏推定量</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">不偏推定量</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/method-of-moments.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">モーメント法</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/estimation/m-estimator.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">M-Estimator</span></span></a>
   </div>
 </li>
       </ul>
@@ -444,7 +450,24 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/bayesian_estimation/bayesian_linear_regression.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../posts/survey_sampling/chapter_header.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">標本調査法</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../posts/survey_sampling/simple_sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">無作為抽出法</span></span></a>
   </div>
 </li>
       </ul>
@@ -453,15 +476,15 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="../../posts/ExplanatoryDataAnalysis/chapter_header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Explanatory Data Analysis</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/ExplanatoryDataAnalysis/gini_coefficient.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">ジニ係数</span></span></a>
   </div>
 </li>
       </ul>
@@ -478,28 +501,28 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a href="../../posts/prediction/chapter_header.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Prediction</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-10" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-10" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/prediction/bias_variance_in_prediction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Bias and Variance</span></span></a>
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Bias and Variance</span></span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true">
  <span class="menu-text">Appendices</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-11" role="navigation" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-12" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
-      <ul id="quarto-sidebar-section-11" class="collapse list-unstyled sidebar-section depth1 show">  
+      <ul id="quarto-sidebar-section-12" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../posts/mathematical_appendix/taylor_series.html" class="sidebar-item-text sidebar-link">
@@ -563,9 +586,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/chapter_header.html">ベイズ推定</a></li><li class="breadcrumb-item"><a href="../../posts/bayesian_estimation/bayesian_linear_regression.html"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></h1>
+<h1 class="title"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">ベイジアン線形回帰</span></h1>
 </div>
 
 
@@ -589,7 +612,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-12</p>
+      <p class="date-modified">2024-10-18</p>
     </div>
   </div>
     
@@ -641,13 +664,13 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 <p>議論の単純化のため，以下では</p>
 <p><span id="eq-normality"><span class="math display">\[
 \epsilon_1, \cdots, \epsilon_m \overset{\mathrm{iid}}{\sim} N(0, \sigma^2)
-\tag{26.1}\]</span></span></p>
+\tag{27.1}\]</span></span></p>
 <p>つまり， Homoscedasticityの仮定の下で話を進めます．</p>
 <p><strong> ▶&nbsp; <span class="math inline">\(\pmb\beta\)</span> の推定</strong></p>
 <p>仮定 (2), (3) より <span class="math inline">\(\mathbb E[Y_i\vert \pmb{x}_i] = \pmb{x}_i^T\pmb{\beta}\)</span> であるので，</p>
 <p><span id="eq-OLS-loss-func"><span class="math display">\[
 \pmb{\beta} = \arg\min_{b} \mathbb E[(Y_i - \pmb{x}_i^T\pmb{b})^2]
-\tag{26.2}\]</span></span></p>
+\tag{27.2}\]</span></span></p>
 <p>the joint distribution <span class="math inline">\((Y_i, \pmb{x}_i)\)</span> は事前には知られていないので、sample analogを用いて以下のように推定します</p>
 <p><span class="math display">\[
 \begin{align*}
@@ -663,7 +686,7 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 <p>仮定 (5) より <span class="math inline">\(\operatorname{rank}(\pmb{X}) = k\)</span>, つまりfull rankであるので <span class="math inline">\((\pmb{X}^T\pmb{X})^{-1}\)</span> がとれます．従って，</p>
 <p><span id="eq-OLS-estimator"><span class="math display">\[
 \widehat{\pmb{\beta}} = (\pmb{X}^T\pmb{X})^{-1}(\pmb{X}^T\pmb{Y})
-\tag{26.3}\]</span></span></p>
+\tag{27.3}\]</span></span></p>
 <p><strong> ▶&nbsp; <span class="math inline">\(\widehat{\pmb{\beta}}\)</span> の漸近分散</strong></p>
 <p>population <span class="math inline">\(\pmb{\beta}\)</span> を用いてerror termを以下のように表します</p>
 <p><span class="math display">\[
@@ -673,7 +696,7 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
     &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i
 \end{align*}
 \]</span></p>
-<p>両辺に <span class="math inline">\([\pmb{X}^T\pmb{X}]^{-1}\pmb{X}^T\)</span> をかけると <a href="#eq-OLS-estimator" class="quarto-xref">Equation&nbsp;<span>26.3</span></a> より</p>
+<p>両辺に <span class="math inline">\([\pmb{X}^T\pmb{X}]^{-1}\pmb{X}^T\)</span> をかけると <a href="#eq-OLS-estimator" class="quarto-xref">Equation&nbsp;<span>27.3</span></a> より</p>
 <p><span class="math display">\[
 \widehat{\pmb{\beta}} = \pmb{\beta} + \left[\sum\pmb{x}_i\pmb{x}_i^T\right]^{-1}\sum \pmb{x}_i\epsilon_i
 \]</span></p>
@@ -691,7 +714,7 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 \sqrt{n}(\widehat{{\pmb{\beta}}} - \pmb{\beta}) \overset{\mathrm{d}}{\to}  N(0, \mathbb E[\pmb{x}_i\pmb{x}]^{-1}\mathbb E[\pmb{x}_i\pmb{x}^T\epsilon_i^2]\mathbb E[\pmb{x}_i\pmb{x}]^{-1})
 \end{align*}
 \]</span></p>
-<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>26.1</span></a> より</p>
+<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>27.1</span></a> より</p>
 <p><span class="math display">\[
 \mathbb E[\pmb{x}_i\pmb{x}^T\epsilon_i^2] = \sigma^2\mathbb E[\pmb{x}_i\pmb{x}^T]
 \]</span></p>
@@ -709,23 +732,23 @@ Y_i &amp;= \pmb{x}_i^T\pmb{\beta} + \epsilon_i \quad (\epsilon_i \text{: errors}
 \end{align*}
 \]</span></p>
 <p><strong> ▶&nbsp; <span class="math inline">\(\pmb{Y}\)</span> の条件付き同時分布 </strong></p>
-<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>26.1</span></a> より<span class="math inline">\(\pmb{Y}\)</span> の条件付き同時確率密度は</p>
+<p><a href="#eq-normality" class="quarto-xref">Equation&nbsp;<span>27.1</span></a> より<span class="math inline">\(\pmb{Y}\)</span> の条件付き同時確率密度は</p>
 <p><span id="eq-joint-normality"><span class="math display">\[
 \begin{align*}
 p&amp;(Y_1, \cdots, Y_n\vert \pmb{x_1}, \cdots, \pmb{x_n}, \pmb{\beta}, \sigma^2)\\
 &amp;= \prod p(Y_i\vert \pmb{x_i}, \pmb{\beta}, \sigma^2) \quad \because\text{i.i.d}\\
 &amp;= (2\pi\sigma^2)^{-n/2}\exp\{- \frac{1}{2\sigma^2}\sum_{i=1}^n (Y_i - \pmb{x}_i^T\pmb{\beta})^2\}
 \end{align*}
-\tag{26.4}\]</span></span></p>
+\tag{27.4}\]</span></span></p>
 <p>つまり，</p>
 <p><span class="math display">\[
 \{\pmb{Y} \vert \pmb{X}, \pmb{\beta}, \sigma\} \sim \operatorname{N}(\pmb{X}\pmb{\beta}, \sigma^2\pmb{I})
 \]</span></p>
-<p><a href="#eq-joint-normality" class="quarto-xref">Equation&nbsp;<span>26.4</span></a> の尤度最大化は</p>
+<p><a href="#eq-joint-normality" class="quarto-xref">Equation&nbsp;<span>27.4</span></a> の尤度最大化は</p>
 <p><span class="math display">\[
 \min\sum_{i=1}^n (Y_i - \pmb{x}_i^T\pmb{\beta})^2
 \]</span></p>
-<p>を解くことで得られますが，これは <a href="#eq-OLS-loss-func" class="quarto-xref">Equation&nbsp;<span>26.2</span></a> の問題と対応していることがわかります．</p>
+<p>を解くことで得られますが，これは <a href="#eq-OLS-loss-func" class="quarto-xref">Equation&nbsp;<span>27.2</span></a> の問題と対応していることがわかります．</p>
 </section>
 <section id="bayesian-linear-regression" class="level2">
 <h2 class="anchored" data-anchor-id="bayesian-linear-regression">Bayesian Linear Regression</h2>
@@ -751,7 +774,7 @@ p&amp;(\pmb\beta\vert \pmb Y, \pmb X, \sigma^2)\\
 \mathbb E[\pmb\beta\vert\pmb Y, \pmb X, \sigma^2]
     &amp;= (\pmb\Sigma_0^{-1} + \pmb X^T\pmb X/\sigma^2)^{-1}(\pmb\Sigma_0^{-1}\pmb\beta_0 + \pmb X^T\pmb Y/\sigma^2)
 \end{align*}
-\tag{26.5}\]</span></span></p>
+\tag{27.5}\]</span></span></p>
 <div class="nte- callout callout-style-default callout-tip no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -762,7 +785,7 @@ p&amp;(\pmb\beta\vert \pmb Y, \pmb X, \sigma^2)\\
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><a href="#eq-posterior-beta" class="quarto-xref">Equation&nbsp;<span>26.5</span></a> について</p>
+<p><a href="#eq-posterior-beta" class="quarto-xref">Equation&nbsp;<span>27.5</span></a> について</p>
 <p><span class="math display">\[
 \begin{gather}
 \pmb\beta_0 = \pmb 0\\
@@ -844,7 +867,7 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 </section>
 <section id="bayesian-linear-regression-with-jax" class="level2">
 <h2 class="anchored" data-anchor-id="bayesian-linear-regression-with-jax">Bayesian Linear Regression with JAX</h2>
-<div id="0106d573" class="cell" data-execution_count="1">
+<div id="ab6c80f0" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -858,7 +881,7 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="43c9228e" class="cell" data-execution_count="2">
+<div id="971a489e" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_stata(</span>
@@ -976,7 +999,7 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 </div>
 </div>
 </div>
-<div id="8fc347b9" class="cell" data-execution_count="3">
+<div id="a98fb25e" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sw.set_templates(<span class="st">"regmonkey_scatter"</span>)</span>
@@ -986,13 +1009,13 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="bayesian_linear_regression_files/figure-html/cell-4-output-1.png" width="587" height="436" class="figure-img"></p>
+<p><img src="bayesian_linear_regression_files/figure-html/cell-4-output-1.png" width="587" height="432" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong> ▶&nbsp; MLE</strong></p>
-<div id="aa308f95" class="cell" data-execution_count="4">
+<div id="a56c6e6c" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> LogLikelihood(y, x, theta):</span>
@@ -1027,13 +1050,13 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="bayesian_linear_regression_files/figure-html/cell-5-output-2.png" width="605" height="436" class="figure-img"></p>
+<p><img src="bayesian_linear_regression_files/figure-html/cell-5-output-2.png" width="605" height="432" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong> ▶&nbsp; OLS</strong></p>
-<div id="de9e6ada" class="cell" data-execution_count="5">
+<div id="99bf3751" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_ols <span class="op">=</span> df.copy()</span>
@@ -1049,8 +1072,8 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 Dep. Variable:               logpgp95   R-squared:                       0.611
 Model:                            OLS   Adj. R-squared:                  0.608
 Method:                 Least Squares   F-statistic:                     171.4
-Date:                Sat, 12 Oct 2024   Prob (F-statistic):           4.16e-24
-Time:                        07:47:50   Log-Likelihood:                -119.71
+Date:                Fri, 18 Oct 2024   Prob (F-statistic):           4.16e-24
+Time:                        19:30:35   Log-Likelihood:                -119.71
 No. Observations:                 111   AIC:                             243.4
 Df Residuals:                     109   BIC:                             248.8
 Df Model:                           1                                         
@@ -1072,7 +1095,7 @@ Notes:
 </div>
 </div>
 <p><strong> ▶&nbsp; Rdige</strong></p>
-<div id="4278b76b" class="cell" data-execution_count="6">
+<div id="f92ab6f0" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>reg_l2 <span class="op">=</span> sm.OLS(endog<span class="op">=</span>df_ols[<span class="st">'logpgp95'</span>], exog<span class="op">=</span>df_ols[[<span class="st">'const'</span>, <span class="st">'avexpr'</span>]], <span class="op">\</span></span>
@@ -1084,7 +1107,7 @@ Notes:
 <pre><code>array([0.55745346, 1.05775113])</code></pre>
 </div>
 </div>
-<div id="f46388cc" class="cell" data-execution_count="7">
+<div id="45538b61" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>reg_l2 <span class="op">=</span> sm.OLS(endog<span class="op">=</span>y_mle, exog<span class="op">=</span>x_mle, <span class="op">\</span></span>
@@ -1096,7 +1119,7 @@ Notes:
 <pre><code>array([0.39242079])</code></pre>
 </div>
 </div>
-<div id="b8bfc844" class="cell" data-execution_count="8">
+<div id="906d1e4b" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
@@ -1105,11 +1128,11 @@ Notes:
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(coef, intercept)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[0.5319228] 4.625329</code></pre>
+<pre><code>[0.5319232] 4.625326</code></pre>
 </div>
 </div>
 <p><strong> ▶&nbsp; bayesian regression</strong></p>
-<div id="0127d577" class="cell" data-execution_count="9">
+<div id="6e397217" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> set_matplotlib_formats</span>
@@ -1159,7 +1182,7 @@ Notes:
 Number of divergences: 0</code></pre>
 </div>
 </div>
-<div id="67f2a9dc" class="cell" data-execution_count="10">
+<div id="63ee6d8f" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model(x<span class="op">=</span><span class="va">None</span>, y<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> numpyro.sample(<span class="st">"a"</span>, dist.Normal(<span class="fl">5.0</span>, <span class="dv">1</span>))</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    M, A <span class="op">=</span> <span class="fl">0.0</span>, <span class="fl">0.0</span></span>
@@ -1192,7 +1215,7 @@ Number of divergences: 0</code></pre>
 Number of divergences: 0</code></pre>
 </div>
 </div>
-<div id="c7f31ec3" class="cell" data-execution_count="11">
+<div id="17039007" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_regression(x_data, y_mean, y_hpdi, y_data):</span>
@@ -1227,12 +1250,12 @@ Number of divergences: 0</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="bayesian_linear_regression_files/figure-html/cell-12-output-1.png" width="512" height="535" class="figure-img"></p>
+<p><img src="bayesian_linear_regression_files/figure-html/cell-12-output-1.png" width="512" height="531" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="134a66f2" class="cell" data-execution_count="12">
+<div id="b5f30e48" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpyro.infer <span class="im">import</span> Predictive</span>
@@ -1251,12 +1274,12 @@ Number of divergences: 0</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="bayesian_linear_regression_files/figure-html/cell-13-output-1.png" width="523" height="535" class="figure-img"></p>
+<p><img src="bayesian_linear_regression_files/figure-html/cell-13-output-1.png" width="523" height="531" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="fd09294c" class="cell" data-execution_count="13">
+<div id="9f9a3720" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df_bayes <span class="op">=</span> df.copy()</span>
@@ -1316,7 +1339,7 @@ Number of divergences: 0</code></pre>
 </div>
 </div>
 </div>
-<div id="8f059706" class="cell" data-execution_count="14">
+<div id="1c538056" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot predicted values</span></span>
@@ -1339,12 +1362,12 @@ Number of divergences: 0</code></pre>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="bayesian_linear_regression_files/figure-html/cell-15-output-1.png" width="587" height="461" class="figure-img"></p>
+<p><img src="bayesian_linear_regression_files/figure-html/cell-15-output-1.png" width="587" height="457" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="5349a9b8" class="cell" data-execution_count="15">
+<div id="96159d6e" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_likelihood(rng_key, params, model, <span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
@@ -1965,8 +1988,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../posts/ExplanatoryDataAnalysis/chapter_header.html" class="pagination-link" aria-label="Explanatory Data Analysis">
-        <span class="nav-page-text">Explanatory Data Analysis</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../../posts/survey_sampling/chapter_header.html" class="pagination-link" aria-label="標本調査法">
+        <span class="nav-page-text">標本調査法</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
