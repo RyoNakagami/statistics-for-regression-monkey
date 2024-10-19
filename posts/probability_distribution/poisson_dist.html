@@ -213,6 +213,11 @@ window.Quarto = {
             </a>
           </li>
           <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/cmdstan_for_regression_monkey/">
+            cmdstanpy for regmonkey
+            </a>
+          </li>
+          <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/statistics_dojo/">
             statistics dojo
             </a>
@@ -637,7 +642,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-18</p>
+      <p class="date-modified">2024-10-19</p>
     </div>
   </div>
     
@@ -781,7 +786,7 @@ M_X(t)
 </tbody>
 </table>
 <p>抽出結果は以下のようになります</p>
-<div id="327829b6" class="cell" data-execution_count="1">
+<div id="98e816ff" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -861,7 +866,7 @@ M_X(t)
 </div>
 </div>
 <p>ここからMan Utdのゲームごとのゴール数配列を抽出し，ポワソン分布比較してみます．</p>
-<div id="e8da0117" class="cell" data-execution_count="2">
+<div id="479eae88" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -921,9 +926,9 @@ M_X(t)
 <span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>fig.show()    </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>                            <div id="c79fcea5-b9a5-4ec9-8edf-ccec1154ad1d" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("c79fcea5-b9a5-4ec9-8edf-ccec1154ad1d")) {                    Plotly.newPlot(                        "c79fcea5-b9a5-4ec9-8edf-ccec1154ad1d",                        [{"name":"Goals per games","width":0.3,"x":[0,1,2,3,4,5],"y":[0.21052631578947367,0.2631578947368421,0.23684210526315788,0.18421052631578946,0.07894736842105263,0.02631578947368421],"type":"bar"},{"line":{"color":"gray","dash":"dot"},"mode":"lines+markers","name":"Poisson","x":[0,1,2,3,4,5],"y":[0.17607555165924665,0.30581543182921794,0.2655765592201103,0.1537548500748007,0.06676197437458452,0.023191001624855684],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"line":{"width":2},"marker":{"size":5},"mode":"markers","opacity":0.7,"type":"scatter"}]},"layout":{"autosize":true,"colorway":["#4477AA","#EE6677","#228833","#CCBB44","#66CCEE","#AA3377","#BBBBBB"],"font":{"color":"#3F5661","size":12},"legend":{"bgcolor":"rgba(255, 255, 255, 0)","font":{"size":12},"traceorder":"normal"},"margin":{"b":60,"l":70,"r":30,"t":60},"paper_bgcolor":"#EFF5F5","plot_bgcolor":"#EFF5F5","title":{"font":{"size":24},"x":0.001,"xanchor":"left","xref":"paper","yanchor":"top"},"xaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"X-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1},"yaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"Y-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1}}},"title":{"text":"19-20\u30b7\u30fc\u30ba\u30f3 Man Utd Goal Distribution"},"xaxis":{"title":{"text":"Goals"}},"yaxis":{"title":{"text":"Frequency"}},"legend":{"title":{"text":"Legend"}},"showlegend":true},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="1c5bb9ec-1ee2-47bb-9230-32da5fba4108" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("1c5bb9ec-1ee2-47bb-9230-32da5fba4108")) {                    Plotly.newPlot(                        "1c5bb9ec-1ee2-47bb-9230-32da5fba4108",                        [{"name":"Goals per games","width":0.3,"x":[0,1,2,3,4,5],"y":[0.21052631578947367,0.2631578947368421,0.23684210526315788,0.18421052631578946,0.07894736842105263,0.02631578947368421],"type":"bar"},{"line":{"color":"gray","dash":"dot"},"mode":"lines+markers","name":"Poisson","x":[0,1,2,3,4,5],"y":[0.17607555165924665,0.30581543182921794,0.2655765592201103,0.1537548500748007,0.06676197437458452,0.023191001624855684],"type":"scatter"}],                        {"template":{"data":{"scatter":[{"line":{"width":2},"marker":{"size":5},"mode":"markers","opacity":0.7,"type":"scatter"}]},"layout":{"autosize":true,"colorway":["#4477AA","#EE6677","#228833","#CCBB44","#66CCEE","#AA3377","#BBBBBB"],"font":{"color":"#3F5661","size":12},"legend":{"bgcolor":"rgba(255, 255, 255, 0)","font":{"size":12},"traceorder":"normal"},"margin":{"b":60,"l":70,"r":30,"t":60},"paper_bgcolor":"#EFF5F5","plot_bgcolor":"#EFF5F5","title":{"font":{"size":24},"x":0.001,"xanchor":"left","xref":"paper","yanchor":"top"},"xaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"X-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1},"yaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"Y-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1}}},"title":{"text":"19-20\u30b7\u30fc\u30ba\u30f3 Man Utd Goal Distribution"},"xaxis":{"title":{"text":"Goals"}},"yaxis":{"title":{"text":"Frequency"}},"legend":{"title":{"text":"Legend"}},"showlegend":true},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('c79fcea5-b9a5-4ec9-8edf-ccec1154ad1d');
+var gd = document.getElementById('1c5bb9ec-1ee2-47bb-9230-32da5fba4108');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{

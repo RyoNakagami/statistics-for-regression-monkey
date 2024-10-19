@@ -213,6 +213,11 @@ window.Quarto = {
             </a>
           </li>
           <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/cmdstan_for_regression_monkey/">
+            cmdstanpy for regmonkey
+            </a>
+          </li>
+          <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/statistics_dojo/">
             statistics dojo
             </a>
@@ -627,7 +632,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-18</p>
+      <p class="date-modified">2024-10-19</p>
     </div>
   </div>
     
@@ -681,7 +686,7 @@ F_X(x) = \Pr(X\leq x) \quad x\in \mathbb{R}
 </div>
 </div>
 <p>任意の <span class="math inline">\(a\in\mathbb R\)</span> に対して, <span class="math inline">\(x\)</span> を右から <span class="math inline">\(a\)</span> に近づけると <span class="math inline">\(F_X(x)\)</span> が <span class="math inline">\(F_X(a)\)</span> に収束するとき， <span class="math inline">\(F_X(x)\)</span> は右連続といいます．<span class="math inline">\(F_X(x)\)</span> が右連続かつ左連続であるとき，<span class="math inline">\(F_X(x)\)</span> は点 <span class="math inline">\(a\)</span> で連続であるといいます．</p>
-<div id="6f29c78c" class="cell" data-execution_count="1">
+<div id="4e79e20a" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -721,9 +726,9 @@ F_X(x) = \Pr(X\leq x) \quad x\in \mathbb{R}
 <span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>pio.show(fig)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<div>                            <div id="903063ae-3977-418e-bcff-ea7be7b5a57a" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("903063ae-3977-418e-bcff-ea7be7b5a57a")) {                    Plotly.newPlot(                        "903063ae-3977-418e-bcff-ea7be7b5a57a",                        [{"line":{"shape":"hv"},"marker":{"symbol":"0"},"mode":"lines+markers","name":"CDF is Right-Continuous","x":[-1,0,1,2,3,4,5,6],"y":[0.0,0.07776,0.3369599999999999,0.68256,0.91296,0.98976,1.0,1.0],"type":"scatter"}],                        {"title":{"text":"CDF is Right-Continuous"},"xaxis":{"title":{"text":"X"}},"yaxis":{"title":{"text":"\u7d2f\u7a4d\u78ba\u7387"}},"template":{"data":{"scatter":[{"connectgaps":true,"line":{"width":2},"marker":{"size":5},"mode":"lines","opacity":0.9,"type":"scatter"}]},"layout":{"autosize":true,"colorway":["#4477AA","#66CCEE","#CCBB44","#AA3377","#228833","#EE6677","#BBBBBB"],"font":{"color":"#3F5661","size":12},"legend":{"bgcolor":"rgba(255, 255, 255, 0)","font":{"size":12},"traceorder":"normal"},"margin":{"b":60,"l":70,"r":30,"t":60},"paper_bgcolor":"#EFF5F5","plot_bgcolor":"#EFF5F5","title":{"font":{"size":24},"x":0.001,"xanchor":"left","xref":"paper","yanchor":"top"},"xaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"X-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1},"yaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"Y-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1}}}},                        {"responsive": true}                    ).then(function(){
+<div>                            <div id="f20dc82c-b3f4-4777-86d6-9753f4fa0f21" class="plotly-graph-div" style="height:525px; width:100%;"></div>            <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("f20dc82c-b3f4-4777-86d6-9753f4fa0f21")) {                    Plotly.newPlot(                        "f20dc82c-b3f4-4777-86d6-9753f4fa0f21",                        [{"line":{"shape":"hv"},"marker":{"symbol":"0"},"mode":"lines+markers","name":"CDF is Right-Continuous","x":[-1,0,1,2,3,4,5,6],"y":[0.0,0.07776,0.3369599999999999,0.68256,0.91296,0.98976,1.0,1.0],"type":"scatter"}],                        {"title":{"text":"CDF is Right-Continuous"},"xaxis":{"title":{"text":"X"}},"yaxis":{"title":{"text":"\u7d2f\u7a4d\u78ba\u7387"}},"template":{"data":{"scatter":[{"connectgaps":true,"line":{"width":2},"marker":{"size":5},"mode":"lines","opacity":0.9,"type":"scatter"}]},"layout":{"autosize":true,"colorway":["#4477AA","#66CCEE","#CCBB44","#AA3377","#228833","#EE6677","#BBBBBB"],"font":{"color":"#3F5661","size":12},"legend":{"bgcolor":"rgba(255, 255, 255, 0)","font":{"size":12},"traceorder":"normal"},"margin":{"b":60,"l":70,"r":30,"t":60},"paper_bgcolor":"#EFF5F5","plot_bgcolor":"#EFF5F5","title":{"font":{"size":24},"x":0.001,"xanchor":"left","xref":"paper","yanchor":"top"},"xaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"X-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1},"yaxis":{"gridcolor":"#BBBBBB","griddash":"dot","gridwidth":0.1,"showgrid":true,"showline":true,"tickfont":{"size":12},"title":{"standoff":10,"text":"Y-axis Title","font":{"size":16}},"zeroline":true,"zerolinecolor":"#B7C6CF","zerolinewidth":0.1}}}},                        {"responsive": true}                    ).then(function(){
                             
-var gd = document.getElementById('903063ae-3977-418e-bcff-ea7be7b5a57a');
+var gd = document.getElementById('f20dc82c-b3f4-4777-86d6-9753f4fa0f21');
 var x = new MutationObserver(function (mutations, observer) {{
         var display = window.getComputedStyle(gd).display;
         if (!display || display === 'none') {{

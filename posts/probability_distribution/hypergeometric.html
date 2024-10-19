@@ -194,6 +194,11 @@ window.Quarto = {
             </a>
           </li>
           <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/cmdstan_for_regression_monkey/">
+            cmdstanpy for regmonkey
+            </a>
+          </li>
+          <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/statistics_dojo/">
             statistics dojo
             </a>
@@ -613,7 +618,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-18</p>
+      <p class="date-modified">2024-10-19</p>
     </div>
   </div>
     
@@ -883,7 +888,7 @@ a_1, a_2, \cdots, a_N
 </tbody>
 </table>
 <p>上記のような５観測単位からなる有限母集団を考える．このとき，３人を非復元抽出でサンプリングしたとき， その標本平均の平均と分散は以下のようになる</p>
-<div id="70b1df67" class="cell" data-execution_count="1">
+<div id="f18dad24" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations <span class="im">as</span> comb</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -898,7 +903,7 @@ a_1, a_2, \cdots, a_N
 </div>
 </div>
 <p>有限母集団修正を考えずに計算してみると</p>
-<div id="92e50979" class="cell" data-execution_count="2">
+<div id="6b5e31db" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>biased_var <span class="op">=</span> np.var(finite_population) <span class="op">/</span> <span class="dv">3</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>correction <span class="op">=</span> (<span class="dv">5</span> <span class="op">-</span> <span class="dv">3</span>) <span class="op">/</span> (<span class="dv">5</span> <span class="op">-</span> <span class="dv">1</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>

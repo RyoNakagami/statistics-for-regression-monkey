@@ -194,6 +194,11 @@ window.Quarto = {
             </a>
           </li>
           <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/cmdstan_for_regression_monkey/">
+            cmdstanpy for regmonkey
+            </a>
+          </li>
+          <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/statistics_dojo/">
             statistics dojo
             </a>
@@ -607,7 +612,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-18</p>
+      <p class="date-modified">2024-10-19</p>
     </div>
   </div>
     
@@ -633,7 +638,7 @@ window.Quarto = {
 {}_5C_3 = \frac{5!}{(5-3)!3!} = 10
 \]</span></p>
 <p>と計算できます．実際にPythonで計算すると以下のように確かめることができます．</p>
-<div id="76a4e635" class="cell" data-execution_count="1">
+<div id="83b37c4c" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
@@ -676,7 +681,7 @@ window.Quarto = {
 </div>
 </div>
 <p>これら標本がどれも当確率に選ばれるような抽出操作のことを<strong>無作為抽出法</strong>と呼びます．各Entityに着目すると， 標本に含まれる確率は <span class="math inline">\(\displaystyle\frac{3}{5}\)</span> となります．実際にEntity Aに着目して，その抽出確率を求めると</p>
-<div id="2ccfdd04" class="cell" data-execution_count="2">
+<div id="1f7b59a2" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>probability_A <span class="op">=</span> df.<span class="bu">filter</span>(pl.col(<span class="st">"combination"</span>).<span class="bu">str</span>.contains(<span class="st">"A"</span>)).height <span class="op">/</span> <span class="bu">len</span>(</span>

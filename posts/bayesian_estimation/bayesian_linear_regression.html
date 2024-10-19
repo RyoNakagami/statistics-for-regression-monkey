@@ -197,6 +197,11 @@ window.Quarto = {
             </a>
           </li>
           <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/cmdstan_for_regression_monkey/">
+            cmdstanpy for regmonkey
+            </a>
+          </li>
+          <li>
             <a class="dropdown-item sidebar-tools-main-item" href="https://ryonakagami.github.io/statistics_dojo/">
             statistics dojo
             </a>
@@ -612,7 +617,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Modified</div>
     <div class="quarto-title-meta-contents">
-      <p class="date-modified">2024-10-18</p>
+      <p class="date-modified">2024-10-19</p>
     </div>
   </div>
     
@@ -867,7 +872,7 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 </section>
 <section id="bayesian-linear-regression-with-jax" class="level2">
 <h2 class="anchored" data-anchor-id="bayesian-linear-regression-with-jax">Bayesian Linear Regression with JAX</h2>
-<div id="ab6c80f0" class="cell" data-execution_count="1">
+<div id="2faa8831" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -881,7 +886,7 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div id="971a489e" class="cell" data-execution_count="2">
+<div id="74c78a31" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_stata(</span>
@@ -999,7 +1004,7 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 </div>
 </div>
 </div>
-<div id="a98fb25e" class="cell" data-execution_count="3">
+<div id="11637d10" class="cell" data-execution_count="3">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sw.set_templates(<span class="st">"regmonkey_scatter"</span>)</span>
@@ -1015,7 +1020,7 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 </div>
 </div>
 <p><strong> ▶&nbsp; MLE</strong></p>
-<div id="a56c6e6c" class="cell" data-execution_count="4">
+<div id="252b6bf5" class="cell" data-execution_count="4">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> LogLikelihood(y, x, theta):</span>
@@ -1056,7 +1061,7 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 </div>
 </div>
 <p><strong> ▶&nbsp; OLS</strong></p>
-<div id="99bf3751" class="cell" data-execution_count="5">
+<div id="de504cd9" class="cell" data-execution_count="5">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_ols <span class="op">=</span> df.copy()</span>
@@ -1072,8 +1077,8 @@ p&amp;(\gamma\vert\pmb Y, \pmb X, \pmb\beta)\\[5pt]
 Dep. Variable:               logpgp95   R-squared:                       0.611
 Model:                            OLS   Adj. R-squared:                  0.608
 Method:                 Least Squares   F-statistic:                     171.4
-Date:                Fri, 18 Oct 2024   Prob (F-statistic):           4.16e-24
-Time:                        19:30:35   Log-Likelihood:                -119.71
+Date:                Sat, 19 Oct 2024   Prob (F-statistic):           4.16e-24
+Time:                        10:17:22   Log-Likelihood:                -119.71
 No. Observations:                 111   AIC:                             243.4
 Df Residuals:                     109   BIC:                             248.8
 Df Model:                           1                                         
@@ -1095,7 +1100,7 @@ Notes:
 </div>
 </div>
 <p><strong> ▶&nbsp; Rdige</strong></p>
-<div id="f92ab6f0" class="cell" data-execution_count="6">
+<div id="6a7aeae0" class="cell" data-execution_count="6">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>reg_l2 <span class="op">=</span> sm.OLS(endog<span class="op">=</span>df_ols[<span class="st">'logpgp95'</span>], exog<span class="op">=</span>df_ols[[<span class="st">'const'</span>, <span class="st">'avexpr'</span>]], <span class="op">\</span></span>
@@ -1107,7 +1112,7 @@ Notes:
 <pre><code>array([0.55745346, 1.05775113])</code></pre>
 </div>
 </div>
-<div id="45538b61" class="cell" data-execution_count="7">
+<div id="466bd219" class="cell" data-execution_count="7">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>reg_l2 <span class="op">=</span> sm.OLS(endog<span class="op">=</span>y_mle, exog<span class="op">=</span>x_mle, <span class="op">\</span></span>
@@ -1119,7 +1124,7 @@ Notes:
 <pre><code>array([0.39242079])</code></pre>
 </div>
 </div>
-<div id="906d1e4b" class="cell" data-execution_count="8">
+<div id="f5bf1559" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
@@ -1132,7 +1137,7 @@ Notes:
 </div>
 </div>
 <p><strong> ▶&nbsp; bayesian regression</strong></p>
-<div id="6e397217" class="cell" data-execution_count="9">
+<div id="d6c088db" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> set_matplotlib_formats</span>
@@ -1182,7 +1187,7 @@ Notes:
 Number of divergences: 0</code></pre>
 </div>
 </div>
-<div id="63ee6d8f" class="cell" data-execution_count="10">
+<div id="c2c92b36" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model(x<span class="op">=</span><span class="va">None</span>, y<span class="op">=</span><span class="va">None</span>):</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> numpyro.sample(<span class="st">"a"</span>, dist.Normal(<span class="fl">5.0</span>, <span class="dv">1</span>))</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    M, A <span class="op">=</span> <span class="fl">0.0</span>, <span class="fl">0.0</span></span>
@@ -1215,7 +1220,7 @@ Number of divergences: 0</code></pre>
 Number of divergences: 0</code></pre>
 </div>
 </div>
-<div id="17039007" class="cell" data-execution_count="11">
+<div id="7be03020" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_regression(x_data, y_mean, y_hpdi, y_data):</span>
@@ -1255,7 +1260,7 @@ Number of divergences: 0</code></pre>
 </div>
 </div>
 </div>
-<div id="b5f30e48" class="cell" data-execution_count="12">
+<div id="5a10f1cd" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> numpyro.infer <span class="im">import</span> Predictive</span>
@@ -1279,7 +1284,7 @@ Number of divergences: 0</code></pre>
 </div>
 </div>
 </div>
-<div id="9f9a3720" class="cell" data-execution_count="13">
+<div id="bb1e2543" class="cell" data-execution_count="13">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df_bayes <span class="op">=</span> df.copy()</span>
@@ -1339,7 +1344,7 @@ Number of divergences: 0</code></pre>
 </div>
 </div>
 </div>
-<div id="1c538056" class="cell" data-execution_count="14">
+<div id="e85f0b75" class="cell" data-execution_count="14">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot predicted values</span></span>
@@ -1367,7 +1372,7 @@ Number of divergences: 0</code></pre>
 </div>
 </div>
 </div>
-<div id="96159d6e" class="cell" data-execution_count="15">
+<div id="3e5fb70c" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_likelihood(rng_key, params, model, <span class="op">*</span>args, <span class="op">**</span>kwargs):</span>
