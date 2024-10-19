@@ -18,9 +18,12 @@ book:
          - text: Ryo's Tech Blog
            href: https://ryonakagami.github.io/
            aria-label: blog-general
+         - text: cmdstanpy for regmonkey
+           href: https://ryonakagami.github.io/cmdstan_for_regression_monkey/
+           aria-label: regmonkey_cmd
          - text: statistics dojo
            href: https://ryonakagami.github.io/statistics_dojo/
-           aria-label: blog-general
+           aria-label: regmonkey_dojo
          - text: OhGoshGit!?!
            href: https://ohgoshgit.github.io/
            aria-label: blog-ogg
